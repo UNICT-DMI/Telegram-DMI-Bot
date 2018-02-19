@@ -24,11 +24,14 @@ from bs4 import BeautifulSoup
 import sqlite3
 import logging
 
+
 from module.lezioni import lezioni_cmd
 from module.esami import esami_cmd
 from module.professori import prof_cmd
 from module.scraperesami import scrape_esami
 import yaml
+
+from mensa import*
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -722,3 +725,10 @@ def avviso(bot, job):
 
 def update_esami(bot, job):
 	scrape_esami()
+def start(bot, update):
+	bot.sendMessage(chat_id=update.message.chat_id, text="Benvenuto! Questo bot è stato realizzato dagli studenti del Corso di Laurea in Informatica al fine di suppotare gli studenti del DMI! Per scoprire cosa puoi fare usa /help")
+	
+def mensa(bot,update):
+	mensamessage(bot, update)
+
+	

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from functions import *
-
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -35,7 +34,7 @@ def main():
 	dp.add_handler(CommandHandler('ersu', lambda bot, update: informative_callback(bot, update, 'ersu')))
 	dp.add_handler(CommandHandler('ufficioersu', lambda bot, update: informative_callback(bot, update, 'ufficioersu')))
 	dp.add_handler(CommandHandler('urp', lambda bot, update: informative_callback(bot, update, 'urp')))
-	dp.add_handler(CommandHandler('mensa', lambda bot, update: informative_callback(bot, update, 'mensa')))
+	dp.add_handler(CommandHandler('mensa', mensa))
 	dp.add_handler(CommandHandler('biblioteca', lambda bot, update: informative_callback(bot, update, 'biblioteca')))
 	dp.add_handler(CommandHandler('cus', lambda bot, update: informative_callback(bot, update, 'cus')))
 
@@ -59,6 +58,7 @@ def main():
 	dp.add_handler(CommandHandler('sendlog', sendLog))
 	dp.add_handler(CommandHandler('sendChatids', sendChatIds))
 	dp.add_handler(CommandHandler('errors', sendErrors))
+	dp.add_handler(CommandHandler('start', start))
 
 	#JobQueue
 	j = updater.job_queue
@@ -84,7 +84,7 @@ def main():
 
 
 	dp.add_handler(CallbackQueryHandler(callback))
-
+	
 	updater.start_polling()
 	updater.idle()
 
