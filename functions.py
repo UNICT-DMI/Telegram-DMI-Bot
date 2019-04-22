@@ -882,7 +882,7 @@ def report(bot, update, args):
                 name = db.execute("SELECT Username,Nome,Cognome FROM 'Chat_id_List' WHERE Chat_id = %s" %chat_id)
                 row = name.fetchone()
 
-                message += "Username: @" + row[0] + "\n" + "Nome: " + row[1] + "\n" + "Cognome: " + row[2] + "\n" + " ".join(args)
+                message += "Username: @" + row[1] + "\n" + "Nome: " + row[2] + "\n" + "Cognome: " + row[3] + "\n" + " ".join(args)
                 bot.sendMessage(chat_id = config_map['representatives_group'], text = message)
                 bot.sendMessage(chat_id = chat_id, text = "Resoconto segnalazione: \n" + message + "\n Grazie per la segnalazione, un rappresentante ti contatterà nel minor tempo possibile.")
 
