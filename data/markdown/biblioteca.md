@@ -1,7 +1,7 @@
 Sala Lettura:
-lunedì - venerdì 08.00 - 19.00 
+Lunedì - Venerdì 08.00 - 19.00 
 
 Servizio Distribuzione: 
-lunedì - giovedì 08.30 - 14.00 
-lunedì - giovedì 14.30 - 16.30 
-venerdì  08.30 - 13.30
+Lunedì - Giovedì 08.30 - 14.00 
+Lunedì - Giovedì 14.30 - 16.30 
+Venerdì  08.30 - 13.30

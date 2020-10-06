@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from telegram.ext import run_async, CallbackContext
 from urllib.parse import quote
 import requests
@@ -178,7 +179,11 @@ def get_blob_file(project_id, blob_id):
 
     try:
         blob_file = api.projects.get(project_id).repository_blob(blob_id)
-        blob_content = base64.b64decode(blob_file['content']).decode()
+
+        if type(blob_file['content']) == str:
+            blob_content = blob_file['content']
+        else:
+            blob_content = base64.b64decode(blob_file['content']).decode()
         blob_size = blob_file['size']
 
         if blob_content.startswith('version https://git-lfs.github.com/spec/v1'):
@@ -189,7 +194,7 @@ def get_blob_file(project_id, blob_id):
             'content': blob_content
         }
     except gitlab.GitlabGetError:
-        return None
+        print('Problem during the download of file from gitlab')
 
 @run_async
 def download_blob_file_async_internal(update: Update, context: CallbackContext, blob_id, blob_name, db_result):
@@ -372,12 +377,12 @@ def gitlab_handler(update: Update, context: CallbackContext):
                 for subgroup in subgroups:
                     db.execute("INSERT OR REPLACE INTO gitlab (id, parent_id, name, type) VALUES (?, ?, ?, ?)", (subgroup.id, subgroup.parent_id, subgroup.name, 'subgroup'))
                     buttons.append(InlineKeyboardButton("🗂 %s" % subgroup.name, callback_data='git_s_%s' % subgroup.id))
-            else:
-                projects = get_projects(origin_id)
+            
+            projects = get_projects(origin_id)
 
-                for project in projects:
-                    db.execute("INSERT OR REPLACE INTO gitlab (id, parent_id, name, web_url, type) VALUES (?, ?, ?, ?, ?)", (project.id, origin_id, project.name, project.web_url, 'project'))
-                    buttons.append(InlineKeyboardButton("🗂 %s" % project.name, callback_data='git_p_%s' % project.id))
+            for project in projects:
+                db.execute("INSERT OR REPLACE INTO gitlab (id, parent_id, name, web_url, type) VALUES (?, ?, ?, ?, ?)", (project.id, origin_id, project.name, project.web_url, 'project'))
+                buttons.append(InlineKeyboardButton("🗂 %s" % project.name, callback_data='git_p_%s' % project.id))
         elif action == 'p':
             buttons.extend(explore_repository_tree(origin_id, '/', db))
         elif action == 't':

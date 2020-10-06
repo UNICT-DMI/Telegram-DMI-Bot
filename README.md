@@ -101,3 +101,4 @@ This project is made possible thanks to the contributions of:
 - [Ernesto Casablanca](https://github.com/TendTo)
 - [Graziano Di Grande](https://github.com/Drendog)
 - [Santo Cariotti](https://github.com/dcariotti)
+- [Giuseppe Criscione](https://github.com/datalux)

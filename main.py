@@ -63,6 +63,7 @@ def main():
 
 	dp.add_handler(CommandHandler('aulario', informative_callback))
 	dp.add_handler(CommandHandler('help', help))
+	dp.add_handler(MessageHandler(Filters.regex('❔ Help'), help))
 	dp.add_handler(CommandHandler('contributors', informative_callback))
 
 	dp.add_handler(CommandHandler('rappresentanti', informative_callback))

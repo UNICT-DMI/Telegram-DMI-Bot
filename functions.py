@@ -38,6 +38,7 @@ from module.scraper_notices import scrape_notices
 from module.gitlab import gitlab_handler
 from module.easter_egg_func import *
 from module.regolamento_didattico import *
+from module.utils.keyboard_utils import get_help_keyboard
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -72,8 +73,8 @@ def get_esami_text_InlineKeyboard(context: CallbackContext) -> (str, InlineKeybo
     keyboard = [[]]
 
     esami_user_data = context.user_data['esami']
-    text_anno = ", ".join([key for key in esami_user_data.keys() if "anno" in key]) #stringa contenente gli anni per cui la flag è true
-    text_sessione = ", ".join([key for key in esami_user_data.keys() if "sessione" in key]).replace("sessione", "") #stringa contenente le sessioni per cui la flag è true
+    text_anno = ", ".join([key for key in esami_user_data if "anno" in key]) #stringa contenente gli anni per cui la flag è true
+    text_sessione = ", ".join([key for key in esami_user_data if "sessione" in key]).replace("sessione", "") #stringa contenente le sessioni per cui la flag è true
     text_insegnamento = esami_user_data.get("insegnamento", "") #stringa contenente l'insegnamento
 
     message_text = "Anno: {}\nSessione: {}\nInsegnamento: {}"\
@@ -609,7 +610,11 @@ def get_year_code(month, day):
     return str(year)[-2:]
 
 def start(update: Update, context: CallbackContext):
-    context.bot.sendMessage(chat_id=update.message.chat_id, text="Benvenuto! Questo bot è stato realizzato dagli studenti del Corso di Laurea in Informatica al fine di suppotare gli studenti del DMI! Per scoprire cosa puoi fare usa /help")
+    reply_keyboard = get_help_keyboard()
+    message_text = read_md("start")
+    context.bot.sendMessage(chat_id=update.message.chat_id,
+                            text=message_text,
+                            reply_markup=reply_keyboard)
 
 def git(update: Update, context: CallbackContext):
     check_log(update, context, "gitlab")
@@ -622,7 +627,7 @@ def git(update: Update, context: CallbackContext):
     else:
         db = sqlite3.connect('data/DMI_DB.db')
 
-        if db.execute("SELECT Chat_id FROM 'Chat_id_List' WHERE Chat_id = ?",  chat_id).fetchone():
+        if db.execute("SELECT Chat_id FROM 'Chat_id_List' WHERE Chat_id = %s" % chat_id).fetchone():
             gitlab_handler(update, context)
         else:
             context.bot.sendMessage(chat_id=chat_id, text="🔒 Non hai i permessi per utilizzare la funzione %s\nUtilizzare il comando /request <nome> <cognome> <e-mail> (il nome e il cognome devono essere scritti uniti Es: Di Mauro -> DiMauro)" % executed_command)
