@@ -93,7 +93,7 @@ def scrape_exams(year_exams, delete= False):
 	if(delete):
 		conn.execute('DELETE FROM `exams`;') # TRUNCATE professors
 	try:
-		conn.execute("INSERT INTO exams (?) VALUES ?", columns, values)
+		conn.execute("INSERT INTO exams (?) VALUES ?", (columns, values))
 		conn.commit()
 	except:
 		logger.error("The exams query could not be executed")

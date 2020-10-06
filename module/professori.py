@@ -31,7 +31,7 @@ def prof_cmd(profs):
 
         professors = []
         for i in profs:
-            rows = conn.execute("SELECT * FROM professors WHERE Nome LIKE ? OR Cognome LIKE ?",  ('%' + i + '%'), ('%' + i + '%')).fetchall()
+            rows = conn.execute("SELECT * FROM professors WHERE Nome LIKE ? OR Cognome LIKE ?",  (('%' + i + '%'), ('%' + i + '%'))).fetchall()
             professors += rows
 
         for prof in professors:

@@ -79,7 +79,7 @@ def scrape_lessons(year_exams):
 
     conn = sqlite3.connect('data/DMI_DB.db')
     conn.execute('DELETE FROM `lessons`;') # TRUNCATE lessons
-    conn.execute("INSERT INTO lessons (?) VALUES ?", columns, values)
+    conn.execute("INSERT INTO lessons (?) VALUES ?", (columns, values))
     conn.commit()
     conn.close()
 

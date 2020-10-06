@@ -96,7 +96,7 @@ def scrape_prof():
 
     conn = sqlite3.connect('data/DMI_DB.db')
     conn.execute('DELETE FROM `professors`;') # TRUNCATE professors
-    conn.execute("INSERT INTO professors (?) VALUES ?", columns, values)
+    conn.execute("INSERT INTO professors (?) VALUES ?", (columns, values))
     conn.commit()
     conn.close()
 

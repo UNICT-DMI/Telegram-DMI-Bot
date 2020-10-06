@@ -24,7 +24,7 @@ def check_log(update: Update, context: CallbackContext, type, callback=0):
     if (config_map['debug']['disable_db'] == 0):
         today = str(date.today())
         conn = sqlite3.connect('data/DMI_DB.db')
-        conn.execute("INSERT INTO stat_list VALUES (?, ?, ?)", str(type), str(chat_id), str(today))
+        conn.execute("INSERT INTO stat_list VALUES (?, ?, ?)", (str(type), str(chat_id), str(today)))
         conn.commit()
         conn.close()
 
