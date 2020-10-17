@@ -3,7 +3,7 @@ from functions import TOKEN, Bot, Updater, MessageHandler, CommandHandler, Callb
 	smonta_portoni, santino, prof_sticker, bladrim, lei_che_ne_pensa_signorina, informative_callback, lezioni, esami, prof, report, give_chat_id, send_log, send_chat_ids, send_errors, start, callback, help,\
 	regolamenti, regolamentodidattico, regolamentodidattico_button, regolamentodidattico_keyboard, triennale, magistrale, regdid, esami_handler, esami_input_insegnamento,\
 	generic_button_handler, gitlab_handler, submenu_handler, md_handler,\
-	updater_lep, git, drive, stats, stats_tot, request, add_db #importati solo componenti utilizzati nel main
+	updater_lep, updater_schedule, git, drive, stats, stats_tot, request, add_db #importati solo componenti utilizzati nel main
 from module.shared import config_map
 
 bot = telegram.Bot(config_map["token"])
@@ -106,7 +106,8 @@ def main():
 	j = updater.job_queue
 
 	j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
-
+	j.run_repeating(updater_schedule, interval=86400, first=0)
+	# j.run_daily(update_schedule, time = datetime.time(00,05,00), days = (0, 1, 2, 3, 4, 5) )
 	if (config_map['debug']['disable_drive'] == 0):
 		dp.add_handler(CommandHandler('drive',drive))
 

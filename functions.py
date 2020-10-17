@@ -26,6 +26,9 @@ import logging
 import pytz
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
+import dryscrape
+import time
+import pandas as pd
 
 from module.shared import read_md, check_log, config_map
 from module.lezioni import lezioni_cmd
@@ -108,7 +111,7 @@ def esami(update: Update, context: CallbackContext):
     if chat_id != user_id: # forza ad eseguire il comando in una chat privata, anche per evitare di inondare un gruppo con i risultati
         context.bot.sendMessage(chat_id=chat_id, text="Questo comando è utilizzabile solo in privato")
         context.bot.sendMessage(chat_id=user_id, text="Dal comando esami che hai eseguito in un gruppo")
-    
+
     message_text, inline_keyboard = get_esami_text_InlineKeyboard(context)
     context.bot.sendMessage(chat_id=user_id, text=message_text, reply_markup=inline_keyboard)
 
@@ -441,7 +444,7 @@ def help(update: Update, context: CallbackContext):
     keyboard.append(
         [
             InlineKeyboardButton("📖 Esami (link)",        callback_data="md_esami_link"),
-            InlineKeyboardButton("🗓 Aulario",              url='http://aule.dmi.unict.it/booked/Web/view-schedule.php'),
+            InlineKeyboardButton("🗓 Aulario",              callback_data="sm_aulario"),
             InlineKeyboardButton("Orari lezioni (link)",    callback_data="md_lezioni_link")
         ]
     )
@@ -668,6 +671,69 @@ def report(update: Update, context: CallbackContext):
         else:
             context.bot.sendMessage(chat_id = chat_id, text="Errore. Inserisci la tua segnalazione dopo /report (Ad esempio /report Invasione ingegneri in corso.)")
 
+def updater_schedule(context):
+    session = dryscrape.Session()
+    aulario_url = 'http://aule.dmi.unict.it/booked/Web/monitor-display.php'
+    session.visit(aulario_url)
+    time.sleep(0.5)
+    # days_field = session.at_xpath('//select[@id="days"]')
+    # days_field.set(7)
+    # days_field.submit()
+    response = session.body()
+    soup = BeautifulSoup(response,'lxml')
+
+    # table = soup.findAll('table', attrs = {'class' : 'reservations'})[-1]
+    df = pd.read_html(response)
+    print("Schedule loaded")
+
+    data = []
+
+    data.append(df)
+    df = pd.concat(df, axis = 'rows')
+    rooms = df.iloc[:,0]
+    schedule = df.iloc[:,1:]
+    subjects = {}
+    for c in schedule:
+        for i,r in enumerate(df[c]):
+            if not pd.isnull(r):
+                # print(r,c)
+                if len(r) >= 32:
+                    r = r[:28] + " ..."
+                if not r in subjects:
+                    subjects[r] = {}
+                    subjects[r]["times"] = []
+                    subjects[r]['room'] = rooms[i]
+                if c[-1] == "1":
+                    c = c[:3] + "30"
+                subjects[r]['times'].append(c)
+    with open("data/json/subjs.json", "w+") as outfile:
+        json.dump(subjects, outfile)
+
+def get_subjs_json():
+    try:
+        json_file = open('data/json/subjs.json','r')
+    except:
+        logger.error("subjs.json still does not exist")
+        return False
+    return json.load(json_file)
+
+def aulario(update: Update, context: CallbackContext, chat_id, message_id):
+    json_data = get_subjs_json()
+    if json_data:
+        text = "Quale lezione devi seguire oggi?"
+        keyboard = []
+        keys = json_data.keys()
+        subjs = [k for k in keys]
+        for s in subjs[0:5]:
+            keyboard.append([InlineKeyboardButton(s,callback_data = 'sb_'+s)])
+        if len(subjs) > 5:
+            keyboard.append([InlineKeyboardButton('➡️',callback_data = 'pg_0_r')])
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        context.bot.editMessageText(text = text, reply_markup = reply_markup, chat_id = chat_id, message_id = message_id)
+    elif json_data == {}:
+        text = "Nessuna lezione oggi"
+        context.bot.editMessageText(text = text, chat_id = chat_id, message_id = message_id)
+
 # Callback Query Handlers
 
 def submenu_handler(update: Update, context: CallbackContext):
@@ -681,7 +747,7 @@ def submenu_handler(update: Update, context: CallbackContext):
       query.message.chat_id,
       query.message.message_id
     )
-  
+
 def generic_button_handler(update: Update, context: CallbackContext):
     query = update.callback_query
     data = query.data
@@ -700,7 +766,7 @@ def md_handler(update: Update, context: CallbackContext):
 
     message_text = read_md(data)
     check_log(update, context, data, 1)
-    
+
     context.bot.editMessageText(
       text=message_text,
       chat_id=query.message.chat_id,
@@ -715,13 +781,13 @@ def esami_handler(update: Update, context: CallbackContext):
     message_id = update.callback_query.message.message_id
     esami_user_data = context.user_data['esami']
     if "anno" in callbackData:
-        if callbackData[-7:] not in esami_user_data.keys(): #se non era presente, setta la key di [1° anno|2° anno| 3° anno] a true... 
-            esami_user_data[callbackData[-7:]] = True 
+        if callbackData[-7:] not in esami_user_data.keys(): #se non era presente, setta la key di [1° anno|2° anno| 3° anno] a true...
+            esami_user_data[callbackData[-7:]] = True
         else:
            del esami_user_data[callbackData[-7:]] #... o elmina la key se era già presente
     elif "sessione" in callbackData:
-        if 'sessione' + callbackData[22:] not in esami_user_data.keys(): #se non era presente, setta la key di sessione[prima|seconda|terza] a true... 
-            esami_user_data['sessione' + callbackData[22:]] = True 
+        if 'sessione' + callbackData[22:] not in esami_user_data.keys(): #se non era presente, setta la key di sessione[prima|seconda|terza] a true...
+            esami_user_data['sessione' + callbackData[22:]] = True
         else:
            del esami_user_data['sessione' + callbackData[22:]] #... o elmina la key se era già presente
     elif "search" in callbackData:
