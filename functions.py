@@ -29,6 +29,7 @@ from bs4 import BeautifulSoup
 import dryscrape
 import time
 import pandas as pd
+import calendar
 
 from module.shared import read_md, check_log, config_map
 from module.lezioni import lezioni_cmd
@@ -42,7 +43,6 @@ from module.gitlab import gitlab_handler
 from module.easter_egg_func import *
 from module.regolamento_didattico import *
 from module.utils.keyboard_utils import get_help_keyboard
-
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -673,41 +673,40 @@ def report(update: Update, context: CallbackContext):
 
 def updater_schedule(context):
     session = dryscrape.Session()
-    aulario_url = 'http://aule.dmi.unict.it/booked/Web/monitor-display.php'
+    aulario_url = 'http://aule.dmi.unict.it/booked/Web/monitor-display.php?dr=schedule&sid=1&rid=-1&format=1&d=30'
     session.visit(aulario_url)
     time.sleep(0.5)
-    # days_field = session.at_xpath('//select[@id="days"]')
-    # days_field.set(7)
-    # days_field.submit()
+
     response = session.body()
     soup = BeautifulSoup(response,'lxml')
 
     # table = soup.findAll('table', attrs = {'class' : 'reservations'})[-1]
-    df = pd.read_html(response)
+    tables = pd.read_html(response)
     print("Schedule loaded")
-
-    data = []
-
-    data.append(df)
-    df = pd.concat(df, axis = 'rows')
-    rooms = df.iloc[:,0]
-    schedule = df.iloc[:,1:]
-    subjects = {}
-    for c in schedule:
-        for i,r in enumerate(df[c]):
-            if not pd.isnull(r):
-                # print(r,c)
-                if len(r) >= 32:
-                    r = r[:28] + " ..."
-                if not r in subjects:
-                    subjects[r] = {}
-                    subjects[r]["times"] = []
-                    subjects[r]['room'] = rooms[i]
-                if c[-1] == "1":
-                    c = c[:3] + "30"
-                subjects[r]['times'].append(c)
+    # print(len(tables))
+    days = {}
+    for k,table in enumerate(tables):
+    # df = pd.concat(df, axis = 'rows')
+        rooms = table.iloc[:,0]
+        schedule = table.iloc[:,1:]
+        subjects = {}
+        for c in schedule:
+            for i,r in enumerate(table[c]):
+                if not pd.isnull(r):
+                    # print(r,c)
+                    if len(r) >= 32:
+                        r = r[:28] + " ..."
+                    if not r in subjects:
+                        subjects[r] = {}
+                        subjects[r]["times"] = []
+                        subjects[r]['room'] = rooms[i]
+                    if c[-1] == "1":
+                        c = c[:3] + "30"
+                    subjects[r]['times'].append(c)
+        days[k] = subjects
     with open("data/json/subjs.json", "w+") as outfile:
-        json.dump(subjects, outfile)
+        json.dump(days, outfile)
+    # print(days)
 
 def get_subjs_json():
     try:
@@ -717,12 +716,57 @@ def get_subjs_json():
         return False
     return json.load(json_file)
 
+def create_calendar(today,days,year=None,month=None):
+    if year == None:
+        year = today.year
+    if month == None:
+        month = today.month
+    keyboard = []
+    keyboard.append([InlineKeyboardButton(calendar.month_name[month]+" "+str(year),callback_data = "NULL")])
+    week = ['L','M','M','G','V','S','D']
+    row = []
+    for w in week:
+        row.append(InlineKeyboardButton(w,callback_data = "NULL"))
+    keyboard.append(row)
+    my_cal = calendar.monthcalendar(year,month)
+    diff = 0
+    for week in my_cal:
+        row = []
+        empty = True
+        for day in week:
+            if day < today.day and (day == 0 or month == today.month) :
+                row.append(InlineKeyboardButton(" ",callback_data = "NULL"))
+            else:
+                curr = date(year,month,day)
+                diff = (curr - today).days
+                if diff <= days:
+                    empty = False
+                    row.append(InlineKeyboardButton(str(day),callback_data = "cal_{0}".format(diff)))
+                else:
+                    row.append(InlineKeyboardButton(" ",callback_data = "NULL"))
+        if not empty:
+            keyboard.append(row)
+    row = []
+    if today.month < month:
+        row.append(InlineKeyboardButton("<",callback_data="c_p_{0}_{1}_{2}".format(year,month,days)))
+    if diff < days:
+        row.append(InlineKeyboardButton("➡️",callback_data="c_n_{0}_{1}_{2}".format(year,month,days)))
+    keyboard.append(row)
+    return(InlineKeyboardMarkup(keyboard))
+
+
 def aulario(update: Update, context: CallbackContext, chat_id, message_id):
     json_data = get_subjs_json()
+    keys =  [k for k in json_data.keys()]
+    reply_markup = create_calendar(date.today(),len(keys))
+    context.bot.editMessageText(text = "Seleziona la data", reply_markup = reply_markup , chat_id = chat_id, message_id = message_id)
+
+def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, day):
+    json_data = get_subjs_json()
     if json_data:
-        text = "Quale lezione devi seguire oggi?"
+        text = "Quale lezione devi seguire?"
         keyboard = []
-        keys = json_data.keys()
+        keys = json_data[day]
         subjs = [k for k in keys]
         for s in subjs[0:5]:
             keyboard.append([InlineKeyboardButton(s,callback_data = 'sb_'+s)])
@@ -846,3 +890,33 @@ def esami_button_anno(update: Update, context: CallbackContext, chat_id, message
     )
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=InlineKeyboardMarkup(keyboard))
+
+def calendar_handler(update: Update, context: CallbackContext):
+    query = update.callback_query
+    data = query.data
+    chat_id = query.message.chat_id
+    message_id = query.message.message_id
+    day = data.split("_")[1]
+    aulario_subj(update,context,chat_id,message_id,day)
+
+# def subject_arrow_handler(update: Update, context: CallbackContext):
+#     query = update.callback_query
+#     data = query.data
+#     page = int(data.split('_')[1])
+#     arrows = []
+#     if data[-1] == 'r':
+#         page+=1
+#         arrows.append(InlineKeyboardButton('⬅️',callback_data = 'arr_{0}_l'.format(page)))
+#         if len(keys) >= page*5:
+#             arrows.append(InlineKeyboardButton('➡️',callback_data = 'arr_{0}_r'.format(page)))
+#     elif data[-1] == 'l':
+#         page-=1
+#         if page != 0:
+#             arrows.append(InlineKeyboardButton('⬅️',callback_data = 'arr_{0}_l'.format(page)))
+#         arrows.append(InlineKeyboardButton('➡️',callback_data = 'arr_{0}_r'.format(page)))
+#     keyboard = []
+#     for s in SUBS[page*5:(page*5)+5]:
+#         keyboard.append([InlineKeyboardButton(s,callback_data = 'sb_'+s)])
+#     keyboard.append(arrows)
+#     reply_markup = InlineKeyboardMarkup(keyboard)
+#     context.bot.editMessageReplyMarkup(chat_id = query.message.chat_id,message_id=query.message.message_id,reply_markup = reply_markup)
