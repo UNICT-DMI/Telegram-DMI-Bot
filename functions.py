@@ -722,7 +722,7 @@ def create_calendar(today,days,year=None,month=None):
     if month == None:
         month = today.month
     keyboard = []
-    keyboard.append([InlineKeyboardButton(calendar.month_name[month]+" "+str(year),callback_data = "NULL")])
+    keyboard.append([InlineKeyboardButton("🗓{0} {1}".format(calendar.month_name[month],str(year)),callback_data = "NULL")])
     week = ['L','M','M','G','V','S','D']
     row = []
     for w in week:
@@ -748,9 +748,9 @@ def create_calendar(today,days,year=None,month=None):
             keyboard.append(row)
     row = []
     if today.month < month:
-        row.append(InlineKeyboardButton("<",callback_data="c_p_{0}_{1}_{2}".format(year,month,days)))
+        row.append(InlineKeyboardButton("◀️",callback_data="c_p_{0}_{1}_{2}".format(year,month,days)))
     if diff < days:
-        row.append(InlineKeyboardButton("➡️",callback_data="c_n_{0}_{1}_{2}".format(year,month,days)))
+        row.append(InlineKeyboardButton("▶️",callback_data="c_n_{0}_{1}_{2}".format(year,month,days)))
     keyboard.append(row)
     return(InlineKeyboardMarkup(keyboard))
 
@@ -769,9 +769,9 @@ def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, 
         keys = json_data[day]
         subjs = [k for k in keys]
         for s in subjs[0:5]:
-            keyboard.append([InlineKeyboardButton(s,callback_data = 'sb_'+s)])
+            keyboard.append([InlineKeyboardButton(s,callback_data = 'sb_{0}_{1}'.format(day,s))])
         if len(subjs) > 5:
-            keyboard.append([InlineKeyboardButton('➡️',callback_data = 'pg_0_r')])
+            keyboard.append([InlineKeyboardButton('▶️',callback_data = 'pg_0_r')])
         reply_markup = InlineKeyboardMarkup(keyboard)
         context.bot.editMessageText(text = text, reply_markup = reply_markup, chat_id = chat_id, message_id = message_id)
     elif json_data == {}:
@@ -899,24 +899,27 @@ def calendar_handler(update: Update, context: CallbackContext):
     day = data.split("_")[1]
     aulario_subj(update,context,chat_id,message_id,day)
 
-# def subject_arrow_handler(update: Update, context: CallbackContext):
-#     query = update.callback_query
-#     data = query.data
-#     page = int(data.split('_')[1])
-#     arrows = []
-#     if data[-1] == 'r':
-#         page+=1
-#         arrows.append(InlineKeyboardButton('⬅️',callback_data = 'arr_{0}_l'.format(page)))
-#         if len(keys) >= page*5:
-#             arrows.append(InlineKeyboardButton('➡️',callback_data = 'arr_{0}_r'.format(page)))
-#     elif data[-1] == 'l':
-#         page-=1
-#         if page != 0:
-#             arrows.append(InlineKeyboardButton('⬅️',callback_data = 'arr_{0}_l'.format(page)))
-#         arrows.append(InlineKeyboardButton('➡️',callback_data = 'arr_{0}_r'.format(page)))
-#     keyboard = []
-#     for s in SUBS[page*5:(page*5)+5]:
-#         keyboard.append([InlineKeyboardButton(s,callback_data = 'sb_'+s)])
-#     keyboard.append(arrows)
-#     reply_markup = InlineKeyboardMarkup(keyboard)
-#     context.bot.editMessageReplyMarkup(chat_id = query.message.chat_id,message_id=query.message.message_id,reply_markup = reply_markup)
+def subject_arrow_handler(update: Update, context: CallbackContext):
+    query = update.callback_query
+    data = query.data
+    day = int(data.split('_')[1])
+    page = int(data.split('_')[2])
+    arrows = []
+    keys = json_data[day]
+    subjs = [k for k in keys]
+    if data[-1] == 'r':
+        page+=1
+        arrows.append(InlineKeyboardButton('◀️',callback_data = 'arr_{0}_l'.format(page)))
+        if len(subjs) >= page*5:
+            arrows.append(InlineKeyboardButton('▶️',callback_data = 'arr_{0}_r'.format(page)))
+    elif data[-1] == 'l':
+        page-=1
+        if page != 0:
+            arrows.append(InlineKeyboardButton('◀️',callback_data = 'arr_{0}_l'.format(page)))
+        arrows.append(InlineKeyboardButton('▶️',callback_data = 'arr_{0}_r'.format(page)))
+    keyboard = []
+    for s in subjs[page*5:(page*5)+5]:
+        keyboard.append([InlineKeyboardButton(s,callback_data = 'sb_'+s)])
+    keyboard.append(arrows)
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    context.bot.editMessageReplyMarkup(chat_id = query.message.chat_id,message_id=query.message.message_id,reply_markup = reply_markup)
