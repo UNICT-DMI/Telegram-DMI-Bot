@@ -691,13 +691,13 @@ def updater_schedule(context):
         schedule = table.iloc[:,1:]
         subjects = {}
         for c in schedule:
-            for i,r in enumerate(table[c]):
-                if not pd.isnull(r):
-                    # print(r,c)
-                    if len(r) >= 32:
-                        r = r[:28] + " ..."
+            for i,row in enumerate(table[c]):
+                if not pd.isnull(row):
+                    # if len(row) >= 32:
+                    r = row[:20] + rooms[i]
                     if not r in subjects:
                         subjects[r] = {}
+                        subjects[r]["subj"] = row
                         subjects[r]["times"] = []
                         subjects[r]['room'] = rooms[i]
                     if c[-1] == "1":
@@ -769,7 +769,7 @@ def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, 
         keys = json_data[day]
         subjs = [k for k in keys]
         for s in subjs[0:5]:
-            keyboard.append([InlineKeyboardButton(s,callback_data = 'sb_{0}_{1}'.format(day,s))])
+            keyboard.append([InlineKeyboardButton(keys[s]["subj"],callback_data = 'sb_{0}_{1}'.format(day,s))])
         if len(subjs) > 5:
             keyboard.append([InlineKeyboardButton('▶️',callback_data = 'pg_0_r')])
         reply_markup = InlineKeyboardMarkup(keyboard)
