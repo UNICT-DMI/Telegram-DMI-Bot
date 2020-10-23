@@ -673,7 +673,7 @@ def report(update: Update, context: CallbackContext):
 
 def updater_schedule(context):
     session = dryscrape.Session()
-    aulario_url = 'http://aule.dmi.unict.it/booked/Web/monitor-display.php?dr=schedule&sid=1&rid=-1&format=1&d=30'
+    aulario_url = read_md("aulario")
     session.visit(aulario_url)
     time.sleep(0.5)
 
@@ -697,7 +697,7 @@ def updater_schedule(context):
                     r = row[:20] + rooms[i]
                     if not r in subjects:
                         subjects[r] = {}
-                        subjects[r]["subj"] = row
+                        subjects[r]["subj"] = row.replace('[]','').replace('[','(').replace(']',')')
                         subjects[r]["times"] = []
                         subjects[r]['room'] = rooms[i]
                     if c[-1] == "1":
@@ -716,7 +716,8 @@ def get_subjs_json():
         return False
     return json.load(json_file)
 
-def create_calendar(today,days,year=None,month=None):
+def create_calendar(days,year=None,month=None):
+    today = date.today()
     if year == None:
         year = today.year
     if month == None:
@@ -739,7 +740,7 @@ def create_calendar(today,days,year=None,month=None):
             else:
                 curr = date(year,month,day)
                 diff = (curr - today).days
-                if diff <= days:
+                if diff < days:
                     empty = False
                     row.append(InlineKeyboardButton(str(day),callback_data = "cal_{0}".format(diff)))
                 else:
@@ -747,23 +748,29 @@ def create_calendar(today,days,year=None,month=None):
         if not empty:
             keyboard.append(row)
     row = []
-    if today.month < month:
-        row.append(InlineKeyboardButton("◀️",callback_data="c_p_{0}_{1}_{2}".format(year,month,days)))
+    if today.month < month or today.year < year:
+        row.append(InlineKeyboardButton("◀️",callback_data="m_p_{0}_{1}_{2}".format(year,month,days)))
     if diff < days:
-        row.append(InlineKeyboardButton("▶️",callback_data="c_n_{0}_{1}_{2}".format(year,month,days)))
+        row.append(InlineKeyboardButton("▶️",callback_data="m_n_{0}_{1}_{2}".format(year,month,days)))
     keyboard.append(row)
     return(InlineKeyboardMarkup(keyboard))
 
 
-def aulario(update: Update, context: CallbackContext, chat_id, message_id):
+def aulario(update: Update, context: CallbackContext, chat_id=None, message_id=None):
+    if not chat_id:
+        chat_id = update.message.chat_id
     json_data = get_subjs_json()
     keys =  [k for k in json_data.keys()]
-    reply_markup = create_calendar(date.today(),len(keys))
-    context.bot.editMessageText(text = "Seleziona la data", reply_markup = reply_markup , chat_id = chat_id, message_id = message_id)
+    reply_markup = create_calendar(len(keys))
+    text = "Seleziona la data della lezione che ti interessa."
+    if message_id:
+        context.bot.editMessageText(text = text, reply_markup = reply_markup , chat_id = chat_id, message_id = message_id)
+    else:
+        context.bot.sendMessage(text = text, reply_markup = reply_markup , chat_id = chat_id)
 
 def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, day):
     json_data = get_subjs_json()
-    if json_data:
+    if json_data[day]:
         text = "Quale lezione devi seguire?"
         keyboard = []
         keys = json_data[day]
@@ -771,11 +778,11 @@ def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, 
         for s in subjs[0:5]:
             keyboard.append([InlineKeyboardButton(keys[s]["subj"],callback_data = 'sb_{0}_{1}'.format(day,s))])
         if len(subjs) > 5:
-            keyboard.append([InlineKeyboardButton('▶️',callback_data = 'pg_0_r')])
+            keyboard.append([InlineKeyboardButton('▶️',callback_data = 'pg_{0}_0_r'.format(day))])
         reply_markup = InlineKeyboardMarkup(keyboard)
         context.bot.editMessageText(text = text, reply_markup = reply_markup, chat_id = chat_id, message_id = message_id)
-    elif json_data == {}:
-        text = "Nessuna lezione oggi"
+    elif json_data[day] == {}:
+        text = "Nessuna lezione programmata per questo giorno"
         context.bot.editMessageText(text = text, chat_id = chat_id, message_id = message_id)
 
 # Callback Query Handlers
@@ -899,27 +906,75 @@ def calendar_handler(update: Update, context: CallbackContext):
     day = data.split("_")[1]
     aulario_subj(update,context,chat_id,message_id,day)
 
-def subject_arrow_handler(update: Update, context: CallbackContext):
+def subjects_arrow_handler(update: Update, context: CallbackContext):
     query = update.callback_query
     data = query.data
-    day = int(data.split('_')[1])
+    day = data.split('_')[1]
     page = int(data.split('_')[2])
+    json_data = get_subjs_json()
     arrows = []
     keys = json_data[day]
     subjs = [k for k in keys]
     if data[-1] == 'r':
         page+=1
-        arrows.append(InlineKeyboardButton('◀️',callback_data = 'arr_{0}_l'.format(page)))
-        if len(subjs) >= page*5:
-            arrows.append(InlineKeyboardButton('▶️',callback_data = 'arr_{0}_r'.format(page)))
+        arrows.append(InlineKeyboardButton('◀️',callback_data = 'pg_{0}_{1}_l'.format(day,page)))
+        if len(subjs) > page*5+5:
+            arrows.append(InlineKeyboardButton('▶️',callback_data = 'pg_{0}_{1}_r'.format(day,page)))
     elif data[-1] == 'l':
         page-=1
         if page != 0:
-            arrows.append(InlineKeyboardButton('◀️',callback_data = 'arr_{0}_l'.format(page)))
-        arrows.append(InlineKeyboardButton('▶️',callback_data = 'arr_{0}_r'.format(page)))
+            arrows.append(InlineKeyboardButton('◀️',callback_data = 'pg_{0}_{1}_l'.format(day,page)))
+        arrows.append(InlineKeyboardButton('▶️',callback_data = 'pg_{0}_{1}_r'.format(day,page)))
     keyboard = []
     for s in subjs[page*5:(page*5)+5]:
-        keyboard.append([InlineKeyboardButton(s,callback_data = 'sb_'+s)])
+        keyboard.append([InlineKeyboardButton(json_data[day][s]["subj"],callback_data = 'sb_{0}_{1}'.format(day,s))])
     keyboard.append(arrows)
     reply_markup = InlineKeyboardMarkup(keyboard)
     context.bot.editMessageReplyMarkup(chat_id = query.message.chat_id,message_id=query.message.message_id,reply_markup = reply_markup)
+
+def month_handler(update: Update, context: CallbackContext):
+    query = update.callback_query
+    data = query.data
+    chat_id = query.message.chat_id
+    message_id = query.message.message_id
+    d = data.split("_")
+    direction = d[1]
+    year = int(d[2])
+    month = int(d[3])
+    days = int(d[4])
+    if direction == 'n':
+        if month < 12:
+            month += 1
+        else:
+            month = 1
+            year += 1
+    elif direction == 'p':
+        if month > 1:
+            month -= 1
+        else:
+            month = 12
+            year -= 1
+
+    context.bot.editMessageReplyMarkup(reply_markup = create_calendar(days,year,month), chat_id = chat_id, message_id = message_id)
+
+def subjects_handler(update: Update, context: CallbackContext):
+    query = update.callback_query
+    data = query.data
+    chat_id = query.message.chat_id
+    message_id = query.message.message_id
+    json_data = get_subjs_json()
+    d = data.split("_")
+    day = d[1]
+    s = d[2]
+    hours = json_data[day][s]['times']
+    start = hours[0]
+    end = hours[-1]
+    if end[3:] == '30':
+        end = "{0}:00".format(int(end[:2])+1)
+    else:
+        end[3:] = '30'
+    h = "{0} - {1}".format(start,end)
+    room = json_data[day][s]['room']
+    sub = json_data[day][s]['subj']
+    text = "{0} Ore: {1}: {2}".format(sub,h,room)
+    context.bot.editMessageText(text = text, chat_id = chat_id,message_id = message_id)
