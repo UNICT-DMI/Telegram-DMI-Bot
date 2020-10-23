@@ -23,18 +23,22 @@ If you want to test the bot by creating your personal instance, follow this step
 - Python 3
 - python-pip3
 - language-pack-it
+- libqtwebkit (v5)
 
 #### To install with *pip3*
 
 - python-telegram-bot
 - pydrive
 - requests
-- xlrd
 - beautifulsoup4
 - python-gitlab
+- pytz
+- pandas
+- dryscrape
 
 To install all the requirements you can run:
 ```bash
+sudo apt install libqtwebkit-dev
 pip3 install -r requirements.txt
 ```
 
