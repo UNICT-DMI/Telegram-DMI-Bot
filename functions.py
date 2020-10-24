@@ -982,7 +982,7 @@ def subjects_handler(update: Update, context: CallbackContext):
     text = "{0} Ore: {1}: {2}".format(sub,h,room)
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Indietro ❌', callback_data = 'sm&aulario_subj&{0}'.format(day))]])
     context.bot.deleteMessage(chat_id = chat_id,message_id = message_id)
-    context.bot.sendPhoto(photo = show_map(sub,h,room), reply_markup = reply_markup, chat_id = chat_id)
+    context.bot.sendPhoto(photo = show_map(sub,h,room), caption = text, reply_markup = reply_markup, chat_id = chat_id)
 
 def show_map(sub,h,room):
     b1_rooms = ["Aula 124","Aula 126","Aula 127","Aula 128","Laboratorio 125 Archimede","Aula Anile"]
