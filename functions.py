@@ -2,7 +2,7 @@
 
 # Telegram
 import telegram
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, Bot, ParseMode
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, Bot, ParseMode, InputMediaPhoto
 from telegram.ext import Updater, Filters, MessageHandler, CommandHandler, CallbackQueryHandler, RegexHandler, CallbackContext
 from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError)
 
@@ -30,6 +30,8 @@ import dryscrape
 import time
 import pandas as pd
 import calendar
+from PIL import Image, ImageDraw
+from io import BytesIO
 
 from module.shared import read_md, check_log, config_map
 from module.lezioni import lezioni_cmd
@@ -693,7 +695,8 @@ def updater_schedule(context):
                     r = row[:20] + rooms[i]
                     if not r in subjects:
                         subjects[r] = {}
-                        subjects[r]["subj"] = row.replace('[]','').replace('[','(').replace(']',')')
+                        row.replace('[]','').replace('[','(').replace(']',')')
+                        subjects[r]["subj"] = row
                         subjects[r]["times"] = []
                         subjects[r]['room'] = rooms[i]
                     if c[-1] == "1":
@@ -978,7 +981,20 @@ def subjects_handler(update: Update, context: CallbackContext):
     sub = json_data[day][s]['subj']
     text = "{0} Ore: {1}: {2}".format(sub,h,room)
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Indietro ❌', callback_data = 'sm&aulario_subj&{0}'.format(day))]])
-    context.bot.editMessageText(text = text, reply_markup = reply_markup, chat_id = chat_id,message_id = message_id)
+    context.bot.deleteMessage(chat_id = chat_id,message_id = message_id)
+    context.bot.sendPhoto(photo = show_map(sub,h,room), reply_markup = reply_markup, chat_id = chat_id)
+
+def show_map(sub,h,room):
+    b1_rooms = ["Aula 124","Aula 126","Aula 127","Aula 128","Laboratorio 125 Archimede","Aula Anile"]
+    b1_path = 'data/img/mappa_blocco_1.jpg'
+    b1_img = Image.open(b1_path)
+    draw = ImageDraw.Draw(b1_img)
+    draw.ellipse((20, 20, 80, 80), fill = 'red', outline ='red')
+    bio = BytesIO()
+    bio.name = 'image.jpeg'
+    b1_img.save(bio, 'JPEG')
+    bio.seek(0)
+    return bio
 
 def submenu_with_args_handler(update: Update, context: CallbackContext):
     query = update.callback_query

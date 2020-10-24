@@ -112,8 +112,8 @@ def main():
 	#JobQueue
 	j = updater.job_queue
 
-	j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
-	j.run_repeating(updater_schedule, interval=86400, first=0)
+	# j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
+	# j.run_repeating(updater_schedule, interval=86400, first=0)
 	# j.run_daily(update_schedule, time = datetime.time(00,05,00), days = (0, 1, 2, 3, 4, 5) )
 	if (config_map['debug']['disable_drive'] == 0):
 		dp.add_handler(CommandHandler('drive',drive))
