@@ -779,11 +779,13 @@ def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, 
             keyboard.append([InlineKeyboardButton('▶️',callback_data = 'pg_{0}_0_r'.format(day))])
         keyboard.append([InlineKeyboardButton('Indietro ❌', callback_data = 'sm_aulario')])
         reply_markup = InlineKeyboardMarkup(keyboard)
-        context.bot.editMessageText(text = text, reply_markup = reply_markup, chat_id = chat_id, message_id = message_id)
+        context.bot.deleteMessage(chat_id = chat_id,  message_id = message_id)
+        context.bot.sendMessage(text = text, reply_markup = reply_markup, chat_id = chat_id)
     elif json_data[day] == {}:
         text = "Nessuna lezione programmata per questo giorno"
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Indietro ❌', callback_data = 'sm_aulario')]])
-        context.bot.editMessageText(text = text, reply_markup = reply_markup, chat_id = chat_id, message_id = message_id)
+        context.bot.deleteMessage(chat_id = chat_id,  message_id = message_id)
+        context.bot.sendMessage(text = text, reply_markup = reply_markup, chat_id = chat_id)
 
 # Callback Query Handlers
 
@@ -985,8 +987,7 @@ def subjects_handler(update: Update, context: CallbackContext):
     context.bot.sendPhoto(photo = show_map(sub,h,room), caption = text, reply_markup = reply_markup, chat_id = chat_id)
 
 def show_map(sub,h,room):
-    b1_rooms = ["Aula 124","Aula 126","Aula 127","Aula 128","Laboratorio 125 Archimede","Aula Anile"]
-    b1_path = 'data/img/mappa_blocco_1.jpg'
+    b1_path = 'data/img/mappa.jpg'
     b1_img = Image.open(b1_path)
     draw = ImageDraw.Draw(b1_img)
     draw.ellipse((20, 20, 80, 80), fill = 'red', outline ='red')
