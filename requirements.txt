@@ -1,7 +1,8 @@
 python-telegram-bot
 pydrive
 requests
-xlrd
 beautifulsoup4
 python-gitlab
 pytz
+pandas
+dryscrape
