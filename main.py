@@ -2,7 +2,7 @@
 from functions import TOKEN, Bot, Updater, MessageHandler, CommandHandler, CallbackQueryHandler, Filters, telegram, Update, CallbackContext,\
 	smonta_portoni, santino, prof_sticker, bladrim, lei_che_ne_pensa_signorina, informative_callback, lezioni, esami, prof, report, give_chat_id, send_log, send_chat_ids, send_errors, start, callback, help,\
 	regolamenti, regolamentodidattico, regolamentodidattico_button, regolamentodidattico_keyboard, triennale, magistrale, regdid, esami_handler, esami_input_insegnamento,\
-	generic_button_handler, gitlab_handler, submenu_handler, md_handler, calendar_handler, month_handler, subjects_handler, subjects_arrow_handler, aulario,\
+	generic_button_handler, gitlab_handler, submenu_handler, md_handler, calendar_handler, month_handler, subjects_handler, subjects_arrow_handler, aulario, submenu_with_args_handler,\
 	updater_lep, updater_schedule, git, drive, stats, stats_tot, request, add_db #importati solo componenti utilizzati nel main
 from module.shared import config_map
 
@@ -62,7 +62,7 @@ def main():
 	dp.add_handler(CommandHandler('prof', prof))
 
 	dp.add_handler(CommandHandler('aulario', aulario))
-	dp.add_handler(MessageHandler(Filters.regex('📆 Aulario'), informative_callback))
+	dp.add_handler(MessageHandler(Filters.regex('📆 Aulario'), aulario))
 	dp.add_handler(CommandHandler('help', help))
 	dp.add_handler(MessageHandler(Filters.regex('❔ Help'), help))
 	dp.add_handler(CommandHandler('contributors', informative_callback))
@@ -82,19 +82,20 @@ def main():
 	dp.add_handler(MessageHandler(Filters.regex('📫 Segnalazione Rappresentanti'), informative_callback))
 
   # generic buttons
-	dp.add_handler(CallbackQueryHandler(generic_button_handler, pattern='^(lezioni_button|help_cmd|exit_cmd)'))
-	dp.add_handler(CallbackQueryHandler(submenu_handler,        pattern='sm_*'))
-	dp.add_handler(CallbackQueryHandler(md_handler,             pattern='md_*'))
+	dp.add_handler(CallbackQueryHandler(generic_button_handler,    pattern='^(lezioni_button|help_cmd|exit_cmd)'))
+	dp.add_handler(CallbackQueryHandler(submenu_handler,           pattern='sm_.*'))
+	dp.add_handler(CallbackQueryHandler(md_handler,                pattern='md_.*'))
+	dp.add_handler(CallbackQueryHandler(submenu_with_args_handler, pattern='sm&.*'))
 
   # aulario and calendar
-	dp.add_handler(CallbackQueryHandler(calendar_handler,       pattern='cal_*'))
-	dp.add_handler(CallbackQueryHandler(month_handler,          pattern='m_[np]_*'))
-	dp.add_handler(CallbackQueryHandler(subjects_handler,       pattern='sb_*'))
-	dp.add_handler(CallbackQueryHandler(subjects_arrow_handler, pattern='pg_*'))
+	dp.add_handler(CallbackQueryHandler(calendar_handler,       pattern='cal_.*'))
+	dp.add_handler(CallbackQueryHandler(month_handler,          pattern='m_[np]_.*'))
+	dp.add_handler(CallbackQueryHandler(subjects_handler,       pattern='sb_.*'))
+	dp.add_handler(CallbackQueryHandler(subjects_arrow_handler, pattern='pg_.*'))
 
   # drive & gitlab buttons
-	dp.add_handler(CallbackQueryHandler(callback,               pattern='Drive_*'))
-	dp.add_handler(CallbackQueryHandler(gitlab_handler,         pattern='git_*'))
+	dp.add_handler(CallbackQueryHandler(callback,               pattern='Drive_.*'))
+	dp.add_handler(CallbackQueryHandler(gitlab_handler,         pattern='git_.*'))
 
 	# regolamento didattico
 	dp.add_handler(CommandHandler('regolamentodidattico', regolamentodidattico))
@@ -106,13 +107,13 @@ def main():
 
 	#esami
 	dp.add_handler(MessageHandler(Filters.regex(r"^(?!=<[/])[Ii]ns:\s+"), esami_input_insegnamento)) #regex accetta [/ins: nome] oppure [/Ins: nome], per agevolare chi usa il cellulare
-	dp.add_handler(CallbackQueryHandler(esami_handler, pattern='esami_button_*'))
+	dp.add_handler(CallbackQueryHandler(esami_handler, pattern='esami_button_.*'))
 
 	#JobQueue
 	j = updater.job_queue
 
 	# j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
-	j.run_repeating(updater_schedule, interval=86400, first=0)
+	# j.run_repeating(updater_schedule, interval=86400, first=0)
 	# j.run_daily(update_schedule, time = datetime.time(00,05,00), days = (0, 1, 2, 3, 4, 5) )
 	if (config_map['debug']['disable_drive'] == 0):
 		dp.add_handler(CommandHandler('drive',drive))
