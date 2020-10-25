@@ -30,7 +30,7 @@ import dryscrape
 import time
 import pandas as pd
 import calendar
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 
 from module.shared import read_md, check_log, config_map
@@ -695,8 +695,8 @@ def updater_schedule(context):
                     r = row[:20] + rooms[i]
                     if not r in subjects:
                         subjects[r] = {}
-                        row.replace('[]','').replace('[','(').replace(']',')')
-                        subjects[r]["subj"] = row
+
+                        subjects[r]["subj"] = row.replace('[]','').replace('[','(').replace(']',')')
                         subjects[r]["times"] = []
                         subjects[r]['room'] = rooms[i]
                     if c[-1] == "1":
@@ -706,9 +706,9 @@ def updater_schedule(context):
     with open("data/json/subjs.json", "w+") as outfile:
         json.dump(days, outfile)
 
-def get_subjs_json():
+def get_json(file):
     try:
-        json_file = open('data/json/subjs.json','r')
+        json_file = open('data/json/{0}.json'.format(file),'r')
     except:
         logger.error("subjs.json still does not exist")
         return False
@@ -757,7 +757,7 @@ def create_calendar(days,year=None,month=None):
 def aulario(update: Update, context: CallbackContext, chat_id=None, message_id=None):
     if not chat_id:
         chat_id = update.message.chat_id
-    json_data = get_subjs_json()
+    json_data = get_json("subjs")
     keys =  [k for k in json_data.keys()]
     reply_markup = create_calendar(len(keys))
     text = "Seleziona la data della lezione che ti interessa."
@@ -767,7 +767,7 @@ def aulario(update: Update, context: CallbackContext, chat_id=None, message_id=N
         context.bot.sendMessage(text = text, reply_markup = reply_markup , chat_id = chat_id)
 
 def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, day):
-    json_data = get_subjs_json()
+    json_data = get_json("subjs")
     if json_data[day]:
         text = "Quale lezione devi seguire?"
         keyboard = []
@@ -940,7 +940,7 @@ def subjects_arrow_handler(update: Update, context: CallbackContext):
     data = query.data
     day = data.split('_')[1]
     page = int(data.split('_')[2])
-    json_data = get_subjs_json()
+    json_data = get_json("subjs")
     arrows = []
     keys = json_data[day]
     subjs = [k for k in keys]
@@ -967,7 +967,7 @@ def subjects_handler(update: Update, context: CallbackContext):
     data = query.data
     chat_id = query.message.chat_id
     message_id = query.message.message_id
-    json_data = get_subjs_json()
+    json_data = get_json("subjs")
     d = data.split("_")
     day = d[1]
     s = d[2]
@@ -983,19 +983,34 @@ def subjects_handler(update: Update, context: CallbackContext):
     sub = json_data[day][s]['subj']
     text = "{0} Ore: {1}: {2}".format(sub,h,room)
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Indietro ❌', callback_data = 'sm&aulario_subj&{0}'.format(day))]])
+    photo = create_map(sub,h,room)
     context.bot.deleteMessage(chat_id = chat_id,message_id = message_id)
-    context.bot.sendPhoto(photo = show_map(sub,h,room), caption = text, reply_markup = reply_markup, chat_id = chat_id)
+    if not photo:
+        context.bot.sendMessage(text = text, reply_markup = reply_markup, chat_id = chat_id)
+    else:
+        context.bot.sendPhoto(photo = photo, reply_markup = reply_markup, chat_id = chat_id)
 
-def show_map(sub,h,room):
-    b1_path = 'data/img/mappa.jpg'
-    b1_img = Image.open(b1_path)
-    draw = ImageDraw.Draw(b1_img)
-    draw.ellipse((20, 20, 80, 80), fill = 'red', outline ='red')
-    bio = BytesIO()
-    bio.name = 'image.jpeg'
-    b1_img.save(bio, 'JPEG')
-    bio.seek(0)
-    return bio
+def create_map(sub,h,room):
+    data = get_json("room_coordinates")
+    if room in data:
+        b1_path = 'data/img/mappa.jpg'
+        b1_img = Image.open(b1_path)
+        draw = ImageDraw.Draw(b1_img)
+        font = ImageFont.truetype("data/fonts/arial.ttf",30)
+        draw.text((30,860),"{0} Ore: {1}: ".format(sub,h),fill = 'black', font = font)
+        coord = data[room]
+        x = coord[0]
+        y = coord[1]
+        w = coord[2]
+        z = coord[3]
+        draw.rectangle((x, y, w, z), outline ='red', width = 5)
+        bio = BytesIO()
+        bio.name = 'image.jpeg'
+        b1_img.save(bio, 'JPEG')
+        bio.seek(0)
+        return bio
+    else:
+        return None
 
 def submenu_with_args_handler(update: Update, context: CallbackContext):
     query = update.callback_query
