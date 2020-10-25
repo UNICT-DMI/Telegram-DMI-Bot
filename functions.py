@@ -770,13 +770,7 @@ def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, 
     json_data = get_json("subjs")
     if json_data[day]:
         text = "Quale lezione devi seguire?"
-        keyboard = []
-        keys = json_data[day]
-        subjs = [k for k in keys]
-        for s in subjs[0:5]:
-            keyboard.append([InlineKeyboardButton(keys[s]["subj"],callback_data = 'sb_{0}_{1}'.format(day,s))])
-        if len(subjs) > 5:
-            keyboard.append([InlineKeyboardButton('▶️',callback_data = 'pg_{0}_0_r'.format(day))])
+        keyboard = get_subjs_keyboard(0,day,json_data)
         keyboard.append([InlineKeyboardButton('Indietro ❌', callback_data = 'sm_aulario')])
         reply_markup = InlineKeyboardMarkup(keyboard)
         context.bot.deleteMessage(chat_id = chat_id,  message_id = message_id)
@@ -787,6 +781,30 @@ def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, 
         context.bot.deleteMessage(chat_id = chat_id,  message_id = message_id)
         context.bot.sendMessage(text = text, reply_markup = reply_markup, chat_id = chat_id)
 
+def get_subjs_keyboard(page,day,data):
+    keyboard = []
+    keys = data[day]
+    subjs = [k for k in keys]
+    t_subjs = subjs
+    if day == '0':
+        t_subjs = []
+        for s in subjs:
+            t = keys[s]['times'][-1]
+            h = t.split(':')[0]
+            m = t.split(':')[1]
+            now = datetime.now()
+            last = now.replace(hour = int(h), minute = int(m), second = 0, microsecond = 0)
+            if now < last:
+                t_subjs.append(s)
+    for s in t_subjs[page*5:(page*5)+5]:
+        keyboard.append([InlineKeyboardButton(data[day][s]["subj"],callback_data = 'sb_{0}_{1}'.format(day,s))])
+    arrows = []
+    if page != 0:
+        arrows.append(InlineKeyboardButton('◀️',callback_data = 'pg_{0}_{1}_l'.format(day,page)))
+    if len(t_subjs) > page*5+5:
+        arrows.append(InlineKeyboardButton('▶️',callback_data = 'pg_{0}_{1}_r'.format(day,page)))
+    keyboard.append(arrows)
+    return keyboard
 # Callback Query Handlers
 
 def submenu_handler(update: Update, context: CallbackContext):
@@ -940,23 +958,15 @@ def subjects_arrow_handler(update: Update, context: CallbackContext):
     data = query.data
     day = data.split('_')[1]
     page = int(data.split('_')[2])
-    json_data = get_json("subjs")
     arrows = []
+    json_data = get_json("subjs")
     keys = json_data[day]
     subjs = [k for k in keys]
     if data[-1] == 'r':
         page+=1
-        arrows.append(InlineKeyboardButton('◀️',callback_data = 'pg_{0}_{1}_l'.format(day,page)))
-        if len(subjs) > page*5+5:
-            arrows.append(InlineKeyboardButton('▶️',callback_data = 'pg_{0}_{1}_r'.format(day,page)))
     elif data[-1] == 'l':
         page-=1
-        if page != 0:
-            arrows.append(InlineKeyboardButton('◀️',callback_data = 'pg_{0}_{1}_l'.format(day,page)))
-        arrows.append(InlineKeyboardButton('▶️',callback_data = 'pg_{0}_{1}_r'.format(day,page)))
-    keyboard = []
-    for s in subjs[page*5:(page*5)+5]:
-        keyboard.append([InlineKeyboardButton(json_data[day][s]["subj"],callback_data = 'sb_{0}_{1}'.format(day,s))])
+    keyboard = get_subjs_keyboard(page,day,json_data)
     keyboard.append(arrows)
     keyboard.append([InlineKeyboardButton('Indietro ❌', callback_data = 'sm_aulario')])
     reply_markup = InlineKeyboardMarkup(keyboard)
