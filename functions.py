@@ -747,9 +747,9 @@ def create_calendar(days,year=None,month=None):
             keyboard.append(row)
     row = []
     if today.month < month or today.year < year:
-        row.append(InlineKeyboardButton("◀️ {0}".format(calendar.month_name[((month-1)%12)+1]),callback_data="m_p_{0}_{1}_{2}".format(year,month,days)))
+        row.append(InlineKeyboardButton("◀️ {0}".format(calendar.month_name[((month-2)%12)+1]),callback_data="m_p_{0}_{1}_{2}".format(year,month,days)))
     if diff < days:
-        row.append(InlineKeyboardButton("{0} ▶️".format(calendar.month_name[((month+1)%12)+1]),callback_data="m_n_{0}_{1}_{2}".format(year,month,days)))
+        row.append(InlineKeyboardButton("{0} ▶️".format(calendar.month_name[((month)%12)+1]),callback_data="m_n_{0}_{1}_{2}".format(year,month,days)))
     keyboard.append(row)
     return(InlineKeyboardMarkup(keyboard))
 
@@ -987,7 +987,7 @@ def subjects_handler(update: Update, context: CallbackContext):
     if end[3:] == '30':
         end = "{0}:00".format(int(end[:2])+1)
     else:
-        end[3:] = '30'
+        end = end[:3]+'30'
     h = "{0} - {1}".format(start,end)
     room = json_data[day][s]['room']
     sub = json_data[day][s]['subj']
