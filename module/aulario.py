@@ -109,10 +109,14 @@ def aulario(update: Update, context: CallbackContext, chat_id=None, message_id=N
             context.bot.sendMessage(text = text, reply_markup = reply_markup , chat_id = chat_id)
     else:
         text = "⚠️ Aulario non ancora pronto, riprova fra qualche minuto ⚠️"
+<<<<<<< HEAD
         if message_id:
             context.bot.editMessageText(text = text, chat_id = chat_id, message_id = message_id)
         else:
             context.bot.sendMessage(text = text, chat_id = chat_id)
+=======
+        context.bot.editMessageText(text = text, chat_id = chat_id, message_id = message_id)
+>>>>>>> origin/master
         context.job_queue.run_once(updater_schedule,0)
 
 def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, day):
