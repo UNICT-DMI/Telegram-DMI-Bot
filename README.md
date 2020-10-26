@@ -35,6 +35,7 @@ If you want to test the bot by creating your personal instance, follow this step
 - pytz
 - pandas
 - dryscrape
+- pillow
 
 To install all the requirements you can run:
 ```bash

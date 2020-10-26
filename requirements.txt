@@ -7,3 +7,4 @@ pytz
 matplotlib
 pandas
 dryscrape
+pillow
