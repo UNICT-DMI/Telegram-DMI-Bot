@@ -243,10 +243,7 @@ def create_map(sub,h,room):
         font = ImageFont.truetype("data/fonts/arial.ttf",30)
         draw.text((30,860),"{0} Ore: {1} ".format(sub,h),fill = 'black', font = font)
         coord = data[room]
-        x = coord[0]
-        y = coord[1]
-        w = coord[2]
-        z = coord[3]
+        [x, y, w, z] = coord
         draw.rectangle((x, y, w, z), outline ='red', width = 5)
         bio = BytesIO()
         bio.name = 'image.jpeg'
