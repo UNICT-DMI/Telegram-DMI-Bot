@@ -194,13 +194,10 @@ def md_handler(update: Update, context: CallbackContext):
     query = update.callback_query
 
     data = query.data.replace("md_", "")
-    print(data)
     message_text = read_md(data)
 
     if(data == "help"):
-        print("replacing")
         message_text = message_text.replace("<cusicon>", CUSicon[random.randint(0, 5)])
-        print(message_text)
 
     check_log(update, context, data, 1)
 
