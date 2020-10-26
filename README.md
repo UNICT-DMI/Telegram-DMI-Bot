@@ -86,6 +86,48 @@ $ cd /usr/local/dmibot/
 $ python main.py
 ```
 
+### Testing
+
+#### To install with *pip3*
+
+- pytest
+- pytest-asyncio
+- telethon
+
+To install all the test requirements you can run:
+```bash
+pip3 install -r test-requirements.txt
+```
+
+Steps:
+- Sign in your Telegram account with your phone number **[here](https://my.telegram.org/auth)**. Then choose “API development tools”
+- If it is your first time doing so, it will ask you for an app name and a short name, you can change both of them later if you need to. Submit the form when you have completed it
+- You will then see the api_id and api_hash for your app. These are unique to your app, and not revocable.
+- Edit the folling values in the config/settings.yaml file:
+```yaml
+test: 
+  api_hash: hash of the telegram app used for testing
+  api_id: id of the telegram app used for testing
+  session: session of the telegram app used for testing (see steps below)
+  tag: tag of the bot used for testing
+  token: token for the bot used for testing
+  representatives_group: representatives' group id used for testing
+  dev_group_chatid: dev's group id used for testing
+```
+- Copy the file "tests/conftest.py" in the root folder and Run 
+```bash
+python3 conftest.py .
+```
+- Follow the procedure and copy the session value it provides in the settings file in "test:session". You can then delete the "conftest.py" you just used, you won't need it again
+- Edit the remaining values in the settings file as you like
+
+**Check [here](https://dev.to/blueset/how-to-write-integration-tests-for-a-telegram-bot-4c0e) if you want to have more information on the steps above**
+
+Start tests:
+```bash
+pytest
+```
+
 ### License
 This open-source software is published under the GNU General Public License (GNU GPL) version 3. Please refer to the "LICENSE" file of this project for the full text.
 

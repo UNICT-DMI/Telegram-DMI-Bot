@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
+
+# Telegram
 from telegram.ext import run_async, CallbackContext
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+
+#Modules
+from module.shared import check_log
+
+# System libraries
 from urllib.parse import quote
 import requests
 import sqlite3
@@ -13,7 +21,6 @@ import re
 import os
 import io
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 
 # Logger
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -38,6 +45,24 @@ formats = {
     ** dict.fromkeys(["out", "exe"], "⚙"),
     ** dict.fromkeys(["c", "cc", "cpp", "h", "py", "java", "js", "html", "php"], "💻")
 }
+
+def git(update: Update, context: CallbackContext):
+    check_log(update, context, "gitlab")
+
+    chat_id = update.message.chat_id
+    executed_command = update.message.text.split(' ')[0]
+
+    if chat_id < 0:
+        context.bot.sendMessage(chat_id=chat_id, text="❗️ La funzione %s non è ammessa nei gruppi" % executed_command)
+    else:
+        db = sqlite3.connect('data/DMI_DB.db')
+
+        if db.execute("SELECT Chat_id FROM 'Chat_id_List' WHERE Chat_id = %s" % chat_id).fetchone():
+            gitlab_handler(update, context)
+        else:
+            context.bot.sendMessage(chat_id=chat_id, text="🔒 Non hai i permessi per utilizzare la funzione %s\nUtilizzare il comando /request <nome> <cognome> <e-mail> (il nome e il cognome devono essere scritti uniti Es: Di Mauro -> DiMauro)" % executed_command)
+
+        db.close()
 
 def new_session(token):
     """

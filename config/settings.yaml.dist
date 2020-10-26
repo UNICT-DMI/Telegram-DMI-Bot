@@ -23,5 +23,14 @@ debug:
     disable_drive: 1
     disable_gitlab: 1
 
+test:
+  api_hash: ''
+  api_id: -1
+  session: ''
+  tag: ''
+  token: ''
+  representatives_group: ''
+  dev_group_chatid: ''
+
 dev_group_chatid: 0 
 representatives_group: 0
