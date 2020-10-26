@@ -86,7 +86,7 @@ def get_esami_text_InlineKeyboard(context: CallbackContext) -> (str, InlineKeybo
         .format(text_anno if text_anno else "tutti",\
                 text_sessione if text_sessione else "tutti",\
                 text_insegnamento if text_insegnamento else "tutti")
-    keyboard.append([InlineKeyboardButton(" ~ Personalizza la ricerca ~ ", callback_data="_div")])
+    keyboard.append([InlineKeyboardButton(" ~ Personalizza la ricerca ~ ", callback_data="NONE")])
     keyboard.append(
             [
                 InlineKeyboardButton(" Anno ", callback_data="sm_esami_button_anno"),
@@ -441,7 +441,7 @@ def help(update: Update, context: CallbackContext):
     keyboard = [[]]
     message_text = "@DMI_Bot risponde ai seguenti comandi:"
 
-    keyboard.append([InlineKeyboardButton(" ~ Dipartimento e CdL ~ ", callback_data="_div")])
+    keyboard.append([InlineKeyboardButton(" ~ Dipartimento e CdL ~ ", callback_data="NONE")])
 
     keyboard.append(
         [
@@ -464,7 +464,7 @@ def help(update: Update, context: CallbackContext):
         ]
     )
 
-    keyboard.append([InlineKeyboardButton(" ~ Segreteria orari e contatti ~ ", callback_data="_div")])
+    keyboard.append([InlineKeyboardButton(" ~ Segreteria orari e contatti ~ ", callback_data="NONE")])
 
     keyboard.append(
         [
@@ -474,7 +474,7 @@ def help(update: Update, context: CallbackContext):
         ]
     )
 
-    keyboard.append([InlineKeyboardButton(" ~ ERSU orari e contatti ~ ", callback_data="_div")])
+    keyboard.append([InlineKeyboardButton(" ~ ERSU orari e contatti ~ ", callback_data="NONE")])
 
     keyboard.append(
         [
@@ -484,7 +484,7 @@ def help(update: Update, context: CallbackContext):
         ]
     )
 
-    keyboard.append([InlineKeyboardButton(" ~ Bot e varie ~ ", callback_data="_div")])
+    keyboard.append([InlineKeyboardButton(" ~ Bot e varie ~ ", callback_data="NONE")])
 
     keyboard.append(
         [
@@ -721,11 +721,11 @@ def create_calendar(days,year=None,month=None):
     if month == None:
         month = today.month
     keyboard = []
-    keyboard.append([InlineKeyboardButton("🗓 {0} {1}".format(calendar.month_name[month],str(year)),callback_data = "NULL")])
+    keyboard.append([InlineKeyboardButton("🗓 {0} {1}".format(calendar.month_name[month],str(year)),callback_data = "NONE")])
     week = ['L','M','M','G','V','S','D']
     row = []
     for w in week:
-        row.append(InlineKeyboardButton(w,callback_data = "NULL"))
+        row.append(InlineKeyboardButton(w,callback_data = "NONE"))
     keyboard.append(row)
     my_cal = calendar.monthcalendar(year,month)
     diff = 0
@@ -734,7 +734,7 @@ def create_calendar(days,year=None,month=None):
         empty = True
         for day in week:
             if day < today.day and (day == 0 or month == today.month) :
-                row.append(InlineKeyboardButton(" ",callback_data = "NULL"))
+                row.append(InlineKeyboardButton(" ",callback_data = "NONE"))
             else:
                 curr = date(year,month,day)
                 diff = (curr - today).days
@@ -742,7 +742,7 @@ def create_calendar(days,year=None,month=None):
                     empty = False
                     row.append(InlineKeyboardButton(str(day),callback_data = "cal_{0}".format(diff)))
                 else:
-                    row.append(InlineKeyboardButton(" ",callback_data = "NULL"))
+                    row.append(InlineKeyboardButton(" ",callback_data = "NONE"))
         if not empty:
             keyboard.append(row)
     row = []
@@ -758,13 +758,17 @@ def aulario(update: Update, context: CallbackContext, chat_id=None, message_id=N
     if not chat_id:
         chat_id = update.message.chat_id
     json_data = get_json("subjs")
-    keys =  [k for k in json_data.keys()]
-    reply_markup = create_calendar(len(keys))
-    text = "Seleziona la data della lezione che ti interessa."
-    if message_id:
-        context.bot.editMessageText(text = text, reply_markup = reply_markup , chat_id = chat_id, message_id = message_id)
+    if json_data:
+        keys =  [k for k in json_data.keys()]
+        reply_markup = create_calendar(len(keys))
+        text = "Seleziona la data della lezione che ti interessa."
+        if message_id:
+            context.bot.editMessageText(text = text, reply_markup = reply_markup , chat_id = chat_id, message_id = message_id)
+        else:
+            context.bot.sendMessage(text = text, reply_markup = reply_markup , chat_id = chat_id)
     else:
-        context.bot.sendMessage(text = text, reply_markup = reply_markup , chat_id = chat_id)
+        text = "⚠️ Aulario non ancora pronto, stiamo lavorando per voi ⚠️"
+        context.bot.sendMessage(text = text, chat_id = chat_id)
 
 def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, day):
     json_data = get_json("subjs")
@@ -1007,7 +1011,7 @@ def create_map(sub,h,room):
         b1_img = Image.open(b1_path)
         draw = ImageDraw.Draw(b1_img)
         font = ImageFont.truetype("data/fonts/arial.ttf",30)
-        draw.text((30,860),"{0} Ore: {1}: ".format(sub,h),fill = 'black', font = font)
+        draw.text((30,860),"{0} Ore: {1} ".format(sub,h),fill = 'black', font = font)
         coord = data[room]
         x = coord[0]
         y = coord[1]
@@ -1036,3 +1040,6 @@ def submenu_with_args_handler(update: Update, context: CallbackContext):
       query.message.message_id,
       arg
     )
+
+def none_handler(update: Update, context: CallbackContext):
+    update.callback_query.answer()

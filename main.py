@@ -2,11 +2,14 @@
 from functions import TOKEN, Bot, Updater, MessageHandler, CommandHandler, CallbackQueryHandler, Filters, telegram, Update, CallbackContext,\
 	smonta_portoni, santino, prof_sticker, bladrim, lei_che_ne_pensa_signorina, informative_callback, lezioni, esami, prof, report, give_chat_id, send_log, send_chat_ids, send_errors, start, callback, help,\
 	regolamenti, regolamentodidattico, regolamentodidattico_button, regolamentodidattico_keyboard, triennale, magistrale, regdid, esami_handler, esami_input_insegnamento,\
-	generic_button_handler, gitlab_handler, submenu_handler, md_handler, calendar_handler, month_handler, subjects_handler, subjects_arrow_handler, aulario, submenu_with_args_handler,\
+	generic_button_handler, gitlab_handler, submenu_handler, md_handler, calendar_handler, month_handler, subjects_handler, subjects_arrow_handler, aulario, submenu_with_args_handler, none_handler,\
 	updater_lep, updater_schedule, git, drive, stats, stats_tot, request, add_db #importati solo componenti utilizzati nel main
 from module.shared import config_map
 
+from datetime import time
+
 bot = telegram.Bot(config_map["token"])
+
 
 def logging_message(update: Update, context: CallbackContext):
 	try:
@@ -86,6 +89,7 @@ def main():
 	dp.add_handler(CallbackQueryHandler(submenu_handler,           pattern='sm_.*'))
 	dp.add_handler(CallbackQueryHandler(md_handler,                pattern='md_.*'))
 	dp.add_handler(CallbackQueryHandler(submenu_with_args_handler, pattern='sm&.*'))
+	dp.add_handler(CallbackQueryHandler(none_handler,              pattern='NONE'))
 
   # aulario and calendar
 	dp.add_handler(CallbackQueryHandler(calendar_handler,       pattern='cal_.*'))
@@ -112,9 +116,8 @@ def main():
 	#JobQueue
 	j = updater.job_queue
 
-	# j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
-	# j.run_repeating(updater_schedule, interval=86400, first=0)
-	# j.run_daily(update_schedule, time = datetime.time(00,05,00), days = (0, 1, 2, 3, 4, 5) )
+	j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
+	j.run_daily(updater_schedule, time = time(hour = 1, minute = 5) )       # you need to put 1 hour late cause of the timezone
 	if (config_map['debug']['disable_drive'] == 0):
 		dp.add_handler(CommandHandler('drive',drive))
 
