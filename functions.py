@@ -683,7 +683,6 @@ def updater_schedule(context):
     soup = BeautifulSoup(response,'lxml')
 
     tables = pd.read_html(response)
-    print("Schedule loaded")
     days = {}
     for k,table in enumerate(tables):
         rooms = table.iloc[:,0]
