@@ -70,10 +70,10 @@ def create_calendar(days,year=None,month=None):
     keyboard.append(row)
     my_cal = calendar.monthcalendar(year,month)
     diff = 0
-    for week in my_cal:
+    for my_week in my_cal:
         row = []
         empty = True
-        for day in week:
+        for day in my_week:
             if day < today.day and (day == 0 or month == today.month) :
                 row.append(InlineKeyboardButton(" ",callback_data = "NONE"))
             else:
