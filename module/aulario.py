@@ -195,7 +195,7 @@ def subjects_arrow_handler(update: Update, context: CallbackContext):
     arrows = []
     json_data = get_json("subjs")
     keys = json_data[day]
-    subjs = [k for k in keys]
+    subjs = list(keys)
     if data[-1] == 'r':
         page+=1
     elif data[-1] == 'l':
