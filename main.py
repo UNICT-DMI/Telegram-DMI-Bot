@@ -139,7 +139,7 @@ def main():
 	#JobQueue
 	j = updater.job_queue
 
-	# j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
+	j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
 	j.run_daily(updater_schedule, time = time(hour = 1, minute = 5) )       # you need to put 1 hour late cause of the timezone
 	if (config_map['debug']['disable_drive'] == 0):
 		dp.add_handler(CommandHandler('drive',drive))
