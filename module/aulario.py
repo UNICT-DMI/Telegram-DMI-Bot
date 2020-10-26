@@ -250,5 +250,3 @@ def create_map(sub,h,room):
         b1_img.save(bio, 'JPEG')
         bio.seek(0)
         return bio
-    else:
-        return None
