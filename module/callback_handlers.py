@@ -233,18 +233,6 @@ def submenu_with_args_handler(update: Update, context: CallbackContext):
       arg
     )
 
-def submenu_with_jobqueue_handler(update: Update, context: CallbackContext, job_queue):
-    query = update.callback_query
-    data = query.data
-
-    func_name = data[3:len(data)]
-    globals()[func_name](
-      query,
-      context,
-      job_queue,
-      query.message.chat_id,
-      query.message.message_id
-    )
 
 def none_handler(update: Update, context: CallbackContext):
     update.callback_query.answer()
