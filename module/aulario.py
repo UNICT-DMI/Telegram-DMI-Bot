@@ -130,7 +130,7 @@ def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, 
 def get_subjs_keyboard(page,day,data):
     keyboard = []
     keys = data[day]
-    subjs = [k for k in keys]
+    subjs = list(keys)
     t_subjs = subjs
     if day == '0':
         t_subjs = []
