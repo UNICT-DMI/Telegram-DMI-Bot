@@ -136,3 +136,4 @@ This open-source software is published under the GNU General Public License (GNU
 
 ### Contributors
 You can find the list of contributors [here](CONTRIBUTORS.md)
+If you want to contribute, make sure to read the [guidelines](CONTRIBUTING.md)
