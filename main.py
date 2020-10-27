@@ -8,7 +8,7 @@ from telegram.ext import Updater, CallbackQueryHandler, CommandHandler, Filters,
 # Modules
 from module.easter_egg_func import smonta_portoni, santino, prof_sticker, bladrim, lei_che_ne_pensa_signorina
 from module.callback_handlers import informative_callback, generic_button_handler, submenu_handler, md_handler, callback, submenu_with_args_handler, none_handler
-from module.shared import config_map, TOKEN, give_chat_id
+from module.shared import config_map, TOKEN, give_chat_id, HELP, AULARIO, SEGNALAZIONE, CLOUD
 from module.regolamento_didattico import regolamenti, regolamentodidattico, regolamentodidattico_button, regolamentodidattico_keyboard, triennale, magistrale, regdid
 from module.esami import esami, esami_handler, esami_input_insegnamento
 from module.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
@@ -84,9 +84,9 @@ def main():
 	dp.add_handler(CommandHandler('prof', prof))
 
 	dp.add_handler(CommandHandler('aulario', aulario))
-	dp.add_handler(MessageHandler(Filters.regex('📆 Aulario'), aulario))
+	dp.add_handler(MessageHandler(Filters.regex(AULARIO), aulario))
 	dp.add_handler(CommandHandler('help', help))
-	dp.add_handler(MessageHandler(Filters.regex('❔ Help'), help))
+	dp.add_handler(MessageHandler(Filters.regex(HELP), help))
 	dp.add_handler(CommandHandler('contributors', informative_callback))
 
 	dp.add_handler(CommandHandler('rappresentanti', informative_callback))
@@ -100,8 +100,8 @@ def main():
 	dp.add_handler(CommandHandler('errors', send_errors))
 	dp.add_handler(CommandHandler('start', start))
 	dp.add_handler(CommandHandler('cloud', informative_callback))
-	dp.add_handler(MessageHandler(Filters.regex('☁️ Cloud'), informative_callback))
-	dp.add_handler(MessageHandler(Filters.regex('📫 Segnalazione Rappresentanti'), informative_callback))
+	dp.add_handler(MessageHandler(Filters.regex(CLOUD), informative_callback))
+	dp.add_handler(MessageHandler(Filters.regex(SEGNALAZIONE), informative_callback))
 
   # generic buttons
 	dp.add_handler(CallbackQueryHandler(generic_button_handler,        pattern='^(exit_cmd)'))

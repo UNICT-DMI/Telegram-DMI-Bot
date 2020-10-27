@@ -28,6 +28,12 @@ CUSicon = {0: "🏋",
            5: "🏊",
            }
 
+# keyboard menu
+HELP = "❔ Help"
+AULARIO = "📆 Aulario"
+CLOUD = "☁️ Cloud"
+SEGNALAZIONE = "📫 Segnalazione Rappresentanti"
+
 def send_message(update: Update, context: CallbackContext, messaggio):
     chat_id = update.message.chat_id if update.message else update.callback_query.message.chat_id #prova a prendere il chat_id da update.message, altrimenti prova da update.callback_query.message
     msg = ""

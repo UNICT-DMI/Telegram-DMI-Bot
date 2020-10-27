@@ -1,9 +1,9 @@
 from telegram import KeyboardButton, ReplyKeyboardMarkup
-
+from module.shared import HELP, AULARIO, SEGNALAZIONE, CLOUD
 
 def get_help_keyboard() -> ReplyKeyboardMarkup:
     kb = [
-            [KeyboardButton('❔ Help'), KeyboardButton('📫 Segnalazione Rappresentanti')],
-            [KeyboardButton('📆 Aulario'), KeyboardButton('☁️ Cloud')],  
+            [KeyboardButton(HELP), KeyboardButton(SEGNALAZIONE)],
+            [KeyboardButton(AULARIO), KeyboardButton(CLOUD)],  
          ]
     return ReplyKeyboardMarkup(kb, resize_keyboard=True)
