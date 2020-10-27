@@ -6,7 +6,7 @@ Welcome to this repo from all the members! The repository is created by UNICT-DM
 To contribute, you don't need to be an international champion of competitive programming, you can and are encouraged to do so even if you are a completely beginner.
 In order to submit the best contribution, make sure to read the whole guideline.
 
-If you have any doubt about contribution, feel free to contact [@Helias](https://t.me/Helias), [@aegroto](https://t.me/aegroto), [@Pierpaolo791].
+If you have any doubt about contribution, feel free to contact [@Helias](https://t.me/Helias), [@aegroto](https://t.me/aegroto), [@Pierpaolo791](https://t.me/Pierpaolo791).
 
 ## Setup
 
