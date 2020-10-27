@@ -3,7 +3,7 @@ from telegram.ext import CallbackContext
 
 import random
 
-from module.shared import check_log, CUSicon, read_md
+from module.shared import check_log, CUSicon, read_md, AULARIO, CLOUD
 
 def help(update: Update, context: CallbackContext):
     check_log(update, context, "help")
@@ -16,7 +16,7 @@ def help(update: Update, context: CallbackContext):
     keyboard.append(
         [
             InlineKeyboardButton("📖 Esami (link)",        callback_data="md_esami_link"),
-            InlineKeyboardButton("🗓 Aulario",              callback_data="sm_aulario"),
+            InlineKeyboardButton(AULARIO,              callback_data="sm_aulario"),
             InlineKeyboardButton("Orari lezioni (link)",    callback_data="md_lezioni_link")
         ]
     )
@@ -30,7 +30,7 @@ def help(update: Update, context: CallbackContext):
             InlineKeyboardButton("👥 Rappresentanti",                       callback_data="sm_rapp_menu"),
             InlineKeyboardButton("📚 Biblioteca",                           callback_data="md_biblioteca"),
             InlineKeyboardButton(CUSicon[random.randint(0, 5)] + " CUS",    callback_data="md_cus"),
-            InlineKeyboardButton("☁️ Cloud",                                 callback_data="md_cloud")
+            InlineKeyboardButton(CLOUD,                                 callback_data="md_cloud")
         ]
     )
 
