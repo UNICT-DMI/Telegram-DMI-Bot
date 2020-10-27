@@ -22,10 +22,11 @@ After you've finished implementing your contribution in your local repo, you wil
 
 1. **Add** your changes to your work tree (via `git add <name_of_file>`)
 2. **Commit** the files you have just added (via `git commit -m "<small but informative message>"`)
-3. **Push** your changes on your local repo (via `git push`)
-4. **Switch to master** in order to pull the updates without overriding your work (via `git checkout master`)
-5. **Merge** updates from _upstream_ (the original repo) (via `git merge upstream/master`)
-6. **Merge** your branch, which contains the updates, with master (via `git merge <your_branch> master`)
+3. **Switch to master** in order to push the updates without having conflicts (via `git checkout master`)
+4. **Fetch** updates from _upstream_ (the original repo) (via `git fetch upstream`)
+4. **Merge** updates from _upstream_ (via `git merge upstream/master`)
+5. **Merge** your branch, which contains the updates, with master (via `git merge <your_branch>`)
+6. **Push** your changes on your local repo (via `git push`)
 7. **Finally make a PR** using the Pull Request button in your repository page.
 
 ## PR best practices
