@@ -9,7 +9,7 @@ from telegram.ext import Updater, CallbackQueryHandler, CommandHandler, Filters,
 from module.easter_egg_func import smonta_portoni, santino, prof_sticker, bladrim, lei_che_ne_pensa_signorina
 from module.callback_handlers import informative_callback, generic_button_handler, submenu_handler, md_handler, callback, submenu_with_args_handler, none_handler
 from module.shared import config_map, TOKEN, give_chat_id, HELP, AULARIO, SEGNALAZIONE, CLOUD
-from module.regolamento_didattico import regolamenti, regolamentodidattico, regolamentodidattico_button, regolamentodidattico_keyboard, triennale, magistrale, regdid
+from module.regolamento_didattico import regolamenti, regolamentodidattico, regolamentodidattico_button, triennale, magistrale, regdid
 from module.esami import esami, esami_handler, esami_input_insegnamento
 from module.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
 from module.professori import prof
@@ -128,7 +128,7 @@ def main():
 	dp.add_handler(CallbackQueryHandler(regolamenti,                 pattern='Regolamento*'))
 	dp.add_handler(CallbackQueryHandler(regolamentodidattico_button, pattern='regolamentodidattico_button'))
 
-	#esami
+	# esami
 	dp.add_handler(MessageHandler(Filters.regex(r"^(?!=<[/])[Ii]ns:\s+"), esami_input_insegnamento)) #regex accetta [/ins: nome] oppure [/Ins: nome], per agevolare chi usa il cellulare
 	dp.add_handler(CallbackQueryHandler(esami_handler, pattern='esami_button_.*'))
 
@@ -136,7 +136,7 @@ def main():
 	dp.add_handler(CallbackQueryHandler(lezioni_handler, pattern='lezioni_button_*'))
 	dp.add_handler(MessageHandler(Filters.regex(r"^(?!=<[/])[Nn]ome:\s+"), lezioni_input_insegnamento))
 
-	#JobQueue
+	# job queue
 	j = updater.job_queue
 
 	j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
