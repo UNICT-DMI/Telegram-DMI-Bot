@@ -105,9 +105,8 @@ def get_chat_id(update: Update):
 
     chat_id = None
 
-    if hasattr(update, "callback_query"):
-        if hasattr(update.callback_query, "message"):
-            chat_id = update.callback_query.message.chat.id
+    if hasattr(update, "callback_query") and hasattr(update.callback_query, "message"):
+        chat_id = update.callback_query.message.chat.id
 
     if not chat_id:
         chat_id = update.message.chat_id

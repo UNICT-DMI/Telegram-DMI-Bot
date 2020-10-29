@@ -25,6 +25,7 @@ import json
 import random
 
 
+# TODO: refactor this function (properly)
 def callback(update: Update, context: CallbackContext):
     conn = sqlite3.connect('data/DMI_DB.db')
     keyboard2 = [[]]
@@ -196,7 +197,7 @@ def md_handler(update: Update, context: CallbackContext):
     data = query.data.replace("md_", "")
     message_text = read_md(data)
 
-    if(data == "help"):
+    if data == "help":
         message_text = message_text.replace("<cusicon>", CUSicon[random.randint(0, 5)])
 
     check_log(update, context, data, 1)
@@ -221,10 +222,9 @@ def informative_callback(update: Update, context: CallbackContext):
 def submenu_with_args_handler(update: Update, context: CallbackContext):
     query = update.callback_query
     data = query.data
-    chat_id = query.message.chat_id
-    message_id = query.message.message_id
     func_name = data.split('&')[1]
     arg = data.split('&')[2]
+
     globals()[func_name](
       query,
       context,
