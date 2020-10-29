@@ -6,13 +6,14 @@ from module.shared import read_md
 
 from datetime import date, datetime
 import json
-from bs4 import BeautifulSoup
 import dryscrape
 import time
 import pandas as pd
 import calendar
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
+
+BACK_BUTTON_TEXT =  "Indietro ❌"
 
 def updater_schedule(context):
     session = dryscrape.Session()
@@ -21,7 +22,6 @@ def updater_schedule(context):
     time.sleep(0.5)
 
     response = session.body()
-    soup = BeautifulSoup(response,'lxml')
 
     tables = pd.read_html(response)
     days = {}
@@ -43,6 +43,7 @@ def updater_schedule(context):
                         c = c[:3] + "30"
                     subjects[r]['times'].append(c)
         days[k] = subjects
+
     with open("data/json/subjs.json", "w+") as outfile:
         json.dump(days, outfile)
 
@@ -61,6 +62,7 @@ def create_calendar(days,year=None,month=None):
         year = today.year
     if month == None:
         month = today.month
+
     keyboard = []
     keyboard.append([InlineKeyboardButton("🗓 {0} {1}".format(calendar.month_name[month],str(year)),callback_data = "NONE")])
     week = ['L','M','M','G','V','S','D']
@@ -98,6 +100,7 @@ def create_calendar(days,year=None,month=None):
 def aulario(update: Update, context: CallbackContext, chat_id=None, message_id=None):
     if not chat_id:
         chat_id = update.message.chat_id
+
     json_data = get_json("subjs")
     if json_data:
         keys =  [k for k in json_data.keys()]
@@ -114,24 +117,27 @@ def aulario(update: Update, context: CallbackContext, chat_id=None, message_id=N
         else:
             context.bot.sendMessage(text = text, chat_id = chat_id)
         context.job_queue.run_once(updater_schedule,0)
-
+ 
 def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, day):
     json_data = get_json("subjs")
     if json_data[day]:
         text = "Quale lezione devi seguire?"
+
         keyboard = get_subjs_keyboard(0,day,json_data)
-        keyboard.append([InlineKeyboardButton('Indietro ❌', callback_data = 'sm_aulario')])
+        keyboard.append([InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data = 'sm_aulario')])
         reply_markup = InlineKeyboardMarkup(keyboard)
+
         context.bot.deleteMessage(chat_id = chat_id,  message_id = message_id)
         context.bot.sendMessage(text = text, reply_markup = reply_markup, chat_id = chat_id)
     elif json_data[day] == {}:
         text = "Nessuna lezione programmata per questo giorno"
-        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Indietro ❌', callback_data = 'sm_aulario')]])
+
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data = 'sm_aulario')]])
+
         context.bot.deleteMessage(chat_id = chat_id,  message_id = message_id)
         context.bot.sendMessage(text = text, reply_markup = reply_markup, chat_id = chat_id)
 
 def get_subjs_keyboard(page,day,data):
-    keyboard = []
     keys = data[day]
     subjs = list(keys)
     t_subjs = subjs
@@ -145,8 +151,11 @@ def get_subjs_keyboard(page,day,data):
             last = now.replace(hour = int(h), minute = int(m), second = 0, microsecond = 0)
             if now < last:
                 t_subjs.append(s)
+
+    keyboard = []
     for s in t_subjs[page*5:(page*5)+5]:
         keyboard.append([InlineKeyboardButton(data[day][s]["subj"],callback_data = 'sb_{0}_{1}'.format(day,s))])
+
     arrows = []
     if page != 0:
         arrows.append(InlineKeyboardButton('◀️',callback_data = 'pg_{0}_{1}_l'.format(day,page)))
@@ -160,8 +169,9 @@ def calendar_handler(update: Update, context: CallbackContext):
     data = query.data
     chat_id = query.message.chat_id
     message_id = query.message.message_id
+
     day = data.split("_")[1]
-    aulario_subj(update,context,chat_id,message_id,day)
+    aulario_subj(update, context, chat_id, message_id, day)
 
 
 def month_handler(update: Update, context: CallbackContext):
@@ -169,11 +179,13 @@ def month_handler(update: Update, context: CallbackContext):
     data = query.data
     chat_id = query.message.chat_id
     message_id = query.message.message_id
+
     d = data.split("_")
     direction = d[1]
     year = int(d[2])
     month = int(d[3])
     days = int(d[4])
+
     if direction == 'n':
         if month < 12:
             month += 1
@@ -195,18 +207,17 @@ def subjects_arrow_handler(update: Update, context: CallbackContext):
     data = query.data
     day = data.split('_')[1]
     page = int(data.split('_')[2])
-    arrows = []
     json_data = get_json("subjs")
-    keys = json_data[day]
-    subjs = list(keys)
+
     if data[-1] == 'r':
         page+=1
     elif data[-1] == 'l':
         page-=1
-    keyboard = get_subjs_keyboard(page,day,json_data)
-    keyboard.append(arrows)
-    keyboard.append([InlineKeyboardButton('Indietro ❌', callback_data = 'sm_aulario')])
+
+    keyboard = get_subjs_keyboard(page, day, json_data)
+    keyboard.append([InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data = 'sm_aulario')])
     reply_markup = InlineKeyboardMarkup(keyboard)
+
     context.bot.editMessageReplyMarkup(chat_id = query.message.chat_id,message_id=query.message.message_id,reply_markup = reply_markup)
 
 def subjects_handler(update: Update, context: CallbackContext):
@@ -214,10 +225,12 @@ def subjects_handler(update: Update, context: CallbackContext):
     data = query.data
     chat_id = query.message.chat_id
     message_id = query.message.message_id
+
     json_data = get_json("subjs")
     d = data.split("_")
     day = d[1]
     s = d[2]
+
     hours = json_data[day][s]['times']
     start = hours[0]
     end = hours[-1]
@@ -225,12 +238,14 @@ def subjects_handler(update: Update, context: CallbackContext):
         end = "{0}:00".format(int(end[:2])+1)
     else:
         end = end[:3]+'30'
+
     h = "{0} - {1}".format(start,end)
     room = json_data[day][s]['room']
     sub = json_data[day][s]['subj']
-    text = "{0} Ore: {1}: {2}".format(sub,h,room)
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Indietro ❌', callback_data = 'sm&aulario_subj&{0}'.format(day))]])
+    text = "{0} Ore: {1}: {2}".format(sub, h, room)
     photo = create_map(sub,h,room)
+
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data = 'sm&aulario_subj&{0}'.format(day))]])
     context.bot.deleteMessage(chat_id = chat_id,message_id = message_id)
     if not photo:
         context.bot.sendMessage(text = text, reply_markup = reply_markup, chat_id = chat_id)
