@@ -27,7 +27,7 @@ If you want to test the bot by creating your personal instance, follow this step
 
 #### To install with *pip3*
 
-- python-telegram-bot
+- python-telegram-bot==12.8
 - pydrive
 - requests
 - beautifulsoup4
