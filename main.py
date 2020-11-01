@@ -6,7 +6,7 @@ from telegram import Bot, Update
 from telegram.ext import Updater, CallbackQueryHandler, CommandHandler, Filters, CallbackContext, MessageHandler
 
 # Modules
-from module.easter_egg_func import smonta_portoni, santino, prof_sticker, bladrim, lei_che_ne_pensa_signorina
+from module.easter_egg_func import smonta_portoni, santino, prof_sticker, bladrim, lei_che_ne_pensa_signorina, tomarchio_schedule, tomarchio_balance, add_soldino
 from module.callback_handlers import informative_callback, generic_button_handler, submenu_handler, md_handler, callback, submenu_with_args_handler, none_handler
 from module.shared import config_map, TOKEN, give_chat_id, HELP, AULARIO, SEGNALAZIONE, CLOUD
 from module.regolamento_didattico import regolamenti, regolamentodidattico, regolamentodidattico_button, triennale, magistrale, regdid
@@ -67,6 +67,8 @@ def main():
 	dp.add_handler(CommandHandler('prof_sticker' ,prof_sticker))
 	dp.add_handler(MessageHandler(Filters.regex('/lezioni cazzeggio'), bladrim))
 	dp.add_handler(CommandHandler('leiCheNePensaSignorina',lei_che_ne_pensa_signorina))
+	dp.add_handler(CommandHandler('tomarchio', tomarchio_balance))
+	dp.add_handler(MessageHandler(Filters.reply & Filters.regex(r"^[Ss][Ii]$"), add_soldino))
 
 	#Informative command
 	dp.add_handler(CommandHandler('sdidattica', informative_callback))
@@ -141,6 +143,8 @@ def main():
 
 	j.run_repeating(updater_lep, interval=86400, first=0) 				# job_updater_lep (24h)
 	j.run_daily(updater_schedule, time = time(hour = 1, minute = 5) )       # you need to put 1 hour late cause of the timezone
+	j.run_daily(tomarchio_schedule, time = time(hour = 1, minute = 5) )       # you need to put 1 hour late cause of the timezone
+
 	if (config_map['debug']['disable_drive'] == 0):
 		dp.add_handler(CommandHandler('drive',drive))
 
