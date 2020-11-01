@@ -17,7 +17,11 @@ def help(update: Update, context: CallbackContext) -> None:
     keyboard.append([
         InlineKeyboardButton("📖 Esami (link)",         callback_data="md_esami_link"),
         InlineKeyboardButton(AULARIO,                   callback_data="sm_aulario"),
-        InlineKeyboardButton("Orari lezioni (link)",    callback_data="md_lezioni_link")
+    ])
+
+    keyboard.append([
+        InlineKeyboardButton("📘 Orari lezioni (link)",    callback_data="md_lezioni_link"),
+        InlineKeyboardButton("👨‍🏫 Info Professori",    callback_data="md_professori")
     ])
 
     keyboard.append([
@@ -27,6 +31,9 @@ def help(update: Update, context: CallbackContext) -> None:
     keyboard.append([
         InlineKeyboardButton("👥 Rappresentanti",                       callback_data="sm_rapp_menu"),
         InlineKeyboardButton("📚 Biblioteca",                           callback_data="md_biblioteca"),
+    ])
+
+    keyboard.append([
         InlineKeyboardButton(CUSicon[random.randint(0, 5)] + " CUS",    callback_data="md_cus"),
         InlineKeyboardButton(CLOUD,                                     callback_data="md_cloud")
     ])
