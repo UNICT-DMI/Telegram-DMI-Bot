@@ -61,8 +61,7 @@ def tomarchio_schedule(context: CallbackContext) -> None:
     if not path.exists("data/soldini"):
         with open("data/soldini", 'w+') as soldini:
             soldini.write("0")
-    #context.job_queue.run_once(tomarchio_request, when=time(hour=randint(10, 21), minute=randint(0, 59)))
-    context.job_queue.run_once(tomarchio_request, when=0)
+    context.job_queue.run_once(tomarchio_request, when=time(hour=randint(10, 21), minute=randint(0, 59)))
 
 
 def tomarchio_request(context: CallbackContext) -> None:
