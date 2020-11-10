@@ -1,7 +1,10 @@
-python-telegram-bot
+python-telegram-bot==12.8
 pydrive
 requests
-xlrd
 beautifulsoup4
 python-gitlab
 pytz
+matplotlib
+pandas
+dryscrape
+pillow

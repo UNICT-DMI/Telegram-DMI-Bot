@@ -48,9 +48,9 @@ def scrape_lessons(year_exams):
                     td_anno = tr.find('td')
                     if td_anno is not None and (td_anno.text[0] == '2' or td_anno.text[0] == '3'):
                         anno = td_anno.text[0]
-
-                    if len(td_all) == 3:
-                        orari = td_all[2]
+                    
+                    if len(td_all) == 4:
+                        orari = td_all[3]
                         for orario in orari:
                             if str(orario) != '<br/>':
                                 giorno = get_giorno(orario[0:3])

@@ -1,5 +1,5 @@
 *Rappresentanti Corso di Laurea Triennale*
-Catania Valentina - @valentina_catania
+Catania Valentina - @valentina\_catania
 Polignano Luisa - @LuisaPolignano
 
 

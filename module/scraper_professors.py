@@ -62,6 +62,7 @@ def scrape_prof():
                 role = "Lettore madrelingua"
             else:
                 role = link.parent.next_sibling.text.split(" ")[1] if len(link.parent.next_sibling.text.split(" ")) > 1 else link.parent.next_sibling.text
+
             if link.parent.parent.next_sibling.next_sibling != None and link.parent.parent.next_sibling.next_sibling.find("td").find("b") != None:
                 contract = False
                 mother_tongue = True

@@ -7,6 +7,4 @@ Pecoraio Pierpaolo - @Pierpaolo791
 Pistorio Anna - @annapist25
 
 *Rappresentanti Corso di Laurea Magistrale*
-Borzì Stefano - @Helias
 Piazza Alessio - @squalex95
-Steccanella Luca - @Steccas
