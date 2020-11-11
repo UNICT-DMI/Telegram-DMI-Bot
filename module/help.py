@@ -57,11 +57,17 @@ def help(update: Update, context: CallbackContext) -> None:
     keyboard.append([InlineKeyboardButton(" ~ Bot e varie ~ ", callback_data="NONE")])
 
     keyboard.append([
-        InlineKeyboardButton("📈 Opis Manager",      callback_data="md_opismanager"),
         InlineKeyboardButton("📂 Drive",             callback_data="md_drive"),
-        InlineKeyboardButton("📂 GitLab",            callback_data="md_gitlab"),
+        InlineKeyboardButton("📂 GitLab",            callback_data="md_gitlab")
+    ])
+
+    keyboard.append([InlineKeyboardButton(" ~ Progetti e Riconoscimenti ~ ", callback_data="NONE")])
+    
+    keyboard.append([
+        InlineKeyboardButton("📈 Opis Manager",      callback_data="md_opismanager"),
         InlineKeyboardButton("Contributors",         callback_data="md_contributors")
     ])
+
 
     keyboard.append([
         InlineKeyboardButton("Tutti i comandi", callback_data="md_help"),
