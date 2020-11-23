@@ -76,6 +76,7 @@ def main():
 	dp.add_handler(CommandHandler('ufficioersu', informative_callback))
 	dp.add_handler(CommandHandler('urp', informative_callback))
 	dp.add_handler(CommandHandler('biblioteca', informative_callback))
+	dp.add_handler(CommandHandler('gruppi', informative_callback))
 	dp.add_handler(CommandHandler('cus', informative_callback))
 
 	dp.add_handler(CommandHandler('lezioni', lezioni))

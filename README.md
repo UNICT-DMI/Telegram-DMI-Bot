@@ -43,6 +43,58 @@ sudo apt install libqtwebkit-dev
 pip3 install -r requirements.txt
 ```
 
+### Known problems on Ubuntu 20.04:
+
+* #### **Installing libqtwebkit**
+
+Open terminal in your repo folder and run command: 
+
+```bash 
+sudo add-apt-repository ppa:rock-core/qt4
+```
+
+After adding the PPA, it should automatically refresh the system package cache. If not, you may run command to manually update the package cache:
+
+```bash
+sudo apt update
+```
+  
+  
+  
+* #### **Installing dryscrape**
+
+Download webkit-server from github:
+
+```bash
+git clone https://github.com/niklasb/webkit-server.git webkit-server
+```
+
+Change in webkit-server/setup.py :
+
+```python
+shutil.copy('src/webkit_server', self.build_purelib)
+shutil.copy('src/webkit_server', self.build_platlib)
+```
+
+to
+
+```python
+shutil.copy('src/webkit_server.pro', self.build_purelib)
+shutil.copy('src/webkit_server.pro', self.build_platlib)
+```
+
+then run:
+
+```bash
+cd webkit-server
+python setup.py install
+```
+
+- [x] There you go!
+
+
+
+
 ### Special functions
 
 Notes: only some users are allowed to use these commands indeed there is an if condition that check the chatid of the user that can use them

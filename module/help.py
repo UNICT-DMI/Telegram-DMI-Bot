@@ -31,6 +31,7 @@ def help(update: Update, context: CallbackContext) -> None:
     keyboard.append([
         InlineKeyboardButton("👥 Rappresentanti",                       callback_data="sm_rapp_menu"),
         InlineKeyboardButton("📚 Biblioteca",                           callback_data="md_biblioteca"),
+        InlineKeyboardButton("📊 Gruppi",				   callback_data="md_gruppi"),
     ])
 
     keyboard.append([
