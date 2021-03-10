@@ -6,5 +6,4 @@ python-gitlab
 pytz
 matplotlib
 pandas
-dryscrape
 pillow
