@@ -27,6 +27,6 @@ Informatica (L)
 📞 095 738 6126
 
 Informatica (L-LM)
-👤 Giovanna Suriano
-✉️ giovanna.suriano@unict.it
-📞 095 738 6109
+👤 Maria Malogioglio
+✉️ maria.malogioglio@unict.it
+📞 095 738 6108
