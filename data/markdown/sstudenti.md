@@ -22,7 +22,7 @@ Matematica (L-LM)
 📞 095 738 6121
 
 Informatica (L)
-👤 Giuseppe Famoso
+👤 Giuseppa Famoso
 ✉️ gfamoso@unict.it
 📞 095 738 6126
 
