@@ -6,7 +6,7 @@ from module.shared import read_md
 
 from datetime import date, datetime
 import json
-import dryscrape
+import requests
 import time
 import pandas as pd
 import calendar
@@ -15,13 +15,14 @@ from io import BytesIO
 
 BACK_BUTTON_TEXT =  "Indietro ❌"
 
-def updater_schedule(context):
-    session = dryscrape.Session()
-    aulario_url = read_md("aulario")
-    session.visit(aulario_url)
-    time.sleep(0.5)
+import logging
 
-    response = session.body()
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def updater_schedule(context):
+    response = requests.get(read_md("aulario")).text
+    time.sleep(0.5)
 
     tables = pd.read_html(response)
     days = {}
@@ -46,6 +47,8 @@ def updater_schedule(context):
 
     with open("data/json/subjs.json", "w+") as outfile:
         json.dump(days, outfile)
+
+    logger.info("Aulario loaded.")
 
 
 def get_json(file):
