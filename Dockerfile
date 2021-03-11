@@ -1,23 +1,20 @@
-FROM  ubuntu:18.04
+FROM python:3.8.5-slim-buster
 
 ARG TOKEN
-ENV DMI_BOT_REPO    https://github.com/UNICT-DMI/Telegram-DMI-Bot.git
-ENV DMI_BOT_DIR    /usr/local
+
+WORKDIR /dmibot
 
 RUN apt-get update && \
-  apt-get install -y \
-	git \
-	git-lfs \
-	python3 \
-	python3-pip\
-	language-pack-it
+	apt-get install -y
 
-RUN mkdir -p $DMI_BOT_DIR && \
-  cd $DMI_BOT_DIR && \
-  git clone -b master $DMI_BOT_REPO dmibot
+COPY requirements.txt .
+#Install requirements
+RUN pip3 install -r requirements.txt
 
-RUN pip3 install -r $DMI_BOT_DIR/dmibot/requirements.txt
+COPY . .
+#Final setup settings and databases
+RUN mv data/DMI_DB.db.dist data/DMI_DB.db &&\
+	mv config/settings.yaml.dist config/settings.yaml &&\
+	python3 setup.py ${TOKEN}
 
-RUN cp $DMI_BOT_DIR/dmibot/data/DMI_DB.db.dist $DMI_BOT_DIR/dmibot/data/DMI_DB.db
-RUN cp $DMI_BOT_DIR/dmibot/config/settings.yaml.dist $DMI_BOT_DIR/dmibot/config/settings.yaml
-RUN echo $TOKEN > $DMI_BOT_DIR/dmibot/config/token.conf
+CMD ["python3", "main.py"]
