@@ -1,11 +1,11 @@
 """Test configuration"""
-from threading import Thread
 import asyncio
 import warnings
 import pytest
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
-from main import main
+from telegram.ext import Updater
+from main import add_handlers, add_jobs
 from module.shared import config_map
 
 warnings.filterwarnings("ignore",
@@ -22,15 +22,6 @@ def get_session():
     """
     with TelegramClient(StringSession(), api_id, api_hash) as connection:
         print("Your session string is:", connection.session.save())
-
-
-def start_test_bot():
-    """Starts the bot with the test stettings
-    """
-    config_map['token'] = config_map['test']['token']
-    config_map['dev_group_chatid'] = config_map['test']['dev_group_chatid']
-    config_map['representatives_group'] = config_map['test']['representatives_group']
-    main()
 
 
 @pytest.fixture(scope="session")
@@ -54,10 +45,16 @@ async def bot():
         None: wait for the testing session to end
     """
     print("[info] started telegram bot")
-    t = Thread(target=start_test_bot, daemon=True)
-    t.start()
+    config_map['token'] = config_map['test']['token']
+    updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
+    add_handlers(updater.dispatcher)
+    add_jobs(updater.job_queue)
+    updater.start_polling()
     await asyncio.sleep(2)
+
     yield None
+
+    updater.stop()
     print("[info] closed telegram bot")
 
 
