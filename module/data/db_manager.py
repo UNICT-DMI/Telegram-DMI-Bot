@@ -160,23 +160,31 @@ class DbManager():
         return query_result[0]['number']
 
     @staticmethod
-    def insert_into(table_name: str, values: tuple, columns: tuple = ""):
+    def insert_into(table_name: str, values: tuple, columns: tuple = "", multiple_rows: bool = False):
         """Inserts the specified values in the database
 
         Args:
             table_name (:class:`str`): name of the table used in the INSERT INTO
-            values (:class:`tuple`): values to be inserted
+            values (:class:`tuple`): values to be inserted. If multiple_rows is true, tuple of tuples of values to be inserted
             columns (:class:`tuple`, optional): columns that will be inserted, as a tuple of strings. Defaults to None.
+            multiple_rows (:class:`bool`): whether multiple rows will be inserted at the same time
         """
         conn, cur = DbManager.get_db()
 
-        placeholders = ", ".join(["?" for _ in values])
+        if multiple_rows:
+            placeholders = ", ".join(["?" for _ in values[0]])
+        else:
+            placeholders = ", ".join(["?" for _ in values])
+
 
         if columns:
             columns = "(" + ", ".join(columns) + ")"
 
         try:
-            cur.execute(f"INSERT INTO {table_name} {columns} VALUES ({placeholders})", values)
+            if multiple_rows:
+                cur.executemany(f"INSERT INTO {table_name} {columns} VALUES ({placeholders})", values)
+            else:
+                cur.execute(f"INSERT INTO {table_name} {columns} VALUES ({placeholders})", values)
         except sqlite3.Error as e:
             print("[error] select_start_from_where: " + str(e))
 
