@@ -115,3 +115,54 @@ async def test_rappresentanti_md_buttons(client: TelegramClient):
             resp: Message = await conv.get_edit()
 
             assert resp.text
+
+
+@pytest.mark.asyncio
+async def test_esami_cmd(client: TelegramClient):
+    """Tests all the md buttons in the rappresentanti sub-menu
+
+    Args:
+        client (TelegramClient): client used to simulate the user
+    """
+    conv: Conversation
+    async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
+
+        await conv.send_message("/esami")  # send a command
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        await resp.click(data="sm_esami_button_anno")  # click the "Anno" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await resp.click(data="esami_button_anno_1° anno")  # click the "1° anno" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await resp.click(data="sm_esami_button_sessione")  # click the "Sessione" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await resp.click(data="esami_button_sessione_prima")  # click the "Prima" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await resp.click(data="sm_esami_button_insegnamento")  # click the "Insegnamento" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await conv.send_message("ins: programmazione")  # send a message
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        await resp.click(data="esami_button_search")  # click the "Cerca" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
