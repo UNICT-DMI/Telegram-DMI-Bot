@@ -3,7 +3,7 @@ from telegram.ext import CallbackContext
 
 import random
 
-from module.shared import check_log, CUSicon, read_md, AULARIO, CLOUD
+from module.shared import check_log, CUSicon, AULARIO, CLOUD
 
 def help(update: Update, context: CallbackContext) -> None:
     check_log(update, context, "help")

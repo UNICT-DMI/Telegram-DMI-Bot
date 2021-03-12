@@ -15,10 +15,6 @@ logger = logging.getLogger(__name__)
 with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
-
-# Token of your telegram bot that you created from @BotFather, write it on settings.yml
-TOKEN = config_map["token"]
-
 # Icons
 CUSicon = {0: "🏋",
            1: "⚽️",

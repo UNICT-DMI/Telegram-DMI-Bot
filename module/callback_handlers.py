@@ -9,7 +9,7 @@ from pydrive.drive import GoogleDrive
 from pydrive.auth import GoogleAuth
 
 # Modules
-from module.shared import read_md, check_log, config_map, TOKEN, CUSicon
+from module.shared import read_md, check_log, config_map, CUSicon
 
 # Needed to correctly run functions using globals()
 from module.esami import esami_button_anno, esami_button_insegnamento, esami_button_sessione
@@ -70,7 +70,7 @@ def callback(update: Update, context: CallbackContext):
             gauth2.CommandLineAuth()
             # gauth2.LocalWebserverAuth()
             drive2 = GoogleDrive(gauth2)
-            bot2 = telegram.Bot(TOKEN)
+            bot2 = telegram.Bot(config_map['token'])
 
             file1 = drive2.CreateFile({'id': update.callback_query.data})
             file1.FetchMetadata()
