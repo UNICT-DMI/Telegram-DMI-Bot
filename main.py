@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # Telegram
-import telegram
 from telegram import Update
 from telegram.ext import Updater, Dispatcher, CallbackQueryHandler, CommandHandler, Filters, CallbackContext, MessageHandler, JobQueue
 
@@ -22,7 +21,7 @@ from module.stats import stats, stats_tot
 from module.job_updater import updater_lep
 from module.utils.send_utils import send_chat_ids, send_errors, send_log
 from module.aulario import aulario, calendar_handler, month_handler, subjects_handler, subjects_arrow_handler, updater_schedule
-from start import start
+from module.start import start
 
 # Utils
 from datetime import time
@@ -126,10 +125,9 @@ def add_handlers(dp: Dispatcher):
     dp.add_handler(CallbackQueryHandler(regolamentodidattico_button,pattern='regolamentodidattico_button'))
 
     # esami
-    dp.add_handler(MessageHandler(
-        Filters.regex(r"^(?!=<[/])[Ii]ns:\s+"),
-        esami_input_insegnamento))  #regex accetta [/ins: nome] oppure [/Ins: nome], per agevolare chi usa il cellulare
+    #regex accetta [/ins: nome] oppure [/Ins: nome], per agevolare chi usa il cellulare
     dp.add_handler(CallbackQueryHandler(esami_handler, pattern='esami_button_.*'))
+    dp.add_handler(MessageHandler(Filters.regex(r"^(?!=<[/])[Ii]ns:\s+"), esami_input_insegnamento))
 
     # lezioni
     dp.add_handler(CallbackQueryHandler(lezioni_handler, pattern='lezioni_button_*'))
@@ -149,7 +147,7 @@ def add_handlers(dp: Dispatcher):
         dp.add_handler(MessageHandler(Filters.regex('/add_db'), add_db))
 
     # stats command
-    if (config_map['debug']['disable_db'] == 0):
+    if config_map['debug']['disable_db'] == 0:
         dp.add_handler(CommandHandler('stats', stats))
         dp.add_handler(CommandHandler('stats_tot', stats_tot))
 
