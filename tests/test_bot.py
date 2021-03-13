@@ -70,9 +70,6 @@ async def test_help_buttons(client: TelegramClient):
             "md_opismanager",
             "md_contributors",
             "md_help",
-            "md_rappresentanti_dmi",
-            "md_rappresentanti_informatica",
-            "md_rappresentanti_matematica",
         )
 
         for button in buttons:
@@ -119,7 +116,7 @@ async def test_rappresentanti_md_buttons(client: TelegramClient):
 
 @pytest.mark.asyncio
 async def test_esami_cmd(client: TelegramClient):
-    """Tests all the md buttons in the rappresentanti sub-menu
+    """Tests all the possible options in the /esami command
 
     Args:
         client (TelegramClient): client used to simulate the user
@@ -163,6 +160,57 @@ async def test_esami_cmd(client: TelegramClient):
         assert resp.text
 
         await resp.click(data="esami_button_search")  # click the "Cerca" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+
+@pytest.mark.asyncio
+async def test_lezioni_cmd(client: TelegramClient):
+    """Tests all the possible options in the /lezioni command
+
+    Args:
+        client (TelegramClient): client used to simulate the user
+    """
+    conv: Conversation
+    async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
+
+        await conv.send_message("/lezioni")  # send a command
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        await resp.click(data="sm_lezioni_button_anno")  # click the "Anno" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await resp.click(data="lezioni_button_anno_1 anno")  # click the "1° anno" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await resp.click(data="sm_lezioni_button_giorno")  # click the "Giorno" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await resp.click(data="lezioni_button_giorno_1 giorno")  # click the "LUN" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await resp.click(data="sm_lezioni_button_insegnamento")  # click the "Insegnamento" button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        await conv.send_message("nome: programmazione")  # send a message
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        await resp.click(data="lezioni_button_search")  # click the "Cerca" button
         resp: Message = await conv.get_edit()
 
         assert resp.text

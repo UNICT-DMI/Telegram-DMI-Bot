@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
-
-# Telegram
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import CallbackContext
-
-# System libraries
+"""/esami command"""
 import logging
 import re
-
-# Modules
-from module.shared import check_log, send_message
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram.ext import CallbackContext
 from module.data import Exam
+from module.shared import check_log, send_message
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -108,25 +103,6 @@ def esami_button_anno(update: Update, context: CallbackContext, chat_id: int, me
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=InlineKeyboardMarkup(keyboard))
 
 
-def esami_button_insegnamento(update: Update, context: CallbackContext, chat_id: int, message_id: int):
-    """Called by one of the buttons of the /esami command.
-    Allows the user to write the "insegnamento" they want to search for
-
-    Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        chat_id (:class:`int`): id of the chat of the user
-        message_id (:class:`int`): id of the sub-menu message
-    """
-    context.user_data['esami']['cmd'] = "input_insegnamento"  # attende che venga impostato il campo insegnamento
-    message_text = "Inserire l'insegnamento desiderato nel formato:\n"\
-                   "ins: nome insegnamento\n"\
-                   "Esempio:\n"\
-                   "ins: SisTeMi oPeRaTIvI"
-
-    context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id)
-
-
 def esami_button_sessione(update: Update, context: CallbackContext, chat_id: int, message_id: int):
     """Called by one of the buttons of the /esami command.
     Allows the user to choose a session among the ones proposed
@@ -152,9 +128,28 @@ def esami_button_sessione(update: Update, context: CallbackContext, chat_id: int
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=InlineKeyboardMarkup(keyboard))
 
 
+def esami_button_insegnamento(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+    """Called by one of the buttons of the /esami command.
+    Allows the user to write the subject they want to search for
+
+    Args:
+        update (:class:`Update`): update event
+        context (:class:`CallbackContext`): context passed by the handler
+        chat_id (:class:`int`): id of the chat of the user
+        message_id (:class:`int`): id of the sub-menu message
+    """
+    context.user_data['esami']['cmd'] = "input_insegnamento"  # attende che venga impostato il campo insegnamento
+    message_text = "Inserire l'insegnamento desiderato nel formato:\n"\
+                   "ins: nome insegnamento\n"\
+                   "Esempio:\n"\
+                   "ins: SisTeMi oPeRaTIvI"
+
+    context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id)
+
+
 def esami_input_insegnamento(update: Update, context: CallbackContext):
     """Called after :func:`esami_button_insegnamento`.
-    Allows the user to input the wanted "isegnamento", in the format [Ii]ns: <insegnamento>
+    Allows the user to input the wanted subject, in the format [Ii]ns: <insegnamento>
 
     Args:
         update (:class:`Update`): update event

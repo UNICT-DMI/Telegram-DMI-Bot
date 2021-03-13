@@ -39,7 +39,7 @@ class Scrapable():
         if scrapables is None:
             return
         values = tuple(scrapable.values for scrapable in scrapables)
-        DbManager.insert_into(table_name=scrapables[0].table, columns=scrapables[0].columns, values=values, multiple_rows=True)
+        DbManager.insert_into(table_name=cls().table, columns=cls().columns, values=values, multiple_rows=True)
 
     @classmethod
     def find_all(cls) -> list:
@@ -48,8 +48,13 @@ class Scrapable():
         Returns:
             :class:`list`: list of all the scrapable objects
         """
-        db_results = DbManager.select_from(table_name="exams")
+        db_results = DbManager.select_from(table_name=cls().table)
         return cls._query_result_initializer(db_results)
+
+    @classmethod
+    def delete_all(cls):
+        """Deletes all the scrapable objects of this kind from the database"""
+        DbManager.delete_from(table_name=cls().table)
 
     @classmethod
     def _query_result_initializer(cls, db_results: list) -> list:

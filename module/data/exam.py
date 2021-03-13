@@ -85,13 +85,16 @@ class Exam(Scrapable):
         DbManager.delete_from(table_name=self.table, where=where, where_args=values)
 
     @classmethod
-    def scrape_exams(cls, year_exams: str, delete=False):
+    def scrape(cls, year_exams: str, delete=False):
         """Scrapes the exams of the provided year and stores them in the database
 
         Args:
             year_exams (:class:`str`): current year
             delete (:class:`bool`, optional): whether the table contents should be deleted first. Defaults to False.
         """
+        if delete:
+            cls.delete_all()
+
         url_exams = {
             "l-31": [  # Informatica Triennale
                 "http://web.dmi.unict.it/corsi/l-31/esami?sessione=1&aa=" + year_exams,
@@ -116,9 +119,6 @@ class Exam(Scrapable):
         }
         exams: List[Exam] = []
         year = ""
-
-        if delete:
-            DbManager.delete_from('exams')  # TRUNCATE professors
 
         for course in cls.COURSES:
             for count, url in enumerate(url_exams[course]):
@@ -174,7 +174,7 @@ class Exam(Scrapable):
                         else:  # altrimenti, se ha l'attributo class, è la riga che indica l'anno delle materie successive
                             year = firstcell.b.text  # quindi aggiorniamo la variabile anno con il valore della prima cella della riga
 
-        Exam.bulk_save(exams)  # infine, salviamo tutti gli esami nel database
+        cls.bulk_save(exams)  # infine, salviamo tutti gli esami nel database
         logger.info("Exams loaded.")
 
     @classmethod
@@ -198,7 +198,7 @@ class Exam(Scrapable):
             where_anno = ""
 
         db_results = DbManager.select_from(select=f"anno, cdl, docenti, insegnamento, {select_sessione}",
-                                           table_name="exams",
+                                           table_name=cls().table,
                                            where=f"insegnamento LIKE ? {where_sessione} {where_anno}",
                                            where_args=(f'%{where_insegnamento}%',))
         return cls._query_result_initializer(db_results)
