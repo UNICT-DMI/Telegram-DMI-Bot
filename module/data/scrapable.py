@@ -18,11 +18,16 @@ class Scrapable():
     @property
     def values(self):
         """:class:`tuple`: tuple of values that will be saved in the database"""
-        raise NotImplementedError("values is to be implemented")
+        return tuple(self.__getattribute__(column) for column in self.columns)
 
     def save(self):
-        """Save this scrapable object in the database"""
+        """Saves this scrapable object in the database"""
         DbManager.insert_into(table_name=self.table, columns=self.columns, values=self.values)
+
+    def delete(self):
+        """Deletes this scrapable object from the database"""
+        where = " = ? and ".join(self.columns) + " = ?"
+        DbManager.delete_from(table_name=self.table, where=where, where_args=self.values)
 
     @classmethod
     def bulk_save(cls, scrapables: list):
@@ -35,3 +40,31 @@ class Scrapable():
             return
         values = tuple(scrapable.values for scrapable in scrapables)
         DbManager.insert_into(table_name=scrapables[0].table, columns=scrapables[0].columns, values=values, multiple_rows=True)
+
+    @classmethod
+    def find_all(cls) -> list:
+        """Finds all the scrapable objects present in the database
+
+        Returns:
+            :class:`list`: list of all the scrapable objects
+        """
+        db_results = DbManager.select_from(table_name="exams")
+        return cls._query_result_initializer(db_results)
+
+    @classmethod
+    def _query_result_initializer(cls, db_results: list) -> list:
+        """Initializes the list of scrapables from the result of the query on the database
+
+        Args:
+            db_results (:class:`list`): list of rows produced by the database query
+
+        Returns:
+            :class:`list`: list of initialized scrapable objects
+        """
+        scrapables = []
+        for row in db_results:
+            scrapable = cls()
+            for col in scrapable.columns:
+                setattr(scrapable, col, row.get(col, None))
+            scrapables.append(scrapable)
+        return scrapables

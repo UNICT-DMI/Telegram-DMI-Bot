@@ -28,10 +28,10 @@ class Exam(Scrapable):
         terza (:class:`list | str`): list of appeals in the second session
         straordinaria (:class:`list | str`): list of appeals in the "straordinaria" session
     """
-    courses = ["l-31", "lm-18", "l-35", "lm-40"]
-    sessions = ["prima", "seconda", "terza", "straordinaria"]  # "straordinaria" non è considerata per lo scraping
+    COURSES = ["l-31", "lm-18", "l-35", "lm-40"]
+    SESSIONS = ["prima", "seconda", "terza", "straordinaria"]  # "straordinaria" non è considerata per lo scraping
 
-    def __init__(self, anno: str, cdl: str, insegnamento: str = "", docenti: str = ""):
+    def __init__(self, anno: str = "", cdl: str = "", insegnamento: str = "", docenti: str = ""):
         self.anno = anno
         self.cdl = cdl
         self.insegnamento = insegnamento
@@ -65,7 +65,8 @@ class Exam(Scrapable):
         Returns:
             :class:`list`: session
         """
-        return self.__getattribute__(session_name)
+        if session_name in self.__class__.SESSIONS:
+            return self.__getattribute__(session_name)
 
     def append_session(self, session_name: str, to_append: str):
         """Appends an element to a session based on its name.
@@ -74,7 +75,14 @@ class Exam(Scrapable):
             session_name (:class:`str`): [ prima | seconda | terza | straordinaria ]
             to_append (:class:`str`): element to append
         """
-        self.__getattribute__(session_name).append(to_append)
+        if session_name in self.__class__.SESSIONS:
+            self.__getattribute__(session_name).append(to_append)
+
+    def delete(self):
+        """Deletes this exam from the database"""
+        where = "anno = ? and cdl = ? and insegnamento = ? and docenti = ?"
+        values = (self.anno, self.cdl, self.insegnamento, self.docenti)
+        DbManager.delete_from(table_name=self.table, where=where, where_args=values)
 
     @classmethod
     def scrape_exams(cls, year_exams: str, delete=False):
@@ -112,7 +120,7 @@ class Exam(Scrapable):
         if delete:
             DbManager.delete_from('exams')  # TRUNCATE professors
 
-        for course in cls.courses:
+        for course in cls.COURSES:
             for count, url in enumerate(url_exams[course]):
                 source = requests.get(url).text
                 soup = bs4.BeautifulSoup(source, "html.parser")
@@ -128,7 +136,7 @@ class Exam(Scrapable):
                         if not firstcell.has_attr("class"):  # se questa non ha l'attributo class è una materia
                             # adesso che sappiamo che è una materia, estraiamo tutte le celle per ottenere i dati su di essa
                             cells = row.find_all("td")
-                            session = cls.sessions[count]  # in base al valore di count sappiamo la sessione che stiamo analizzando
+                            session = cls.SESSIONS[count]  # in base al valore di count sappiamo la sessione che stiamo analizzando
                             flag = False  # variabile sentinella per vedere se la materia che stiamo analizzando è già presente dentro l'array
 
                             for exam in exams:  # scorriamo tutte le materie fino ad ora inserite (inizialmente, banalmente, saranno 0)
@@ -170,7 +178,7 @@ class Exam(Scrapable):
         logger.info("Exams loaded.")
 
     @classmethod
-    def from_db(cls, select_sessione: str, where_sessione: str, where_anno: str, where_insegnamento: str) -> List['Exam']:
+    def find(cls, select_sessione: str = None, where_sessione: str = None, where_anno: str = None, where_insegnamento: str = "") -> List['Exam']:
         """Produces a list of exams from the database, based on the provided parametes
 
         Returns:
@@ -193,18 +201,16 @@ class Exam(Scrapable):
                                            table_name="exams",
                                            where=f"insegnamento LIKE ? {where_sessione} {where_anno}",
                                            where_args=(f'%{where_insegnamento}%',))
+        return cls._query_result_initializer(db_results)
 
-        exams = []
-        row: dict
-        for row in db_results:
-            exam = cls(anno=row['anno'], cdl=row['cdl'], insegnamento=row['insegnamento'], docenti=row['docenti'])
-            exam.prima = row.get('prima', None)
-            exam.seconda = row.get('seconda', None)
-            exam.terza = row.get('terza', None)
-            exam.straordinaria = row.get('straordinaria', None)
-            exams.append(exam)
+    @classmethod
+    def find_all(cls) -> List['Exam']:
+        """Finds all the exams present in the database
 
-        return exams
+        Returns:
+            :class:`List['Exam']`: list of all the exams
+        """
+        return super().find_all()
 
     def __repr__(self):
         return f"Exam: {self.__dict__}"
@@ -213,7 +219,7 @@ class Exam(Scrapable):
         output = "*Insegnamento:* " + self.insegnamento
         output += "\n*Docenti:* " + self.insegnamento
 
-        for session in self.__class__.sessions:
+        for session in self.__class__.SESSIONS:
             if self.get_session(session):
                 appeals = str(self.get_session(session))
                 #aggiunge un - per separare orario e luogo dell'esame

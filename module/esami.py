@@ -226,7 +226,7 @@ def generate_esami_text(user_dict: dict) -> str:
     #stringa contenente l'insegnamento, se presente
     where_insegnamento = user_dict.get("insegnamento", "")
 
-    exams = Exam.from_db(select_sessione, where_sessione, where_anno, where_insegnamento)
+    exams = Exam.find(select_sessione, where_sessione, where_anno, where_insegnamento)
 
     if len(exams) > 0:
         output_str = '\n'.join(map(str, exams))
