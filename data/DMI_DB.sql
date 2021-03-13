@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `professors` (
   "ruolo" VARCHAR(255),
   "nome" VARCHAR(255),
   "cognome" VARCHAR(255),
-  "scheda DMI" VARCHAR(255),
+  "scheda_dmi" VARCHAR(255),
   "fax" VARCHAR(255),
   "telefono" VARCHAR(255),
   "email" VARCHAR(255),
