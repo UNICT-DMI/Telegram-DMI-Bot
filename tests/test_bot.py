@@ -11,7 +11,7 @@ bot_tag = config_map['test']['tag']
 
 @pytest.mark.asyncio
 async def test_start_cmd(client: TelegramClient):
-    """Tests the start command
+    """Tests the /start command
 
     Args:
         client (TelegramClient): client used to simulate the user
@@ -26,7 +26,7 @@ async def test_start_cmd(client: TelegramClient):
 
 @pytest.mark.asyncio
 async def test_rappresentanti_cmd(client: TelegramClient):
-    """Tests the rappresentanti command
+    """Tests the /rappresentanti command
 
     Args:
         client (TelegramClient): client used to simulate the user
@@ -215,3 +215,20 @@ async def test_lezioni_cmd(client: TelegramClient):
         resp: Message = await conv.get_edit()
 
         assert resp.text
+
+@pytest.mark.asyncio
+async def test_prof_cmd(client: TelegramClient):
+    """Tests the /prof command
+
+    Args:
+        client (TelegramClient): client used to simulate the user
+    """
+    conv: Conversation
+    async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
+        commands = ("/prof", "/prof bilotta", "/prof giuseppe bilotta", "/prof rocco senteta")
+
+        for command in commands:
+            await conv.send_message(command)  # send a command
+            resp: Message = await conv.get_response()
+
+            assert resp.text
