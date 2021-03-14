@@ -14,12 +14,10 @@ import sqlite3
 import logging
 import base64
 import gitlab
-import json
 import yaml
 import time
 import re
 import os
-import io
 
 
 # Logger

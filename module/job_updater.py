@@ -1,10 +1,17 @@
+"""Job updater"""
 from telegram.ext import CallbackContext
 from module.shared import check_print_old_exams, get_year_code
 from module.data import DbManager, Exam, Lesson, Professor
 
 
-def updater_lep(context: CallbackContext) -> None:
-    DbManager.query_from_file()
+def updater_lep(context: CallbackContext):
+    """Called with a set frequence.
+    Updates all the scrapables
+
+    Args:
+        context (:class:`CallbackContext`): context passed by the handler
+    """
+    DbManager.query_from_file()  # makes sure the database is correctly initialized
 
     year_exam = get_year_code(11, 30)  # aaaa/12/01 (cambio nuovo anno esami) data dal quale esami del vecchio a nuovo anno coesistono
 
