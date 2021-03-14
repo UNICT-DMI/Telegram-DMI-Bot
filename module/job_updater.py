@@ -3,8 +3,6 @@ from module.shared import check_print_old_exams, get_year_code
 from module.data import DbManager, Exam, Lesson, Professor
 
 
-
-
 def updater_lep(context: CallbackContext) -> None:
     DbManager.query_from_file()
 

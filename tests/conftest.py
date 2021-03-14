@@ -36,7 +36,7 @@ def event_loop():
     loop.close()
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session")
 async def bot():
     """Called at the beginning of the testing session.
     Starts the bot with the testing setting in another thread
@@ -48,7 +48,6 @@ async def bot():
     config_map['token'] = config_map['test']['token']
     updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
     add_handlers(updater.dispatcher)
-    add_jobs(updater.job_queue)
     updater.start_polling()
     await asyncio.sleep(2)
 
@@ -59,7 +58,7 @@ async def bot():
 
 
 @pytest.fixture(scope="session")
-async def client() -> TelegramClient:
+async def client(bot) -> TelegramClient:
     """Called at the beginning of the testing session.
     Creates the telegram client that will simulate the user
 

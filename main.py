@@ -1,30 +1,26 @@
 # -*- coding: utf-8 -*-
-
-# Telegram
-from telegram import Update
-from telegram.ext import Updater, Dispatcher, CallbackQueryHandler, CommandHandler, Filters, CallbackContext, MessageHandler, JobQueue
-
-# Modules
-from module.easter_egg_func import smonta_portoni, santino, prof_sticker, bladrim, lei_che_ne_pensa_signorina
-from module.callback_handlers import informative_callback, generic_button_handler, submenu_handler, md_handler, callback, submenu_with_args_handler, none_handler
-from module.shared import config_map, give_chat_id, HELP, AULARIO, SEGNALAZIONE, CLOUD
-from module.regolamento_didattico import regolamenti, regolamentodidattico, regolamentodidattico_button, triennale, magistrale, regdid
-from module.esami import esami, esami_handler, esami_input_insegnamento
-from module.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
-from module.professori import prof
-from module.help import help
-from module.gitlab import git, gitlab_handler
-from module.gdrive import drive
-from module.request import request, add_db
-from module.report import report
-from module.stats import stats, stats_tot
-from module.job_updater import updater_lep
-from module.utils.send_utils import send_chat_ids, send_errors, send_log
-from module.aulario import aulario, calendar_handler, month_handler, subjects_handler, subjects_arrow_handler, updater_schedule
-from module.start import start
-
-# Utils
+"""Main module"""
 from datetime import time
+from telegram import Update
+from telegram.ext import CallbackContext, CallbackQueryHandler, CommandHandler, Dispatcher, Filters, JobQueue, MessageHandler, Updater
+
+from module.aulario import aulario, calendar_handler, month_handler, subjects_arrow_handler, subjects_handler, updater_schedule
+from module.callback_handlers import callback, generic_button_handler, informative_callback, md_handler, none_handler, submenu_handler, submenu_with_args_handler
+from module.commands.esami import esami, esami_handler, esami_input_insegnamento
+from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
+from module.commands.professori import prof
+from module.commands.start import start
+from module.commands.stats import stats, stats_tot
+from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni
+from module.gdrive import drive
+from module.gitlab import git, gitlab_handler
+from module.help import help
+from module.job_updater import updater_lep
+from module.regolamento_didattico import magistrale, regdid, regolamenti, regolamentodidattico, regolamentodidattico_button, triennale
+from module.report import report
+from module.request import add_db, request
+from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, config_map, give_chat_id
+from module.utils.send_utils import send_chat_ids, send_errors, send_log
 
 
 def logging_message(update: Update, context: CallbackContext):
@@ -100,29 +96,29 @@ def add_handlers(dp: Dispatcher):
     dp.add_handler(MessageHandler(Filters.regex(SEGNALAZIONE), informative_callback))
 
     # generic buttons
-    dp.add_handler(CallbackQueryHandler(generic_button_handler,     pattern='^(exit_cmd)'))
-    dp.add_handler(CallbackQueryHandler(submenu_handler,            pattern='sm_.*'))
-    dp.add_handler(CallbackQueryHandler(md_handler,                 pattern='md_.*'))
-    dp.add_handler(CallbackQueryHandler(submenu_with_args_handler,  pattern='sm&.*'))
-    dp.add_handler(CallbackQueryHandler(none_handler,               pattern='NONE'))
+    dp.add_handler(CallbackQueryHandler(generic_button_handler, pattern='^(exit_cmd)'))
+    dp.add_handler(CallbackQueryHandler(submenu_handler, pattern='sm_.*'))
+    dp.add_handler(CallbackQueryHandler(md_handler, pattern='md_.*'))
+    dp.add_handler(CallbackQueryHandler(submenu_with_args_handler, pattern='sm&.*'))
+    dp.add_handler(CallbackQueryHandler(none_handler, pattern='NONE'))
 
     # aulario and calendar
-    dp.add_handler(CallbackQueryHandler(calendar_handler,           pattern='cal_.*'))
-    dp.add_handler(CallbackQueryHandler(month_handler,              pattern='m_[np]_.*'))
-    dp.add_handler(CallbackQueryHandler(subjects_handler,           pattern='sb_.*'))
-    dp.add_handler(CallbackQueryHandler(subjects_arrow_handler,     pattern='pg_.*'))
+    dp.add_handler(CallbackQueryHandler(calendar_handler, pattern='cal_.*'))
+    dp.add_handler(CallbackQueryHandler(month_handler, pattern='m_[np]_.*'))
+    dp.add_handler(CallbackQueryHandler(subjects_handler, pattern='sb_.*'))
+    dp.add_handler(CallbackQueryHandler(subjects_arrow_handler, pattern='pg_.*'))
 
     # drive & gitlab buttons
-    dp.add_handler(CallbackQueryHandler(callback,                   pattern='Drive_.*'))
-    dp.add_handler(CallbackQueryHandler(gitlab_handler,             pattern='git_.*'))
+    dp.add_handler(CallbackQueryHandler(callback, pattern='Drive_.*'))
+    dp.add_handler(CallbackQueryHandler(gitlab_handler, pattern='git_.*'))
 
     # regolamento didattico
     dp.add_handler(CommandHandler('regolamentodidattico', regolamentodidattico))
-    dp.add_handler(CallbackQueryHandler(triennale,                  pattern='reg_triennale_button'))
-    dp.add_handler(CallbackQueryHandler(magistrale,                 pattern='reg_magistrale_button'))
-    dp.add_handler(CallbackQueryHandler(regdid,                     pattern='regdid_button'))
-    dp.add_handler(CallbackQueryHandler(regolamenti,                pattern='Regolamento*'))
-    dp.add_handler(CallbackQueryHandler(regolamentodidattico_button,pattern='regolamentodidattico_button'))
+    dp.add_handler(CallbackQueryHandler(triennale, pattern='reg_triennale_button'))
+    dp.add_handler(CallbackQueryHandler(magistrale, pattern='reg_magistrale_button'))
+    dp.add_handler(CallbackQueryHandler(regdid, pattern='regdid_button'))
+    dp.add_handler(CallbackQueryHandler(regolamenti, pattern='Regolamento*'))
+    dp.add_handler(CallbackQueryHandler(regolamentodidattico_button, pattern='regolamentodidattico_button'))
 
     # esami
     #regex accetta [/ins: nome] oppure [/Ins: nome], per agevolare chi usa il cellulare
@@ -160,7 +156,7 @@ def add_jobs(job_queue: JobQueue):
 def main():
     updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
     add_handlers(updater.dispatcher)
-    add_jobs(updater.job_queue)
+    #add_jobs(updater.job_queue)
 
     updater.start_polling()
     updater.idle()

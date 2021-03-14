@@ -25,6 +25,28 @@ async def test_start_cmd(client: TelegramClient):
 
 
 @pytest.mark.asyncio
+async def test_stats_cmd(client: TelegramClient):
+    """Tests the /stats and /stats_tot command
+
+    Args:
+        client (TelegramClient): client used to simulate the user
+    """
+    conv: Conversation
+    async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
+        commands = ("/stats", "/stats 3", "/stats_tot")
+
+        for command in commands:
+            await conv.send_message(command)  # send a command
+            resp: Message = await conv.get_response()
+
+            assert resp.text
+
+            resp: Message = await conv.get_response()
+
+            assert resp.photo
+
+
+@pytest.mark.asyncio
 async def test_rappresentanti_cmd(client: TelegramClient):
     """Tests the /rappresentanti command
 
@@ -215,6 +237,7 @@ async def test_lezioni_cmd(client: TelegramClient):
         resp: Message = await conv.get_edit()
 
         assert resp.text
+
 
 @pytest.mark.asyncio
 async def test_prof_cmd(client: TelegramClient):
