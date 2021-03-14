@@ -108,13 +108,3 @@ def rapp_menu(update: Update, context: CallbackContext, chat_id: int, message_id
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
-
-def exit_cmd() -> str:
-    """Called by exit_cmd from the /help command.
-    Reduces the help message to a point
-
-    Returns:
-        :class:`str`: new text for the message
-    """
-    output = "."
-    return output

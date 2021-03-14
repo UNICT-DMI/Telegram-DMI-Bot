@@ -5,7 +5,7 @@ from telegram import Update
 from telegram.ext import CallbackContext, CallbackQueryHandler, CommandHandler, Dispatcher, Filters, JobQueue, MessageHandler, Updater
 
 from module.aulario import aulario, calendar_handler, month_handler, subjects_arrow_handler, subjects_handler, updater_schedule
-from module.callback_handlers import generic_button_handler, informative_callback, md_handler, none_handler, submenu_handler, submenu_with_args_handler
+from module.callback_handlers import exit_handler, informative_callback, md_handler, none_handler, submenu_handler, submenu_with_args_handler
 from module.commands.esami import esami, esami_handler, esami_input_insegnamento
 from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
 from module.commands.professori import prof
@@ -72,7 +72,7 @@ def add_handlers(dp: Dispatcher):
     dp.add_handler(MessageHandler(Filters.regex(SEGNALAZIONE), informative_callback))
 
     # generic buttons
-    dp.add_handler(CallbackQueryHandler(generic_button_handler, pattern='^(exit_cmd)'))
+    dp.add_handler(CallbackQueryHandler(exit_handler, pattern='^(exit_cmd)'))
     dp.add_handler(CallbackQueryHandler(submenu_handler, pattern='sm_.*'))
     dp.add_handler(CallbackQueryHandler(md_handler, pattern='md_.*'))
     dp.add_handler(CallbackQueryHandler(submenu_with_args_handler, pattern='sm&.*'))
