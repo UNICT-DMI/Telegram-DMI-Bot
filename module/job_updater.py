@@ -12,5 +12,5 @@ def updater_lep(context: CallbackContext) -> None:
     if check_print_old_exams(year_exam):
         Exam.scrape("1" + str(int(year_exam) - 1))
 
-    Lesson.scrape("1" + str(get_year_code(9, 20)))  # aaaa/09/21 (cambio nuovo anno lezioni) data dal quale vengono prelevate le lezioni del nuovo anno
-    Professor.scrape()
+    Lesson.scrape("1" + str(get_year_code(9, 20)), delete=True)  # aaaa/09/21 (cambio nuovo anno lezioni) data dal quale vengono prelevate le lezioni del nuovo anno
+    Professor.scrape(delete=True)

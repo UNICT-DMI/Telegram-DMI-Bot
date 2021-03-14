@@ -156,7 +156,7 @@ def add_jobs(job_queue: JobQueue):
 def main():
     updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
     add_handlers(updater.dispatcher)
-    #add_jobs(updater.job_queue)
+    add_jobs(updater.job_queue)
 
     updater.start_polling()
     updater.idle()

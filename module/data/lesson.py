@@ -64,9 +64,6 @@ class Lesson(Scrapable):
             year_exams (:class:`str`): current year
             delete (:class:`bool`, optional): whether the table contents should be deleted first. Defaults to False.
         """
-        if delete:
-            cls.delete_all()
-
         lessons = []
         for id_ in cls.IDS:
             urls = [
@@ -113,12 +110,13 @@ class Lesson(Scrapable):
                                                 semestre=str(semestre))
                                 lessons.append(lesson)
 
+        if delete:
+            cls.delete_all()
         cls.bulk_save(lessons)
-
         logger.info("Lessons loaded.")
 
     @classmethod
-    def find(cls, where_anno: str = None, where_giorno: str = None, where_insegnamento: str = "") -> List['Lesson']:
+    def find(cls, where_anno: str = None, where_giorno: str = None, where_nome: str = "") -> List['Lesson']:
         """Produces a list of lessons from the database, based on the provided parametes
 
         Returns:
@@ -134,10 +132,9 @@ class Lesson(Scrapable):
         else:
             where_anno = ""
 
-        db_results = DbManager.select_from(select="anno, cdl, docenti, insegnamento",
-                                           table_name=cls().table,
-                                           where=f"insegnamento LIKE ? {where_giorno} {where_anno}",
-                                           where_args=(f'%{where_insegnamento}%',))
+        db_results = DbManager.select_from(table_name=cls().table,
+                                           where=f"nome LIKE ? {where_giorno} {where_anno}",
+                                           where_args=(f'%{where_nome}%',))
         return cls._query_result_initializer(db_results)
 
     @classmethod

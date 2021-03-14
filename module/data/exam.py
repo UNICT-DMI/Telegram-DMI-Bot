@@ -92,9 +92,6 @@ class Exam(Scrapable):
             year_exams (:class:`str`): current year
             delete (:class:`bool`, optional): whether the table contents should be deleted first. Defaults to False.
         """
-        if delete:
-            cls.delete_all()
-
         url_exams = {
             "l-31": [  # Informatica Triennale
                 f"http://web.dmi.unict.it/corsi/l-31/esami?sessione=1&aa={year_exams}",
@@ -173,6 +170,8 @@ class Exam(Scrapable):
                         else:  # altrimenti, se ha l'attributo class, è la riga che indica l'anno delle materie successive
                             year = firstcell.b.text  # quindi aggiorniamo la variabile anno con il valore della prima cella della riga
 
+        if delete:
+            cls.delete_all()
         cls.bulk_save(exams)  # infine, salviamo tutti gli esami nel database
         logger.info("Exams loaded.")
 

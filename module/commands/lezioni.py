@@ -221,9 +221,9 @@ def generate_lezioni_text(user_dict) -> str:
     # stringa contenente gli anni per cui il dict contiene la key, separate da "' or anno = '"
     where_anno = " or anno = ".join([key.replace(" anno", "") for key in user_dict if "anno" in key])
     # stringa contenente l'insegnamento, se presente
-    where_insegnamento = user_dict.get("insegnamento", "")
+    where_nome = user_dict.get("insegnamento", "")
 
-    lessons = Lesson.find(where_anno=where_anno, where_giorno=where_giorno, where_insegnamento=where_insegnamento)
+    lessons = Lesson.find(where_anno=where_anno, where_giorno=where_giorno, where_nome=where_nome)
 
     if len(lessons) > 0:
         output_str = '\n'.join(map(str, lessons))

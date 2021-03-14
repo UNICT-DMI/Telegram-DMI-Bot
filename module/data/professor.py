@@ -70,9 +70,6 @@ class Professor(Scrapable):
         Args:
             delete (:class:`bool`, optional): whether the table contents should be deleted first. Defaults to False.
         """
-        if delete:
-            cls.delete_all()
-
         professors = []
         count = 0
 
@@ -129,6 +126,8 @@ class Professor(Scrapable):
 
                 professors.append(professor)
 
+        if delete:
+            cls.delete_all()
         cls.bulk_save(professors)
         logger.info("Professors loaded.")
 
