@@ -1,6 +1,5 @@
 -- chat_id_list
 CREATE TABLE IF NOT EXISTS `Chat_id_List` (
-  `id` INTEGER PRIMARY KEY,
   `Chat_id` int(11) NOT NULL,
   `Username` text NOT NULL,
   `Nome` int(11) NOT NULL,
