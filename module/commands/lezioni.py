@@ -19,7 +19,7 @@ def lezioni(update: Update, context: CallbackContext) -> None:
         update (:class:`Update`): update event
         context (:class:`CallbackContext`): context passed by the handler
     """
-    check_log(update, context, "lezioni")
+    check_log(update, "lezioni")
 
     if 'lezioni' in context.user_data:
         context.user_data['lezioni'].clear()  # ripulisce il dict dell'user relativo al comando /lezioni da eventuali dati presenti
@@ -159,7 +159,7 @@ def lezioni_input_insegnamento(update: Update, context: CallbackContext) -> None
         context (:class:`CallbackContext`): context passed by the handler
     """
     if context.user_data['lezioni'].get('cmd', 'null') == "input_insegnamento":  #se effettivamente l'user aveva richiesto di modificare l'insegnamento...
-        check_log(update, context, "lezioni_input_insegnamento")
+        check_log(update, "lezioni_input_insegnamento")
         context.user_data['lezioni']['insegnamento'] = re.sub(r"^(?!=<[/])[Nn]ome:\s+", "",
                                                               update.message.text)  #ottieni il nome dell'insegnamento e salvalo nel dict
         del context.user_data['lezioni'][

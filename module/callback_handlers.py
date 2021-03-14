@@ -40,7 +40,7 @@ def md_handler(update: Update, context: CallbackContext):
     if data == "help":
         message_text = message_text.replace("<cusicon>", CUSicon[random.randint(0, 5)])
 
-    check_log(update, context, data, 1)
+    check_log(update, data, is_query=True)
 
     context.bot.editMessageText(text=message_text, chat_id=query.message.chat_id, message_id=query.message.message_id, parse_mode=ParseMode.MARKDOWN)
 
@@ -57,7 +57,7 @@ def informative_callback(update: Update, context: CallbackContext):
         cmd = update.message.text.split(' ')[0][1:]  #prende solo la prima parola del messaggio (cioè il comando) escludendo lo slash
     else:
         cmd = update.message.text.split(' ')[1].lower()  # prende la prima parola dopo l'emoji
-    check_log(update, context, cmd)
+    check_log(update, cmd)
     message_text = read_md(cmd)
     context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode=ParseMode.MARKDOWN)
 

@@ -15,7 +15,7 @@ def prof(update: Update, context: CallbackContext):
         update (:class:`Update`): update event
         context (:class:`CallbackContext`): context passed by the handler
     """
-    check_log(update, context, "prof")
+    check_log(update, "prof")
     message_text = generate_prof_text(context.args)
     if len(message_text) > 4096:
         send_message(update, context, message_text)

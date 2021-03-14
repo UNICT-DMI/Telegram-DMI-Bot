@@ -13,7 +13,7 @@ def report(update: Update, context: CallbackContext):
         update (:class:`Update`): update event
         context (:class:`CallbackContext`): context passed by the handler
     """
-    check_log(update, context, "report")
+    check_log(update, "report")
     chat_id = update.message.chat_id
     chat_user = update.message.from_user
     executed_command = update.message.text.split(' ')[0]

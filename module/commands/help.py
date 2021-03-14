@@ -13,7 +13,7 @@ def help(update: Update, context: CallbackContext) -> None:
         update (:class:`Update`): update event
         context (:class:`CallbackContext`): context passed by the handler
     """
-    check_log(update, context, "help")
+    check_log(update, "help")
     chat_id = update.message.chat_id
 
     message_text = "@DMI_Bot risponde ai seguenti comandi:"

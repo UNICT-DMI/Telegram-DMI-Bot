@@ -1,12 +1,11 @@
-
-from telegram import Update
-from telegram.ext import CallbackContext
-from datetime import date, datetime
-
-import sqlite3
-import yaml
+"""Constants and common functions"""
 import logging
-import pytz
+from datetime import date, datetime
+import yaml
+from telegram import Update
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext
+from module.data import DbManager
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -16,13 +15,14 @@ with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
 # Icons
-CUSicon = {0: "🏋",
-           1: "⚽️",
-           2: "🏀",
-           3: "🏈",
-           4: "🏐",
-           5: "🏊",
-           }
+CUSicon = {
+    0: "🏋",
+    1: "⚽️",
+    2: "🏀",
+    3: "🏈",
+    4: "🏐",
+    5: "🏊",
+}
 
 # keyboard menu
 HELP = "❔ Help"
@@ -30,8 +30,17 @@ AULARIO = "📆 Aulario"
 CLOUD = "☁️ Cloud"
 SEGNALAZIONE = "📫 Segnalazione Rappresentanti"
 
-def send_message(update: Update, context: CallbackContext, messaggio):
-    chat_id = update.message.chat_id if update.message else update.callback_query.message.chat_id #prova a prendere il chat_id da update.message, altrimenti prova da update.callback_query.message
+
+def send_message(update: Update, context: CallbackContext, messaggio: str):
+    """Replies with a message, making sure the maximum lenght text allowed is respected
+
+    Args:
+        update (:class:`Update`): update event
+        context (:class:`CallbackContext`): context passed by the handler
+        messaggio (:class:`str`): message to send
+    """
+    #prova a prendere il chat_id da update.message, altrimenti prova da update.callback_query.message
+    chat_id = update.message.chat_id if update.message else update.callback_query.message.chat_id
     msg = ""
     righe = messaggio.split('\n')
     for riga in righe:
@@ -39,62 +48,77 @@ def send_message(update: Update, context: CallbackContext, messaggio):
             try:
                 context.bot.sendMessage(chat_id=chat_id, text=msg, parse_mode='Markdown')
                 msg = ""
-            except:
-                logger.error("in: functions.py - send_message: the message is badly formatted")
+            except BadRequest:
+                logger.error("send_message: the message is badly formatted")
         else:
             msg += riga + "\n"
     context.bot.sendMessage(chat_id=chat_id, text=msg, parse_mode='Markdown')
 
-def read_md(namefile):
-    in_file = open("data/markdown/" + namefile + ".md", "r", encoding="utf8")
-    text = in_file.read()
-    in_file.close()
+
+def read_md(namefile: str) -> str:
+    """Reads a markdown file
+
+    Args:
+        namefile (:class:`str`): name of the markdown file, without extension
+
+    Returns:
+        :class:`str`: content of the markdown file
+    """
+    with open(f"data/markdown/{namefile}.md", "r", encoding="utf8") as in_file:
+        text = in_file.read()
     return text
 
-def check_log(update: Update, context: CallbackContext, type, callback=0):
-    if callback:
-        update = update.callback_query
 
-    chat_id = update.message.chat_id
+def check_log(update: Update, command_name: str, is_query: bool = False):
+    """[summary]
 
-    if (config_map['debug']['disable_db'] == 0):
-        today = str(date.today())
-        conn = sqlite3.connect('data/DMI_DB.db')
-        conn.execute("INSERT INTO stat_list VALUES ('"+ str(type) + "',"+str(chat_id)+",'"+str(today)+" ')")
-        conn.commit()
-        conn.close()
+    Args:
+        update (:class:`Update`): update event
+        command_name (:class:`str`): name of the event to log
+        is_query (:class:`bool`, optional): whether the event to log is a query. Defaults to False.
+    """
+    chat_id = update.callback_query.message.chat_id if is_query else update.message.chat_id
 
-    if (config_map['debug']['disable_chatid_logs'] == 0):
-        a_log = open("logs/chatid.txt", "a+")
-        r_log = open("logs/chatid.txt", "r+")
-        if not str(chat_id) in r_log.read():
-            a_log.write(str(chat_id)+"\n")
+    if config_map['debug']['disable_db'] == 0:
+        DbManager.insert_into(table_name="stat_list", values=(command_name, chat_id, date.today()))
 
-def give_chat_id(update: Update, context: CallbackContext):
-    update.message.reply_text(str(update.message.chat_id))
+    if config_map['debug']['disable_chatid_logs'] == 0:
+        with open("logs/chatid.txt", "r+") as r_log:
+            log = r_log.read()
+        if not str(chat_id) in log:
+            with open("logs/chatid.txt", "a+") as a_log:
+                a_log.write(f"{chat_id}\n")
 
-def get_year_code(month, day):
-    date_time = get_current_date()
-    check_new_year = get_checkdate(date_time.year, month, day)
+
+def get_year_code(month: int, day: int) -> str:
+    """Generates the code of the year
+
+    Args:
+        month (:class:`int`): month
+        day (:class:`int`): day
+
+    Returns:
+        :class:`str`: last two digits of the current year
+    """
+    date_time = datetime.now().astimezone()
+    check_new_year = datetime(year=date_time.year, month=month, day=day).astimezone()
     year = date_time.year
     if date_time > check_new_year:
         year = date_time.year + 1
     return str(year)[-2:]
 
-def get_current_date():
-    tz = pytz.timezone('Europe/Rome')
-    date_time = datetime.now(tz)
-    return date_time
 
-def get_checkdate(year, month, day):
-    tz = pytz.timezone('Europe/Rome')
-    checkdate = datetime(year= year, month= month, day= day)
-    checkdate = tz.localize(checkdate)
-    return checkdate
+def check_print_old_exams(year_exam: str) -> bool:
+    """Checks if the old exams should be considered
 
-def check_print_old_exams(year_exam):
-    date_time = get_current_date()
-    ckdate = get_checkdate(date_time.year, 12, 23) # aaaa/12/24 data dal quale vengono prelevati solo gli esami del nuovo anno
-    if((year_exam != str(date_time.year)[-2:]) and date_time < ckdate):
+    Args:
+        year_exam (:class:`str`): target year
+
+    Returns:
+        :class:`bool`: whether the old exams should be considered
+    """
+    date_time = datetime.now().astimezone()
+    ckdate = datetime(year=date_time.year, month=12, day=23).astimezone()  # aaaa/12/24 data dal quale vengono prelevati solo gli esami del nuovo anno
+    if year_exam != str(date_time.year)[-2:] and date_time < ckdate:
         return True
     return False

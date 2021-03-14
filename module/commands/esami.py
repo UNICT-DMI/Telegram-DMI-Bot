@@ -19,7 +19,7 @@ def esami(update: Update, context: CallbackContext):
         update (:class:`Update`): update event
         context (:class:`CallbackContext`): context passed by the handler
     """
-    check_log(update, context, "esami")
+    check_log(update, "esami")
 
     if 'esami' in context.user_data:  #ripulisce il dict dell'user relativo al comando /esami da eventuali dati presenti
         context.user_data['esami'].clear()
@@ -157,7 +157,7 @@ def esami_input_insegnamento(update: Update, context: CallbackContext):
     """
     if context.user_data['esami'].get('cmd', None) == "input_insegnamento":
         #se effettivamente l'user aveva richiesto di modificare l'insegnamento...
-        check_log(update, context, "esami_input_insegnamento")
+        check_log(update, "esami_input_insegnamento")
         #ottieni il nome dell'insegnamento e salvalo nel dict
         context.user_data['esami']['insegnamento'] = re.sub(r"^(?!=<[/])[Ii]ns:\s+", "", update.message.text)
         #elimina la possibilità di modificare l'insegnamento fino a quando l'apposito button non viene premuto di nuovo

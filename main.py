@@ -19,7 +19,7 @@ from module.commands.regolamento_didattico import regolamentodidattico, regolame
 from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni
 from module.gitlab import git, gitlab_handler
 from module.job_updater import updater_lep
-from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, config_map, give_chat_id
+from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, config_map
 from module.utils.send_utils import send_chat_ids, send_errors, send_log
 from module.debug import error_handler, log_message
 
@@ -78,7 +78,7 @@ def add_handlers(dp: Dispatcher):
     dp.add_handler(CommandHandler('rappresentanti_informatica', informative_callback))
     dp.add_handler(CommandHandler('rappresentanti_matematica', informative_callback))
     dp.add_handler(CommandHandler('report', report))
-    dp.add_handler(CommandHandler('chatid', give_chat_id))
+    dp.add_handler(CommandHandler('chatid', lambda u, c: u.message.reply_text(u.message.chat_id)))
     dp.add_handler(CommandHandler('send_log', send_log))
     dp.add_handler(CommandHandler('send_chat_ids', send_chat_ids))
     dp.add_handler(CommandHandler('errors', send_errors))

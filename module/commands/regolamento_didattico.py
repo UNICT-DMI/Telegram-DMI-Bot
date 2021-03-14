@@ -36,7 +36,7 @@ def regolamentodidattico(update: Update, context: CallbackContext):
         update (:class:`Update`): update event
         context (:class:`CallbackContext`): context passed by the handler
     """
-    check_log(update, context, "regolamentodidattico")
+    check_log(update, "regolamentodidattico")
     update.message.reply_text('Scegliere uno dei seguenti corsi:', reply_markup=get_reg_keyboard())
 
 def regolamentodidattico_handler(update: Update, context: CallbackContext):

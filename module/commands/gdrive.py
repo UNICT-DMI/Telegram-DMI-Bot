@@ -17,7 +17,7 @@ def drive(update: Update, context: CallbackContext):
         update (:class:`Update`): update event
         context (:class:`CallbackContext`): context passed by the handler
     """
-    check_log(update, context, "drive")
+    check_log(update, "drive")
     chat_id = update.message.chat_id
 
     gauth = GoogleAuth(settings_file="config/settings.yaml")

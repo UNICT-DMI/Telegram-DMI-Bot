@@ -13,24 +13,24 @@ from classes.EasterEgg import EasterEgg
 from module.shared import check_log, config_map
 
 def smonta_portoni(update: Update, context: CallbackContext) -> None:
-    check_log(update, context, "smonta_portoni")
+    check_log(update, "smonta_portoni")
     message_text = EasterEgg.get_smonta_portoni()
     context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text)
 
 def santino(update: Update, context: CallbackContext) -> None:
     chat_id = update.message.chat_id
     if (chat_id == -1001031103640 or chat_id == config_map['dev_group_chatid']):
-        check_log(update, context, "santino")
+        check_log(update, "santino")
         message_text = EasterEgg.get_santino()
         context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text)
 
 def bladrim(update: Update, context: CallbackContext) -> None:
-    check_log(update, context, "bladrim")
+    check_log(update, "bladrim")
     message_text = EasterEgg.get_bladrim()
     context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text)
 
 def prof_sticker(update: Update, context: CallbackContext) -> None:
-    check_log(update, context, "prof_sticker")
+    check_log(update, "prof_sticker")
     context.bot.sendSticker(chat_id=update.message.chat_id, sticker=prof_sticker_id())
 
 def prof_sticker_id() -> str:
@@ -41,6 +41,6 @@ def prof_sticker_id() -> str:
     return i
 
 def lei_che_ne_pensa_signorina(update: Update, context: CallbackContext) -> None:
-    check_log(update, context, "leiCheNePensaSignorina")
+    check_log(update, "leiCheNePensaSignorina")
     message_text = EasterEgg.get_lei_che_ne_pensa_signorina()
     context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text)
