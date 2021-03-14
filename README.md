@@ -44,7 +44,6 @@ _(If you don't have a token, message Telegram's [@BotFather](http://telegram.me/
 - requests
 - beautifulsoup4
 - python-gitlab
-- pytz
 - matplotlib
 - pandas
 - pillow

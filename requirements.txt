@@ -3,7 +3,6 @@ pydrive
 requests
 beautifulsoup4
 python-gitlab
-pytz
 matplotlib
 pandas
 pillow
