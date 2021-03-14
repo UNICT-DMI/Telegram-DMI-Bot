@@ -312,13 +312,51 @@ async def test_request_cmd(client: TelegramClient):
 
         assert resp.text
 
-        await request.click(data=f"drive_accept_{config_map['dev_group_chatid']}") # click "Accetta" button
+        await request.click(data=f"drive_accept_{config_map['dev_group_chatid']}")  # click "Accetta" button
 
         resp: Message = await conv.get_edit()
 
         assert resp.text
 
         resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        resp: Message = await conv.get_response()
+
+        assert resp.document
+
+
+@pytest.mark.asyncio
+async def test_regolamentodidattico_cmd(client: TelegramClient):
+    """Tests the /regolamentodidattico command
+
+    Args:
+        client (TelegramClient): client used to simulate the user
+    """
+    conv: Conversation
+    async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
+
+        await conv.send_message("/regolamentodidattico")  # send a command
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        buttons = (
+            "reg_button_triennale",
+            "reg_button_home",
+            "reg_button_magistrale",
+        )
+
+        for button in buttons:
+            await resp.click(data=button)  # click the button
+            resp: Message = await conv.get_edit()
+
+            assert resp.text
+
+        await resp.click(data="Regolamento Didattico 2020/2021_m")  # click "Regolamento" button
+
+        resp: Message = await conv.get_edit()
 
         assert resp.text
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Main module"""
 from datetime import time
-from telegram import Update
-from telegram.ext import CallbackContext, CallbackQueryHandler, CommandHandler, Dispatcher, Filters, JobQueue, MessageHandler, Updater
+from telegram import BotCommand
+from telegram.ext import CallbackQueryHandler, CommandHandler, Dispatcher, Filters, JobQueue, MessageHandler, Updater
 
 from module.aulario import aulario, calendar_handler, month_handler, subjects_arrow_handler, subjects_handler, updater_schedule
 from module.callback_handlers import exit_handler, informative_callback, md_handler, none_handler, submenu_handler, submenu_with_args_handler
@@ -15,13 +15,29 @@ from module.commands.help import help
 from module.commands.report import report
 from module.commands.request import add_db, request, request_handler
 from module.commands.gdrive import drive, drive_handler
+from module.commands.regolamento_didattico import regolamentodidattico, regolamentodidattico_handler, send_regolamento
 from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni
 from module.gitlab import git, gitlab_handler
 from module.job_updater import updater_lep
-from module.regolamento_didattico import magistrale, regdid, regolamenti, regolamentodidattico, regolamentodidattico_button, triennale
 from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, config_map, give_chat_id
 from module.utils.send_utils import send_chat_ids, send_errors, send_log
 from module.debug import error_handler, log_message
+
+
+def add_commands(up: Updater):
+    """Adds the list of commands with their description to the bot
+
+    Args:
+        up (Updater): supplyed Updater
+    """
+    #TODO: add all commands
+    commands = [
+        BotCommand("start", "messaggio di benvenuto"),
+        BotCommand("help ", "help"),
+        BotCommand("esami", "cerca informazioni sugli esami"),
+        BotCommand("lezioni", "cerca informazioni sulle lezioni"),
+    ]
+    up.bot.set_my_commands(commands=commands)
 
 
 def add_handlers(dp: Dispatcher):
@@ -91,11 +107,8 @@ def add_handlers(dp: Dispatcher):
 
     # regolamento didattico
     dp.add_handler(CommandHandler('regolamentodidattico', regolamentodidattico))
-    dp.add_handler(CallbackQueryHandler(triennale, pattern='reg_triennale_button'))
-    dp.add_handler(CallbackQueryHandler(magistrale, pattern='reg_magistrale_button'))
-    dp.add_handler(CallbackQueryHandler(regdid, pattern='regdid_button'))
-    dp.add_handler(CallbackQueryHandler(regolamenti, pattern='Regolamento*'))
-    dp.add_handler(CallbackQueryHandler(regolamentodidattico_button, pattern='regolamentodidattico_button'))
+    dp.add_handler(CallbackQueryHandler(regolamentodidattico_handler, pattern=r'^reg_button_.*'))
+    dp.add_handler(CallbackQueryHandler(send_regolamento, pattern=r'^Regolamento Didattico.*'))
 
     # esami
     #regex accetta [/ins: nome] oppure [/Ins: nome], per agevolare chi usa il cellulare
@@ -132,6 +145,7 @@ def add_jobs(job_queue: JobQueue):
 
 def main():
     updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
+    #add_commands(updater)
     add_handlers(updater.dispatcher)
     add_jobs(updater.job_queue)
 
