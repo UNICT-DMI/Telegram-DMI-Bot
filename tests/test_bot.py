@@ -261,3 +261,67 @@ async def test_report_cmd(client: TelegramClient):
             resp: Message = await conv.get_response()
 
             assert resp.text
+
+
+@pytest.mark.asyncio
+async def test_add_db_cmd(client: TelegramClient):
+    """Tests the /add_db command
+
+    Args:
+        client (TelegramClient): client used to simulate the user
+    """
+    conv: Conversation
+    async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
+
+        await conv.send_message("/add_db")  # send a command
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        await conv.send_message(f"/add_db nome cognome e-mail username {config_map['dev_group_chatid']}")  # send a command
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        resp: Message = await conv.get_response()
+
+        assert resp.document
+
+
+@pytest.mark.asyncio
+async def test_request_cmd(client: TelegramClient):
+    """Tests the /add_db command
+
+    Args:
+        client (TelegramClient): client used to simulate the user
+    """
+    conv: Conversation
+    async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
+
+        await conv.send_message("/request")  # send a command
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        await conv.send_message("/request nome cognome uni0000@studium.unict.it")  # send a command
+        request: Message = await conv.get_response()
+
+        assert request.text
+
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        await request.click(data=f"drive_accept_{config_map['dev_group_chatid']}") # click "Accetta" button
+
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        resp: Message = await conv.get_response()
+
+        assert resp.document
