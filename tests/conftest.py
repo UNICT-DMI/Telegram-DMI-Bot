@@ -5,7 +5,7 @@ import pytest
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 from telegram.ext import Updater
-from main import add_handlers, add_jobs
+from main import add_handlers
 from module.shared import config_map
 
 warnings.filterwarnings("ignore",
