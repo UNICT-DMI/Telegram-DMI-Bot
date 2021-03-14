@@ -82,7 +82,7 @@ async def test_help_buttons(client: TelegramClient):
             "md_cus",
             "md_cloud",
             "md_sdidattica",
-            "md_sstudenti",
+            "md_studenti",
             "md_cea",
             "md_ersu",
             "md_ufficioersu",

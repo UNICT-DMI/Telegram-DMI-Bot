@@ -50,7 +50,7 @@ def help(update: Update, context: CallbackContext) -> None:
 
     keyboard.append([
         InlineKeyboardButton("Seg. Didattica",  callback_data="md_sdidattica"),
-        InlineKeyboardButton("Seg. Studenti",   callback_data="md_sstudenti"),
+        InlineKeyboardButton("Seg. Studenti",   callback_data="md_studenti"),
         InlineKeyboardButton("CEA",             callback_data="md_cea")
     ])
 

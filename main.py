@@ -53,7 +53,7 @@ def add_handlers(dp: Dispatcher):
 
     #Informative command
     dp.add_handler(CommandHandler('sdidattica', informative_callback))
-    dp.add_handler(CommandHandler('sstudenti', informative_callback))
+    dp.add_handler(CommandHandler('studenti', informative_callback))
     dp.add_handler(CommandHandler('cea', informative_callback))
     dp.add_handler(CommandHandler('ersu', informative_callback))
     dp.add_handler(CommandHandler('ufficioersu', informative_callback))

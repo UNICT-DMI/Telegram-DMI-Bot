@@ -15,7 +15,7 @@
 
 *Segreteria orari e contatti:*
 ✍️ /sdidattica - _segreteria didattica_
-📓 /sstudenti - _segreteria studenti_
+📓 /studenti - _segreteria studenti_
 /cea - _informazioni Centro per i sistemi di Elaborazione e Applicazioni scientifiche e didattiche_
 
 *ERSU orari e contatti:*
