@@ -73,3 +73,11 @@ class Scrapable():
                 setattr(scrapable, col, row.get(col, None))
             scrapables.append(scrapable)
         return scrapables
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            raise NotImplementedError()
+        return self.values == other.values
+
+    def __hash__(self):
+        return hash(self.values)

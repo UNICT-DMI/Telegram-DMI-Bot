@@ -203,8 +203,8 @@ def get_esami_text_inline_keyboard(context: CallbackContext) -> (str, InlineKeyb
 
 
 def generate_esami_text(user_dict: dict) -> str:
-    """Called after the search button in the /esami command has been pressed.
-    Executes the query and returns the the text to send to the user
+    """Called by :meth:`esami` after the search button in the /esami command has been pressed.
+    Executes the query and returns the text to send to the user
 
     Args:
         user_dict (:class:`dict`): dictionary that stores the user selected parameters to use in the query

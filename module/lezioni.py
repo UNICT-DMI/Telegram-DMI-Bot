@@ -206,8 +206,8 @@ def get_lezioni_text_InLineKeyboard(context: CallbackContext) -> (str, InlineKey
 
 
 def generate_lezioni_text(user_dict) -> str:
-    """Called after the search button in the /lezioni command has been pressed.
-    Executes the query and returns the the text to send to the user
+    """Called by :meth:`lezioni` after the search button in the /lezioni command has been pressed.
+    Executes the query and returns the text to send to the user
 
     Args:
         user_dict (:class:`dict`): dictionary that stores the user selected parameters to use in the query

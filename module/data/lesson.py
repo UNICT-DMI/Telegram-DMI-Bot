@@ -104,7 +104,7 @@ class Lesson(Scrapable):
                                 orario = orario.replace(ora_inizio + "-" + ora_fine, '')
                                 aula = orario[2:]
 
-                                lesson = Lesson(nome=td_all[0].text,
+                                lesson = cls(nome=td_all[0].text,
                                                 giorno_settimana=str(giorno),
                                                 ora_inizio=ora_inizio,
                                                 ora_fine=ora_fine,

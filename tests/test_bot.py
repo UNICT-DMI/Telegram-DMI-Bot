@@ -70,6 +70,7 @@ async def test_help_buttons(client: TelegramClient):
             "md_opismanager",
             "md_contributors",
             "md_help",
+            "exit_cmd",
         )
 
         for button in buttons:
@@ -85,8 +86,8 @@ async def test_help_buttons(client: TelegramClient):
 
 
 @pytest.mark.asyncio
-async def test_rappresentanti_md_buttons(client: TelegramClient):
-    """Tests all the md buttons in the rappresentanti sub-menu
+async def test_rappresentanti_buttons(client: TelegramClient):
+    """Tests all the buttons in the rappresentanti sub-menu
 
     Args:
         client (TelegramClient): client used to simulate the user

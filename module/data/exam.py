@@ -97,27 +97,27 @@ class Exam(Scrapable):
 
         url_exams = {
             "l-31": [  # Informatica Triennale
-                "http://web.dmi.unict.it/corsi/l-31/esami?sessione=1&aa=" + year_exams,
-                "http://web.dmi.unict.it/corsi/l-31/esami?sessione=2&aa=" + year_exams,
-                "http://web.dmi.unict.it/corsi/l-31/esami?sessione=3&aa=" + year_exams
+                f"http://web.dmi.unict.it/corsi/l-31/esami?sessione=1&aa={year_exams}",
+                f"http://web.dmi.unict.it/corsi/l-31/esami?sessione=2&aa={year_exams}",
+                f"http://web.dmi.unict.it/corsi/l-31/esami?sessione=3&aa={year_exams}"
             ],
             "lm-18": [  # Informatica Magistrale
-                "http://web.dmi.unict.it/corsi/lm-18/esami?sessione=1&aa=" + year_exams,
-                "http://web.dmi.unict.it/corsi/lm-18/esami?sessione=2&aa=" + year_exams,
-                "http://web.dmi.unict.it/corsi/lm-18/esami?sessione=3&aa=" + year_exams
+                f"http://web.dmi.unict.it/corsi/lm-18/esami?sessione=1&aa={year_exams}",
+                f"http://web.dmi.unict.it/corsi/lm-18/esami?sessione=2&aa={year_exams}",
+                f"http://web.dmi.unict.it/corsi/lm-18/esami?sessione=3&aa={year_exams}"
             ],
             "l-35": [  # Matematica Triennale
-                "http://web.dmi.unict.it/corsi/l-35/esami?sessione=1&aa=" + year_exams,
-                "http://web.dmi.unict.it/corsi/l-35/esami?sessione=2&aa=" + year_exams,
-                "http://web.dmi.unict.it/corsi/l-35/esami?sessione=3&aa=" + year_exams
+                f"http://web.dmi.unict.it/corsi/l-35/esami?sessione=1&aa={year_exams}",
+                f"http://web.dmi.unict.it/corsi/l-35/esami?sessione=2&aa={year_exams}",
+                f"http://web.dmi.unict.it/corsi/l-35/esami?sessione=3&aa={year_exams}"
             ],
             "lm-40": [  # Matematica Magistrale
-                "http://web.dmi.unict.it/corsi/lm-40/esami?sessione=1&aa=" + year_exams,
-                "http://web.dmi.unict.it/corsi/lm-40/esami?sessione=2&aa=" + year_exams,
-                "http://web.dmi.unict.it/corsi/lm-40/esami?sessione=3&aa=" + year_exams
+                f"http://web.dmi.unict.it/corsi/lm-40/esami?sessione=1&aa={year_exams}",
+                f"http://web.dmi.unict.it/corsi/lm-40/esami?sessione=2&aa={year_exams}",
+                f"http://web.dmi.unict.it/corsi/lm-40/esami?sessione=3&aa={year_exams}"
             ]
         }
-        exams: List[Exam] = []
+        exams = []
         year = ""
 
         for course in cls.COURSES:
@@ -143,8 +143,7 @@ class Exam(Scrapable):
                                 if (cells[1]).text == exam.insegnamento:  # se abbiamo trovato la materia nell'array
                                     flag = True  # setto la sentinella a true che indica che la materia era già presente nell'array delle materia dunque dobbiamo solo aggiungere gli appelli della nuova sessione>1
 
-                                    for cell in cells[
-                                            3:]:  # dato che la materia è già presente nell'array, i primi 3 valori (id, docenti e nome) non ci interessano
+                                    for cell in cells[3:]:  # dato che la materia è già presente nell'array, i primi 3 valori (id, docenti e nome) non ci interessano
                                         if cell.has_attr("class"):  # se la cella ha l'attributo class allora è un'appello straordinario
                                             exam.append_session("straordinaria", cell.text)
                                         elif cell.text.strip() != "":  # altrimenti è un appello della sessione che stiamo analizzando
