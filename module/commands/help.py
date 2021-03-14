@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext
 from module.shared import AULARIO, CLOUD, CUSicon, check_log
 
 
-def help(update: Update, context: CallbackContext) -> None:
+def help_cmd(update: Update, context: CallbackContext) -> None:
     """Called by the /help command.
     Shows all the actions supported by the bot
 

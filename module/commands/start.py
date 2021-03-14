@@ -1,8 +1,7 @@
 """/start command"""
-from telegram import Update
+from telegram import KeyboardButton, ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
-from module.shared import read_md
-from module.utils.keyboard_utils import get_help_keyboard
+from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, read_md
 
 
 def start(update: Update, context: CallbackContext):
@@ -16,3 +15,16 @@ def start(update: Update, context: CallbackContext):
     reply_keyboard = get_help_keyboard()
     message_text = read_md("start")
     context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, reply_markup=reply_keyboard)
+
+
+def get_help_keyboard() -> ReplyKeyboardMarkup:
+    """Generates the reply keyboard shown at the bottom of the screen
+
+    Returns:
+        :class:`ReplyKeyboardMarkup`: reply keyboard
+    """
+    kb = [
+        [KeyboardButton(HELP), KeyboardButton(SEGNALAZIONE)],
+        [KeyboardButton(AULARIO), KeyboardButton(CLOUD)],
+    ]
+    return ReplyKeyboardMarkup(kb, resize_keyboard=True)

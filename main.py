@@ -11,7 +11,7 @@ from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_inse
 from module.commands.professori import prof
 from module.commands.start import start
 from module.commands.stats import stats, stats_tot
-from module.commands.help import help
+from module.commands.help import help_cmd
 from module.commands.report import report
 from module.commands.request import add_db, request, request_handler
 from module.commands.gdrive import drive, drive_handler
@@ -30,7 +30,7 @@ def add_commands(up: Updater):
     Args:
         up (Updater): supplyed Updater
     """
-    #TODO: add all commands
+    #TODO: add all commands and remove the comment in the main
     commands = [
         BotCommand("start", "messaggio di benvenuto"),
         BotCommand("help ", "help"),
@@ -41,6 +41,11 @@ def add_commands(up: Updater):
 
 
 def add_handlers(dp: Dispatcher):
+    """Adds all the handlers the bot will react to
+
+    Args:
+        dp (:class:`Dispatcher`): supplyed Dispatcher
+    """
     dp.add_error_handler(error_handler)
     dp.add_handler(MessageHandler(Filters.all, log_message), 1)
 
@@ -69,8 +74,8 @@ def add_handlers(dp: Dispatcher):
 
     dp.add_handler(CommandHandler('aulario', aulario))
     dp.add_handler(MessageHandler(Filters.regex(AULARIO), aulario))
-    dp.add_handler(CommandHandler('help', help))
-    dp.add_handler(MessageHandler(Filters.regex(HELP), help))
+    dp.add_handler(CommandHandler('help', help_cmd))
+    dp.add_handler(MessageHandler(Filters.regex(HELP), help_cmd))
     dp.add_handler(CommandHandler('contributors', informative_callback))
 
     dp.add_handler(CommandHandler('rappresentanti', informative_callback))
@@ -139,11 +144,17 @@ def add_handlers(dp: Dispatcher):
 
 
 def add_jobs(job_queue: JobQueue):
+    """Schedule the jobs in the JobQueue
+
+    Args:
+        job_queue (:class:`JobQueue`): job queue
+    """
     job_queue.run_repeating(updater_lep, interval=86400, first=0)  # job_updater_lep (24h)
     job_queue.run_daily(updater_schedule, time=time(hour=1, minute=5))  # you need to put 1 hour late cause of the timezone
 
 
 def main():
+    """Main function"""
     updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
     #add_commands(updater)
     add_handlers(updater.dispatcher)
