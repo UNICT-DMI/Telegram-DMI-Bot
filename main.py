@@ -5,7 +5,7 @@ from telegram import Update
 from telegram.ext import CallbackContext, CallbackQueryHandler, CommandHandler, Dispatcher, Filters, JobQueue, MessageHandler, Updater
 
 from module.aulario import aulario, calendar_handler, month_handler, subjects_arrow_handler, subjects_handler, updater_schedule
-from module.callback_handlers import callback, generic_button_handler, informative_callback, md_handler, none_handler, submenu_handler, submenu_with_args_handler
+from module.callback_handlers import generic_button_handler, informative_callback, md_handler, none_handler, submenu_handler, submenu_with_args_handler
 from module.commands.esami import esami, esami_handler, esami_input_insegnamento
 from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
 from module.commands.professori import prof
@@ -14,43 +14,19 @@ from module.commands.stats import stats, stats_tot
 from module.commands.help import help
 from module.commands.report import report
 from module.commands.request import add_db, request, request_handler
+from module.commands.gdrive import drive, drive_handler
 from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni
-from module.gdrive import drive
 from module.gitlab import git, gitlab_handler
 from module.job_updater import updater_lep
 from module.regolamento_didattico import magistrale, regdid, regolamenti, regolamentodidattico, regolamentodidattico_button, triennale
 from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, config_map, give_chat_id
 from module.utils.send_utils import send_chat_ids, send_errors, send_log
-
-
-def logging_message(update: Update, context: CallbackContext):
-    try:
-        message_id = update.message.message_id  #ID MESSAGGIO
-        user = update.message.from_user  # Restituisce un oggetto Telegram.User
-        chat = update.message.chat  # Restituisce un oggetto Telegram.Chat
-        text = update.message.text  #Restituisce il testo del messaggio
-        date = update.message.date  #Restituisce la data dell'invio del messaggio
-        message = "\n___ID MESSAGE: "  + str(message_id) + "____\n" + \
-           "___INFO USER___\n" + \
-           "user_id:"    + str(user.id) + "\n" + \
-           "user_name:"    + str(user.username) + "\n" + \
-           "user_firstlastname:" + str(user.first_name) + " " + str(user.last_name) + "\n" + \
-           "___INFO CHAT___\n" + \
-           "chat_id:"    + str(chat.id) + "\n" + \
-           "chat_type:"    + str(chat.type)+"\n" + "chat_title:" + str(chat.title) + "\n" + \
-           "___TESTO___\n" + \
-           "text:"     + str(text) + "\n" + \
-           "date:"     + str(date) + \
-           "\n_____________\n"
-
-        log_tmp = open("logs/logs.txt", "a+")
-        log_tmp.write("\n" + message)
-    except:
-        pass
+from module.debug import error_handler, log_message
 
 
 def add_handlers(dp: Dispatcher):
-    dp.add_handler(MessageHandler(Filters.all, logging_message), 1)
+    dp.add_error_handler(error_handler)
+    dp.add_handler(MessageHandler(Filters.all, log_message), 1)
 
     #Easter Egg
     dp.add_handler(CommandHandler('smonta_portoni', smonta_portoni))
@@ -109,8 +85,8 @@ def add_handlers(dp: Dispatcher):
     dp.add_handler(CallbackQueryHandler(subjects_arrow_handler, pattern='pg_.*'))
 
     # drive & gitlab buttons
-    dp.add_handler(CallbackQueryHandler(callback, pattern='Drive_.*'))
-    dp.add_handler(CallbackQueryHandler(request_handler, pattern=r'drive_accept_\d*'))
+    dp.add_handler(CallbackQueryHandler(drive_handler, pattern=r'^drive_file_.*'))
+    dp.add_handler(CallbackQueryHandler(request_handler, pattern=r'^drive_accept_.*'))
     dp.add_handler(CallbackQueryHandler(gitlab_handler, pattern='git_.*'))
 
     # regolamento didattico
