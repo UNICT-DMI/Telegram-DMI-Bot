@@ -56,12 +56,13 @@ def stats_gen(update: Update, context: CallbackContext, days: int = 0):
     text = f"Record di {days} giorni:\n" if days > 0 else "Record Globale:\n"
 
     results = DbManager.select_from(select='type, COUNT(chat_id) as n', table_name='stat_list', where=where, group_by="type", order_by="n DESC")
-    rows = [row for row in results if row['type'] not in EASTER_EGG]
+    print(results)
+    rows = [row for row in results if row['Type'] not in EASTER_EGG]
 
     total = 0
     for row in rows:
-        text += f"{row[1]} : {row[0]}\n"
-        total += row[1]
+        text += f"{row['Type']} : {row['n']}\n"
+        total += row['n']
     text += f"\nTotale: {total}\nMedia per comando: {round(total/(len(rows) if rows else 1), 2)}"
 
     context.bot.sendMessage(chat_id=chat_id, text=text)
@@ -78,8 +79,8 @@ def send_graph(rows: list, bot: Bot, chat_id: int):
         chat_id (:class:`int`): id of the chat
     """
     # Consider only the first 10 values
-    x = [v[0] for v in rows[:10]]
-    y = [v[1] for v in rows[:10]]
+    x = [v['Type'] for v in rows[:10]]
+    y = [v['n'] for v in rows[:10]]
 
     _, ax = plt.subplots()
 
