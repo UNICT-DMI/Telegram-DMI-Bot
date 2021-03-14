@@ -45,7 +45,10 @@ async def bot():
         None: wait for the testing session to end
     """
     print("[info] started telegram bot")
-    config_map['token'] = config_map['test']['token']
+    for test_key in config_map['test']:
+        if test_key in config_map:
+            config_map[test_key] = config_map['test'][test_key]
+
     updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
     add_handlers(updater.dispatcher)
     updater.start_polling()

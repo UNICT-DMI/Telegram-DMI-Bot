@@ -152,30 +152,19 @@ async def test_esami_cmd(client: TelegramClient):
 
         assert resp.text
 
-        await resp.click(data="sm_esami_button_anno")  # click the "Anno" button
-        resp: Message = await conv.get_edit()
+        buttons = (
+            "sm_esami_button_anno",
+            "esami_button_anno_1° anno",
+            "sm_esami_button_sessione",
+            "esami_button_sessione_prima",
+            "sm_esami_button_insegnamento",
+        )
 
-        assert resp.text
+        for button in buttons:
+            await resp.click(data=button)  # click the button
+            resp: Message = await conv.get_edit()
 
-        await resp.click(data="esami_button_anno_1° anno")  # click the "1° anno" button
-        resp: Message = await conv.get_edit()
-
-        assert resp.text
-
-        await resp.click(data="sm_esami_button_sessione")  # click the "Sessione" button
-        resp: Message = await conv.get_edit()
-
-        assert resp.text
-
-        await resp.click(data="esami_button_sessione_prima")  # click the "Prima" button
-        resp: Message = await conv.get_edit()
-
-        assert resp.text
-
-        await resp.click(data="sm_esami_button_insegnamento")  # click the "Insegnamento" button
-        resp: Message = await conv.get_edit()
-
-        assert resp.text
+            assert resp.text
 
         await conv.send_message("ins: programmazione")  # send a message
         resp: Message = await conv.get_response()
@@ -203,30 +192,19 @@ async def test_lezioni_cmd(client: TelegramClient):
 
         assert resp.text
 
-        await resp.click(data="sm_lezioni_button_anno")  # click the "Anno" button
-        resp: Message = await conv.get_edit()
+        buttons = (
+            "sm_lezioni_button_anno",
+            "lezioni_button_anno_1 anno",
+            "sm_lezioni_button_giorno",
+            "lezioni_button_giorno_1 giorno",
+            "sm_lezioni_button_insegnamento",
+        )
 
-        assert resp.text
+        for button in buttons:
+            await resp.click(data=button)  # click the button
+            resp: Message = await conv.get_edit()
 
-        await resp.click(data="lezioni_button_anno_1 anno")  # click the "1° anno" button
-        resp: Message = await conv.get_edit()
-
-        assert resp.text
-
-        await resp.click(data="sm_lezioni_button_giorno")  # click the "Giorno" button
-        resp: Message = await conv.get_edit()
-
-        assert resp.text
-
-        await resp.click(data="lezioni_button_giorno_1 giorno")  # click the "LUN" button
-        resp: Message = await conv.get_edit()
-
-        assert resp.text
-
-        await resp.click(data="sm_lezioni_button_insegnamento")  # click the "Insegnamento" button
-        resp: Message = await conv.get_edit()
-
-        assert resp.text
+            assert resp.text
 
         await conv.send_message("nome: programmazione")  # send a message
         resp: Message = await conv.get_response()
@@ -252,6 +230,34 @@ async def test_prof_cmd(client: TelegramClient):
 
         for command in commands:
             await conv.send_message(command)  # send a command
+            resp: Message = await conv.get_response()
+
+            assert resp.text
+
+
+@pytest.mark.asyncio
+async def test_report_cmd(client: TelegramClient):
+    """Tests the /report command
+
+    Args:
+        client (TelegramClient): client used to simulate the user
+    """
+    conv: Conversation
+    async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
+
+        await conv.send_message("/report")  # send a command
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        commands = ("/report Test", "/report Test Report")
+
+        for command in commands:
+            await conv.send_message(command)  # send a command
+            resp: Message = await conv.get_response()
+
+            assert resp.text
+
             resp: Message = await conv.get_response()
 
             assert resp.text

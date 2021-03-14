@@ -11,13 +11,13 @@ from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_inse
 from module.commands.professori import prof
 from module.commands.start import start
 from module.commands.stats import stats, stats_tot
+from module.commands.report import report
 from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni
 from module.gdrive import drive
 from module.gitlab import git, gitlab_handler
 from module.help import help
 from module.job_updater import updater_lep
 from module.regolamento_didattico import magistrale, regdid, regolamenti, regolamentodidattico, regolamentodidattico_button, triennale
-from module.report import report
 from module.request import add_db, request
 from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, config_map, give_chat_id
 from module.utils.send_utils import send_chat_ids, send_errors, send_log
