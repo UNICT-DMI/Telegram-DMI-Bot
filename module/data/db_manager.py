@@ -126,7 +126,7 @@ class DbManager():
         return query_result
 
     @classmethod
-    def count_from(cls, table_name: str, select: str = "*", where: str = "", where_args: tuple = None) -> int:
+    def count_from(cls, table_name: str, select: str = "*", where: str = "", where_args: tuple = None, group_by: str = "") -> int:
         """Returns the number of rows found with the query.
         Executes "SELECT COUNT(select) FROM table_name [WHERE where (with where_args)]"
 
@@ -135,6 +135,7 @@ class DbManager():
             select (:class:`str`, optional): columns considered for the query. Defaults to "*".
             where (:class:`str`, optional): where clause, with ? placeholders for the where_args. Defaults to "".
             where_args (:class:`tuple`, optional): args used in the where clause. Defaults to None.
+            group_by (:class:`str`, optional): group by clause. Defaults to "".
 
         Returns:
             int: number of rows
@@ -142,14 +143,18 @@ class DbManager():
         conn, cur = cls.get_db()
 
         where = f"WHERE {where}" if where else ""
+        group_by = f"GROUP BY {group_by}" if group_by else ""
 
-        cls.__query_execute(cur=cur, query=f"SELECT COUNT({select}) as number FROM {table_name} {where}", args=where_args, error_str="count_from")
+        cls.__query_execute(cur=cur,
+                            query=f"SELECT COUNT({select}) as number FROM {table_name} {where} {group_by}",
+                            args=where_args,
+                            error_str="count_from")
 
         query_result = cur.fetchall()
         conn.commit()
         cur.close()
         conn.close()
-        return query_result[0]['number'] if len(query_result) > 0 else None
+        return query_result[0]['number'] if len(query_result) > 0 else 0
 
     @classmethod
     def insert_into(cls, table_name: str, values: tuple, columns: tuple = "", multiple_rows: bool = False):

@@ -42,6 +42,18 @@ class Scrapable():
         DbManager.insert_into(table_name=cls().table, columns=cls().columns, values=values, multiple_rows=True)
 
     @classmethod
+    def _find(cls, **kwargs) -> list:
+        """Produces a list of scrapables from the database, based on the provided parametes
+
+        Returns:
+            :class:`list`: result of the query on the database
+        """
+        where = "and".join((f" {c} = ? " for c in kwargs))
+        values = tuple(v for v in kwargs.values())
+        db_results = DbManager.select_from(table_name=cls().table, where=where, where_args=values)
+        return cls._query_result_initializer(db_results)
+
+    @classmethod
     def find_all(cls) -> list:
         """Finds all the scrapable objects present in the database
 
@@ -50,6 +62,20 @@ class Scrapable():
         """
         db_results = DbManager.select_from(table_name=cls().table)
         return cls._query_result_initializer(db_results)
+
+    @classmethod
+    def count(cls, where: str = "", where_args: tuple = None, group_by: str = "") -> int:
+        """Count the number of scrapable objects present in the database, based on the parameters
+
+        Args:
+            where (:class:`str`, optional): where clause, with ? placeholders for the where_args. Defaults to "".
+            where_args (:class:`tuple`, optional): args used in the where clause. Defaults to None.
+            group_by (:class:`str`, optional): group by clause. Defaults to "".
+
+        Returns:
+            :class:`int`: number of scrapable objects
+        """
+        return DbManager.count_from(table_name=cls().table, where=where, where_args=where_args, group_by=group_by)
 
     @classmethod
     def delete_all(cls):

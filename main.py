@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """Main module"""
-from datetime import time
 from telegram import BotCommand
 from telegram.ext import CallbackQueryHandler, CommandHandler, Dispatcher, Filters, JobQueue, MessageHandler, Updater
 
-from module.aulario import aulario, calendar_handler, month_handler, subjects_arrow_handler, subjects_handler, updater_schedule
-from module.callback_handlers import exit_handler, informative_callback, md_handler, none_handler, submenu_handler, submenu_with_args_handler
+from module.commands.aulario import aulario, calendar_handler, month_handler, subjects_arrow_handler, subjects_handler
+from module.callback_handlers import exit_handler, informative_callback, md_handler, none_handler, submenu_handler
 from module.commands.esami import esami, esami_handler, esami_input_insegnamento
 from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
 from module.commands.professori import prof
@@ -96,7 +95,6 @@ def add_handlers(dp: Dispatcher):
     dp.add_handler(CallbackQueryHandler(exit_handler, pattern='^(exit_cmd)'))
     dp.add_handler(CallbackQueryHandler(submenu_handler, pattern='sm_.*'))
     dp.add_handler(CallbackQueryHandler(md_handler, pattern='md_.*'))
-    dp.add_handler(CallbackQueryHandler(submenu_with_args_handler, pattern='sm&.*'))
     dp.add_handler(CallbackQueryHandler(none_handler, pattern='NONE'))
 
     # aulario and calendar
@@ -150,7 +148,6 @@ def add_jobs(job_queue: JobQueue):
         job_queue (:class:`JobQueue`): job queue
     """
     job_queue.run_repeating(updater_lep, interval=86400, first=0)  # job_updater_lep (24h)
-    job_queue.run_daily(updater_schedule, time=time(hour=1, minute=5))  # you need to put 1 hour late cause of the timezone
 
 
 def main():

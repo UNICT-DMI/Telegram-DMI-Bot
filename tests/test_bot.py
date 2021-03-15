@@ -236,6 +236,32 @@ async def test_prof_cmd(client: TelegramClient):
 
 
 @pytest.mark.asyncio
+async def test_aulario_cmd(client: TelegramClient):
+    """Tests the /aulario command
+
+    Args:
+        client (TelegramClient): client used to simulate the user
+    """
+    conv: Conversation
+    async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
+
+        await conv.send_message("/aulario")  # send a command
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        await resp.click(data="cal_0")  # click the button
+        resp: Message = await conv.get_response()
+
+        assert resp.text
+
+        await resp.click(data="sm_aulario")  # click the button
+        resp: Message = await conv.get_edit()
+
+        assert resp.text
+
+
+@pytest.mark.asyncio
 async def test_report_cmd(client: TelegramClient):
     """Tests the /report command
 

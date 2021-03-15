@@ -51,6 +51,16 @@ CREATE TABLE IF NOT EXISTS `exams` (
   `straordinaria` VARCHAR(255)
 );
 
+-- timetable_slots
+CREATE TABLE IF NOT EXISTS `timetable_slots` (
+  `ID` INTEGER PRIMARY KEY,
+  `nome` VARCHAR(255) NOT NULL,
+  `giorno` INT(4) NOT NULL,
+  `ora_inizio` VARCHAR(255) NOT NULL,
+  `ora_fine` VARCHAR(255) NOT NULL,
+  `aula` VARCHAR(255) NOT NULL
+);
+
 -- gitlab
 CREATE TABLE IF NOT EXISTS `gitlab` (
   `id` TEXT NOT NULL UNIQUE,

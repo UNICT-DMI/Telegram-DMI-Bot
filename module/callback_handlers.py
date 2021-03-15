@@ -4,7 +4,7 @@ from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 from module.shared import CUSicon, check_log, read_md
 # Needed to correctly run functions using globals()
-from module.aulario import aulario, aulario_subj
+from module.commands.aulario import aulario
 from module.commands.esami import esami_button_anno, esami_button_insegnamento, esami_button_sessione
 from module.commands.lezioni import lezioni_button_anno, lezioni_button_giorno, lezioni_button_insegnamento
 from module.commands.help import rapp_menu
@@ -60,21 +60,6 @@ def informative_callback(update: Update, context: CallbackContext):
     check_log(update, cmd)
     message_text = read_md(cmd)
     context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode=ParseMode.MARKDOWN)
-
-
-def submenu_with_args_handler(update: Update, context: CallbackContext):
-    """Called by the aulario.
-
-    Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-    """
-    query = update.callback_query
-    data = query.data
-    func_name = data.split('&')[1]
-    arg = data.split('&')[2]
-
-    globals()[func_name](query, context, query.message.chat_id, query.message.message_id, arg)
 
 
 def none_handler(update: Update, context: CallbackContext):

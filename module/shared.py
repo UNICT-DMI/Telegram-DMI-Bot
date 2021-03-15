@@ -1,4 +1,5 @@
 """Constants and common functions"""
+import json
 import logging
 from datetime import date, datetime
 import yaml
@@ -69,8 +70,22 @@ def read_md(namefile: str) -> str:
     return text
 
 
+def read_json(namefile: str) -> dict:
+    """Reads a json file
+
+    Args:
+        namefile (:class:`str`): name of the json file, without extension
+
+    Returns:
+        :class:`dict`: content of the json file, as a dictionary
+    """
+    with open(f"data/json/{namefile}.json", "r", encoding="utf8") as in_file:
+        result = json.load(in_file)
+    return result
+
+
 def check_log(update: Update, command_name: str, is_query: bool = False):
-    """[summary]
+    """If enabled, logs the command
 
     Args:
         update (:class:`Update`): update event
