@@ -15,7 +15,7 @@ def dict_factory(cursor: sqlite3.Cursor, row: sqlite3.Row) -> dict:
         row (:class:`sqlite3.Row`): rows of the database
 
     Returns:
-        dict: structure of the database used used by the cursor
+        :class:`dict`: structure of the database used used by the cursor
     """
     d = {}
     for idx, col in enumerate(cursor.description):
@@ -109,7 +109,7 @@ class DbManager():
             order_by (:class:`str`, optional): order by clause. Defaults to "".
 
         Returns:
-            list: rows from the select
+            :class:`list`: rows from the select
         """
         conn, cur = cls.get_db()
 
@@ -138,7 +138,7 @@ class DbManager():
             group_by (:class:`str`, optional): group by clause. Defaults to "".
 
         Returns:
-            int: number of rows
+            :class:`int`: number of rows
         """
         conn, cur = cls.get_db()
 

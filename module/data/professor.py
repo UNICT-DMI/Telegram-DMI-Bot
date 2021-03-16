@@ -14,9 +14,6 @@ logger = logging.getLogger(__name__)
 class Professor(Scrapable):
     """Professor
 
-    Base:
-        Scrapable (:class:`Scrapable`): base class
-
     Attributes:
         ID (:class:`int`): primary key of the table
         ruolo (:class:`str`): role of the professor
@@ -136,7 +133,7 @@ class Professor(Scrapable):
         """Produces a list of professors from the database, based on the provided parametes
 
         Returns:
-            :class:`List[Professor]`: result of the query on the database
+            :class:`List[module.data.exam.Professor]`: result of the query on the database
         """
         db_results = DbManager.select_from(table_name=cls().table,
                                            where="nome LIKE ? OR cognome LIKE ?",
@@ -148,7 +145,7 @@ class Professor(Scrapable):
         """Finds all the professors present in the database
 
         Returns:
-            :class:`List['Professor']`: list of all the professors
+            :class:`List[module.data.exam.Professor]`: list of all the professors
         """
         return super().find_all()
 

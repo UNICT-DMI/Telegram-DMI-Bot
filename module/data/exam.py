@@ -15,9 +15,6 @@ logger = logging.getLogger(__name__)
 class Exam(Scrapable):
     """Exam
 
-    Base:
-        Scrapable (:class:`Scrapable`): base class
-
     Attributes:
         anno (:class:`str`): [1° anno | 2° anno | 3° anno]
         cdl (:class:`str`): "Corso Di Laurea"
@@ -180,7 +177,7 @@ class Exam(Scrapable):
         """Produces a list of exams from the database, based on the provided parametes
 
         Returns:
-            :class:`List[Exam]`: result of the query on the database
+            :class:`List[module.data.exam.Exam]`: result of the query on the database
         """
         if not select_sessione:
             select_sessione = "prima, seconda, terza, straordinaria"
@@ -206,7 +203,7 @@ class Exam(Scrapable):
         """Finds all the exams present in the database
 
         Returns:
-            :class:`List['Exam']`: list of all the exams
+            :class:`List[module.data.exam.Exam]`: list of all the exams
         """
         return super().find_all()
 

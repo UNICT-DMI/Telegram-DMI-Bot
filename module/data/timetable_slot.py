@@ -15,9 +15,6 @@ logger = logging.getLogger(__name__)
 class TimetableSlot(Scrapable):
     """TimetableSlot
 
-    Base:
-        Scrapable (:class:`Scrapable`): base class
-
     Attributes:
         ID (:class:`int`): id of the TimetableSlot
         nome (:class:`str`): name of the subject
@@ -106,7 +103,7 @@ class TimetableSlot(Scrapable):
         """Finds all the timetable slots present in the database
 
         Returns:
-            :class:`List['TimetableSlot']`: list of all the timetable slots
+            :class:`List[module.data.exam.TimetableSlot]`: list of all the timetable slots
         """
         return super().find_all()
 
@@ -115,7 +112,7 @@ class TimetableSlot(Scrapable):
         """Finds the maximum value of giorno
 
         Returns:
-            :class:`List[TimetableSlot]`: result of the query on the database
+            :class:`List[module.data.exam.TimetableSlot]`: result of the query on the database
         """
         db_results = DbManager.select_from(select="MAX(giorno) as g", table_name=cls().table)
         if not db_results:

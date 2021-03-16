@@ -14,9 +14,6 @@ logger = logging.getLogger(__name__)
 class Lesson(Scrapable):
     """Lesson
 
-    Base:
-        Scrapable (:class:`Scrapable`): base class
-
     Attributes:
         nome (:class:`str`): name of the subject
         giorno_settimana (:class:`str`): day of the week
@@ -120,7 +117,7 @@ class Lesson(Scrapable):
         """Produces a list of lessons from the database, based on the provided parametes
 
         Returns:
-            :class:`List[Lesson]`: result of the query on the database
+            :class:`List[module.data.exam.Lesson]`: result of the query on the database
         """
         if where_giorno:
             where_giorno = f"and (giorno_settimana = {where_giorno})"
@@ -142,7 +139,7 @@ class Lesson(Scrapable):
         """Finds all the lessons present in the database
 
         Returns:
-            :class:`List['Lesson']`: list of all the lessons
+            :class:`List[module.data.exam.Lesson]`: list of all the lessons
         """
         return super().find_all()
 

@@ -1,4 +1,4 @@
-"""Data management module"""
+"""Data storage and fetch"""
 from .db_manager import DbManager
 from .scrapable import Scrapable
 from .exam import Exam

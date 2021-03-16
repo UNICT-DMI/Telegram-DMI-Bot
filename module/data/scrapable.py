@@ -46,7 +46,7 @@ class Scrapable():
         """Produces a list of scrapables from the database, based on the provided parametes
 
         Returns:
-            :class:`list`: result of the query on the database
+            :class:`List[module.data.exam.Scrapable]`: result of the query on the database
         """
         where = "and".join((f" {c} = ? " for c in kwargs))
         values = tuple(v for v in kwargs.values())
@@ -58,7 +58,7 @@ class Scrapable():
         """Finds all the scrapable objects present in the database
 
         Returns:
-            :class:`list`: list of all the scrapable objects
+            :class:`List[module.data.exam.Scrapable]`: list of all the scrapable objects
         """
         db_results = DbManager.select_from(table_name=cls().table)
         return cls._query_result_initializer(db_results)
@@ -90,7 +90,7 @@ class Scrapable():
             db_results (:class:`list`): list of rows produced by the database query
 
         Returns:
-            :class:`list`: list of initialized scrapable objects
+            :class:`module.data.exam.Scrapable`: list of initialized scrapable objects
         """
         scrapables = []
         for row in db_results:

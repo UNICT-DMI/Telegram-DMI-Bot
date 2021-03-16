@@ -11,7 +11,7 @@ from module.commands.help import rapp_menu
 
 
 def submenu_handler(update: Update, context: CallbackContext):
-    """Called by "sm_.*" callbacks.
+    """Called by sm_.* callbacks.
     Opens the requested sub-menu, usually by editing the message and adding an InlineKeyboard
 
     Args:
