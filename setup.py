@@ -17,6 +17,8 @@ def create_argparser() -> argparse.ArgumentParser:
     parser.add_argument('--test_session', help="session of the telegram app used for testing")
     parser.add_argument('--test_tag', help="tag of the telegram bot used for testing. Include the '@' character")
     parser.add_argument('--test_token', help="token for the telegram bot used for testing")
+    parser.add_argument('--test_representatives_group', help="id of the representatives group used for testing")
+    parser.add_argument('--test_dev_group_chatid', help="id of the representatives group used for testing")
     parser.add_argument('-p', '--path', help="path of the setting file (default: %(default)s)", default="config/settings.yaml")
     return parser
 
@@ -39,6 +41,8 @@ def main():
     config_map['test']['session'] = args['test_session']
     config_map['test']['tag'] = args['test_tag']
     config_map['test']['token'] = args['test_token']
+    config_map['test']['representatives_group'] = args['test_representatives_group']
+    config_map['test']['dev_group_chatid'] = args['test_dev_group_chatid']
 
     with open(args['path'], "w") as yaml_file:
         yaml.dump(config_map, yaml_file)

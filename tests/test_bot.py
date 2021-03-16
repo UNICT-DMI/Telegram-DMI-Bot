@@ -4,6 +4,7 @@ from telethon.sync import TelegramClient
 from telethon.tl.custom.message import Message
 from telethon.tl.custom.conversation import Conversation
 from module.shared import config_map
+from module.data import DbManager
 
 TIMEOUT = 8
 bot_tag = config_map['test']['tag']
@@ -321,9 +322,9 @@ async def test_request_cmd(client: TelegramClient):
     Args:
         client (TelegramClient): client used to simulate the user
     """
+    DbManager.delete_from("Chat_id_List")
     conv: Conversation
     async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
-
         await conv.send_message("/request")  # send a command
         resp: Message = await conv.get_response()
 
