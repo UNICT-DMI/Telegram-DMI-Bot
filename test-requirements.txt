@@ -1,3 +1,0 @@
-pytest
-telethon
-pytest-asyncio

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Main module"""
 from telegram import BotCommand
-from telegram.ext import CallbackQueryHandler, CommandHandler, Dispatcher, Filters, JobQueue, MessageHandler, Updater
+from telegram.ext import CallbackQueryHandler, CommandHandler, Dispatcher, Filters, MessageHandler, Updater
 
 from module.commands.aulario import aulario, calendar_handler, month_handler, subjects_arrow_handler, subjects_handler
 from module.callback_handlers import exit_handler, informative_callback, md_handler, none_handler, submenu_handler
@@ -141,13 +141,13 @@ def add_handlers(dp: Dispatcher):
         dp.add_handler(CommandHandler('stats_tot', stats_tot))
 
 
-def add_jobs(job_queue: JobQueue):
+def add_jobs(dp: Dispatcher):
     """Schedule the jobs in the JobQueue
 
     Args:
         job_queue (:class:`JobQueue`): job queue
     """
-    job_queue.run_repeating(updater_lep, interval=86400, first=0)  # job_updater_lep (24h)
+    dp.job_queue.run_repeating(updater_lep, interval=86400, first=1)  # job_updater_lep (24h)
 
 
 def main():
@@ -155,7 +155,7 @@ def main():
     updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
     #add_commands(updater)
     add_handlers(updater.dispatcher)
-    add_jobs(updater.job_queue)
+    add_jobs(updater.dispatcher)
 
     updater.start_polling()
     updater.idle()
