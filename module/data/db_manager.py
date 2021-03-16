@@ -162,10 +162,10 @@ class DbManager():
         Executes "INSERT INTO table_name ([columns]) VALUES (placeholders)"
 
         Args:
-            table_name (:class`str`): name of the table used in the INSERT INTO
-            values (:class`tuple`): values to be inserted. If multiple_rows is true, tuple of tuples of values to be inserted
-            columns (:class`tuple`, optional): columns that will be inserted, as a tuple of strings. Defaults to None.
-            multiple_rows (:class`bool`): whether or not multiple rows will be inserted at the same time
+            table_name (:class:`str`): name of the table used in the INSERT INTO
+            values (:class:`tuple`): values to be inserted. If multiple_rows is true, tuple of tuples of values to be inserted
+            columns (:class:`tuple`, optional): columns that will be inserted, as a tuple of strings. Defaults to None.
+            multiple_rows (:class:`bool`): whether or not multiple rows will be inserted at the same time
         """
         conn, cur = cls.get_db()
 
@@ -193,9 +193,9 @@ class DbManager():
         Executes "DELETE FROM table_name [WHERE where (with where_args)]"
 
         Args:
-            table_name (:class`str`): name of the table used in the DELETE FROM
-            where (:class`str`, optional): where clause, with ? placeholders for the where args. Defaults to "".
-            where_args (:class`tuple`, optional): args used in the where clause. Defaults to None.
+            table_name (:class:`str`): name of the table used in the DELETE FROM
+            where (:class:`str`, optional): where clause, with ? placeholders for the where args. Defaults to "".
+            where_args (:class:`tuple`, optional): args used in the where clause. Defaults to None.
         """
         conn, cur = cls.get_db()
 
