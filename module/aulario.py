@@ -141,28 +141,16 @@ def aulario_subj(update: Update, context: CallbackContext, chat_id, message_id, 
         context.bot.sendMessage(text = text, reply_markup = reply_markup, chat_id = chat_id)
 
 def get_subjs_keyboard(page,day,data):
-    keys = data[day]
-    subjs = list(keys)
-    t_subjs = subjs
-    if day == '0':
-        t_subjs = []
-        for s in subjs:
-            t = keys[s]['times'][-1]
-            h = t.split(':')[0]
-            m = t.split(':')[1]
-            now = datetime.now()
-            last = now.replace(hour = int(h), minute = int(m), second = 0, microsecond = 0)
-            if now < last:
-                t_subjs.append(s)
+    subj_now = get_subj_now(page, day, data)
 
     keyboard = []
-    for s in t_subjs[page*5:(page*5)+5]:
-        keyboard.append([InlineKeyboardButton(data[day][s]["subj"],callback_data = 'sb_{0}_{1}'.format(day,s))])
+    for s in subj_now:
+        keyboard.append([InlineKeyboardButton(s, callback_data = 'sb_{0}_{1}'.format(day,s))])
 
     arrows = []
     if page != 0:
         arrows.append(InlineKeyboardButton('◀️',callback_data = 'pg_{0}_{1}_l'.format(day,page)))
-    if len(t_subjs) > page*5+5:
+    if len(subj_now) > page*5+5:
         arrows.append(InlineKeyboardButton('▶️',callback_data = 'pg_{0}_{1}_r'.format(day,page)))
     keyboard.append(arrows)
     return keyboard
@@ -271,3 +259,24 @@ def create_map(sub,h,room):
         b1_img.save(bio, 'JPEG')
         bio.seek(0)
         return bio
+
+def get_subj_now(page, day,data):
+    keys = data[day]
+    subjs = list(keys)
+    t_subjs = subjs
+    if day == '0':
+        t_subjs = []
+        for s in subjs:
+            t = keys[s]['times'][-1]
+            h = t.split(':')[0]
+            m = t.split(':')[1]
+            now = datetime.now()
+            last = now.replace(hour = int(h), minute = int(m), second = 0, microsecond = 0)
+            if now < last:
+                t_subjs.append(s)
+    
+    subj_now = []
+    for s in t_subjs[page*5:(page*5)+5]:
+        subj_now.append(data[day][s]["subj"])
+    
+    return subj_now
