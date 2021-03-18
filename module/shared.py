@@ -12,7 +12,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 # config
-with open('config/settings.yaml', 'r') as yaml_config:
+with open(r'D:\Programmazione\VSCode\Telegram-DMI-Bot\config\settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
 # Icons
@@ -36,9 +36,9 @@ def send_message(update: Update, context: CallbackContext, messaggio: str):
     """Replies with a message, making sure the maximum lenght text allowed is respected
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        messaggio (:class:`str`): message to send
+        update: update event
+        context: context passed by the handler
+        messaggio: message to send
     """
     #prova a prendere il chat_id da update.message, altrimenti prova da update.callback_query.message
     chat_id = update.message.chat_id if update.message else update.callback_query.message.chat_id
@@ -60,10 +60,10 @@ def read_md(namefile: str) -> str:
     """Reads a markdown file
 
     Args:
-        namefile (:class:`str`): name of the markdown file, without extension
+        namefile: name of the markdown file, without extension
 
     Returns:
-        :class:`str`: content of the markdown file
+        content of the markdown file
     """
     with open(f"data/markdown/{namefile}.md", "r", encoding="utf8") as in_file:
         text = in_file.read()
@@ -74,10 +74,10 @@ def read_json(namefile: str) -> dict:
     """Reads a json file
 
     Args:
-        namefile (:class:`str`): name of the json file, without extension
+        namefile: name of the json file, without extension
 
     Returns:
-        :class:`dict`: content of the json file, as a dictionary
+        content of the json file, as a dictionary
     """
     with open(f"data/json/{namefile}.json", "r", encoding="utf8") as in_file:
         result = json.load(in_file)
@@ -88,9 +88,9 @@ def check_log(update: Update, command_name: str, is_query: bool = False):
     """If enabled, logs the command
 
     Args:
-        update (:class:`Update`): update event
-        command_name (:class:`str`): name of the event to log
-        is_query (:class:`bool`, optional): whether the event to log is a query. Defaults to False.
+        update: update event
+        command_name: name of the event to log
+        is_query: whether the event to log is a query. Defaults to False.
     """
     chat_id = update.callback_query.message.chat_id if is_query else update.message.chat_id
 
@@ -109,11 +109,11 @@ def get_year_code(month: int, day: int) -> str:
     """Generates the code of the year
 
     Args:
-        month (:class:`int`): month
-        day (:class:`int`): day
+        month: month
+        day: day
 
     Returns:
-        :class:`str`: last two digits of the current year
+        last two digits of the current year
     """
     date_time = datetime.now().astimezone()
     check_new_year = datetime(year=date_time.year, month=month, day=day).astimezone()
@@ -127,10 +127,10 @@ def check_print_old_exams(year_exam: str) -> bool:
     """Checks if the old exams should be considered
 
     Args:
-        year_exam (:class:`str`): target year
+        year_exam: target year
 
     Returns:
-        :class:`bool`: whether the old exams should be considered
+        whether the old exams should be considered
     """
     date_time = datetime.now().astimezone()
     ckdate = datetime(year=date_time.year, month=12, day=23).astimezone()  # aaaa/12/24 data dal quale vengono prelevati solo gli esami del nuovo anno

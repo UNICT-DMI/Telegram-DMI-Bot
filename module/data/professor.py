@@ -52,20 +52,20 @@ class Professor(Scrapable):
 
     @property
     def table(self) -> str:
-        """:class:`str`: name of the database table that will store this Lesson"""
+        """name of the database table that will store this Lesson"""
         return "professors"
 
     @property
     def columns(self) -> tuple:
-        """:class:`tuple`: tuple of column names of the database table that will store this Professor"""
+        """tuple of column names of the database table that will store this Professor"""
         return ("ID", "ruolo", "nome", "cognome", "scheda_dmi", "fax", "telefono", "email", "ufficio", "sito")
 
     @classmethod
-    def scrape(cls, delete=False):
+    def scrape(cls, delete: bool = False):
         """Scrapes all the professors and stores them in the database
 
         Args:
-            delete (:class:`bool`, optional): whether the table contents should be deleted first. Defaults to False.
+            delete: whether the table contents should be deleted first. Defaults to False.
         """
         professors = []
         count = 0
@@ -132,8 +132,11 @@ class Professor(Scrapable):
     def find(cls, where_name: str) -> List['Professor']:
         """Produces a list of professors from the database, based on the provided parametes
 
+        Args:
+            where_name: specifies the name and surname of the professor
+
         Returns:
-            :class:`List[module.data.exam.Professor]`: result of the query on the database
+            result of the query on the database
         """
         db_results = DbManager.select_from(table_name=cls().table,
                                            where="nome LIKE ? OR cognome LIKE ?",
@@ -145,7 +148,7 @@ class Professor(Scrapable):
         """Finds all the professors present in the database
 
         Returns:
-            :class:`List[module.data.exam.Professor]`: list of all the professors
+            list of all the professors
         """
         return super().find_all()
 

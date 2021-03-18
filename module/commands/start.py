@@ -9,8 +9,8 @@ def start(update: Update, context: CallbackContext):
     Sends a welcome message
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     reply_keyboard = get_help_keyboard()
     message_text = read_md("start")
@@ -21,7 +21,7 @@ def get_help_keyboard() -> ReplyKeyboardMarkup:
     """Generates the reply keyboard shown at the bottom of the screen
 
     Returns:
-        :class:`ReplyKeyboardMarkup`: reply keyboard
+        reply keyboard
     """
     kb = [
         [KeyboardButton(HELP), KeyboardButton(SEGNALAZIONE)],

@@ -16,8 +16,8 @@ def esami(update: Update, context: CallbackContext):
     Shows the options available to execute an exam query.
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     check_log(update, "esami")
 
@@ -46,8 +46,8 @@ def esami_handler(update: Update, context: CallbackContext):
     - search -> executes the query with all the selected parametes and shows the result
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     callback_data = update.callback_query.data
     chat_id = update.callback_query.message.chat_id
@@ -87,10 +87,10 @@ def esami_button_anno(update: Update, context: CallbackContext, chat_id: int, me
     Allows the user to choose an year among the ones proposed
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        chat_id (:class:`int`): id of the chat of the user
-        message_id (:class:`int`): id of the sub-menu message
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat of the user
+        message_id: id of the sub-menu message
     """
     message_text = "Seleziona l'anno che ti interessa"
 
@@ -108,10 +108,10 @@ def esami_button_sessione(update: Update, context: CallbackContext, chat_id: int
     Allows the user to choose a session among the ones proposed
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        chat_id (:class:`int`): id of the chat of the user
-        message_id (:class:`int`): id of the sub-menu message
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat of the user
+        message_id: id of the sub-menu message
     """
     message_text = "Seleziona la sessione che ti interessa"
 
@@ -133,10 +133,10 @@ def esami_button_insegnamento(update: Update, context: CallbackContext, chat_id:
     Allows the user to write the subject they want to search for
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        chat_id (:class:`int`): id of the chat of the user
-        message_id (:class:`int`): id of the sub-menu message
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat of the user
+        message_id: id of the sub-menu message
     """
     context.user_data['esami']['cmd'] = "input_insegnamento"  # attende che venga impostato il campo insegnamento
     message_text = "Inserire l'insegnamento desiderato nel formato:\n"\
@@ -152,8 +152,8 @@ def esami_input_insegnamento(update: Update, context: CallbackContext):
     Allows the user to input the wanted subject, in the format [Ii]ns: <insegnamento>
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     if context.user_data['esami'].get('cmd', None) == "input_insegnamento":
         #se effettivamente l'user aveva richiesto di modificare l'insegnamento...
@@ -170,11 +170,11 @@ def get_esami_text_inline_keyboard(context: CallbackContext) -> (str, InlineKeyb
     """Generates the text and the InlineKeyboard for the /esami command, based on the current parameters.
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
 
     Returns:
-        :class:`(str, InlineKeyboardMarkup)`: message_text and InlineKeyboardMarkup to use
+        message_text and InlineKeyboardMarkup to use
     """
     esami_user_data = context.user_data['esami']
 
@@ -207,10 +207,10 @@ def generate_esami_text(user_dict: dict) -> str:
     Executes the query and returns the text to send to the user
 
     Args:
-        user_dict (:class:`dict`): dictionary that stores the user selected parameters to use in the query
+        user_dict: dictionary that stores the user selected parameters to use in the query
 
     Returns:
-        :class:`str`: result of the query to send to the user
+        result of the query to send to the user
     """
     #stringa contenente le sessioni per cui il dict contiene la key, separate da ", "
     select_sessione = ", ".join([key for key in user_dict if "sessione" in key]).replace("sessione", "")

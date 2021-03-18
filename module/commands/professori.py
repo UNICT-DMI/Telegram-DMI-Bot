@@ -12,8 +12,8 @@ def prof(update: Update, context: CallbackContext):
     Shows all the professors that match the request
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     check_log(update, "prof")
     message_text = generate_prof_text(context.args)
@@ -28,10 +28,10 @@ def generate_prof_text(names: list) -> str:
     Executes the query and returns the text to send to the user
 
     Args:
-        names (:class:`list`): list of args passed to the context
+        names: list of args passed to the context
 
     Returns:
-        :class:`str`: result of the query to send to the user
+        result of the query to send to the user
     """
     if not names:
         return "La sintassi del comando è: /prof <nomeprofessore>\n"

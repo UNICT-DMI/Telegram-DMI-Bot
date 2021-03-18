@@ -3,7 +3,7 @@ import logging
 import calendar
 from datetime import date, datetime
 from io import BytesIO
-from typing import List
+from typing import List, Optional
 from PIL import Image, ImageDraw, ImageFont
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
@@ -21,10 +21,10 @@ def aulario(update: Update, context: CallbackContext, chat_id: int = None, messa
     Shows the calendar to the user to allow him to select a day from the calendar
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        chat_id (:class:`int`, optional): id of the chat. Defaults to None.
-        message_id (:class:`int`, optional): id of the message. Defaults to None.
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat. Defaults to None.
+        message_id: id of the message. Defaults to None.
     """
     if not chat_id:
         chat_id = update.message.chat_id
@@ -50,8 +50,8 @@ def month_handler(update: Update, context: CallbackContext):
     Updates the calendar
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query = update.callback_query
     data = query.data
@@ -85,8 +85,8 @@ def calendar_handler(update: Update, context: CallbackContext):
     Show the list of subject for the day
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query = update.callback_query
     data = query.data
@@ -112,8 +112,8 @@ def subjects_handler(update: Update, context: CallbackContext):
     Shows more information on the subject selected
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query = update.callback_query
     chat_id = query.message.chat_id
@@ -138,8 +138,8 @@ def subjects_arrow_handler(update: Update, context: CallbackContext):
     Shows the next or previous page
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query = update.callback_query
     data = query.data
@@ -162,12 +162,12 @@ def create_calendar(days: int, year: int = None, month: int = None) -> InlineKey
     Creates an InlineKeyboard to append to the message
 
     Args:
-        days (:class:`int`): day
-        year (:class:`int`, optional): yeat. Defaults to None.
-        month (:class:`int`, optional): month. Defaults to None.
+        days: day
+        year: yeat. Defaults to None.
+        month: month. Defaults to None.
 
     Returns:
-        :class:`InlineKeyboardMarkup`: calendar
+        calendar
     """
     today = date.today()
     if year is None:
@@ -214,12 +214,12 @@ def get_subjs_keyboard(page: int, day: str, daily_slots: List[TimetableSlot]) ->
     Generates the keyboard that lists all the subjects for the selected date
 
     Args:
-        page (:class:`int`): page of the subject selector
-        day (:class:`str`): day
-        daily_slots (:class:`List[TimetableSlot]`): list of timetable slots
+        page: page of the subject selector
+        day: day
+        daily_slots: list of timetable slots
 
     Returns:
-        :class:`list`: InlineKeyboard
+        InlineKeyboard
     """
     slots = daily_slots
     if day == '0':  # check if the slot end_time has already passed
@@ -244,18 +244,18 @@ def get_subjs_keyboard(page: int, day: str, daily_slots: List[TimetableSlot]) ->
     return keyboard
 
 
-def create_map(sub: str, h: str, room: str) -> BytesIO:
+def create_map(sub: str, h: str, room: str) -> Optional[BytesIO]:
     """Called by :meth:`subjects_handler`.
     Creates an image to show where the lesson will take place.
     Returns None if the hall is not in the base image
 
     Args:
-        sub (:class:`str`): name of the subject
-        h (:class:`str`): time
-        room (:class:`str`): hall
+        sub: name of the subject
+        h: time
+        room: hall
 
     Returns:
-        :class:`BytesIO`: photo to send
+        photo to send
     """
     data = read_json("room_coordinates")
     if room not in data:

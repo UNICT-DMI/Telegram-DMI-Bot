@@ -34,27 +34,27 @@ class TimetableSlot(Scrapable):
 
     @property
     def table(self) -> str:
-        """:class:`str`: name of the database table that will store this TimetableSlot"""
+        """name of the database table that will store this TimetableSlot"""
         return "timetable_slots"
 
     @property
     def columns(self) -> tuple:
-        """:class:`tuple`: tuple of column names of the database table that will store this TimetableSlot"""
+        """tuple of column names of the database table that will store this TimetableSlot"""
         return ("ID", "nome", "giorno", "ora_inizio", "ora_fine", "aula")
 
     @property
     def end_hour(self) -> str:
-        """:class:`str`: adds half an hour to the ora_fine value"""
+        """adds half an hour to the ora_fine value"""
         if self.ora_fine[3:] == '30':
             return "{00}:00".format(int(self.ora_fine[:2]) + 1)
         return self.ora_fine[:3] + '30'
 
     @classmethod
-    def scrape(cls, delete=False):
+    def scrape(cls, delete: bool = False):
         """Scrapes the timetable slots of the provided year and stores them in the database
 
         Args:
-            delete (:class:`bool`, optional): whether the table contents should be deleted first. Defaults to False.
+            delete: whether the table contents should be deleted first. Defaults to False.
         """
         timetable_slots = []
         response = requests.get(read_md("aulario")).text
@@ -94,7 +94,7 @@ class TimetableSlot(Scrapable):
         """Produces a list of scrapables from the database, based on the provided parametes
 
         Returns:
-            :class:`list`: result of the query on the database
+            result of the query on the database
         """
         return super()._find(**kwargs)
 
@@ -103,7 +103,7 @@ class TimetableSlot(Scrapable):
         """Finds all the timetable slots present in the database
 
         Returns:
-            :class:`List[module.data.exam.TimetableSlot]`: list of all the timetable slots
+            list of all the timetable slots
         """
         return super().find_all()
 
@@ -112,7 +112,7 @@ class TimetableSlot(Scrapable):
         """Finds the maximum value of giorno
 
         Returns:
-            :class:`List[module.data.exam.TimetableSlot]`: result of the query on the database
+            result of the query on the database
         """
         db_results = DbManager.select_from(select="MAX(giorno) as g", table_name=cls().table)
         if not db_results:

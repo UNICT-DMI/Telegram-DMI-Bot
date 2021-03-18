@@ -18,8 +18,8 @@ def stats(update: Update, context: CallbackContext):
     Shows the history of all the commands requested to the bot in the last 'days'. Defaults to 30.
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     days = 30
     try:
@@ -35,8 +35,8 @@ def stats_tot(update: Update, context: CallbackContext):
     Shows the history of all the commands requested to the bot
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     stats_gen(update, context)
 
@@ -46,9 +46,9 @@ def stats_gen(update: Update, context: CallbackContext, days: int = 0):
     Generates the requested stats, both with text and graph
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        days (:class:`int`, optional): number of days to consider. Defaults to 0.
+        update: update event
+        context: context passed by the handler
+        days: number of days to consider. Defaults to 0.
     """
     chat_id = update.message.chat_id
 
@@ -74,9 +74,9 @@ def send_graph(rows: list, bot: Bot, chat_id: int):
     Generates a graph and sends it to the user
 
     Args:
-        rows (:class:`list`): hystory of commands
-        bot (:class:`Bot`): telegram bot
-        chat_id (:class:`int`): id of the chat
+        rows: hystory of commands
+        bot: telegram bot
+        chat_id: id of the chat
     """
     # Consider only the first 10 values
     x = [v['Type'] for v in rows[:10]]

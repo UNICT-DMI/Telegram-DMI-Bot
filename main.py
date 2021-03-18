@@ -43,7 +43,7 @@ def add_handlers(dp: Dispatcher):
     """Adds all the handlers the bot will react to
 
     Args:
-        dp (:class:`Dispatcher`): supplyed Dispatcher
+        dp: supplyed Dispatcher
     """
     dp.add_error_handler(error_handler)
     dp.add_handler(MessageHandler(Filters.all, log_message), 1)
@@ -145,7 +145,7 @@ def add_jobs(dp: Dispatcher):
     """Schedule the jobs in the JobQueue
 
     Args:
-        job_queue (:class:`JobQueue`): job queue
+        dp: supplyed Dispatcher
     """
     dp.job_queue.run_repeating(updater_lep, interval=86400, first=1)  # job_updater_lep (24h)
 

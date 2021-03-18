@@ -14,8 +14,8 @@ def drive(update: Update, context: CallbackContext):
     Lets the user navigate the drive folders, if he has the permissions
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     check_log(update, "drive")
     chat_id = update.message.chat_id
@@ -49,8 +49,8 @@ def drive_handler(update: Update, context: CallbackContext):
     Allows the user to navigate in the google drive and download files
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query_data = update.callback_query.data.replace("drive_file_", "")
     chat_id = update.callback_query.from_user.id
@@ -106,11 +106,11 @@ def get_files_keyboard(file_list: list, row_len: int = 2) -> list:
     Generates the InlineKeyboard that allows the user to navigate among the files in the list
 
     Args:
-        file_list (:class:`list`): list of files
-        row_len (:class:`int`, optional): lenght of the row. Defaults to 2
+        file_list: list of files
+        row_len: lenght of the row. Defaults to 2
 
     Returns:
-        :class:`list`: InlineKeyboard
+        InlineKeyboard
     """
     formats = {
         **{

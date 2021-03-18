@@ -5,13 +5,13 @@ from telegram.ext import CallbackContext
 from module.shared import AULARIO, CLOUD, CUSicon, check_log
 
 
-def help_cmd(update: Update, context: CallbackContext) -> None:
+def help_cmd(update: Update, context: CallbackContext):
     """Called by the /help command.
     Shows all the actions supported by the bot
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     check_log(update, "help")
     chat_id = update.message.chat_id
@@ -90,10 +90,10 @@ def rapp_menu(update: Update, context: CallbackContext, chat_id: int, message_id
     Allows the user to select the department
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        chat_id (:class:`int`): id of the chat the command was invoked from
-        message_id (:class:`int`): id of the help message
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat the command was invoked from
+        message_id: id of the help message
     """
     message_text = "Quali rappresentanti vuoi contattare?"
 

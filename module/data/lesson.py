@@ -45,21 +45,21 @@ class Lesson(Scrapable):
 
     @property
     def table(self) -> str:
-        """:class:`str`: name of the database table that will store this Lesson"""
+        """name of the database table that will store this Lesson"""
         return "lessons"
 
     @property
     def columns(self) -> tuple:
-        """:class:`tuple`: tuple of column names of the database table that will store this Lesson"""
+        """tuple of column names of the database table that will store this Lesson"""
         return ("nome", "giorno_settimana", "ora_inizio", "ora_fine", "aula", "anno", "semestre")
 
     @classmethod
-    def scrape(cls, year_exams: str, delete=False):
+    def scrape(cls, year_exams: str, delete: bool = False):
         """Scrapes the lessons of the provided year and stores them in the database
 
         Args:
-            year_exams (:class:`str`): current year
-            delete (:class:`bool`, optional): whether the table contents should be deleted first. Defaults to False.
+            year_exams: current year
+            delete: whether the table contents should be deleted first. Defaults to False.
         """
         lessons = []
         for id_ in cls.IDS:
@@ -99,12 +99,12 @@ class Lesson(Scrapable):
                                 aula = orario[2:]
 
                                 lesson = cls(nome=td_all[0].text,
-                                                giorno_settimana=str(giorno),
-                                                ora_inizio=ora_inizio,
-                                                ora_fine=ora_fine,
-                                                aula=str(aula),
-                                                anno=str(anno),
-                                                semestre=str(semestre))
+                                             giorno_settimana=str(giorno),
+                                             ora_inizio=ora_inizio,
+                                             ora_fine=ora_fine,
+                                             aula=str(aula),
+                                             anno=str(anno),
+                                             semestre=str(semestre))
                                 lessons.append(lesson)
 
         if delete:
@@ -113,11 +113,16 @@ class Lesson(Scrapable):
         logger.info("Lessons loaded.")
 
     @classmethod
-    def find(cls, where_anno: str = None, where_giorno: str = None, where_nome: str = "") -> List['Lesson']:
+    def find(cls, where_anno: str = "", where_giorno: str = "", where_nome: str = "") -> List['Lesson']:
         """Produces a list of lessons from the database, based on the provided parametes
 
+        Args:
+            where_anno: specifies the year. Defaults to "".
+            where_giorno: specifies the day. Defaults to "".
+            where_nome: specifies the name of the subject. Defaults to "".
+
         Returns:
-            :class:`List[module.data.exam.Lesson]`: result of the query on the database
+            result of the query on the database
         """
         if where_giorno:
             where_giorno = f"and (giorno_settimana = {where_giorno})"
@@ -129,9 +134,7 @@ class Lesson(Scrapable):
         else:
             where_anno = ""
 
-        db_results = DbManager.select_from(table_name=cls().table,
-                                           where=f"nome LIKE ? {where_giorno} {where_anno}",
-                                           where_args=(f'%{where_nome}%',))
+        db_results = DbManager.select_from(table_name=cls().table, where=f"nome LIKE ? {where_giorno} {where_anno}", where_args=(f'%{where_nome}%',))
         return cls._query_result_initializer(db_results)
 
     @classmethod
@@ -139,7 +142,7 @@ class Lesson(Scrapable):
         """Finds all the lessons present in the database
 
         Returns:
-            :class:`List[module.data.exam.Lesson]`: list of all the lessons
+            list of all the lessons
         """
         return super().find_all()
 

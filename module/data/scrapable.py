@@ -7,17 +7,17 @@ class Scrapable():
 
     @property
     def table(self):
-        """:class:`str`: name of the database table that will store this Scrapable"""
+        """name of the database table that will store this Scrapable"""
         raise NotImplementedError("table is to be implemented")
 
     @property
     def columns(self):
-        """:class:`tuple`: tuple of column names of the database table that will store this Scrapable"""
+        """tuple of column names of the database table that will store this Scrapable"""
         raise NotImplementedError("columns is to be implemented")
 
     @property
     def values(self):
-        """:class:`tuple`: tuple of values that will be saved in the database"""
+        """tuple of values that will be saved in the database"""
         return tuple(self.__getattribute__(column) for column in self.columns)
 
     def save(self):
@@ -34,7 +34,7 @@ class Scrapable():
         """Saves multiple Scrapable objects at once in the database
 
         Args:
-            scrapables (:class:`list`): list of Scrapable objects to save
+            scrapables: list of Scrapable objects to save
         """
         if scrapables is None:
             return
@@ -46,7 +46,7 @@ class Scrapable():
         """Produces a list of scrapables from the database, based on the provided parametes
 
         Returns:
-            :class:`List[module.data.exam.Scrapable]`: result of the query on the database
+            result of the query on the database
         """
         where = "and".join((f" {c} = ? " for c in kwargs))
         values = tuple(v for v in kwargs.values())
@@ -58,7 +58,7 @@ class Scrapable():
         """Finds all the scrapable objects present in the database
 
         Returns:
-            :class:`List[module.data.exam.Scrapable]`: list of all the scrapable objects
+            list of all the scrapable objects
         """
         db_results = DbManager.select_from(table_name=cls().table)
         return cls._query_result_initializer(db_results)
@@ -68,12 +68,12 @@ class Scrapable():
         """Count the number of scrapable objects present in the database, based on the parameters
 
         Args:
-            where (:class:`str`, optional): where clause, with ? placeholders for the where_args. Defaults to "".
-            where_args (:class:`tuple`, optional): args used in the where clause. Defaults to None.
-            group_by (:class:`str`, optional): group by clause. Defaults to "".
+            where: where clause, with ? placeholders for the where_args. Defaults to "".
+            where_args: args used in the where clause. Defaults to None.
+            group_by: group by clause. Defaults to "".
 
         Returns:
-            :class:`int`: number of scrapable objects
+            number of scrapable objects
         """
         return DbManager.count_from(table_name=cls().table, where=where, where_args=where_args, group_by=group_by)
 
@@ -87,10 +87,10 @@ class Scrapable():
         """Initializes the list of scrapables from the result of the query on the database
 
         Args:
-            db_results (:class:`list`): list of rows produced by the database query
+            db_results: list of rows produced by the database query
 
         Returns:
-            :class:`module.data.exam.Scrapable`: list of initialized scrapable objects
+            list of initialized scrapable objects
         """
         scrapables = []
         for row in db_results:

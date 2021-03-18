@@ -8,7 +8,7 @@ def create_argparser() -> argparse.ArgumentParser:
     """Generates the appropriate argparser
 
     Returns:
-        :class:`argparse.ArgumentParser`: the argparser used to parse the arguments
+        the argparser used to parse the arguments
     """
     parser = argparse.ArgumentParser(description="Settings utility to edit the config/settings.yaml file", allow_abbrev=True)
     parser.add_argument('token', help="the token of your telegram bot")

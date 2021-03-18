@@ -12,8 +12,8 @@ def request(update: Update, context: CallbackContext):
     Allows the user to ask the developers to give him access the the /drive and /gitlab commands
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     chat_id = update.message.chat_id
 
@@ -45,8 +45,8 @@ def request_handler(update: Update, context: CallbackContext):
     Adds the user to the database to allow him to use the /drive and /gitlab commands
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     chat_id = update.callback_query.data.replace("drive_accept_", "")  # get the chat id
     values = update.callback_query.message.text.split(" ")  # get all the info from the message
@@ -67,8 +67,8 @@ def add_db(update: Update, context: CallbackContext):
     Adds a new user to the database of users allowed to access the /drive and /gitlab commands
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     chat_id = update.message.chat_id
 

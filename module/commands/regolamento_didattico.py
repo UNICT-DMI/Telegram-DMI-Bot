@@ -33,8 +33,8 @@ def regolamentodidattico(update: Update, context: CallbackContext):
     Shows a menu from with the user can choose between (triennale | magistrale)
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     check_log(update, "regolamentodidattico")
     update.message.reply_text('Scegliere uno dei seguenti corsi:', reply_markup=get_reg_keyboard())
@@ -45,8 +45,8 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext):
     Allows the used to navigate between the rulebooks
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query = update.callback_query
     data = query.data.replace("reg_button_", "")
@@ -67,8 +67,8 @@ def send_regolamento(update: Update, context: CallbackContext):
     Sends said rulebook to the user.
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query = update.callback_query
     data = query.data
@@ -87,10 +87,10 @@ def get_reg_keyboard(reg_doc: dict = None) -> InlineKeyboardMarkup:
     Generates the whole list of rulebooks to append as an InlineKeyboard
 
     Args:
-        reg_doc (:class:`dict`): rulebooks to show
+        reg_doc: rulebooks to show
 
     Returns:
-        :class:`InlineKeyboardMarkup`: list of rulebooks
+        list of rulebooks
     """
     if reg_doc is None:
         return InlineKeyboardMarkup([[

@@ -40,27 +40,27 @@ class Exam(Scrapable):
 
     @property
     def table(self) -> str:
-        """:class:`str`: name of the database table that will store this Exam"""
+        """name of the database table that will store this Exam"""
         return "exams"
 
     @property
     def columns(self) -> tuple:
-        """:class:`tuple`: tuple of column names of the database table that will store this Exam"""
+        """tuple of column names of the database table that will store this Exam"""
         return ("anno", "cdl", "insegnamento", "docenti", "prima", "seconda", "terza", "straordinaria")
 
     @property
     def values(self) -> tuple:
-        """:class:`tuple`: tuple of values that will be saved in the database"""
+        """tuple of values that will be saved in the database"""
         return (self.anno, self.cdl, self.insegnamento, self.docenti, str(self.prima), str(self.seconda), str(self.terza), str(self.straordinaria))
 
     def get_session(self, session_name: str) -> list:
         """Gets the session with the same name.
 
         Args:
-            session_name (:class:`str`): [ prima | seconda | terza | straordinaria ]
+            session_name: [ prima | seconda | terza | straordinaria ]
 
         Returns:
-            :class:`list`: session
+            session
         """
         if session_name in self.__class__.SESSIONS:
             return self.__getattribute__(session_name)
@@ -69,8 +69,8 @@ class Exam(Scrapable):
         """Appends an element to a session based on its name.
 
         Args:
-            session_name (:class:`str`): [ prima | seconda | terza | straordinaria ]
-            to_append (:class:`str`): element to append
+            session_name: [ prima | seconda | terza | straordinaria ]
+            to_append: element to append
         """
         if session_name in self.__class__.SESSIONS:
             self.__getattribute__(session_name).append(to_append)
@@ -82,12 +82,12 @@ class Exam(Scrapable):
         DbManager.delete_from(table_name=self.table, where=where, where_args=values)
 
     @classmethod
-    def scrape(cls, year_exams: str, delete=False):
+    def scrape(cls, year_exams: str, delete: bool = False):
         """Scrapes the exams of the provided year and stores them in the database
 
         Args:
-            year_exams (:class:`str`): current year
-            delete (:class:`bool`, optional): whether the table contents should be deleted first. Defaults to False.
+            year_exams: current year
+            delete: whether the table contents should be deleted first. Defaults to False.
         """
         url_exams = {
             "l-31": [  # Informatica Triennale
@@ -137,7 +137,8 @@ class Exam(Scrapable):
                                 if (cells[1]).text == exam.insegnamento:  # se abbiamo trovato la materia nell'array
                                     flag = True  # setto la sentinella a true che indica che la materia era già presente nell'array delle materia dunque dobbiamo solo aggiungere gli appelli della nuova sessione>1
 
-                                    for cell in cells[3:]:  # dato che la materia è già presente nell'array, i primi 3 valori (id, docenti e nome) non ci interessano
+                                    for cell in cells[
+                                            3:]:  # dato che la materia è già presente nell'array, i primi 3 valori (id, docenti e nome) non ci interessano
                                         if cell.has_attr("class"):  # se la cella ha l'attributo class allora è un'appello straordinario
                                             exam.append_session("straordinaria", cell.text)
                                         elif cell.text.strip() != "":  # altrimenti è un appello della sessione che stiamo analizzando
@@ -173,11 +174,17 @@ class Exam(Scrapable):
         logger.info("Exams loaded.")
 
     @classmethod
-    def find(cls, select_sessione: str = None, where_sessione: str = None, where_anno: str = None, where_insegnamento: str = "") -> List['Exam']:
+    def find(cls, select_sessione: str = "", where_sessione: str = "", where_anno: str = "", where_insegnamento: str = "") -> List['Exam']:
         """Produces a list of exams from the database, based on the provided parametes
 
+        Args:
+            select_sessione: which sessions to select. Defaults to "".
+            where_sessione: specifies what sessions can't be []. Defaults to "".
+            where_anno: specifies the year. Defaults to "".
+            where_insegnamento: specifies the subject. Defaults to "".
+
         Returns:
-            :class:`List[module.data.exam.Exam]`: result of the query on the database
+            result of the query on the database
         """
         if not select_sessione:
             select_sessione = "prima, seconda, terza, straordinaria"
@@ -203,7 +210,7 @@ class Exam(Scrapable):
         """Finds all the exams present in the database
 
         Returns:
-            :class:`List[module.data.exam.Exam]`: list of all the exams
+            list of all the exams
         """
         return super().find_all()
 

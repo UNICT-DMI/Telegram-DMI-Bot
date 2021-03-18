@@ -2,6 +2,7 @@
 """/lezioni command"""
 import logging
 import re
+from typing import Tuple
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.data import Lesson
@@ -11,13 +12,13 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-def lezioni(update: Update, context: CallbackContext) -> None:
+def lezioni(update: Update, context: CallbackContext):
     """Called by the /lezioni command.
     Shows the options available to execute a lesson query.
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     check_log(update, "lezioni")
 
@@ -37,7 +38,7 @@ def lezioni(update: Update, context: CallbackContext) -> None:
     context.bot.sendMessage(chat_id=user_id, text=message_text, reply_markup=inline_keyboard)
 
 
-def lezioni_handler(update: Update, context: CallbackContext) -> None:
+def lezioni_handler(update: Update, context: CallbackContext):
     """Called by any of the buttons in the /lezioni command sub-menus.
     The action will change depending on the button:
 
@@ -46,8 +47,8 @@ def lezioni_handler(update: Update, context: CallbackContext) -> None:
     - search -> executes the query with all the selected parametes and shows the result
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     callback_data = update.callback_query.data
     chat_id = update.callback_query.message.chat_id
@@ -80,15 +81,15 @@ def lezioni_handler(update: Update, context: CallbackContext) -> None:
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=inline_keyboard)
 
 
-def lezioni_button_anno(update: Update, context: CallbackContext, chat_id, message_id) -> None:
+def lezioni_button_anno(update: Update, context: CallbackContext, chat_id, message_id):
     """Called by one of the buttons of the /lezioni command.
     Allows the user to choose an year among the ones proposed
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        chat_id (:class:`int`): id of the chat of the user
-        message_id (:class:`int`): id of the sub-menu message
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat of the user
+        message_id: id of the sub-menu message
     """
     message_text = "Seleziona l'anno che ti interessa"
 
@@ -102,15 +103,15 @@ def lezioni_button_anno(update: Update, context: CallbackContext, chat_id, messa
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=InlineKeyboardMarkup(keyboard))
 
 
-def lezioni_button_giorno(update: Update, context: CallbackContext, chat_id, message_id) -> None:
+def lezioni_button_giorno(update: Update, context: CallbackContext, chat_id, message_id):
     """Called by one of the buttons of the /lezioni command.
     Allows the user to choose a day among the ones proposed
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        chat_id (:class:`int`): id of the chat of the user
-        message_id (:class:`int`): id of the sub-menu message
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat of the user
+        message_id: id of the sub-menu message
     """
     message_text = "Seleziona il giorno che ti interessa"
 
@@ -130,15 +131,15 @@ def lezioni_button_giorno(update: Update, context: CallbackContext, chat_id, mes
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=InlineKeyboardMarkup(keyboard))
 
 
-def lezioni_button_insegnamento(update: Update, context: CallbackContext, chat_id, message_id) -> None:
+def lezioni_button_insegnamento(update: Update, context: CallbackContext, chat_id, message_id):
     """Called by one of the buttons of the /lezioni command.
     Allows the user to write the subject they want to search for
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
-        chat_id (:class:`int`): id of the chat of the user
-        message_id (:class:`int`): id of the sub-menu message
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat of the user
+        message_id: id of the sub-menu message
     """
     context.user_data['lezioni'][
         'cmd'] = "input_insegnamento"  # è in attesa di un messaggio nel formato corretto che imposti il valore del campo insegnamento
@@ -150,13 +151,13 @@ def lezioni_button_insegnamento(update: Update, context: CallbackContext, chat_i
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id)
 
 
-def lezioni_input_insegnamento(update: Update, context: CallbackContext) -> None:
+def lezioni_input_insegnamento(update: Update, context: CallbackContext):
     """Called after :func:`lezioni_button_insegnamento`.
     Allows the user to input the wanted subject, in the format [Nn]ome: <insegnamento>
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     if context.user_data['lezioni'].get('cmd', 'null') == "input_insegnamento":  #se effettivamente l'user aveva richiesto di modificare l'insegnamento...
         check_log(update, "lezioni_input_insegnamento")
@@ -168,15 +169,15 @@ def lezioni_input_insegnamento(update: Update, context: CallbackContext) -> None
         context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, reply_markup=inline_keyboard)
 
 
-def get_lezioni_text_InLineKeyboard(context: CallbackContext) -> (str, InlineKeyboardMarkup):
+def get_lezioni_text_InLineKeyboard(context: CallbackContext) -> Tuple[str, InlineKeyboardMarkup]:
     """Generates the text and the InlineKeyboard for the /lezioni command, based on the current parameters.
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
 
     Returns:
-        :class:`(str, InlineKeyboardMarkup)`: message_text and InlineKeyboardMarkup to use
+        message_text and InlineKeyboardMarkup to use
     """
     lezioni_user_data = context.user_data['lezioni']
     # stringa contenente gli anni per cui la flag è true
@@ -210,10 +211,10 @@ def generate_lezioni_text(user_dict) -> str:
     Executes the query and returns the text to send to the user
 
     Args:
-        user_dict (:class:`dict`): dictionary that stores the user selected parameters to use in the query
+        user_dict: dictionary that stores the user selected parameters to use in the query
 
     Returns:
-        :class:`str`: result of the query to send to the user
+        result of the query to send to the user
     """
     output_str = []
     # stringa contenente i giorni per cui il dict contiene la key, separati da " = '[]' and not "

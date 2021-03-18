@@ -15,8 +15,8 @@ logger.info("Logger enabled")
 def error_handler(update: Update, context: CallbackContext):  # pylint: disable=unused-argument
     """Logs the error and notifies the admins.
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     logger.error(msg="Exception while handling an update:", exc_info=context.error)
 
@@ -52,7 +52,7 @@ def error_handler(update: Update, context: CallbackContext):  # pylint: disable=
 def notify_error_admin(context: CallbackContext, traceback_str: str):
     """Sends a telegram message to notify the admins.
     Args:
-        context (:class:`CallbackContext`): context passed by the handler
+        context: context passed by the handler
     """
     text = (f'An exception was raised:\n' f'<pre>{html.escape(traceback_str)}</pre>')
     context.bot.send_message(chat_id=config_map['dev_group_chatid'], text=text, parse_mode=ParseMode.HTML)
@@ -61,8 +61,8 @@ def notify_error_admin(context: CallbackContext, traceback_str: str):
 def log_error(header: str, error: Exception):  # pylint: disable=unused-argument
     """Logs an error
     Args:
-        header (:class:`str`): message to put before the error
-        error (:class:`Exception`): the error that has occurred
+        header: message to put before the error
+        error: the error that has occurred
     """
     logger.error("%s: %s", header, error)
     try:
@@ -79,8 +79,8 @@ def log_error(header: str, error: Exception):  # pylint: disable=unused-argument
 def log_message(update: Update, context: CallbackContext):  # pylint: disable=unused-argument
     """Logs the message that caused the update
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     if update.message:
         try:

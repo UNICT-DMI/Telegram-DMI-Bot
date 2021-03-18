@@ -15,8 +15,8 @@ def submenu_handler(update: Update, context: CallbackContext):
     Opens the requested sub-menu, usually by editing the message and adding an InlineKeyboard
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query = update.callback_query
     data = query.data
@@ -29,8 +29,8 @@ def md_handler(update: Update, context: CallbackContext):
     """Called by any query that needs to show the contents of a markdown file to the user
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query = update.callback_query
 
@@ -49,8 +49,8 @@ def informative_callback(update: Update, context: CallbackContext):
     """Called by any command that needs to show information to the user
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     # controllo per poter gestire i comandi (/comando) e i messaggi inviati premendo i bottoni (❔ Help)
     if update.message.text[0] == '/':
@@ -67,8 +67,8 @@ def none_handler(update: Update, context: CallbackContext):
     Stops the spinning circle
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     update.callback_query.answer()
 
@@ -78,8 +78,8 @@ def exit_handler(update: Update, context: CallbackContext):
     Reduces the message to a point and removes any inlinekeyboard
 
     Args:
-        update (:class:`Update`): update event
-        context (:class:`CallbackContext`): context passed by the handler
+        update: update event
+        context: context passed by the handler
     """
     query = update.callback_query
     context.bot.editMessageText(text='.', chat_id=query.message.chat_id, message_id=query.message.message_id)

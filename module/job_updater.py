@@ -9,7 +9,7 @@ def updater_lep(context: CallbackContext):
     Updates all the scrapables
 
     Args:
-        context (:class:`CallbackContext`): context passed by the handler
+        context: context passed by the handler
     """
     DbManager.query_from_file()  # makes sure the database is correctly initialized
 
