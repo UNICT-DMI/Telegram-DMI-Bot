@@ -17,7 +17,7 @@ def prof(update: Update, context: CallbackContext):
 
 def prof_output(prof):
     output = "*Ruolo:* " + prof[1] + "\n"
-    output += "*Nome:* " + prof[2] + ' ' + prof[3] + "\n"
+    output += "*Nome:* " + prof[3] + ' ' + prof[2] + "\n"
 
     if prof[7] != "":
         output += "*Indirizzo email:* " + prof[7] + "\n"
