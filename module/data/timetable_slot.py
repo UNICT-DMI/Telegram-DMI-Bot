@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """TimetableSlot class"""
 import logging
+from datetime import datetime
 from typing import List
 import requests
 import pandas as pd
@@ -48,6 +49,14 @@ class TimetableSlot(Scrapable):
         if self.ora_fine[3:] == '30':
             return "{00}:00".format(int(self.ora_fine[:2]) + 1)
         return self.ora_fine[:3] + '30'
+
+    @property
+    def is_still_to_come(self) -> bool:
+        """whether or not the current time slot is still to come or has already passed"""
+        end_time = self.end_hour.split(":")
+        now = datetime.now()
+        last = now.replace(hour=int(end_time[0]), minute=int(end_time[1]), second=0, microsecond=0)
+        return now < last
 
     @classmethod
     def scrape(cls, delete: bool = False):

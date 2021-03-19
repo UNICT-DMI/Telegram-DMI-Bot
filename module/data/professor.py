@@ -157,8 +157,7 @@ class Professor(Scrapable):
 
     def __str__(self):
         string = f"*Ruolo:* {self.ruolo}\n"\
-                f"*Cognome:* {self.cognome}\n"\
-                f"*Nome:* {self.nome}\n"
+                f"*Nome:* {self.cognome} {self.nome}\n"
         if self.email:
             string += f"*Indirizzo email:* {self.email}\n"
         if self.scheda_dmi:

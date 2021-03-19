@@ -96,7 +96,7 @@ def calendar_handler(update: Update, context: CallbackContext):
     daily_slots = TimetableSlot.find(giorno=day)
     if daily_slots:
         text = "Quale lezione devi seguire?"
-        keyboard = get_subjs_keyboard(0, day, daily_slots)
+        keyboard = get_subjs_keyboard(0, day)
         keyboard.append([InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data='sm_aulario')])
         reply_markup = InlineKeyboardMarkup(keyboard)
     else:
@@ -151,7 +151,7 @@ def subjects_arrow_handler(update: Update, context: CallbackContext):
     elif data[-1] == 'l':
         page -= 1
 
-    keyboard = get_subjs_keyboard(page, day, TimetableSlot.find_all())
+    keyboard = get_subjs_keyboard(page, day)
     keyboard.append([InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data='sm_aulario')])
 
     context.bot.editMessageReplyMarkup(chat_id=query.message.chat_id, message_id=query.message.message_id, reply_markup=InlineKeyboardMarkup(keyboard))
@@ -209,7 +209,7 @@ def create_calendar(days: int, year: int = None, month: int = None) -> InlineKey
     return InlineKeyboardMarkup(keyboard)
 
 
-def get_subjs_keyboard(page: int, day: str, daily_slots: List[TimetableSlot]) -> list:
+def get_subjs_keyboard(page: int, day: str) -> list:
     """Called by :meth:`calendar_handler` :meth:`subjects_arrow_handler`.
     Generates the keyboard that lists all the subjects for the selected date
 
@@ -221,24 +221,19 @@ def get_subjs_keyboard(page: int, day: str, daily_slots: List[TimetableSlot]) ->
     Returns:
         InlineKeyboard
     """
-    slots = daily_slots
-    if day == '0':  # check if the slot end_time has already passed
-        slots = []
-        for slot in daily_slots:
-            end_time = slot.ora_fine.split(":")
-            now = datetime.now()
-            last = now.replace(hour=int(end_time[0]), minute=int(end_time[1]), second=0, microsecond=0)
-            if now < last:
-                slots.append(slot)
-    slots: List[TimetableSlot]
+    daily_slots = TimetableSlot.find(giorno=day)
+    now_slots = daily_slots
+    if day == '0':  # add only the slots that are still to come
+        now_slots = [slot for slot in daily_slots if slot.is_still_to_come]
+
     keyboard = []
-    for s in slots[page * 5:(page * 5) + 5]:
+    for s in now_slots[page * 5:(page * 5) + 5]:
         keyboard.append([InlineKeyboardButton(s.nome, callback_data=f'sb_{s.ID}')])
 
     arrows = []
     if page != 0:
         arrows.append(InlineKeyboardButton('◀️', callback_data=f'pg_{day}_{page}_l'))
-    if len(slots) > page * 5 + 5:
+    if len(now_slots) > page * 5 + 5:
         arrows.append(InlineKeyboardButton('▶️', callback_data=f'pg_{day}_{page}_r'))
     keyboard.append(arrows)
     return keyboard

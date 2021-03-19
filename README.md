@@ -15,7 +15,7 @@ Please note that the commands and their answers are in Italian.
 
 #### Automatically
 
-- Follow the [**Docker container**](##Docker-container) section
+- Follow the [**Docker**](#docker) section
 
 #### Manually
 
@@ -55,28 +55,39 @@ To install all the requirements you can run:
 pip3 install -r requirements.txt
 ```
 
-### Docker container
+## Docker
 
-#### How to use
+### docker-compose(recommended)
 
-Build the image _dmibot_ with docker:
-
-```
-$ docker build ./ -t dmibot --build-arg TOKEN=<token_API>
-```
-
-_(If you don't have a token, message Telegram's [@BotFather](http://telegram.me/Botfather) to create a bot and get a token for it)_
-
-Run the container _dmibot_:
-
-```
-$ docker run -it dmibot
+```yaml
+version: '2'
+services:
+    dmibot:
+        image: unictdmi/dmibot
+        container_name: dmibot
+        volumes:
+            - </path/to/settings.yaml>:/dmibot/config/settings.yaml
+            - </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db
 ```
 
-The container **automatically** start the bot with:
-
+### docker cli
+```bash
+$ docker run -v </path/to/settings.yaml>:/dmibot/config/settings.yaml -v </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db -t unictdmi/dmibot
 ```
-$ cd /usr/local/dmibot && python3 main.py
+
+### Parameter
+Container images are configured using parameters passed at runtime (such as those above). These parameters are separated by a colon and indicate \<external>:\<internal> respectively.
+
+| Parameter | Function |
+| :----: | --- |
+| `-v /dmibot/config/settings.yaml` | configurations file |
+| `-v /dmibot/data/DMI_DB.db` | database |
+
+### Building locally
+```bash
+git clone https://github.com/UNICT-DMI/Telegram-DMI-Bot.git
+cd Telegram-DMI-Bot
+docker build --no-cache -t dmibot .
 ```
 
 ---
