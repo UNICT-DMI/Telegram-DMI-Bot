@@ -6,4 +6,4 @@ python-gitlab==2.6.0
 matplotlib==3.3.4
 pandas==1.2.3
 Pillow==8.1.2
-lxml==4.6.2
+lxml==4.6.3
