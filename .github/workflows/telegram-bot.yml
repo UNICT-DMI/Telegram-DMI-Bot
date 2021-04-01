@@ -3,22 +3,26 @@ name: DMI_bot_deploy
 on:
   push:
     branches: [master]
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 3.8
+      - name: Set up Python 3.8.5
         uses: actions/setup-python@v2
         with:
           python-version: 3.8.5
       - name: Install dependencies for requirements and testing
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pytest telethon pytest-asyncio
+          pip install flake8
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements_dev.txt ]; then pip install -r requirements_dev.txt; fi
       - name: Setup enviroment
         run: |
           mv config/settings.yaml.dist config/settings.yaml
@@ -36,3 +40,34 @@ jobs:
       - name: Test with pytest
         run: |
           pytest
+
+
+  doc:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8.5
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8.5
+      - name: Install dependencies for requirements and testing
+        run: |
+          python -m pip install --upgrade pip
+          pip install sphinx sphinx_rtd_theme sphinx_autodoc_typehints
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements_dev.txt ]; then pip install -r requirements_dev.txt; fi
+      - name: Setup enviroment
+        run: |
+          mv config/settings.yaml.dist config/settings.yaml
+          mv data/DMI_DB.db.dist data/DMI_DB.db
+      - name: Sphinx build
+        run: |
+          sphinx-build -b html docs/source docs/build/docs
+          echo "# Telegram DMI bot documentation" > docs/build/README.md
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: docs/build
