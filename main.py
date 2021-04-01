@@ -12,7 +12,6 @@ from module.commands.start import start
 from module.commands.stats import stats, stats_tot
 from module.commands.help import help_cmd
 from module.commands.report import report
-from module.commands.request import add_db, request, request_handler
 from module.commands.gdrive import drive, drive_handler
 from module.commands.regolamento_didattico import regolamentodidattico, regolamentodidattico_handler, send_regolamento
 from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni
@@ -105,7 +104,6 @@ def add_handlers(dp: Dispatcher):
 
     # drive & gitlab buttons
     dp.add_handler(CallbackQueryHandler(drive_handler, pattern=r'^drive_file_.*'))
-    dp.add_handler(CallbackQueryHandler(request_handler, pattern=r'^drive_accept_.*'))
     dp.add_handler(CallbackQueryHandler(gitlab_handler, pattern='git_.*'))
 
     # regolamento didattico
@@ -129,11 +127,6 @@ def add_handlers(dp: Dispatcher):
     if config_map['debug']['disable_gitlab'] == 0:
         dp.add_handler(CommandHandler('git', git))
         dp.add_handler(CommandHandler('gitlab', git))
-
-    if config_map['debug']['disable_drive'] == 0 or \
-     config_map['debug']['disable_gitlab'] == 0:
-        dp.add_handler(CommandHandler('request', request))
-        dp.add_handler(CommandHandler('add_db', add_db))
 
     # stats command
     if config_map['debug']['disable_db'] == 0:

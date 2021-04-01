@@ -74,14 +74,6 @@ report
    :undoc-members:
    :show-inheritance:
 
-request
-------------------------------
-
-.. automodule:: module.commands.request
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 start
 ----------------------------
 

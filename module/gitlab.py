@@ -14,7 +14,6 @@ import sqlite3
 import logging
 import base64
 import gitlab
-import yaml
 import time
 import re
 import os
@@ -22,7 +21,6 @@ import os
 # Logger
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
-
 
 GITLAB_AUTH_TOKEN = config_map['gitlab']['token']
 GITLAB_ROOT_GROUP = config_map['gitlab']['root']
@@ -51,20 +49,7 @@ def git(update: Update, context: CallbackContext):
     if chat_id < 0:
         context.bot.sendMessage(chat_id=chat_id, text="❗️ La funzione %s non è ammessa nei gruppi" % executed_command)
     else:
-        db = sqlite3.connect('data/DMI_DB.db')
-
-        if db.execute("SELECT Chat_id FROM 'Chat_id_List' WHERE Chat_id = %s" % chat_id).fetchone():
-            gitlab_handler(update, context)
-        else:
-            context.bot.sendMessage(
-                chat_id=chat_id,
-                text=
-                "🔒 Non hai i permessi per utilizzare la funzione %s"\
-                "\nUtilizzare il comando /request <nome> <cognome> <e-mail>"\
-                "\n(unire nomi o cognomi multipli Es: Di mauro -> Dimauro)"
-                % executed_command)
-
-        db.close()
+        gitlab_handler(update, context)
 
 
 def new_session(token):

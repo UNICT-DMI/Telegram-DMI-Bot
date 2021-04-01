@@ -1,12 +1,3 @@
--- chat_id_list
-CREATE TABLE IF NOT EXISTS `Chat_id_List` (
-  `Chat_id` int(11) NOT NULL,
-  `Username` text NOT NULL,
-  `Nome` int(11) NOT NULL,
-  `Cognome` int(11) NOT NULL,
-  `E-mail` int(11) NOT NULL
-);
-
 -- stat_list
 CREATE TABLE IF NOT EXISTS stat_list (
 	Type varchar(100),

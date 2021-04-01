@@ -4,7 +4,6 @@ from pydrive.auth import AuthError, GoogleAuth
 from pydrive.drive import GoogleDrive
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
-from module.data import DbManager
 from module.shared import check_log
 from module.debug import log_error
 
@@ -26,13 +25,6 @@ def drive(update: Update, context: CallbackContext):
 
     if chat_id < 0:
         context.bot.sendMessage(chat_id=chat_id, text="La funzione /drive non è ammessa nei gruppi")
-        return
-
-    if DbManager.count_from(table_name="Chat_id_List", where="Chat_id = ?", where_args=(chat_id,)) == 0:
-        context.bot.sendMessage(chat_id=chat_id,
-                text="🔒 Non hai i permessi per utilizzare la funzione /drive\n"\
-                    "Utilizzare il comando /request <nome> <cognome> <e-mail>"\
-                    "\n(unire nomi o cognomi multipli Es: Di mauro -> Dimauro)")
         return
 
     try:
