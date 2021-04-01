@@ -102,13 +102,11 @@ You can enable these commands setting **disable_db = 0** and copy **data/DMI_DB.
 
 This command shows the statistics of the times where the commands are used in the last 30 days.
 
-#### - /drive /request /adddb
+#### - /drive
 
-You can enable these commands setting **disable_drive = 0**, configure the GoogleDrive credentials and copy **data/DMI_DB.db.dist** into **data/DMI_DB.db**.
+You can enable these commands setting **disable_drive = 0** and configuring the GoogleDrive credentials.
 
 **/drive**: command to get the GoogleDrive files
-**/request** allows the user to send the subscribe request to get the access for /drive
-**/adddb** allows some special users to give the access to /drive to another user
 
 ##### **Configure Drive**
 
@@ -130,7 +128,7 @@ You can enable these commands setting **disable_drive = 0**, configure the Googl
 To install all the test requirements you can run:
 
 ```bash
-pip3 install -r test-requirements.txt
+pip3 install -r requirements_dev.txt
 ```
 
 Steps:
