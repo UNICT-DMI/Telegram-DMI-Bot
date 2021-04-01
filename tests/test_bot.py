@@ -1,10 +1,10 @@
 """Tests the bot functionality"""
+from datetime import datetime
 import pytest
 from telethon.sync import TelegramClient
 from telethon.tl.custom.message import Message
 from telethon.tl.custom.conversation import Conversation
 from module.shared import config_map
-from module.data import DbManager
 
 TIMEOUT = 8
 bot_tag = config_map['test']['tag']
@@ -251,7 +251,7 @@ async def test_aulario_cmd(client: TelegramClient):
 
         assert resp.text
 
-        await resp.click(data="cal_0")  # click the button
+        await resp.click(text=f"{datetime.now().day}")  # click the button
         resp: Message = await conv.get_response()
 
         assert resp.text
