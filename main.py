@@ -28,12 +28,35 @@ def add_commands(up: Updater):
     Args:
         up (Updater): supplyed Updater
     """
-    #TODO: add all commands and remove the comment in the main
     commands = [
         BotCommand("start", "messaggio di benvenuto"),
         BotCommand("help ", "help"),
+        BotCommand("gruppi", "link alla lista dei gruppi telegram delle materie"),
         BotCommand("esami", "cerca informazioni sugli esami"),
         BotCommand("lezioni", "cerca informazioni sulle lezioni"),
+        BotCommand("prof", "cerca informazioni sui professori"),
+        BotCommand("aulario", "cerca informazioni sull'aulario"),
+        BotCommand("ufficioersu", "locazione e orari sede ufficio ersu"),
+        BotCommand("ersu", "locazione e orari sede ersu"),
+        BotCommand("sdidattica", "locazione e orari segreteria didattica"),
+        BotCommand("studenti", "locazione e orari segreteria studenti"),
+        BotCommand("cus", "locazione e orari del CUS"),
+        BotCommand("cea", "CEA"),
+        BotCommand("urp", "URP"),
+        BotCommand("mensa", "orari e menù della mensa"),
+        BotCommand("biblioteca", "orari della biblioteca"),
+        BotCommand("drive", "accedi alla cartella Drive"),
+        BotCommand("git", "accedi al materiale didattico su GitLab"),
+        BotCommand("gitlab", "accedi al materiale didattico su GitLab"),
+        BotCommand("rappresentanti", "lista rappresentanti"),
+        BotCommand("rappresentanti_dmi", "lista rappresentanti dmi"),
+        BotCommand("rappresentanti_matematica", "lista rappresentanti matematica"),
+        BotCommand("rappresentanti_informatica", "lista rappresentanti informatica"),
+        BotCommand("report", "segnala un problema"),
+        BotCommand("contributors", "sviluppatori del bot"),
+        BotCommand("chat_id", "mostra la chat id di questa chat"),
+        BotCommand("cloud", "risorse didattiche in cloud"),
+        BotCommand("regolamentodidattico", "lista dei regolamenti didattici"),
     ]
     up.bot.set_my_commands(commands=commands)
 
@@ -146,7 +169,7 @@ def add_jobs(dp: Dispatcher):
 def main():
     """Main function"""
     updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
-    #add_commands(updater)
+    add_commands(updater)
     add_handlers(updater.dispatcher)
     add_jobs(updater.dispatcher)
 
