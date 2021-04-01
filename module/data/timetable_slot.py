@@ -124,7 +124,7 @@ class TimetableSlot(Scrapable):
             result of the query on the database
         """
         db_results = DbManager.select_from(select="MAX(giorno) as g", table_name=cls().table)
-        if not db_results:
+        if not db_results or db_results[0]['g'] is None:
             return 0
         return int(db_results[0]['g'])
 

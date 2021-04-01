@@ -251,6 +251,9 @@ async def test_aulario_cmd(client: TelegramClient):
 
         assert resp.text
 
+        if "⚠️" in resp.text:
+            return
+
         await resp.click(text=f"{datetime.now().day}")  # click the button
         resp: Message = await conv.get_response()
 
