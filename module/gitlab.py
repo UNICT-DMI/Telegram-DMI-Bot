@@ -59,7 +59,9 @@ def git(update: Update, context: CallbackContext):
             context.bot.sendMessage(
                 chat_id=chat_id,
                 text=
-                "🔒 Non hai i permessi per utilizzare la funzione %s\nUtilizzare il comando /request <nome> <cognome> <e-mail> (il nome e il cognome devono essere scritti uniti Es: Di Mauro -> DiMauro)"
+                "🔒 Non hai i permessi per utilizzare la funzione %s"\
+                "\nUtilizzare il comando /request <nome> <cognome> <e-mail>"\
+                "\n(unire nomi o cognomi multipli Es: Di mauro -> Dimauro)"
                 % executed_command)
 
         db.close()

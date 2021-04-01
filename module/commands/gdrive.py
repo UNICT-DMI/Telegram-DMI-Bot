@@ -32,7 +32,7 @@ def drive(update: Update, context: CallbackContext):
         context.bot.sendMessage(chat_id=chat_id,
                 text="🔒 Non hai i permessi per utilizzare la funzione /drive\n"\
                     "Utilizzare il comando /request <nome> <cognome> <e-mail>"\
-                    " (il nome e il cognome devono essere scritti uniti Es: Di mauro -> Dimauro) ")
+                    "\n(unire nomi o cognomi multipli Es: Di mauro -> Dimauro)")
         return
 
     try:
