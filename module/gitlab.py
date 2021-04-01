@@ -43,7 +43,7 @@ formats = {
 
 
 def git(update: Update, context: CallbackContext):
-    check_log(update, context, "gitlab")
+    check_log(update, "gitlab")
 
     chat_id = update.message.chat_id
     executed_command = update.message.text.split(' ')[0]
