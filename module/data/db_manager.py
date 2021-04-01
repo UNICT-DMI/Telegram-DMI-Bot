@@ -206,3 +206,5 @@ class DbManager():
         conn.commit()
         cur.close()
         conn.close()
+
+DbManager.query_from_file()  # makes sure the database is correctly initialized
