@@ -18,7 +18,6 @@ class Professor(Scrapable):
         ID (:class:`int`): primary key of the table
         ruolo (:class:`str`): role of the professor
         nome (:class:`str`): name of the professor
-        cognome (:class:`str`): surname of the professor
         scheda_dmi (:class:`str`): web-page about the professor
         fax (:class:`str`): fax of the professor
         telefono (:class:`str`): phone number of the professor
@@ -32,7 +31,6 @@ class Professor(Scrapable):
                  ID: int = -1,
                  ruolo: str = "",
                  nome: str = "",
-                 cognome: str = "",
                  scheda_dmi: str = "",
                  fax: str = "",
                  telefono: str = "",
@@ -42,7 +40,6 @@ class Professor(Scrapable):
         self.ID = ID
         self.ruolo = ruolo
         self.nome = nome
-        self.cognome = cognome
         self.scheda_dmi = scheda_dmi
         self.fax = fax
         self.telefono = telefono
@@ -58,7 +55,7 @@ class Professor(Scrapable):
     @property
     def columns(self) -> tuple:
         """tuple of column names of the database table that will store this Professor"""
-        return ("ID", "ruolo", "nome", "cognome", "scheda_dmi", "fax", "telefono", "email", "ufficio", "sito")
+        return ("ID", "ruolo", "nome", "scheda_dmi", "fax", "telefono", "email", "ufficio", "sito")
 
     @classmethod
     def scrape(cls, delete: bool = False):
@@ -80,11 +77,7 @@ class Professor(Scrapable):
         for link in table.find_all("a"):
             if not link.has_attr("name"):
                 href = link['href']
-                surname = link.text.split(" ")[0]
-                name = ""
-
-                for i in range(len(link.text.split(" ")) - 1):
-                    name += link.text.split(" ")[i + 1] + " "
+                name = link.text
 
                 if contract:
                     role = "Contratto"
@@ -104,7 +97,7 @@ class Professor(Scrapable):
                         mother_tongue = False
 
                 count += 1
-                professor = cls(ID=count, ruolo=role.title(), nome=name, cognome=surname, scheda_dmi=f"http://web.dmi.unict.it{href}")
+                professor = cls(ID=count, ruolo=role.title(), nome=name, scheda_dmi=f"http://web.dmi.unict.it{href}")
 
                 source = requests.get(professor.scheda_dmi).text
                 soup = bs4.BeautifulSoup(source, "html.parser")
@@ -133,14 +126,25 @@ class Professor(Scrapable):
         """Produces a list of professors from the database, based on the provided parametes
 
         Args:
-            where_name: specifies the name and surname of the professor
+            where_name: specifies the name of the professor
 
         Returns:
             result of the query on the database
         """
+        where = "nome LIKE ?"
+
+        for i in range(len(where_name) - 1):
+            where += ' AND nome LIKE ?'
+        
+        where_args = []
+
+        for name in where_name:
+            where_args.append(f'%{name}%')
+
+
         db_results = DbManager.select_from(table_name=cls().table,
-                                           where="nome LIKE ? OR cognome LIKE ?",
-                                           where_args=(f'%{where_name}%', f'%{where_name}%'))
+                                           where=where,
+                                           where_args=where_args)
         return cls._query_result_initializer(db_results)
 
     @classmethod
@@ -157,7 +161,7 @@ class Professor(Scrapable):
 
     def __str__(self):
         string = f"*Ruolo:* {self.ruolo}\n"\
-                f"*Nome:* {self.cognome} {self.nome}\n"
+                f"*Nome:* {self.nome}\n"
         if self.email:
             string += f"*Indirizzo email:* {self.email}\n"
         if self.scheda_dmi:

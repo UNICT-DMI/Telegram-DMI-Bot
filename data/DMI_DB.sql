@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS `professors` (
   "ID" INT(11) NOT NULL PRIMARY KEY,
   "ruolo" VARCHAR(255),
   "nome" VARCHAR(255),
-  "cognome" VARCHAR(255),
   "scheda_dmi" VARCHAR(255),
   "fax" VARCHAR(255),
   "telefono" VARCHAR(255),

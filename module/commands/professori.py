@@ -16,14 +16,14 @@ def prof(update: Update, context: CallbackContext):
         context: context passed by the handler
     """
     check_log(update, "prof")
-    message_text = generate_prof_text(context.args)
+    message_text = generate_prof_text(update, context.args)
     if len(message_text) > 4096:
         send_message(update, context, message_text)
     else:
         context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode='Markdown')
 
 
-def generate_prof_text(names: list) -> str:
+def generate_prof_text(update: Update, names: list) -> str:
     """Called from the :meth:`prof` method.
     Executes the query and returns the text to send to the user
 
@@ -37,8 +37,8 @@ def generate_prof_text(names: list) -> str:
         return "La sintassi del comando è: /prof <nomeprofessore>\n"
 
     professors = set()
-    for name in names:
-        professors.update(Professor.find(where_name=name))
+
+    professors.update(Professor.find(where_name=names))
 
     if len(professors) > 0:
         output_str = '\n'.join(map(str, professors))
