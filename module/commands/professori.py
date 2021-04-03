@@ -16,14 +16,14 @@ def prof(update: Update, context: CallbackContext):
         context: context passed by the handler
     """
     check_log(update, "prof")
-    message_text = generate_prof_text(update, context.args)
+    message_text = generate_prof_text(context.args)
     if len(message_text) > 4096:
         send_message(update, context, message_text)
     else:
         context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode='Markdown')
 
 
-def generate_prof_text(update: Update, names: list) -> str:
+def generate_prof_text(names: list) -> str:
     """Called from the :meth:`prof` method.
     Executes the query and returns the text to send to the user
 
