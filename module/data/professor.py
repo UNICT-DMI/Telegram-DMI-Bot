@@ -131,15 +131,8 @@ class Professor(Scrapable):
         Returns:
             result of the query on the database
         """
-        where = "nome LIKE ?"
-
-        for i in range(len(where_name) - 1):
-            where += ' AND nome LIKE ?'
-        
-        where_args = []
-
-        for name in where_name:
-            where_args.append(f'%{name}%')
+        where = " AND ".join(("nome LIKE ?" for name in where_name))
+        where_args = tuple(f'%{name}%' for name in where_name)
 
 
         db_results = DbManager.select_from(table_name=cls().table,
