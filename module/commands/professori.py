@@ -38,17 +38,13 @@ def generate_prof_text(names: list) -> str:
 
     professors = set()
     names_number = len(names)
-    s_names = []
+    s_names = [].append(names[0])
 
     if names_number > 1:
-        s_names.append(names[0])
-
         for name in names[1:-1]:
             s_names.append('{0} '.format(name))
            
         s_names.append(' {0}'.format(names[names_number - 1]))
-    else:
-        s_names.append(names[0])
 
     professors.update(Professor.find(where_name=s_names))
 
