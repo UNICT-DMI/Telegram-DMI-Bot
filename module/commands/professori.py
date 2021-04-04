@@ -41,10 +41,10 @@ def generate_prof_text(names: list) -> str:
     s_names = []
 
     if names_number > 1:
-        s_names.append('{0} '.format(names[0]))
+        s_names.append(names[0])
 
         for name in names[1:-1]:
-            s_names.append(' {0} '.format(name))
+            s_names.append('{0} '.format(name))
            
         s_names.append(' {0}'.format(names[names_number - 1]))
     else:
