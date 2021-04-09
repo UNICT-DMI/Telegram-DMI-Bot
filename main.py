@@ -57,6 +57,8 @@ def add_commands(up: Updater):
         BotCommand("chat_id", "mostra la chat id di questa chat"),
         BotCommand("cloud", "risorse didattiche in cloud"),
         BotCommand("regolamentodidattico", "lista dei regolamenti didattici"),
+        BotCommand("ricevimenti", "lista orari ricevimenti dei professori"),
+        BotCommand("trasporto_urbano_unict", "link orari BRTU"),
     ]
     up.bot.set_my_commands(commands=commands)
 
@@ -70,14 +72,14 @@ def add_handlers(dp: Dispatcher):
     dp.add_error_handler(error_handler)
     dp.add_handler(MessageHandler(Filters.all, log_message), 1)
 
-    #Easter Egg
+    # Easter Egg
     dp.add_handler(CommandHandler('smonta_portoni', smonta_portoni))
     dp.add_handler(CommandHandler('santino', santino))
     dp.add_handler(CommandHandler('prof_sticker', prof_sticker))
     dp.add_handler(MessageHandler(Filters.regex('/lezioni cazzeggio'), bladrim))
     dp.add_handler(CommandHandler('leiCheNePensaSignorina', lei_che_ne_pensa_signorina))
 
-    #Informative command
+    # Informative command
     dp.add_handler(CommandHandler('sdidattica', informative_callback))
     dp.add_handler(CommandHandler('studenti', informative_callback))
     dp.add_handler(CommandHandler('cea', informative_callback))
@@ -87,6 +89,8 @@ def add_handlers(dp: Dispatcher):
     dp.add_handler(CommandHandler('biblioteca', informative_callback))
     dp.add_handler(CommandHandler('gruppi', informative_callback))
     dp.add_handler(CommandHandler('cus', informative_callback))
+    dp.add_handler(CommandHandler('ricevimenti', informative_callback))
+    dp.add_handler(CommandHandler('trasporto_urbano_unict', informative_callback))
 
     dp.add_handler(CommandHandler('lezioni', lezioni))
     dp.add_handler(CommandHandler('esami', esami))
