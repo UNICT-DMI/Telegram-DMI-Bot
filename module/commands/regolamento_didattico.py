@@ -4,7 +4,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.shared import check_log
 
-reg_doc_triennale = {
+reg_doc_triennale_L31 = {
     'Regolamento Didattico 2020/2021': 'http://web.dmi.unict.it/sites/default/files/files/L%2031_Informatica%20AA%202020-21%20all\'albo.pdf',
     'Regolamento Didattico 2019/2020': 'http://web.dmi.unict.it/sites/default/files/files/Regolamento%202019-20%20L%2031_Informatica.pdf',
     'Regolamento Didattico 2018/2019': 'http://web.dmi.unict.it/sites/default/files/files/L%2031%20Informatica(1).pdf',
@@ -16,7 +16,7 @@ reg_doc_triennale = {
     'Regolamento Didattico 2012/2013': 'http://web.dmi.unict.it/sites/default/files/files/regolamentoDidattico_L31_Informatica_1213.pdf',
 }
 
-reg_doc_magistrale = {
+reg_doc_magistrale_LM18 = {
     'Regolamento Didattico 2020/2021_m': 'http://web.dmi.unict.it/sites/default/files/Regolamento%20Didattico%20LM%2018%202021.pdf',
     'Regolamento Didattico 2019/2020_m': 'http://web.dmi.unict.it/sites/default/files/Regolamento%20Didattico%20LM18%201920_0.pdf',
     'Regolamento Didattico 2018/2019_m': 'http://web.dmi.unict.it/sites/default/files/documenti_sito/Regolamento%20Didattico%20LM18%201819.pdf',
@@ -25,7 +25,22 @@ reg_doc_magistrale = {
     'Regolamento Didattico 2015/2016_m': 'http://web.dmi.unict.it/sites/default/files/documenti_sito/Regolamento%20Didattico%20LM18%201516.pdf'
 }
 
-REGOLAMENTI = {'triennale': reg_doc_triennale, 'magistrale': reg_doc_magistrale}
+reg_doc_triennale_L35 = {
+    'Regolamento Didattico 2020/2021': 'http://web.dmi.unict.it/sites/default/files/files/L%2035_Matematica_2020_21approvato.pdf',
+    'Regolamento Didattico 2019/2020': 'http://web.dmi.unict.it/sites/default/files/files/L%2035_Matematica.pdf',
+    'Regolamento Didattico 2018/2019': 'http://web.dmi.unict.it/sites/default/files/files/Regol%20L35_1819%20approvato%20Senato.pdf',
+    'Regolamento Didattico 2017/2018': 'http://web.dmi.unict.it/sites/default/files/files/L%2035%20ufficiale1718.pdf',
+    'Regolamento Didattico 2016/2017': 'http://web.dmi.unict.it/sites/default/files/files/regolamento1617pubbldallAteneo.pdf',
+}
+
+reg_doc_magistrale_LM40 = {
+    'Regolamento Didattico 2020/2021_m': 'http://web.dmi.unict.it/sites/default/files/documenti_sito/LM%2040_Matematica%202020-21%20approvato%20Senato.pdf',
+    'Regolamento Didattico 2019/2020_m': 'http://web.dmi.unict.it/sites/default/files/documenti_sito/LM%2040_Matematica%2019-20%20approvato%20senato.pdf',
+    'Regolamento Didattico 2018/2019_m': 'http://web.dmi.unict.it/sites/default/files/documenti_sito/LM%2040%20Matematica%202018-19%20approvato%20senato.pdf',
+}
+
+REGOLAMENTI = {'triennale_L31': reg_doc_triennale_L31, 'magistrale_LM18': reg_doc_magistrale_LM18, 'triennale_L35': reg_doc_triennale_L35, 'magistrale_LM40': reg_doc_magistrale_LM40}
+
 
 
 def regolamentodidattico(update: Update, context: CallbackContext):
@@ -94,8 +109,10 @@ def get_reg_keyboard(reg_doc: dict = None) -> InlineKeyboardMarkup:
     """
     if reg_doc is None:
         return InlineKeyboardMarkup([[
-            InlineKeyboardButton('Triennale', callback_data='reg_button_triennale'),
-            InlineKeyboardButton('Magistrale', callback_data='reg_button_magistrale')
+            InlineKeyboardButton('Triennale L-31', callback_data='reg_button_triennale_L31'),
+            InlineKeyboardButton('Magistrale LM-18', callback_data='reg_button_magistrale_LM18')
+            InlineKeyboardButton('Triennale L-35', callback_data='reg_button_triennale_L35'),
+            InlineKeyboardButton('Magistrale LM-40', callback_data='reg_button_magistrale_LM40')
         ]])
     keyboard = [[InlineKeyboardButton(r.replace('_m', ''), callback_data=r)] for r in reg_doc]
     keyboard.append([InlineKeyboardButton('Indietro', callback_data='reg_button_home')])  # back button

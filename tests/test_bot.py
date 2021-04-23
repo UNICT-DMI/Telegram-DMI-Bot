@@ -309,9 +309,11 @@ async def test_regolamentodidattico_cmd(client: TelegramClient):
         assert resp.text
 
         buttons = (
-            "reg_button_triennale",
+            "reg_button_triennale_L31",
+            "reg_button_triennale_L35",
             "reg_button_home",
-            "reg_button_magistrale",
+            "reg_button_magistrale_LM18",
+            "reg_button_magistrale_LM40",
         )
 
         for button in buttons:
