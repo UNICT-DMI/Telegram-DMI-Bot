@@ -109,10 +109,10 @@ def get_reg_keyboard(reg_doc: dict = None) -> InlineKeyboardMarkup:
     """
     if reg_doc is None:
         return InlineKeyboardMarkup([[
-            InlineKeyboardButton('Triennale L-31', callback_data='reg_button_triennale_L31'),
-            InlineKeyboardButton('Magistrale LM-18', callback_data='reg_button_magistrale_LM18')
-            InlineKeyboardButton('Triennale L-35', callback_data='reg_button_triennale_L35'),
-            InlineKeyboardButton('Magistrale LM-40', callback_data='reg_button_magistrale_LM40')
+            InlineKeyboardButton('L-31', callback_data='reg_button_triennale_L31'),
+            InlineKeyboardButton('LM-18', callback_data='reg_button_magistrale_LM18')
+            InlineKeyboardButton('L-35', callback_data='reg_button_triennale_L35'),
+            InlineKeyboardButton('LM-40', callback_data='reg_button_magistrale_LM40')
         ]])
     keyboard = [[InlineKeyboardButton(r.replace('_m', ''), callback_data=r)] for r in reg_doc]
     keyboard.append([InlineKeyboardButton('Indietro', callback_data='reg_button_home')])  # back button
