@@ -88,10 +88,14 @@ def send_regolamento(update: Update, context: CallbackContext):
     query = update.callback_query
     data = query.data
     chat_id = update.effective_chat.id
-    if data in reg_doc_triennale:
-        doc = reg_doc_triennale[data]
+    if data in reg_doc_triennale_L31:
+        doc = reg_doc_triennale_L31[data]
+    if data in reg_doc_triennale_L35:
+        doc = reg_doc_triennale_L35[data]
+    if data in reg_doc_magistrale_LM18:
+        doc = reg_doc_magistrale_LM18[data]
     else:
-        doc = reg_doc_magistrale[data]
+        doc = reg_doc_magistrale_LM40[data]
 
     context.bot.send_document(chat_id=chat_id, document=doc)
     context.bot.edit_message_text(chat_id=query.message.chat_id, message_id=query.message.message_id, text="Ecco il file richiesto:",)
