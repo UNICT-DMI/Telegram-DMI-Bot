@@ -90,9 +90,9 @@ def send_regolamento(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     if data in reg_doc_triennale_L31:
         doc = reg_doc_triennale_L31[data]
-    if data in reg_doc_triennale_L35:
+    elif data in reg_doc_triennale_L35:
         doc = reg_doc_triennale_L35[data]
-    if data in reg_doc_magistrale_LM18:
+    elif data in reg_doc_magistrale_LM18:
         doc = reg_doc_magistrale_LM18[data]
     else:
         doc = reg_doc_magistrale_LM40[data]
