@@ -39,7 +39,12 @@ reg_doc_magistrale_LM40 = {
     'Regolamento Didattico 2018/2019_m': 'http://web.dmi.unict.it/sites/default/files/documenti_sito/LM%2040%20Matematica%202018-19%20approvato%20senato.pdf',
 }
 
-REGOLAMENTI = {'triennale_L31': reg_doc_triennale_L31, 'magistrale_LM18': reg_doc_magistrale_LM18, 'triennale_L35': reg_doc_triennale_L35, 'magistrale_LM40': reg_doc_magistrale_LM40}
+REGOLAMENTI = {
+    'triennale_L31': reg_doc_triennale_L31, 
+    'magistrale_LM18': reg_doc_magistrale_LM18, 
+    'triennale_L35': reg_doc_triennale_L35, 
+    'magistrale_LM40': reg_doc_magistrale_LM40
+}
 
 
 
