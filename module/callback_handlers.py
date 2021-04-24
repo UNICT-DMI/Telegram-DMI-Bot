@@ -55,6 +55,8 @@ def informative_callback(update: Update, context: CallbackContext):
     # controllo per poter gestire i comandi (/comando) e i messaggi inviati premendo i bottoni (❔ Help)
     if update.message.text[0] == '/':
         cmd = update.message.text.split(' ')[0][1:]  #prende solo la prima parola del messaggio (cioè il comando) escludendo lo slash
+        if cmd.find('@') != -1:
+            cmd = cmd.split('@')[0]
     else:
         cmd = update.message.text.split(' ')[1].lower()  # prende la prima parola dopo l'emoji
     check_log(update, cmd)
