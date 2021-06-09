@@ -227,7 +227,14 @@ async def test_prof_cmd(client: TelegramClient):
     """
     conv: Conversation
     async with client.conversation(bot_tag, timeout=TIMEOUT) as conv:
-        commands = ("/prof", "/prof bilotta", "/prof giuseppe bilotta", "/prof rocco senteta")
+        commands = (
+            "/prof",
+            "/prof bilotta",
+            "/prof giuseppe bilotta",
+            "/prof rocco senteta",
+            "/prof Dario",
+            "/prof a",
+        )
 
         for command in commands:
             await conv.send_message(command)  # send a command
