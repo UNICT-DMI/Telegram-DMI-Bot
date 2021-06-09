@@ -21,6 +21,11 @@ def prof(update: Update, context: CallbackContext):
     message_text_list = message_text.split('\n\n')
     professors, total_profs = message_text_list[:-1], message_text_list[-1]
 
+    if len(professors) == 0:
+        context.bot.sendMessage(chat_id=update.message.chat_id,
+                text=message_text)
+        return
+
     # 15 professors are like ~3500 characters
     for index in range(0, len(professors), 15):
         message_text = '\n\n'.join(professors[index:index+15])
