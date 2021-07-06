@@ -1,10 +1,14 @@
 *Rappresentanti Corso di Laurea Triennale*
-Dragà Federica - @chicca5398
-Marino Salvatore - @Kuvon
-Marroccia Marco - @MarcoMDP95
-Onofrio Naso Giuseppe -  gnaso57@gmail.com
-Pecoraio Pierpaolo - @Pierpaolo791
+Campo Filippo - @filippocampo98
+Cascino Andrea - @Mag1candry
+Cigna Gaia - @GaiaCigna
+Coco Giuseppe - @peppe10001
+Cocuzza Daniele - @danielecocuzza
+Gibilterra Martin - @w8floosh
+Parlavecchio Martina - @makapx
+Patania Alex - @under3_5
 Pistorio Anna - @annapist25
 
+
 *Rappresentanti Corso di Laurea Magistrale*
-Piazza Alessio - @squalex95
+Trupia Andrea - @andreatrups
