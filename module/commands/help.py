@@ -5,13 +5,14 @@ from telegram.ext import CallbackContext
 from module.shared import AULARIO, CLOUD, CUSicon, check_log
 
 
-def help_cmd(update: Update, context: CallbackContext):
+def help_cmd(update: Update, context: CallbackContext, **kwargs: int):
     """Called by the /help command.
     Shows all the actions supported by the bot
 
     Args:
         update: update event
         context: context passed by the handler
+        kwargs: contains the chat_id and message_id to perform the back to menu
     """
     check_log(update, "help")
     chat_id = update.message.chat_id
@@ -37,11 +38,63 @@ def help_cmd(update: Update, context: CallbackContext):
     ])
 
     reply_markup = InlineKeyboardMarkup(keyboard)
+    if(kwargs):
+        context.bot.editMessageText(text=message_text, chat_id=kwargs['chat_id'], message_id=kwargs['message_id'], reply_markup=reply_markup)
+    else:
+        context.bot.sendMessage(chat_id=chat_id, text=message_text, reply_markup=reply_markup)
+    
 
-    context.bot.sendMessage(chat_id=chat_id, text=message_text, reply_markup=reply_markup)
+def help_back_to_menu(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+    """Called by a sm_help_back_to_menu button from the sub menu.
+    Allows the user to return back to the command list
 
-def rapp_menu(update: Update, context: CallbackContext, chat_id: int, message_id: int):
-    """Called by the sm_rapp_menu button from the /help command.
+    Args:
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat the command was invoked from
+        message_id: id of the help message
+    """
+    help_cmd(update, context, chat_id=chat_id, message_id=message_id)
+
+def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+    """Called by the sm_help_dip_cdl button from the /help command.
+    Lists to the user the commands related to the department or the CDL
+
+    Args:
+        update: update event
+        context: context passed by the handler
+        chat_id: id of the chat the command was invoked from
+        message_id: id of the help message
+    """
+    message_text = "Visualizzazione comandi relativi a:"
+
+    keyboard = [[]]
+    keyboard.append([InlineKeyboardButton(" ~ Dipartimento e CdL ~ ", callback_data="NONE")])
+    keyboard.append([
+        InlineKeyboardButton("📖 Esami (link)",         callback_data="md_esami_link"),
+        InlineKeyboardButton("📖 Cerca Esami",         callback_data="fr_esami"),
+        InlineKeyboardButton(AULARIO,                   callback_data="sm_aulario"),
+    ])
+
+    keyboard.append([
+        InlineKeyboardButton("📘 Orari lezioni (link)",    callback_data="md_lezioni_link"),
+        InlineKeyboardButton("👨‍🏫 Info Professori",         callback_data="md_professori")
+    ])
+
+    keyboard.append([
+        InlineKeyboardButton("👥 Rappresentanti",                       callback_data="sm_rapp_menu"),
+        InlineKeyboardButton("📚 Biblioteca",                           callback_data="md_biblioteca"),
+        InlineKeyboardButton("📊 Gruppi",                               callback_data="md_gruppi"),
+    ])
+    keyboard.append([
+        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+    ])
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
+
+def help_rapp_menu(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+    """Called by the sm_help_rapp_menu button from the /help command.
     Allows the user to select the department
 
     Args:
@@ -60,45 +113,15 @@ def rapp_menu(update: Update, context: CallbackContext, chat_id: int, message_id
             InlineKeyboardButton("Rapp. Matematica",  callback_data="md_rappresentanti_matematica"),
         ]
     )
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
-    context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
-
-def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message_id: int):
-    """Called by the sm_help_dip_cdl button from the /help command.
-    Lists to the user the commands related to the department or the CDL
-
-    Args:
-        update: update event
-        context: context passed by the handler
-        chat_id: id of the chat the command was invoked from
-        message_id: id of the help message
-    """
-    message_text = "Visualizzazione comandi relativi a:"
-
-    keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(" ~ Dipartimento e CdL ~ ", callback_data="NONE")])
     keyboard.append([
-        InlineKeyboardButton("📖 Esami (link)",         callback_data="md_esami_link"),
-        InlineKeyboardButton(AULARIO,                   callback_data="sm_aulario"),
-    ])
-
-    keyboard.append([
-        InlineKeyboardButton("📘 Orari lezioni (link)",    callback_data="md_lezioni_link"),
-        InlineKeyboardButton("👨‍🏫 Info Professori",         callback_data="md_professori")
-    ])
-
-    keyboard.append([
-        InlineKeyboardButton("👥 Rappresentanti",                       callback_data="sm_rapp_menu"),
-        InlineKeyboardButton("📚 Biblioteca",                           callback_data="md_biblioteca"),
-        InlineKeyboardButton("📊 Gruppi",                               callback_data="md_gruppi"),
+        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
     ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
 
 def help_segr(update: Update, context: CallbackContext, chat_id: int, message_id: int):
-    """Called by the sm_help_reg button from the /help command.
+    """Called by the sm_help_segr button from the /help command.
     Lists to the user the commands related to the secretariats' office hours
 
     Args:
@@ -117,12 +140,15 @@ def help_segr(update: Update, context: CallbackContext, chat_id: int, message_id
         InlineKeyboardButton("Seg. Studenti",   callback_data="md_studenti"),
         InlineKeyboardButton("CEA",             callback_data="md_cea")
     ])
+    keyboard.append([
+        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+    ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
 
 def help_ersu(update: Update, context: CallbackContext, chat_id: int, message_id: int):
-    """Called by the sm_help_reg button from the /help command.
+    """Called by the sm_help_ersu button from the /help command.
     Lists to the user the commands related to the ERSU
 
     Args:
@@ -141,12 +167,15 @@ def help_ersu(update: Update, context: CallbackContext, chat_id: int, message_id
         InlineKeyboardButton("Ufficio ERSU",  callback_data="md_ufficioersu"),
         InlineKeyboardButton("URP",           callback_data="md_urp")
     ])
+    keyboard.append([
+        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+    ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
     
 def help_projects_acknowledgements(update: Update, context: CallbackContext, chat_id: int, message_id: int):
-    """Called by the sm_help_reg button from the /help command.
+    """Called by the sm_help_projects_acknowledgements button from the /help command.
     Lists to the user the commands related to the other's project and acknowledgements
 
     Args:
@@ -164,12 +193,15 @@ def help_projects_acknowledgements(update: Update, context: CallbackContext, cha
         InlineKeyboardButton("📈 Opis Manager",      callback_data="md_opismanager"),
         InlineKeyboardButton("Contributors",         callback_data="md_contributors")
     ])
+    keyboard.append([
+        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+    ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
 
 def help_misc(update: Update, context: CallbackContext, chat_id: int, message_id: int):
-    """Called by the sm_help_reg button from the /help command.
+    """Called by the sm_help_misc button from the /help command.
     Lists to the user the commands related to the miscellaneous stuff
 
     Args:
@@ -186,6 +218,9 @@ def help_misc(update: Update, context: CallbackContext, chat_id: int, message_id
     keyboard.append([
         InlineKeyboardButton("📂 Drive",             callback_data="md_drive"),
         InlineKeyboardButton("📂 GitLab",            callback_data="md_gitlab")
+    ])
+    keyboard.append([
+        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
     ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 

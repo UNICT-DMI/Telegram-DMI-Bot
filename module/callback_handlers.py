@@ -7,7 +7,7 @@ from module.shared import CUSicon, check_log, read_md
 from module.commands.aulario import aulario
 from module.commands.esami import esami_button_anno, esami_button_insegnamento, esami_button_sessione
 from module.commands.lezioni import lezioni_button_anno, lezioni_button_giorno, lezioni_button_insegnamento
-from module.commands.help import rapp_menu, help_dip_cdl, help_segr, help_ersu, help_misc, help_projects_acknowledgements
+from module.commands.help import help_back_to_menu, help_dip_cdl, help_rapp_menu, help_segr, help_ersu, help_misc, help_projects_acknowledgements
 
 
 def submenu_handler(update: Update, context: CallbackContext):
