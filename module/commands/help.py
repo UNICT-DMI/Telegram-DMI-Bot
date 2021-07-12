@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext
 from module.shared import AULARIO, CLOUD, CUSicon, check_log
 
 
-def help_cmd(update: Update, context: CallbackContext, **kwargs: int):
+def help_cmd(update: Update, context: CallbackContext, edit: bool = False):
     """Called by the /help command.
     Shows all the actions supported by the bot
 
@@ -38,8 +38,8 @@ def help_cmd(update: Update, context: CallbackContext, **kwargs: int):
     ])
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-    if(kwargs):
-        context.bot.editMessageText(text=message_text, chat_id=kwargs['chat_id'], message_id=kwargs['message_id'], reply_markup=reply_markup)
+    if(edit):
+        context.bot.editMessageText(text=message_text, chat_id=update.message.chat_id, message_id=update.message.message_id, reply_markup=reply_markup)
     else:
         context.bot.sendMessage(chat_id=chat_id, text=message_text, reply_markup=reply_markup)
     
