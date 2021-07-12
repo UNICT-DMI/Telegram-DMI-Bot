@@ -72,7 +72,6 @@ def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message
     keyboard.append([InlineKeyboardButton(" ~ Dipartimento e CdL ~ ", callback_data="NONE")])
     keyboard.append([
         InlineKeyboardButton("📖 Esami (link)",         callback_data="md_esami_link"),
-        InlineKeyboardButton("📖 Cerca Esami",         callback_data="fr_esami"),
         InlineKeyboardButton(AULARIO,                   callback_data="sm_aulario"),
     ])
 
