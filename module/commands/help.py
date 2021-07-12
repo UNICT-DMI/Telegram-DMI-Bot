@@ -12,7 +12,7 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False):
     Args:
         update: update event
         context: context passed by the handler
-        kwargs: contains the chat_id and message_id to perform the back to menu
+        edit: bool flag that affects how the message should be handled 
     """
     check_log(update, "help")
     chat_id = update.message.chat_id
@@ -54,7 +54,7 @@ def help_back_to_menu(update: Update, context: CallbackContext, chat_id: int, me
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    help_cmd(update, context, chat_id=chat_id, message_id=message_id)
+    help_cmd(update, context, True)
 
 def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message_id: int):
     """Called by the sm_help_dip_cdl button from the /help command.
