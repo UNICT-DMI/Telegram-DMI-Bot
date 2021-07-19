@@ -1,15 +1,19 @@
 """Test configuration"""
 import asyncio
 import warnings
+
 import pytest
-from telethon.sync import TelegramClient
-from telethon.sessions import StringSession
 from telegram.ext import Updater
+from telethon.sessions import StringSession
+from telethon.sync import TelegramClient
+
 from main import add_handlers
 from module.shared import config_map
 
-warnings.filterwarnings("ignore",
-                        message="If 'per_message=False', 'CallbackQueryHandler' will not be tracked for every message.")
+warnings.filterwarnings(
+    "ignore",
+    message="If 'per_message=False', 'CallbackQueryHandler' will not be tracked for every message.",
+)
 
 api_id = config_map['test']['api_id']
 api_hash = config_map['test']['api_hash']
@@ -49,7 +53,11 @@ async def bot():
         if test_key in config_map:
             config_map[test_key] = config_map['test'][test_key]
 
-    updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
+    updater = Updater(
+        config_map['token'],
+        request_kwargs={'read_timeout': 20, 'connect_timeout': 20},
+        use_context=True,
+    )
     add_handlers(updater.dispatcher)
     updater.start_polling()
     await asyncio.sleep(2)
@@ -69,7 +77,9 @@ async def client(bot) -> TelegramClient:
         Iterator[TelegramClient]: telegram client that will simulate the user
     """
     print("[info] started telegram client")
-    tg_client = TelegramClient(StringSession(session), api_id, api_hash, sequential_updates=True)
+    tg_client = TelegramClient(
+        StringSession(session), api_id, api_hash, sequential_updates=True
+    )
 
     await tg_client.connect()  # Connect to the server
     await tg_client.get_me()  # Issue a high level command to start receiving message

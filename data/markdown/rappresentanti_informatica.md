@@ -6,7 +6,7 @@ Coco Giuseppe - @peppe10001
 Cocuzza Daniele - @danielecocuzza
 Gibilterra Martin - @w8floosh
 Parlavecchio Martina - @makapx
-Patania Alex - @under3_5
+Patania Alex - @under3\_5
 Pistorio Anna - @annapist25
 
 
