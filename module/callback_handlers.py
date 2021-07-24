@@ -77,11 +77,12 @@ def none_handler(update: Update, context: CallbackContext):
 
 def exit_handler(update: Update, context: CallbackContext):
     """Called when the user wants to close a sub-menu.
-    Reduces the message to a point and removes any inlinekeyboard
+    Removes the message from the user's chat
 
     Args:
         update: update event
         context: context passed by the handler
     """
     query = update.callback_query
-    context.bot.editMessageText(text='.', chat_id=query.message.chat_id, message_id=query.message.message_id)
+    context.bot.deleteMessage(chat_id=query.message.chat_id, message_id=query.message.message_id)
+
