@@ -31,7 +31,7 @@ def drive_contribute(update: Update, context: CallbackContext):
 
     request_message = context.bot.sendMessage(
         chat_id=config_map["dev_group_chatid"],
-        text=f"L'utente {first_name} (Username: {username}, E-mail: {email}) vuole avere accesso in scrittura a Drive per il seguente motivo:\n\n{reason}"
+        text=f"L'utente {first_name} (Username: {username}, E-mail: {email}) ha avuto accesso in scrittura a Drive con la seguente motivazione:\n\n{reason}"
     )
 
     gauth = GoogleAuth(settings_file="config/settings.yaml")
