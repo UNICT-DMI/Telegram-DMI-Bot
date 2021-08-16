@@ -21,3 +21,4 @@ This project is made possible thanks to the contributions of:
 - [Giuseppe Criscione](https://github.com/datalux)
 - [Stefano Origlio](https://github.com/InfernoMentale)
 - [Salvo Asero](https://github.com/Guberlo)
+- [Paolo Rabbito](https://github.com/IlRabbino)

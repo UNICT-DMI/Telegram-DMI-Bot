@@ -6,9 +6,16 @@ import bs4
 import requests
 from module.data.db_manager import DbManager
 from module.data.scrapable import Scrapable
+from telegram.utils.helpers import escape_markdown
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+def em(text):
+    """
+    Alias for `escape_markdown` function
+    """
+    return escape_markdown(text, version=2)
 
 
 class Professor(Scrapable):
@@ -153,18 +160,18 @@ class Professor(Scrapable):
         return f"Professor: {self.__dict__}"
 
     def __str__(self):
-        string = f"*Ruolo:* {self.ruolo}\n"\
-                f"*Nome:* {self.nome}\n"
+        string = f"*Ruolo:* {em(self.ruolo)}\n"\
+                f"*Nome:* {em(self.nome)}\n"
         if self.email:
-            string += f"*Indirizzo email:* {self.email}\n"
+            string += f"*Indirizzo email:* {em(self.email)}\n"
         if self.scheda_dmi:
-            string += f"*Scheda DMI:* {self.scheda_dmi}\n"
+            string += f"*Scheda DMI:* {em(self.scheda_dmi)}\n"
         if self.sito:
-            string += f"*Sito web:* {self.sito}\n"
+            string += f"*Sito web:* {em(self.sito)}\n"
         if self.ufficio:
-            string += f"*Ufficio:* {self.ufficio}\n"
+            string += f"*Ufficio:* {em(self.ufficio)}\n"
         if self.telefono:
-            string += f"*Telefono:* {self.telefono}\n"
+            string += f"*Telefono:* {em(self.telefono)}\n"
         if self.fax:
-            string += f"*Fax:* {self.fax}\n"
+            string += f"*Fax:* {em(self.fax)}\n"
         return string

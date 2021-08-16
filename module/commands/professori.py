@@ -17,10 +17,26 @@ def prof(update: Update, context: CallbackContext):
     """
     check_log(update, "prof")
     message_text = generate_prof_text(context.args)
-    if len(message_text) > 4096:
-        send_message(update, context, message_text)
-    else:
-        context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode='Markdown')
+
+    message_text_list = message_text.split('\n\n')
+    professors, total_profs = message_text_list[:-1], message_text_list[-1]
+
+    if len(professors) == 0:
+        context.bot.sendMessage(chat_id=update.message.chat_id,
+                text=message_text)
+        return
+
+    # 15 professors are like ~3500 characters
+    for index in range(0, len(professors), 15):
+        message_text = '\n\n'.join(professors[index:index+15])
+        # if this is the last message, we could append the "Total results"
+        if len(professors) <= index+15:
+            message_text += '\n\n'+total_profs
+
+        context.bot.sendMessage(chat_id=update.message.chat_id,
+                text=message_text,
+                parse_mode='MarkdownV2',
+                disable_web_page_preview=True)
 
 
 def generate_prof_text(names: list) -> str:
@@ -38,7 +54,7 @@ def generate_prof_text(names: list) -> str:
 
     professors = set()
     names_number = len(names)
-    s_names = [].append(names[0])
+    s_names = [names[0]]
 
     if names_number > 1:
         for name in names[1:-1]:
