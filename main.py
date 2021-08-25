@@ -47,6 +47,7 @@ def add_commands(up: Updater):
         BotCommand("mensa", "orari e menù della mensa"),
         BotCommand("biblioteca", "orari della biblioteca"),
         BotCommand("drive", "accedi alla cartella Drive"),
+        BotCommand("drive_contribute", "ottieni i permessi per caricare materiale sulla cartella Drive"),
         BotCommand("git", "accedi al materiale didattico su GitLab"),
         BotCommand("gitlab", "accedi al materiale didattico su GitLab"),
         BotCommand("rappresentanti", "lista rappresentanti"),
