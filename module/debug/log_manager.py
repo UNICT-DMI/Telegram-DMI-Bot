@@ -23,7 +23,7 @@ def error_handler(update: Update, context: CallbackContext):  # pylint: disable=
     traceback_list = traceback.format_exception(None, context.error, context.error.__traceback__)
     traceback_str = ''.join(traceback_list)
 
-    min_traceback_list = [line for line in traceback_list if "modules" in line]
+    min_traceback_list = [line for line in traceback_list if "module" in line and "venv" not in line]
     min_traceback_list.append(traceback_list[-1])
     min_traceback_str = ''.join(min_traceback_list)
     notify_error_admin(context=context, traceback_str=min_traceback_str)
