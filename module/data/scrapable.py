@@ -39,6 +39,9 @@ class Scrapable():
         if scrapables is None:
             return
         values = tuple(scrapable.values for scrapable in scrapables)
+        if len(values) == 0:
+            return # nothing to save
+
         DbManager.insert_into(table_name=cls().table, columns=cls().columns, values=values, multiple_rows=True)
 
     @classmethod
