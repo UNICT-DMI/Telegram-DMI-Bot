@@ -29,20 +29,28 @@ def drive(update: Update, context: CallbackContext):
 
     if chat_id < 0:
         context.bot.sendMessage(
-            chat_id=chat_id, text="La funzione /drive non è ammessa nei gruppi")
+            chat_id=chat_id, text="La funzione /drive non è ammessa nei gruppi"
+        )
         return
 
     try:
         file_list = gdrive.ListFile(
-            {'q': f"'{config_map['drive_folder_id']}' in parents and trashed=false", 'orderBy': 'folder,title'}).GetList()
+            {
+                'q': f"'{config_map['drive_folder_id']}' in parents and trashed=false",
+                'orderBy': 'folder,title',
+            }
+        ).GetList()
 
     except AuthError as e:
         log_error(header="drive", error=e)
 
     # keyboard that allows the user to navigate the folder
     keyboard = get_files_keyboard(file_list, row_len=3)
-    context.bot.sendMessage(chat_id=chat_id, text="Appunti & Risorse:",
-                            reply_markup=InlineKeyboardMarkup(keyboard))
+    context.bot.sendMessage(
+        chat_id=chat_id,
+        text="Appunti & Risorse:",
+        reply_markup=InlineKeyboardMarkup(keyboard),
+    )
 
 
 def drive_handler(update: Update, context: CallbackContext):
@@ -69,51 +77,75 @@ def drive_handler(update: Update, context: CallbackContext):
     if fetched_file['mimeType'] == "application/vnd.google-apps.folder":
         try:
             istance_file = gdrive.ListFile(
-                {'q': "'" + fetched_file['id'] + "' in parents and trashed=false", 'orderBy': 'folder,title'})
+                {
+                    'q': "'" + fetched_file['id'] + "' in parents and trashed=false",
+                    'orderBy': 'folder,title',
+                }
+            )
             file_list = istance_file.GetList()
 
         except Exception as e:
             log_error(header="drive_handler", error=e)
-            bot.editMessageText(chat_id=chat_id, message_id=message_id,
-                                text="Si è verificato un errore, ci scusiamo per il disagio. Contatta i devs. /help")
+            bot.editMessageText(
+                chat_id=chat_id,
+                message_id=message_id,
+                text="Si è verificato un errore, ci scusiamo per il disagio. Contatta i devs. /help",
+            )
             return
 
         # keyboard that allows the user to navigate the folder
         keyboard = get_files_keyboard(file_list)
 
-        if len(fetched_file['parents']) > 0 and fetched_file['parents'][0]['id'] != '0ADXK_Yx5406vUk9PVA':
-            keyboard.append([InlineKeyboardButton(
-                "🔙", callback_data="drive_file_" + fetched_file['parents'][0]['id'])])
+        if (
+            len(fetched_file['parents']) > 0
+            and fetched_file['parents'][0]['id'] != '0ADXK_Yx5406vUk9PVA'
+        ):
+            keyboard.append(
+                [
+                    InlineKeyboardButton(
+                        text="🔙",
+                        callback_data=f"drive_file_{fetched_file['parents'][0]['id']}",
+                    )
+                ]
+            )
 
-        bot.editMessageText(chat_id=chat_id, message_id=message_id,
-                            text=fetched_file['title'] + ":", reply_markup=InlineKeyboardMarkup(keyboard))
+        bot.editMessageText(
+            chat_id=chat_id,
+            message_id=message_id,
+            text=fetched_file['title'] + ":",
+            reply_markup=InlineKeyboardMarkup(keyboard),
+        )
 
     # the user clicked on a google docs
     elif fetched_file['mimeType'] == "application/vnd.google-apps.document":
-        bot.sendMessage(chat_id=chat_id,
-                        text=("Impossibile scaricare questo file poichè esso è un google document...\n"
-                              f"Andare sul seguente link: {fetched_file['exportLinks']['application/pdf']}"))
+        bot.sendMessage(
+            chat_id=chat_id,
+            text=(
+                "Impossibile scaricare questo file poichè esso è un google document...\n"
+                f"Andare sul seguente link: {fetched_file['exportLinks']['application/pdf']}"
+            ),
+        )
 
     else:  # the user clicked on a file
         try:
             file_d = gdrive.CreateFile({'id': fetched_file['id']})
 
-            if int(file_d['fileSize']) < 5e+7:
+            if int(file_d['fileSize']) < 5e7:
 
                 file_path = f"file/{fetched_file['title']}"
                 file_d.GetContentFile(file_path)
 
-                bot.sendChatAction(
-                    chat_id=chat_id, action="UPLOAD_DOCUMENT")
-                bot.sendDocument(chat_id=chat_id, document=open(
-                    file_path, 'rb'))
+                bot.sendChatAction(chat_id=chat_id, action="UPLOAD_DOCUMENT")
+                bot.sendDocument(chat_id=chat_id, document=open(file_path, 'rb'))
 
                 os.remove(file_path)
 
             else:
-                bot.sendMessage(chat_id=chat_id,
-                                text="File troppo grande per il download diretto...\n"
-                                f"Scarica dal seguente link: {file_d['alternateLink']}")
+                bot.sendMessage(
+                    chat_id=chat_id,
+                    text="File troppo grande per il download diretto...\n"
+                    f"Scarica dal seguente link: {file_d['alternateLink']}",
+                )
 
         except Exception as e:
             log_error(header="drive_handler", error=e)
@@ -133,15 +165,13 @@ def get_files_keyboard(file_list: list, row_len: int = 2) -> list:
         InlineKeyboard
     """
     formats = {
-        **{
-            "pdf": "📕 "
-        },
+        **{"pdf": "📕 "},
         **dict.fromkeys([' a', 'b', 'c'], 10),
-        **dict.fromkeys(["doc", "docx", "txt"], "📘 "),
+        **dict.fromkeys(["doc", "docx", "txt"], "📄 "),
         **dict.fromkeys(["jpg", "png", "gif"], "📷 "),
-        **dict.fromkeys(["rar", "zip"], "🗄 "),
+        **dict.fromkeys(["rar", "zip"], "📦 "),
         **dict.fromkeys(["out", "exe"], "⚙ "),
-        **dict.fromkeys(["c", "cpp", "h", "py", "java", "js", "html", "php"], "💻 ")
+        **dict.fromkeys(["c", "cpp", "h", "py", "java", "js", "html", "php"], "💻 "),
     }
 
     keyboard = []
@@ -158,12 +188,19 @@ def get_files_keyboard(file_list: list, row_len: int = 2) -> list:
             file_format = file_format[-1]  # get last element of file_format
             icon = formats.get(file_format, "📄 ")
 
-        if i % row_len == 0:  # the current element has an even index
-            keyboard.append([InlineKeyboardButton(
-                icon + file['title'], callback_data="drive_file_" + file['id'])])
+        keyboard_button = InlineKeyboardButton(
+            text=f"{icon} {file['title']}", callback_data="drive_file_" + file['id']
+        )
 
-        else:  # the current element has an odd index
-            keyboard[i // row_len].append(InlineKeyboardButton(
-                icon + file['title'], callback_data="drive_file_" + file['id']))
+        """"
+        We add a new row when we have added the number of buttons specified by {row_len} argument
+        In this way we have a maximum of {row_len} buttons in a row.
+        """
+
+        if i % row_len == 0:
+            keyboard.append([keyboard_button])
+
+        else:
+            keyboard[i // row_len].append(keyboard_button)
 
     return keyboard
