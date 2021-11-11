@@ -1,8 +1,8 @@
 """/drive command"""
 import os
 import yaml
-from pydrive.auth import AuthError, GoogleAuth
-from pydrive.drive import GoogleDrive
+from pydrive2.auth import AuthError, GoogleAuth
+from pydrive2.drive import GoogleDrive
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.shared import check_log
