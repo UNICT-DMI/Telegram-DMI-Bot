@@ -78,7 +78,7 @@ def drive_handler(update: Update, context: CallbackContext):
         try:
             istance_file = gdrive.ListFile(
                 {
-                    'q': "'" + fetched_file['id'] + "' in parents and trashed=false",
+                    'q': f"'{fetched_file['id']}' in parents and trashed=false",
                     'orderBy': 'folder,title',
                 }
             )
