@@ -8,8 +8,21 @@ from telegram.ext import CallbackContext
 from module.shared import check_log
 from module.debug import log_error
 
+gdrive_interface = None
+
 with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
+
+
+def get_gdrive_interface():
+    global gdrive_interface
+
+    if gdrive_interface is None:
+        gauth = GoogleAuth(settings_file="config/settings.yaml")
+        gauth.CommandLineAuth()
+        gdrive_interface = GoogleDrive(gauth)
+
+    return gdrive_interface
 
 
 def drive(update: Update, context: CallbackContext):
@@ -21,11 +34,8 @@ def drive(update: Update, context: CallbackContext):
         context: context passed by the handler
     """
     check_log(update, "drive")
+    gdrive = get_gdrive_interface()
     chat_id = update.message.chat_id
-
-    gauth = GoogleAuth(settings_file="config/settings.yaml")
-    gauth.CommandLineAuth()
-    gdrive = GoogleDrive(gauth)
 
     if chat_id < 0:
         context.bot.sendMessage(
@@ -61,15 +71,13 @@ def drive_handler(update: Update, context: CallbackContext):
         update: update event
         context: context passed by the handler
     """
+    bot = context.bot
+    
+    gdrive = get_gdrive_interface()
+
     query_data = update.callback_query.data.replace("drive_file_", "")
     chat_id = update.callback_query.from_user.id
     message_id = update.callback_query.message.message_id
-
-    bot = context.bot
-
-    gauth = GoogleAuth(settings_file="config/settings.yaml")
-    gauth.CommandLineAuth()
-    gdrive = GoogleDrive(gauth)
 
     fetched_file = gdrive.CreateFile({'id': query_data})
 
