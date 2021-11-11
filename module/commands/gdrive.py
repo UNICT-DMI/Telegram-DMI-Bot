@@ -2,7 +2,7 @@
 import os, yaml
 from pydrive.auth import AuthError, GoogleAuth
 from pydrive.drive import GoogleDrive
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, message
 from telegram.ext import CallbackContext
 from module.shared import check_log
 from module.debug import log_error
@@ -48,6 +48,7 @@ def drive_handler(update: Update, context: CallbackContext):
     """
     query_data = update.callback_query.data.replace("drive_file_", "")
     chat_id = update.callback_query.from_user.id
+    message_id = update.callback_query.message.message_id
     bot = context.bot
 
     gauth = GoogleAuth(settings_file="config/settings.yaml")
@@ -62,7 +63,7 @@ def drive_handler(update: Update, context: CallbackContext):
             file_list = istance_file.GetList()
         except Exception as e:
             log_error(header="drive_handler", error=e)
-            bot.sendMessage(chat_id=chat_id, text="Si è verificato un errore, ci scusiamo per il disagio. Contatta i devs. /help")
+            bot.editMessageText(chat_id=chat_id,message_id=message_id, text="Si è verificato un errore, ci scusiamo per il disagio. Contatta i devs. /help")
             return
 
         keyboard = get_files_keyboard(file_list)  # keyboard that allows the user to navigate the folder
@@ -70,11 +71,11 @@ def drive_handler(update: Update, context: CallbackContext):
         if len(file1['parents']) > 0 and file1['parents'][0]['id'] != '0ADXK_Yx5406vUk9PVA':
             keyboard.append([InlineKeyboardButton("🔙", callback_data="drive_file_" + file1['parents'][0]['id'])])
 
-        bot.sendMessage(chat_id=chat_id, text=file1['title'] + ":", reply_markup=InlineKeyboardMarkup(keyboard))
+        bot.editMessageText(chat_id=chat_id,message_id=message_id, text=file1['title'] + ":", reply_markup=InlineKeyboardMarkup(keyboard))
 
     elif file1['mimeType'] == "application/vnd.google-apps.document":  # the user clicked on a google docs
-        bot.sendMessage(chat_id=chat_id, text="Impossibile scaricare questo file poichè esso è un google document, Andare sul seguente link")
-        bot.sendMessage(chat_id=chat_id, text=file1['exportLinks']['application/pdf'])
+        bot.editMessageText(chat_id=chat_id,message_id=message_id, text="Impossibile scaricare questo file poichè esso è un google document, Andare sul seguente link")
+        bot.editMessageText(chat_id=chat_id,message_id=message_id, text=file1['exportLinks']['application/pdf'])
 
     else:  # the user clicked on a file
         try:
@@ -88,8 +89,8 @@ def drive_handler(update: Update, context: CallbackContext):
                     bot.sendDocument(chat_id=chat_id, document=f)
                 os.remove(file_path)
             else:
-                bot.sendMessage(chat_id=chat_id, text="File troppo grande per il download diretto, scarica dal seguente link")
-                bot.sendMessage(chat_id=chat_id, text=file_d['alternateLink'])
+                bot.editMessageText(chat_id=chat_id,message_id=message_id, text="File troppo grande per il download diretto, scarica dal seguente link")
+                bot.editMessageText(chat_id=chat_id,message_id=message_id, text=file_d['alternateLink'])
         except Exception as e:
             log_error(header="drive_handler", error=e)
     update.callback_query.answer()  # stops the spinning
