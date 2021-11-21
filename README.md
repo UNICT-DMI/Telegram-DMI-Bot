@@ -156,7 +156,9 @@ python3 conftest.py .
 ```
 
 - Follow the procedure and copy the session value it provides in the settings file in "test:session". You can then delete the `conftest.py` you just used, you won't need it again
-- Edit the remaining values in the settings file as you like
+- Edit `tag` value with the username of the test bot you will use.
+- Edit `representatives_group` value with the `user_id` or `group_id` where you want receive reports from **/report** command.
+- Edit `dev_group_chatid` value with the `user_id` or `group_id` where you want receive tracebacks.
 
 **Check [here](https://dev.to/blueset/how-to-write-integration-tests-for-a-telegram-bot-4c0e) if you want to have more information on the steps above**
 
