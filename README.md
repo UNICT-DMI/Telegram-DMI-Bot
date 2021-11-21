@@ -2,10 +2,10 @@
 
 **Telegram-DMI-Bot** is the platform that powers **@DMI_bot**, a Telegram bot aided at helping students find informations about professors, classes' schedules, administration's office hours and more.
 
-### Using the live version
+## Using the live version
 
 The bot is live on Telegram with the username [@DMI_Bot](https://telegram.me/DMI_Bot).
-Send **'/start'** to start it, **'/help'** to see a list of commands.
+Send **`/start`** to start it, **`/help`** to see a list of commands.
 
 Please note that the commands and their answers are in Italian.
 
@@ -39,7 +39,7 @@ _(If you don't have a token, message Telegram's [@BotFather](http://telegram.me/
 
 #### To install with _pip3_
 
-- python-telegram-bot==12.8
+- python-telegram-bot
 - pydrive
 - requests
 - beautifulsoup4
@@ -71,11 +71,13 @@ services:
 ```
 
 ### docker cli
+
 ```bash
-$ docker run -v </path/to/settings.yaml>:/dmibot/config/settings.yaml -v </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db -t unictdmi/dmibot
+docker run -v </path/to/settings.yaml>:/dmibot/config/settings.yaml -v </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db -t unictdmi/dmibot
 ```
 
 ### Parameter
+
 Container images are configured using parameters passed at runtime (such as those above). These parameters are separated by a colon and indicate \<external>:\<internal> respectively.
 
 | Parameter | Function |
@@ -84,6 +86,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-v /dmibot/data/DMI_DB.db` | database |
 
 ### Building locally
+
 ```bash
 git clone https://github.com/UNICT-DMI/Telegram-DMI-Bot.git
 cd Telegram-DMI-Bot
@@ -119,7 +122,7 @@ You can enable these commands setting **disable_drive = 0** and configuring the 
 
 ### Testing
 
-#### To install with _pip3_
+**To install with _pip3_**
 
 - pytest
 - pytest-asyncio
