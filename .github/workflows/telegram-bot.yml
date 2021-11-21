@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 3.8.5
+      - name: Set up Python 3.9.7
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8.5
+          python-version: 3.9.7
       - name: Install dependencies for requirements and testing
         run: |
           python -m pip install --upgrade pip
@@ -48,10 +48,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 3.8.5
+      - name: Set up Python 3.9.7
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8.5
+          python-version: 3.9.7
       - name: Install dependencies for requirements and testing
         run: |
           python -m pip install --upgrade pip
