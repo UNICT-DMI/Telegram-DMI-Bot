@@ -37,19 +37,7 @@ _(If you don't have a token, message Telegram's [@BotFather](http://telegram.me/
 - python-pip3
 - language-pack-it
 
-#### To install with _pip3_
-
-- python-telegram-bot
-- pydrive
-- requests
-- beautifulsoup4
-- python-gitlab
-- matplotlib
-- pandas
-- pillow
-- lxml
-
-To install all the requirements you can run:
+**To install all the requirements you can run**:
 
 ```bash
 pip3 install -r requirements.txt
@@ -122,13 +110,7 @@ You can enable these commands setting **disable_drive = 0** and configuring the 
 
 ### Testing
 
-**To install with _pip3_**
-
-- pytest
-- pytest-asyncio
-- telethon
-
-To install all the test requirements you can run:
+**To install all the test requirements you can run**:
 
 ```bash
 pip3 install -r requirements_dev.txt
