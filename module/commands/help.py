@@ -32,10 +32,10 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False):
 
     keyboard = [[]]
     keyboard.append([InlineKeyboardButton(DIPARTIMENTO_CDL, callback_data="sm_help_dip_cdl")])
-    keyboard.append([InlineKeyboardButton(REGOLAMENTO_DIDATTICO, callback_data="reg_button_home")])
+    keyboard.append([InlineKeyboardButton(APPUNTI_CLOUD, callback_data="sm_help_misc")])
     keyboard.append([InlineKeyboardButton(SEGRETERIA_CONTATTI, callback_data="sm_help_segr")])
     keyboard.append([InlineKeyboardButton(ERSU_ORARI, callback_data="sm_help_ersu")])
-    keyboard.append([InlineKeyboardButton(APPUNTI_CLOUD, callback_data="sm_help_misc")])
+    keyboard.append([InlineKeyboardButton(REGOLAMENTO_DIDATTICO, callback_data="reg_button_home")])
     keyboard.append([InlineKeyboardButton(PROGETTI_RICONOSCIMENTI, callback_data="sm_help_projects_acknowledgements")])
     keyboard.append([
         InlineKeyboardButton(ALL_COMMANDS, callback_data="md_help"),
