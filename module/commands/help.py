@@ -4,6 +4,17 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.shared import AULARIO, CLOUD, CUSicon, check_log
 
+DIPARTIMENTO_CDL = "🏢 Dipartimento e CdL"
+REGOLAMENTO_DIDATTICO = "🪧 Regolamento Didattico"
+SEGRETERIA_CONTATTI = "🕐 Segreteria orari e contatti"
+ERSU_ORARI = "🍽 ERSU orari e contatti"
+APPUNTI_CLOUD = "☁️ Appunti & Cloud"
+PROGETTI_RICONOSCIMENTI = "🏅 Progetti e Riconoscimenti"
+
+ALL_COMMANDS = "Tutti i comandi"
+CLOSE = "❌ Chiudi"
+
+BACK_TO_MENU = "🔙 Torna al menu"
 
 def help_cmd(update: Update, context: CallbackContext, edit: bool = False):
     """Called by the /help command.
@@ -20,21 +31,15 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False):
     message_text = "@DMI_Bot risponde ai seguenti comandi:"
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(" ~ Dipartimento e CdL (SubMenu) ~ ", callback_data="sm_help_dip_cdl")])
-
-    keyboard.append([InlineKeyboardButton(" ~ Regolamento Didattico ~ ", callback_data="reg_button_home")])
-
-    keyboard.append([InlineKeyboardButton(" ~ Segreteria orari e contatti (SubMenu) ~ ", callback_data="sm_help_segr")])
-
-    keyboard.append([InlineKeyboardButton(" ~ ERSU orari e contatti (SubMenu) ~ ", callback_data="sm_help_ersu")])
-
-    keyboard.append([InlineKeyboardButton(" ~ Bot e varie (SubMenu) ~ ", callback_data="sm_help_misc")])
-
-    keyboard.append([InlineKeyboardButton(" ~ Progetti e Riconoscimenti (SubMenu) ~ ", callback_data="sm_help_projects_acknowledgements")])
-
+    keyboard.append([InlineKeyboardButton(DIPARTIMENTO_CDL, callback_data="sm_help_dip_cdl")])
+    keyboard.append([InlineKeyboardButton(REGOLAMENTO_DIDATTICO, callback_data="reg_button_home")])
+    keyboard.append([InlineKeyboardButton(SEGRETERIA_CONTATTI, callback_data="sm_help_segr")])
+    keyboard.append([InlineKeyboardButton(ERSU_ORARI, callback_data="sm_help_ersu")])
+    keyboard.append([InlineKeyboardButton(APPUNTI_CLOUD, callback_data="sm_help_misc")])
+    keyboard.append([InlineKeyboardButton(PROGETTI_RICONOSCIMENTI, callback_data="sm_help_projects_acknowledgements")])
     keyboard.append([
-        InlineKeyboardButton("Tutti i comandi", callback_data="md_help"),
-        InlineKeyboardButton("Chiudi",          callback_data="exit_cmd")
+        InlineKeyboardButton(ALL_COMMANDS, callback_data="md_help"),
+        InlineKeyboardButton(CLOSE,          callback_data="exit_cmd")
     ])
 
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -69,7 +74,7 @@ def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message
     message_text = "Visualizzazione comandi relativi a:"
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(" ~ Dipartimento e CdL ~ ", callback_data="NONE")])
+    keyboard.append([InlineKeyboardButton("🏢 Dipartimento e CdL", callback_data="NONE")])
     keyboard.append([
         InlineKeyboardButton("📖 Esami (link)",         callback_data="md_esami_link"),
         InlineKeyboardButton(AULARIO,                   callback_data="sm_aulario"),
@@ -86,7 +91,7 @@ def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message
         InlineKeyboardButton("📊 Gruppi",                               callback_data="md_gruppi"),
     ])
     keyboard.append([
-        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
     ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -113,7 +118,7 @@ def help_rapp_menu(update: Update, context: CallbackContext, chat_id: int, messa
         ]
     )
     keyboard.append([
-        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
     ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -132,7 +137,7 @@ def help_segr(update: Update, context: CallbackContext, chat_id: int, message_id
     message_text = "Visualizzazione comandi relativi a:"
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(" ~ Segreteria orari e contatti ~ ", callback_data="NONE")])
+    keyboard.append([InlineKeyboardButton(SEGRETERIA_CONTATTI, callback_data="NONE")])
     
     keyboard.append([
         InlineKeyboardButton("Seg. Didattica",  callback_data="md_sdidattica"),
@@ -140,7 +145,7 @@ def help_segr(update: Update, context: CallbackContext, chat_id: int, message_id
         InlineKeyboardButton("CEA",             callback_data="md_cea")
     ])
     keyboard.append([
-        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
     ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -159,7 +164,7 @@ def help_ersu(update: Update, context: CallbackContext, chat_id: int, message_id
     message_text = "Visualizzazione comandi relativi a:"
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(" ~ ERSU orari e contatti ~ ", callback_data="NONE")])
+    keyboard.append([InlineKeyboardButton(ERSU_ORARI, callback_data="NONE")])
     
     keyboard.append([
         InlineKeyboardButton("ERSU",          callback_data="md_ersu"),
@@ -167,7 +172,7 @@ def help_ersu(update: Update, context: CallbackContext, chat_id: int, message_id
         InlineKeyboardButton("URP",           callback_data="md_urp")
     ])
     keyboard.append([
-        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
     ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -186,14 +191,14 @@ def help_projects_acknowledgements(update: Update, context: CallbackContext, cha
     message_text = "Visualizzazione comandi relativi a:"
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(" ~ Progetti e Riconoscimenti ~ ", callback_data="NONE")])
+    keyboard.append([InlineKeyboardButton(PROGETTI_RICONOSCIMENTI, callback_data="NONE")])
     
     keyboard.append([
         InlineKeyboardButton("📈 Opis Manager",      callback_data="md_opismanager"),
         InlineKeyboardButton("Contributors",         callback_data="md_contributors")
     ])
     keyboard.append([
-        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
     ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -212,14 +217,14 @@ def help_misc(update: Update, context: CallbackContext, chat_id: int, message_id
     message_text = "Visualizzazione comandi relativi a:"
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(" ~ Bot e varie ~ ", callback_data="NONE")])
+    keyboard.append([InlineKeyboardButton(APPUNTI_CLOUD, callback_data="NONE")])
     
     keyboard.append([
         InlineKeyboardButton("📂 Drive",             callback_data="md_drive"),
         InlineKeyboardButton("📂 GitLab",            callback_data="md_gitlab")
     ])
     keyboard.append([
-        InlineKeyboardButton("🔙 Torna al menu",                       callback_data="sm_help_back_to_menu"),
+        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
     ])
     reply_markup = InlineKeyboardMarkup(keyboard)
 

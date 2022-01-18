@@ -139,6 +139,5 @@ def check_print_old_exams(year_exam: str) -> bool:
     """
     date_time = datetime.now().astimezone()
     ckdate = datetime(year=date_time.year, month=12, day=23).astimezone()  # aaaa/12/24 data dal quale vengono prelevati solo gli esami del nuovo anno
-    if year_exam != str(date_time.year)[-2:] and date_time < ckdate:
-        return True
-    return False
+
+    return year_exam != str(date_time.year)[-2:] and date_time < ckdate
