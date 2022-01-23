@@ -63,6 +63,6 @@ def drive_contribute(update: Update, context: CallbackContext):
     except:
         context.bot.sendMessage(
             chat_id=update.message.chat_id,
-            text=f"Si é verificato un errore durante la validazione dell'email, riprova piú tardi o verifica se hai già gli accessi in scrittura alla cartella mediante questo link https://cutt.ly/unict-dmi-drive",
+            text=f"Si é verificato un errore durante la validazione dell'email, riprova più tardi o verifica se hai già gli accessi in scrittura alla cartella mediante questo link https://cutt.ly/unict-dmi-drive",
         )
 
