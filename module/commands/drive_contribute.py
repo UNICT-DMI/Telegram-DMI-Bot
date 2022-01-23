@@ -1,8 +1,10 @@
 import yaml
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
+from pydrive2.files import ApiRequestError
 from telegram import Update
 from telegram.ext import CallbackContext
+from telegram.error import BadRequest
 
 from module.utils.drive_contribute_utils import delete_drive_permission_job
 
@@ -60,7 +62,7 @@ def drive_contribute(update: Update, context: CallbackContext):
             chat_id=update.message.chat_id,
             text=f"Hai ottenuto l'accesso in scrittura alla cartella Drive! \n\nPresto ti arriverà un'email di conferma per gli accessi in scrittura e potrai aggiungere appunti nella cartella mediante questo link https://cutt.ly/unict-dmi-drive",
         )
-    except:
+    except (BadRequest, ApiRequestError):
         context.bot.sendMessage(
             chat_id=update.message.chat_id,
             text=f"Si é verificato un errore durante la validazione dell'email, riprova piú tardi o verifica se hai già gli accessi in scrittura alla cartella mediante questo link https://cutt.ly/unict-dmi-drive",
