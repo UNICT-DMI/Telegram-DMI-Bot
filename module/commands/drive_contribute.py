@@ -27,30 +27,42 @@ def drive_contribute(update: Update, context: CallbackContext):
         )
         return
 
-    email = args[0]
-    reason = ' '.join(args[1:])
+    try:
+        email = args[0]
+        reason = ' '.join(args[1:])
 
-    request_message = context.bot.sendMessage(
-        chat_id=config_map["dev_group_chatid"],
-        text=f"L'utente {first_name} (Username: {username}, E-mail: {email}) ha avuto accesso in scrittura a Drive con la seguente motivazione:\n\n{reason}",
-    )
+        request_message = context.bot.sendMessage(
+            chat_id=config_map["dev_group_chatid"],
+            text=f"L'utente {first_name} (Username: {username}, E-mail: {email}) ha avuto accesso in scrittura a Drive con la seguente motivazione:\n\n{reason}",
+        )
 
-    gauth = GoogleAuth(settings_file="config/settings.yaml")
-    gauth.CommandLineAuth()
-    gdrive = GoogleDrive(gauth)
+        gauth = GoogleAuth(settings_file="config/settings.yaml")
+        gauth.CommandLineAuth()
+        gdrive = GoogleDrive(gauth)
 
-    drive_root_folder = gdrive.CreateFile({'id': config_map['drive_folder_id']})
-    drive_root_folder.FetchMetadata(fields='permissions')
-    permission = drive_root_folder.InsertPermission(
-        {'type': 'user', 'emailAddress': email, 'value': email, 'role': 'writer'}
-    )
+        drive_root_folder = gdrive.CreateFile({'id': config_map['drive_folder_id']})
+        drive_root_folder.FetchMetadata(fields='permissions')
+        permission = drive_root_folder.InsertPermission(
+            {'type': 'user', 'emailAddress': email, 'value': email, 'role': 'writer'}
+        )
 
-    context.dispatcher.job_queue.run_once(
-        delete_drive_permission_job,
-        when=config_map['drive_permission_duration'] * 60 * 60,
-        context={
-            "folder_obj": drive_root_folder,
-            "permission_obj": permission,
-            "request_message": request_message,
-        },
-    )
+        context.dispatcher.job_queue.run_once(
+            delete_drive_permission_job,
+            when=config_map['drive_permission_duration'] * 60 * 60,
+            context={
+                "folder_obj": drive_root_folder,
+                "permission_obj": permission,
+                "request_message": request_message,
+            },
+        )
+
+        context.bot.sendMessage(
+            chat_id=update.message.chat_id,
+            text=f"Hai ottenuto l'accesso in scrittura alla cartella Drive! \n\nPresto ti arriverà un'email di conferma per gli accessi in scrittura e potrai aggiungere appunti nella cartella mediante questo link https://cutt.ly/unict-dmi-drive",
+        )
+    except:
+        context.bot.sendMessage(
+            chat_id=update.message.chat_id,
+            text=f"Si é verificato un errore durante la validazione dell'email, riprova piú tardi o verifica se hai già gli accessi in scrittura alla cartella mediante questo link https://cutt.ly/unict-dmi-drive",
+        )
+

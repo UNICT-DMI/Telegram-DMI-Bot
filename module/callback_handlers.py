@@ -61,7 +61,10 @@ def informative_callback(update: Update, context: CallbackContext):
         cmd = update.message.text.split(' ')[1].lower()  # prende la prima parola dopo l'emoji
     check_log(update, cmd)
     message_text = read_md(cmd)
-    context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode=ParseMode.MARKDOWN)
+    
+    if_disable_preview = True if cmd == 'cloud' else False
+
+    context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=if_disable_preview)
 
 
 def none_handler(update: Update, context: CallbackContext):
