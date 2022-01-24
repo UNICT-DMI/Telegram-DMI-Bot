@@ -1,5 +1,7 @@
 ☁️  [Google Drive di Matematica e Informatica](https://cutt.ly/unict-dmi-drive)
 
+Accedi alla cartella condivisa di GoogleDrive mediante il comando /drive oppure clicca [qui](https://cutt.ly/unict-dmi-drive).
+
 📝 Vuoi aggiungere appunti alla cartella Google Drive? Utilizza il comando /drive\_contribute per ottenere l'accesso in scrittura e modificare o aggiungere appunti.
 
 [GitLab](https://gitlab.com/UNICT-DMI)  
