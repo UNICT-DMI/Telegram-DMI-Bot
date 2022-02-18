@@ -124,15 +124,18 @@ def get_reg_keyboard(reg_doc: dict = None) -> InlineKeyboardMarkup:
     Returns:
         list of rulebooks
     """
+
+    BACK_TO_MENU = InlineKeyboardButton('Menu principale  ⏪', callback_data='reg_button_help') # menu button
+    
     if reg_doc is None:
         return InlineKeyboardMarkup([[
             InlineKeyboardButton('L-31', callback_data='reg_button_triennale_L31'),
             InlineKeyboardButton('LM-18', callback_data='reg_button_magistrale_LM18'),
             InlineKeyboardButton('L-35', callback_data='reg_button_triennale_L35'),
             InlineKeyboardButton('LM-40', callback_data='reg_button_magistrale_LM40')],
-           [InlineKeyboardButton('Menu principale  ⏪', callback_data='reg_button_help')]
+           [BACK_TO_MENU]
         ])
     keyboard = [[InlineKeyboardButton(r.split('_')[0], callback_data=r)] for r in reg_doc]
     keyboard.append([InlineKeyboardButton('Indietro  ◀️', callback_data='reg_button_home')])  # back button
-    keyboard.append([InlineKeyboardButton('Menu principale  ⏪', callback_data='reg_button_help')]) # menu button
+    keyboard.append([BACK_TO_MENU])
     return InlineKeyboardMarkup(keyboard)
