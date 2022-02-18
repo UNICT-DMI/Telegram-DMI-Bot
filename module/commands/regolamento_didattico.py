@@ -3,6 +3,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.shared import check_log
+from module.commands.help import help_cmd
 
 reg_doc_triennale_L31 = {
     'Regolamento Didattico 2021/2022_L31': 'http://web.dmi.unict.it/sites/default/files/files/L%2031_%20Informatica.pdf',
@@ -79,6 +80,9 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext):
                                   message_id=query.message.message_id,
                                   text='Scegliere uno dei seguenti corsi:',
                                   reply_markup=get_reg_keyboard())
+    elif data == "help":
+        help_cmd(query, context, True)
+
     else:
         context.bot.edit_message_text(chat_id=query.message.chat_id,
                                   message_id=query.message.message_id,
@@ -125,8 +129,10 @@ def get_reg_keyboard(reg_doc: dict = None) -> InlineKeyboardMarkup:
             InlineKeyboardButton('L-31', callback_data='reg_button_triennale_L31'),
             InlineKeyboardButton('LM-18', callback_data='reg_button_magistrale_LM18'),
             InlineKeyboardButton('L-35', callback_data='reg_button_triennale_L35'),
-            InlineKeyboardButton('LM-40', callback_data='reg_button_magistrale_LM40'),
-        ]])
+            InlineKeyboardButton('LM-40', callback_data='reg_button_magistrale_LM40')],
+           [InlineKeyboardButton('Menu principale  ⏪', callback_data='reg_button_help')]
+        ])
     keyboard = [[InlineKeyboardButton(r.split('_')[0], callback_data=r)] for r in reg_doc]
-    keyboard.append([InlineKeyboardButton('Indietro', callback_data='reg_button_home')])  # back button
+    keyboard.append([InlineKeyboardButton('Indietro  ◀️', callback_data='reg_button_home')])  # back button
+    keyboard.append([InlineKeyboardButton('Menu principale  ⏪', callback_data='reg_button_help')]) # menu button
     return InlineKeyboardMarkup(keyboard)
