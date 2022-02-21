@@ -14,7 +14,7 @@ from module.commands.help import help_cmd
 from module.commands.report import report
 from module.commands.gdrive import drive, drive_handler
 from module.commands.drive_contribute import drive_contribute
-from module.commands.regolamento_didattico import regolamentodidattico, regolamentodidattico_handler, send_regolamento
+from module.commands.regolamento_didattico import regolamentodidattico, regolamentodidattico_handler, cdl_handler, send_regolamento
 from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni
 from module.gitlab import git, gitlab_handler
 from module.job_updater import updater_lep
@@ -138,6 +138,7 @@ def add_handlers(dp: Dispatcher):
     # regolamento didattico
     dp.add_handler(CommandHandler('regolamentodidattico', regolamentodidattico))
     dp.add_handler(CallbackQueryHandler(regolamentodidattico_handler, pattern=r'^reg_button_.*'))
+    dp.add_handler(CallbackQueryHandler(cdl_handler, pattern=r'^cdl_button_.*'))
     dp.add_handler(CallbackQueryHandler(send_regolamento, pattern=r'^Regolamento Didattico.*'))
 
     # esami

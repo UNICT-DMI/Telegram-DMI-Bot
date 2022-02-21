@@ -51,6 +51,9 @@ REGOLAMENTI = {
     'magistrale_LM40': reg_doc_magistrale_LM40
 }
 
+BACK_TO_MENU = InlineKeyboardButton('Menu principale  ⏪', callback_data='reg_button_help') # menu button
+RETURN_BUTTON = InlineKeyboardButton('Indietro  ◀️', callback_data='reg_button_home')
+
 
 
 def regolamentodidattico(update: Update, context: CallbackContext):
@@ -62,7 +65,7 @@ def regolamentodidattico(update: Update, context: CallbackContext):
         context: context passed by the handler
     """
     check_log(update, "regolamentodidattico")
-    update.message.reply_text('Scegliere uno dei seguenti corsi:', reply_markup=get_reg_keyboard())
+    update.message.reply_text('Scegliere uno dei corsi di laurea:', reply_markup=get_cdl_keyboard())
 
 def regolamentodidattico_handler(update: Update, context: CallbackContext):
     """Called by any of the /regolamentodidattico buttons.
@@ -78,8 +81,8 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext):
     if data == "home":
         context.bot.edit_message_text(chat_id=query.message.chat_id,
                                   message_id=query.message.message_id,
-                                  text='Scegliere uno dei seguenti corsi:',
-                                  reply_markup=get_reg_keyboard())
+                                  text='Scegliere uno dei corsi di laurea:',
+                                  reply_markup=get_cdl_keyboard())
     elif data == "help":
         help_cmd(query, context, True)
 
@@ -87,7 +90,21 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext):
         context.bot.edit_message_text(chat_id=query.message.chat_id,
                                   message_id=query.message.message_id,
                                   text='Scegliere il regolamento in base al proprio anno di immatricolazione:',
-                                  reply_markup=get_reg_keyboard(REGOLAMENTI[data]))
+                                  reply_markup=get_cdl_keyboard(REGOLAMENTI[data]))
+
+def cdl_handler(update: Update, context: CallbackContext):
+    query = update.callback_query
+    data = query.data.replace("cdl_button_", "")
+    if data=="informatica":
+        context.bot.edit_message_text(chat_id=query.message.chat_id,
+                                  message_id=query.message.message_id,
+                                  text='Scegliere uno dei seguenti corsi (Informatica):',
+                                  reply_markup=get_inf_keyboard())
+    else:
+        context.bot.edit_message_text(chat_id=query.message.chat_id,
+                                    message_id=query.message.message_id,
+                                    text='Scegliere uno dei seguenti corsi (Matematica):',
+                                    reply_markup=get_mat_keyboard())
 
 
 def send_regolamento(update: Update, context: CallbackContext):
@@ -113,8 +130,23 @@ def send_regolamento(update: Update, context: CallbackContext):
     context.bot.send_document(chat_id=chat_id, document=doc)
     context.bot.edit_message_text(chat_id=query.message.chat_id, message_id=query.message.message_id, text="Ecco il file richiesto:",)
 
+def get_inf_keyboard():
+    return InlineKeyboardMarkup([[
+            InlineKeyboardButton('Triennale', callback_data='reg_button_triennale_L31'),
+            InlineKeyboardButton('Magistrale', callback_data='reg_button_magistrale_LM18')],
+            [RETURN_BUTTON],
+            [BACK_TO_MENU]
+    ])
 
-def get_reg_keyboard(reg_doc: dict = None) -> InlineKeyboardMarkup:
+def get_mat_keyboard():
+    return InlineKeyboardMarkup([[
+            InlineKeyboardButton('Triennale', callback_data='reg_button_triennale_L35'),
+            InlineKeyboardButton('Magistrale', callback_data='reg_button_magistrale_LM40')],
+            [RETURN_BUTTON],
+            [BACK_TO_MENU]
+    ])
+
+def get_cdl_keyboard(reg_doc: dict = None) -> InlineKeyboardMarkup:
     """Called by :meth:`regolamentodidattico` and :meth:`regolamentodidattico_handler`.
     Generates the whole list of rulebooks to append as an InlineKeyboard
 
@@ -124,18 +156,14 @@ def get_reg_keyboard(reg_doc: dict = None) -> InlineKeyboardMarkup:
     Returns:
         list of rulebooks
     """
-
-    BACK_TO_MENU = InlineKeyboardButton('Menu principale  ⏪', callback_data='reg_button_help') # menu button
     
     if reg_doc is None:
         return InlineKeyboardMarkup([[
-            InlineKeyboardButton('L-31', callback_data='reg_button_triennale_L31'),
-            InlineKeyboardButton('LM-18', callback_data='reg_button_magistrale_LM18'),
-            InlineKeyboardButton('L-35', callback_data='reg_button_triennale_L35'),
-            InlineKeyboardButton('LM-40', callback_data='reg_button_magistrale_LM40')],
+            InlineKeyboardButton('Informatica', callback_data='cdl_button_informatica'),
+            InlineKeyboardButton('Matematica', callback_data='cdl_button_matematica')],
            [BACK_TO_MENU]
         ])
     keyboard = [[InlineKeyboardButton(r.split('_')[0], callback_data=r)] for r in reg_doc]
-    keyboard.append([InlineKeyboardButton('Indietro  ◀️', callback_data='reg_button_home')])  # back button
+    keyboard.append([RETURN_BUTTON])  # return button
     keyboard.append([BACK_TO_MENU])
     return InlineKeyboardMarkup(keyboard)
