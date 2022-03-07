@@ -9,8 +9,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.data import TimetableSlot
 from module.shared import read_json
-
-BACK_BUTTON_TEXT = "Indietro ❌"
+from data.vars import AULARIO_WARNING, BACK_BUTTON_TEXT, DAY_SELECTION, LESSON_SELECTION, NO_LESSON_WARNING
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -32,13 +31,13 @@ def aulario(update: Update, context: CallbackContext, chat_id: int = None, messa
     days = TimetableSlot.get_max_giorno()
     if days:
         reply_markup = create_calendar(days)
-        text = "Seleziona la data della lezione che ti interessa."
+        text = DAY_SELECTION
         if message_id:
             context.bot.editMessageText(text=text, reply_markup=reply_markup, chat_id=chat_id, message_id=message_id)
         else:
             context.bot.sendMessage(text=text, reply_markup=reply_markup, chat_id=chat_id)
     else:
-        text = "⚠️ Aulario non ancora pronto, riprova fra qualche minuto ⚠️"
+        text = AULARIO_WARNING
         if message_id:
             context.bot.editMessageText(text=text, chat_id=chat_id, message_id=message_id)
         else:
@@ -95,12 +94,12 @@ def calendar_handler(update: Update, context: CallbackContext):
     day = data.split("_")[1]
     daily_slots = TimetableSlot.find(giorno=day)
     if daily_slots:
-        text = "Quale lezione devi seguire?"
+        text = LESSON_SELECTION
         keyboard = get_subjs_keyboard(0, day)
         keyboard.append([InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data='sm_aulario')])
         reply_markup = InlineKeyboardMarkup(keyboard)
     else:
-        text = "Nessuna lezione programmata per questo giorno"
+        text = NO_LESSON_WARNING
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data='sm_aulario')]])
 
     context.bot.deleteMessage(chat_id=chat_id, message_id=query.message.message_id)
