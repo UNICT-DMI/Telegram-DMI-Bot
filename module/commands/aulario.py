@@ -9,7 +9,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.data import TimetableSlot
 from module.shared import read_json
-from data.vars import AULARIO_WARNING, BACK_BUTTON_TEXT, DAY_SELECTION, LESSON_SELECTION, NO_LESSON_WARNING
+from module.data.vars import AULARIO_WARNING, BACK_BUTTON_TEXT, DAY_SELECTION, LESSON_SELECTION, NO_LESSON_WARNING
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
