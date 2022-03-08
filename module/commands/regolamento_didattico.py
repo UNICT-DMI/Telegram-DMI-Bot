@@ -4,6 +4,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.shared import check_log
 from module.commands.help import help_cmd
+from module.data.vars import GRAD_SELECT, INF_COURSE, MAT_COURSE, RET_FILE, YEAR_SELECT
 
 reg_doc_triennale_L31 = {
     'Regolamento Didattico 2021/2022_L31': 'http://web.dmi.unict.it/sites/default/files/files/L%2031_%20Informatica.pdf',
@@ -65,7 +66,7 @@ def regolamentodidattico(update: Update, context: CallbackContext):
         context: context passed by the handler
     """
     check_log(update, "regolamentodidattico")
-    update.message.reply_text('Scegliere uno dei corsi di laurea:', reply_markup=get_cdl_keyboard())
+    update.message.reply_text(GRAD_SELECT, reply_markup=get_cdl_keyboard())
 
 def regolamentodidattico_handler(update: Update, context: CallbackContext):
     """Called by any of the /regolamentodidattico buttons.
@@ -81,7 +82,7 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext):
     if data == "home":
         context.bot.edit_message_text(chat_id=query.message.chat_id,
                                   message_id=query.message.message_id,
-                                  text='Scegliere uno dei corsi di laurea:',
+                                  text=GRAD_SELECT,
                                   reply_markup=get_cdl_keyboard())
     elif data == "help":
         help_cmd(query, context, True)
@@ -89,7 +90,7 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext):
     else:
         context.bot.edit_message_text(chat_id=query.message.chat_id,
                                   message_id=query.message.message_id,
-                                  text='Scegliere il regolamento in base al proprio anno di immatricolazione:',
+                                  text=YEAR_SELECT,
                                   reply_markup=get_cdl_keyboard(REGOLAMENTI[data]))
 
 def cdl_handler(update: Update, context: CallbackContext):
@@ -98,12 +99,12 @@ def cdl_handler(update: Update, context: CallbackContext):
     if data=="informatica":
         context.bot.edit_message_text(chat_id=query.message.chat_id,
                                   message_id=query.message.message_id,
-                                  text='Scegliere uno dei seguenti corsi (Informatica):',
+                                  text=INF_COURSE,
                                   reply_markup=get_inf_keyboard())
     else:
         context.bot.edit_message_text(chat_id=query.message.chat_id,
                                     message_id=query.message.message_id,
-                                    text='Scegliere uno dei seguenti corsi (Matematica):',
+                                    text=MAT_COURSE,
                                     reply_markup=get_mat_keyboard())
 
 
@@ -128,7 +129,7 @@ def send_regolamento(update: Update, context: CallbackContext):
         doc = reg_doc_magistrale_LM40[data]
 
     context.bot.send_document(chat_id=chat_id, document=doc)
-    context.bot.edit_message_text(chat_id=query.message.chat_id, message_id=query.message.message_id, text="Ecco il file richiesto:",)
+    context.bot.edit_message_text(chat_id=query.message.chat_id, message_id=query.message.message_id, text=RET_FILE,)
 
 def get_inf_keyboard():
     return InlineKeyboardMarkup([[

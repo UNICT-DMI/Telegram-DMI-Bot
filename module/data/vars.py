@@ -44,3 +44,12 @@ BACK_TO_MENU = "🔙 Torna al menu"
 
 LE_USE_WARNING = "Questo comando è utilizzabile solo in privato"
 LE_GROUP_WARNING = "Dal comando lezioni che hai eseguito in un gruppo"
+
+
+""" regolmento_didattico """
+
+GRAD_SELECT = "Scegliere uno dei corsi di laurea:"
+YEAR_SELECT = "Scegliere il regolamento in base al proprio anno di immatricolazione:"
+INF_COURSE = "Scegliere uno dei seguenti corsi (Informatica):"
+MAT_COURSE = "Scegliere uno dei seguenti corsi (Matematica):"
+RET_FILE = "Ecco il file richiesto:"
