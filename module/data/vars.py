@@ -39,3 +39,8 @@ ALL_COMMANDS = "Tutti i comandi"
 CLOSE = "❌ Chiudi"
 BACK_TO_MENU = "🔙 Torna al menu"
 
+
+""" lezioni.py """
+
+LE_USE_WARNING = "Questo comando è utilizzabile solo in privato"
+LE_GROUP_WARNING = "Dal comando lezioni che hai eseguito in un gruppo"

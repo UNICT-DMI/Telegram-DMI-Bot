@@ -7,6 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.data import Lesson
 from module.shared import check_log, send_message
+from module.data.vars import LE_GROUP_WARNING, LE_USE_WARNING
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -31,8 +32,8 @@ def lezioni(update: Update, context: CallbackContext):
     chat_id = update.message.chat_id
 
     if chat_id != user_id:  # forza ad eseguire il comando in una chat privata, anche per evitare di inondare un gruppo con i risultati
-        context.bot.sendMessage(chat_id=chat_id, text="Questo comando è utilizzabile solo in privato")
-        context.bot.sendMessage(chat_id=user_id, text="Dal comando lezioni che hai eseguito in un gruppo")
+        context.bot.sendMessage(chat_id=chat_id, text=LE_USE_WARNING)
+        context.bot.sendMessage(chat_id=user_id, text=LE_GROUP_WARNING)
 
     message_text, inline_keyboard = get_lezioni_text_InLineKeyboard(context)
     context.bot.sendMessage(chat_id=user_id, text=message_text, reply_markup=inline_keyboard)
