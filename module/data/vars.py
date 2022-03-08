@@ -19,3 +19,10 @@ VALIDATION_ERROR = "Si é verificato un errore durante la validazione dell'email
 
 PRIVATE_USE_WARNING = "Questo comando è utilizzabile solo in privato"
 GROUP_WARNING = "Dal comando /esami che hai eseguito in un gruppo"
+
+
+""" gdrive.py """
+
+NO_GROUP_WARNING = "La funzione /drive non è ammessa nei gruppi"
+ERROR_DEVS = "Si è verificato un errore, ci scusiamo per il disagio. Contatta i devs. /help"
+

@@ -7,6 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.shared import check_log
 from module.debug import log_error
+from module.data.vars import ERROR_DEVS, NO_GROUP_WARNING
 
 gdrive_interface = None
 
@@ -39,7 +40,7 @@ def drive(update: Update, context: CallbackContext):
 
     if chat_id < 0:
         context.bot.sendMessage(
-            chat_id=chat_id, text="La funzione /drive non è ammessa nei gruppi"
+            chat_id=chat_id, text=NO_GROUP_WARNING
         )
         return
 
@@ -97,7 +98,7 @@ def drive_handler(update: Update, context: CallbackContext):
             bot.editMessageText(
                 chat_id=chat_id,
                 message_id=message_id,
-                text="Si è verificato un errore, ci scusiamo per il disagio. Contatta i devs. /help",
+                text=ERROR_DEVS,
             )
             return
 
