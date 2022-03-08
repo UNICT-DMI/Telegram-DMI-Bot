@@ -58,3 +58,8 @@ RET_FILE = "Ecco il file richiesto:"
 """ report.py """
 
 REP_WARNING = "Errore. Inserisci la tua segnalazione dopo /report (Ad esempio /report Invasione ingegneri in corso.)"
+
+
+""" stats.py """
+
+EASTER_EGG = ("leiCheNePensaSignorina", "smonta_portoni", "santino", "bladrim", "prof_sticker")

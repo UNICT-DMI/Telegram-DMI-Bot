@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 from telegram import Bot, Update
 from telegram.ext import CallbackContext
 from module.data import DbManager
+from module.data.vars import EASTER_EGG
 
 warnings.filterwarnings("ignore", category=UserWarning, message='^Starting a Matplotlib')
 
-EASTER_EGG = ("leiCheNePensaSignorina", "smonta_portoni", "santino", "bladrim", "prof_sticker")
 
 
 def stats(update: Update, context: CallbackContext):
