@@ -6,6 +6,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.data import Exam
 from module.shared import check_log, send_message
+from module.data.vars import PRIVATE_USE_WARNING, GROUP_WARNING
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -30,8 +31,8 @@ def esami(update: Update, context: CallbackContext):
     chat_id = update.message.chat_id
 
     if chat_id != user_id:  # forza ad eseguire il comando in una chat privata
-        context.bot.sendMessage(chat_id=chat_id, text="Questo comando è utilizzabile solo in privato")
-        context.bot.sendMessage(chat_id=user_id, text="Dal comando /esami che hai eseguito in un gruppo")
+        context.bot.sendMessage(chat_id=chat_id, text=PRIVATE_USE_WARNING)
+        context.bot.sendMessage(chat_id=user_id, text=GROUP_WARNING)
 
     message_text, inline_keyboard = get_esami_text_inline_keyboard(context)
     context.bot.sendMessage(chat_id=user_id, text=message_text, reply_markup=inline_keyboard)
