@@ -13,3 +13,9 @@ NO_USERNAME_WARNING = "Nessuno username"
 USE_TEXT = "USO: /drive_contribute [e-mail] [motivazione]\n\nESEMPIO: /drive_contribute mario.rossi@gmail.com Vorrei caricare i miei appunti di Fondamenti di Informatica"
 CONFIRM_ACCESS = "Hai ottenuto l'accesso in scrittura alla cartella Drive! \n\nPresto ti arriverà un'email di conferma per gli accessi in scrittura e potrai aggiungere appunti nella cartella mediante questo link https://cutt.ly/unict-dmi-drive"
 VALIDATION_ERROR = "Si é verificato un errore durante la validazione dell'email, riprova più tardi o verifica se hai già gli accessi in scrittura alla cartella mediante questo link https://cutt.ly/unict-dmi-drive"
+
+
+""" esami.py """
+
+PRIVATE_USE_WARNING = "Questo comando è utilizzabile solo in privato"
+GROUP_WARNING = "Dal comando /esami che hai eseguito in un gruppo"
