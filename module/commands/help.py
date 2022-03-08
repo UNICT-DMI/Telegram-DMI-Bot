@@ -3,18 +3,8 @@ import random
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.shared import AULARIO, CLOUD, CUSicon, check_log
+from module.data.vars import ALL_COMMANDS, APPUNTI_CLOUD, BACK_TO_MENU, CLOSE, DIPARTIMENTO_CDL, ERSU_ORARI, PROGETTI_RICONOSCIMENTI, REGOLAMENTO_DIDATTICO, SEGRETERIA_CONTATTI
 
-DIPARTIMENTO_CDL = "🏢 Dipartimento e CdL"
-REGOLAMENTO_DIDATTICO = "🪧 Regolamento Didattico"
-SEGRETERIA_CONTATTI = "🕐 Segreteria orari e contatti"
-ERSU_ORARI = "🍽 ERSU orari e contatti"
-APPUNTI_CLOUD = "☁️ Appunti & Cloud"
-PROGETTI_RICONOSCIMENTI = "🏅 Progetti e Riconoscimenti"
-
-ALL_COMMANDS = "Tutti i comandi"
-CLOSE = "❌ Chiudi"
-
-BACK_TO_MENU = "🔙 Torna al menu"
 
 def help_cmd(update: Update, context: CallbackContext, edit: bool = False):
     """Called by the /help command.

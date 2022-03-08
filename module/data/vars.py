@@ -26,3 +26,16 @@ GROUP_WARNING = "Dal comando /esami che hai eseguito in un gruppo"
 NO_GROUP_WARNING = "La funzione /drive non è ammessa nei gruppi"
 ERROR_DEVS = "Si è verificato un errore, ci scusiamo per il disagio. Contatta i devs. /help"
 
+
+""" help.py """
+
+DIPARTIMENTO_CDL = "🏢 Dipartimento e CdL"
+REGOLAMENTO_DIDATTICO = "🪧 Regolamento Didattico"
+SEGRETERIA_CONTATTI = "🕐 Segreteria orari e contatti"
+ERSU_ORARI = "🍽 ERSU orari e contatti"
+APPUNTI_CLOUD = "☁️ Appunti & Cloud"
+PROGETTI_RICONOSCIMENTI = "🏅 Progetti e Riconoscimenti"
+ALL_COMMANDS = "Tutti i comandi"
+CLOSE = "❌ Chiudi"
+BACK_TO_MENU = "🔙 Torna al menu"
+
