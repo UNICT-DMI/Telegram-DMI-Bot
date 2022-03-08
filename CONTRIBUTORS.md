@@ -13,7 +13,7 @@ This project is made possible thanks to the contributions of:
 - [Salvo Distefano](https://github.com/RayperZ)
 - [Mario Gazzara](https://github.com/gazer99)
 - [Francesco Coppola](https://github.com/BeastHunter19/)
-- [Luca Longo](https://github.com/D4ed4lUS94)
+- [Luca Longo](https://github.com/Daedalus9)
 - [Danilo Santitto](https://github.com/Warcreed)
 - [Ernesto Casablanca](https://github.com/TendTo)
 - [Graziano Di Grande](https://github.com/Drendog)
