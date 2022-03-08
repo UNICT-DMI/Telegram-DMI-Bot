@@ -2,6 +2,7 @@
 from telegram import Update
 from telegram.ext import CallbackContext
 from module.shared import check_log, config_map
+from module.data.vars import REP_WARNING
 
 
 def report(update: Update, context: CallbackContext):
@@ -40,4 +41,4 @@ def report(update: Update, context: CallbackContext):
                                     "\n Grazie per la segnalazione, un rappresentante ti contatterà nel minor tempo possibile.")
         else:
             context.bot.sendMessage(chat_id=chat_id,
-                                    text="Errore. Inserisci la tua segnalazione dopo /report (Ad esempio /report Invasione ingegneri in corso.)")
+                                    text=REP_WARNING)

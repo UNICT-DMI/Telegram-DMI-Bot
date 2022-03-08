@@ -53,3 +53,8 @@ YEAR_SELECT = "Scegliere il regolamento in base al proprio anno di immatricolazi
 INF_COURSE = "Scegliere uno dei seguenti corsi (Informatica):"
 MAT_COURSE = "Scegliere uno dei seguenti corsi (Matematica):"
 RET_FILE = "Ecco il file richiesto:"
+
+
+""" report.py """
+
+REP_WARNING = "Errore. Inserisci la tua segnalazione dopo /report (Ad esempio /report Invasione ingegneri in corso.)"
