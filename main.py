@@ -15,7 +15,7 @@ from module.commands.report import report
 from module.commands.gdrive import drive, drive_handler
 from module.commands.drive_contribute import drive_contribute
 from module.commands.regolamento_didattico import regolamentodidattico, regolamentodidattico_handler, cdl_handler, send_regolamento
-from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni
+from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni, uni_bandita
 from module.gitlab import git, gitlab_handler
 from module.job_updater import updater_lep
 from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, config_map
@@ -80,6 +80,7 @@ def add_handlers(dp: Dispatcher):
     dp.add_handler(CommandHandler('prof_sticker', prof_sticker))
     dp.add_handler(MessageHandler(Filters.regex('/lezioni cazzeggio'), bladrim))
     dp.add_handler(CommandHandler('leiCheNePensaSignorina', lei_che_ne_pensa_signorina))
+    dp.add_handler(CommandHandler('universita_bandita', uni_bandita))
 
     # Informative command
     dp.add_handler(CommandHandler('sdidattica', informative_callback))

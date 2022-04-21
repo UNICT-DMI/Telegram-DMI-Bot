@@ -43,3 +43,9 @@ def lei_che_ne_pensa_signorina(update: Update, context: CallbackContext):
     check_log(update, "leiCheNePensaSignorina")
     message_text = EasterEgg.get_lei_che_ne_pensa_signorina()
     context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text)
+
+
+def uni_bandita(update: Update, context: CallbackContext):
+    check_log(update, "uni_bandita")
+    message_text = EasterEgg.get_uni_bandita()
+    context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode="Markdown")
