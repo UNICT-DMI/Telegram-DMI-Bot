@@ -47,7 +47,7 @@ class EasterEgg():
     def get_uni_bandita() -> str:
         elements = [
             "[Te lo prometto!](https://t.me/assolvo_ad_una_promessa/2)",
-            "[Siamo in RAI!](https://www.raiplay.it/video/2022/02/Presa-diretta-Il-sistema-Universita---Puntata-del-07022022-bf3b1345-3af8-43c0-b477-8baf97b55370.html)",
+            "[Siamo su RAI!](https://www.raiplay.it/video/2022/02/Presa-diretta-Il-sistema-Universita---Puntata-del-07022022-bf3b1345-3af8-43c0-b477-8baf97b55370.html)",
             "[PresaDiretta!](https://www.youtube.com/watch?v=6jgN9Vcti8g)",
             "[Che resti fra noi!](https://www.youtube.com/watch?v=G4QXL6NHMi8)",
             "[Siamo su YT!](https://www.youtube.com/results?search_query=intercettazioni+universit%C3%A0+bandita)",
