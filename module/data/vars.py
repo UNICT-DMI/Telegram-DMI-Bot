@@ -62,4 +62,4 @@ REP_WARNING = "Errore. Inserisci la tua segnalazione dopo /report (Ad esempio /r
 
 """ stats.py """
 
-EASTER_EGG = ("leiCheNePensaSignorina", "smonta_portoni", "santino", "bladrim", "prof_sticker")
+EASTER_EGG = ("leiCheNePensaSignorina", "smonta_portoni", "santino", "bladrim", "prof_sticker", "universita_bandita")
