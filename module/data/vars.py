@@ -1,3 +1,11 @@
+from enum import Enum, auto
+
+
+# Translation IDs
+class TEXT_IDS(Enum):
+    START_TEXT_ID: int = auto()
+
+
 """ aulario.py """
 
 BACK_BUTTON_TEXT = "Indietro ❌"
