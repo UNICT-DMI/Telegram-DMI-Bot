@@ -1,7 +1,10 @@
 """/start command"""
 from telegram import KeyboardButton, ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
+
+from module.data.vars import TEXT_IDS
 from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, read_md
+from module.utils.multi_lang_utils import get_locale
 
 
 def start(update: Update, context: CallbackContext):
@@ -13,7 +16,7 @@ def start(update: Update, context: CallbackContext):
         context: context passed by the handler
     """
     reply_keyboard = get_help_keyboard()
-    message_text = read_md("start")
+    message_text = get_locale(update.message.from_user.language_code, TEXT_IDS.START_TEXT_ID)
     context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, reply_markup=reply_keyboard)
 
 
