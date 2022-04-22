@@ -19,6 +19,7 @@ from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sti
 from module.gitlab import git, gitlab_handler
 from module.job_updater import updater_lep
 from module.shared import AULARIO, CLOUD, HELP, SEGNALAZIONE, config_map
+from module.utils.multi_lang_utils import load_translations
 from module.utils.send_utils import send_chat_ids, send_errors, send_log
 from module.debug import error_handler, log_message
 
@@ -177,6 +178,7 @@ def add_jobs(dp: Dispatcher):
 
 def main():
     """Main function"""
+    load_translations()
     updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
     add_commands(updater)
     add_handlers(updater.dispatcher)

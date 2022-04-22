@@ -3,7 +3,7 @@ from enum import Enum, auto
 
 # Translation IDs
 class TEXT_IDS(Enum):
-    START_TEXT_ID: int = auto()
+    START_TEXT_ID = auto()
 
 
 """ aulario.py """
