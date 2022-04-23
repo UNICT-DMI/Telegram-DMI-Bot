@@ -1,3 +1,155 @@
 # English Translations
+
+# Shared
+SHOW_RELATED_COMMANDS_TEXT_ID: "Showing related commands to:"
+CLOSE_KEYBOARD_TEXT_ID: "❌ Close"
+BACK_TO_MENU_KEYBOARD_TEXT_ID: "🔙 Back to menu"
+BACK_TO_MAIN_MENU_KEYBOARD_TEXT_ID: "Back to main menu  ⏪"
+BACK_BUTTON_TEXT_TEXT_ID: "Back ◀"
+BACHELOR_TEXT_ID: "Bachelor"
+MASTER_TEXT_ID: "Master"
+FOUND_RESULT_TEXT_ID: "Found: %capybara%"
+NO_RESULT_FOUND_TEXT_ID: "Nothing found\n"
+SEARCH_YEAR_TEXT_ID: "Year"
+SEARCH_DAY_TEXT_ID: "Day"
+SEARCH_SESSION_TEXT_ID: "Session"
+SEARCH_COURSE_TEXT_ID: "Teaching"
+SEARCH_HEADER_TEXT_ID: "~ Customize your search ~"
+SEARCH_BUTTON_TEXT_ID: "Search"
+USE_WARNING_TEXT_ID: "The command %capybara% is available only on private chat"
+GROUP_WARNING_TEXT_ID: "From the %capybara% command you executed in a group"
+SELECT_YEAR_TEXT_ID: "Select the year you are interested in"
+YEAR_1ST_TEXT_ID: "First Year"
+YEAR_2ND_TEXT_ID: "Second Year"
+YEAR_3RD_TEXT_ID: "Third Year"
+
+# sticky keyboard
+HELP_KEYBOARD_TEXT_ID: "❔ Help"
+AULARIO_KEYBOARD_TEXT_ID: "📆 Lecture Room"
+CLOUD_KEYBOARD_TEXT_ID: "☁ Cloud"
+REPORT_TO_KEYBOARD_TEXT_ID: "📫 Report to Representatives"
+
+# /start command
 START_TEXT_ID: "Welcome! This bot is developed by Computer Science's students to help fellow DMI's students!\nUse /help or press the ❔ Help button to know what this bot can do"
 
+# /help command
+HELP_HEADER_TEXT_ID: "@DMI_Bot can help you with (following commands):"
+HELP_DIPARTIMENTO_CDL_KEYBOARD_TEXT_ID: "🏢 Department  and Degree Program"
+HELP_REGOLAMENTO_DIDATTICO_KEYBOARD_TEXT_ID: "🪧 Educational Regulations"
+HELP_SEGRETERIA_CONTATTI_KEYBOARD_TEXT_ID: "🕐 Receptionist's contacts and working hours"
+HELP_ERSU_ORARI_KEYBOARD_TEXT_ID: "🍽 ERSU's contactsand working hours"
+HELP_APPUNTI_CLOUD_KEYBOARD_TEXT_ID: "☁ Notes & Cloud"
+HELP_PROGETTI_RICONOSCIMENTI_KEYBOARD_TEXT_ID: "🏅 Projects e Credits"
+HELP_ALL_COMMANDS_KEYBOARD_TEXT_ID: "All commands"
+HELP_ALL_COMMANDS_TOOLTIP_ID: "
+*@DMI_Bot can help you with (following commands):*\n
+📖 /esami - _look for exams with applicable filters_\n
+📘 /lezioni - _look for lessons with applicable filters_\n
+🗓 /aulario - _shows lecture room and a map of the classrooms_\n
+👔 /prof <nome> - _es. /prof Barbanera_\n
+👥 /rappresentanti - _list of representatives_\n
+📚 /biblioteca - _DMI's library working hours_\n
+<cusicon> /cus - _location and contacts_\n
+☁ /cloud - _ access to cloud shared folders_\n
+📣 /report - _submit a report to representatives_\n
+📂 /drive - _access to the drive_\n
+🤝 /drive\_contribute - _request upload permission to add new material on the drive_\n
+📂 /git o /gitlab - _access to gitlab_\n
+🧑‍💻 /contributors - _show the developers that contributed to the bot development_\n
+🧾 /regolamentodidattico - _give a pdf file of the desisered year's educational regulations_\n
+\n
+*Receptionist's contacts and working hours:*\n
+✍ /sdidattica - _edcational receptionist_\n
+📓 /studenti - _student receptionist_\n
+/cea - _information for Centro per i sistemi di Elaborazione e Applicazioni scientifiche e didattiche_\n
+\n
+*ERSU's contactsand working hours:*\n
+🗃 /ersu - _location of the main ersu office_\n
+🗃 /ufficioersu - _(ersu office for student cards)_\n
+🗃 /urp - _students' URP_\n
+"
+
+# /help-CDL command
+HELP_CDL_EXAMS_TEXT_ID: "📖 Exams (link)"
+HELP_CDL_LESSONS_TIMETABLE_TEXT_ID: "📘 Classes' Timetable (link)"
+HELP_CDL_PROF_INFO_TEXT_ID: "👨‍🏫 Professors Info"
+HELP_CDL_REPRS_TEXT_ID: "👥 Representatives"
+HELP_CDL_LIBRARY_TEXT_ID: "📚 Library"
+HELP_CDL_GROUPS_TEXT_ID: "📊 Groups"
+HELP_CDL_PROF_TOOLTIP_ID: "To get information about professors you can use the following command:\n/prof Stanco"
+
+# /help-Reprs command
+REPRS_HEADER_TEXT_ID: "With which representatives you want to talk?"
+REPRS_DMI_TEXT_ID: "DMI's Repr."
+REPRS_DMI_CS_TEXT_ID: "Computer Science Repr."
+REPRS_DMI_MATH_TEXT_ID: "Mathematics Repr."
+
+# /help-Segr command
+SEGR_DID_TEXT_ID: "Educational Sec."
+SEGR_STU_TEXT_ID: "Students Sec."
+SEGR_CEA_TEXT_ID: "CEA"
+
+# /help-ERSU command
+ERSU_TEXT_ID: "ERSU"
+ERSU_OFFICE_TEXT_ID: "ERSU's Office"
+ERSU_URP_TEXT_ID: "URP"
+
+# /help-projct/credits command
+PRJ_OPIS_TEXT_ID: "Opis Manager"
+CREDITS_CONTRIBUTORS_TEXT_ID: "Contributors"
+
+# /help-miscs command
+MISC_GDRIVE_TEXT_ID: "📂 Drive"
+MISC_GITLAB_TEXT_ID: "📂 GitLab"
+MISC_GDRIVE_TOOLTIP_ID: "To access Department's Google Drive Folder use the command /drive"
+MISC_GITLAB_TOOLTIP_ID: "To access Department's GitLab use the command /drive /git o /gitlab"
+
+# /aulario command
+AULARIO_DAY_SELECTION_TEXT_ID: "Select the date of the class you are interested in."
+AULARIO_WARNING_TEXT_ID: "⚠ Lecture Room not yet ready, try again in a few minutes ⚠"
+AULARIO_LESSON_SELECTION_TEXT_ID: "Which class do you want to attend?"
+AULARIO_NO_LESSON_WARNING_TEXT_ID: "No scheduled class for this day"
+AULARIO_LESSON_AT_TIME_TEXT_ID: "At:"
+
+# /drive command
+DRIVE_NO_USERNAME_WARNING_TEXT_ID: "No username entered"
+DRIVE_USE_TEXT_TEXT_ID: "USAGE: /drive_contribute [e-mail] [reason]\n\nEXAMPLE: /drive_contribute mario.rossi@gmail.com I want to share my Fondamenti di Informatica notes"
+DRIVE_CONFIRM_ACCESS_TEXT_ID: "You obtained the write permission for the Drive's folder! \n\nYou will soon receive a confirmation email and then you will be able to upload your notes to the Drive with the following link https://cutt.ly/unict-dmi-drive"
+DRIVE_VALIDATION_ERROR_TEXT_ID: "An error occurred while validating your email, try again in few minutes or check if you already obtained the write permission with the following link https://cutt.ly/unict-dmi-drive"
+DRIVE_HEADER_TEXT_ID: "Notes & Resources:"
+DRIVE_ERROR_DEVS_TEXT_ID: "We re sorry but an error occurred. Contact the developers with /help"
+DRIVE_ERROR_GFILE_TEXT_ID: "Unable to download the file because it is a google document...\n Go here: %capybara%"
+DRIVE_ERROR_TOO_BIG_TEXT_ID: "Ffile is too big for a direct download...\n Download from here: %capybara%"
+
+# /report command
+REPORT_ON_GROUP_WARNING_TEXT_ID: "The operation %capybara% is not allowed inside groups."
+REPORT_NO_USERNAME_WARNING_TEXT_ID: "The operation %capybara% is not allowed for users without username."
+REPORT_WARNING_TEXT_ID: "Error. Enter your report after the /report (Example: /report Capyrabas are raining down from the sky.)"
+REPORT_RESPONSE_TEXT_ID: "Report Summary:\n %capybara% \n Thanks for your report, a representative will get to you as soon as possible."
+
+# /regolamentodidattico command
+REG_CDL_GRAD_SELECT_TEXT_ID: "Choose one of the degree programs:"
+REG_CDL_YEAR_SELECT_TEXT_ID: "Choose the regulation according to your year of matriculation:"
+REG_CDL_INF_COURSE_TEXT_ID: "Choose one of the following courses (Computer Science):"
+REG_CDL_MAT_COURSE_TEXT_ID: "Choose one of the following courses (Mathematics):"
+REG_CDL_RET_FILE_TEXT_ID: "Here is the requested file:"
+
+# /prof command
+PROF_USE_TEXT_ID: "The command syntax is: /prof <professor_name>\n"
+
+# /lezioni command
+CLASSES_SELECT_DAY_TEXT_ID: "Select the day you are interested in"
+CLASSES_SELECT_DAY1_TEXT_ID: "Monday"
+CLASSES_SELECT_DAY2_TEXT_ID: "Tuesday"
+CLASSES_SELECT_DAY3_TEXT_ID: "Wednesday"
+CLASSES_SELECT_DAY4_TEXT_ID: "Thursday"
+CLASSES_SELECT_DAY5_TEXT_ID: "Friday"
+CLASSES_USAGE_TEXT_ID: "Enter the name of the subject in the format:\n nome: subject_name\n Example:\n nome: SisTeMi oPeRaTIvI"
+
+# /esami command
+EXAMS_SELECT_SESSION_TEXT_ID: "Select the session you are interested in"
+EXAMS_SESSION_1_TEXT_ID: "First"
+EXAMS_SESSION_2_TEXT_ID: "Second"
+EXAMS_SESSION_3_TEXT_ID: "Third"
+EXAMS_SESSION_4_TEXT_ID: "Extraordinary"
+EXAMS_USAGE_TEXT_ID: "Enter the name of the subject in the format:\n ins: subject_name\n Example:\n ins: SisTeMi oPeRaTIvI"

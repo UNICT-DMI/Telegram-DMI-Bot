@@ -1,11 +1,14 @@
 """/report command"""
-from telegram import Update
+from typing import Optional
+
+from telegram import Update, User
 from telegram.ext import CallbackContext
 from module.shared import check_log, config_map
-from module.data.vars import REP_WARNING
+from module.data.vars import PLACE_HOLDER, TEXT_IDS
+from module.utils.multi_lang_utils import get_locale
 
 
-def report(update: Update, context: CallbackContext):
+def report(update: Update, context: CallbackContext) -> None:
     """Called by the /report command.
     Use: /report <word> ...
     Allows the user to report something to the administrators
@@ -15,30 +18,30 @@ def report(update: Update, context: CallbackContext):
         context: context passed by the handler
     """
     check_log(update, "report")
-    chat_id = update.message.chat_id
-    chat_user = update.message.from_user
-    executed_command = update.message.text.split(' ')[0]
+    chat_id: int = update.message.chat_id
+    chat_user: Optional[User] = update.message.from_user
+    executed_command: str = update.message.text.split(' ')[0]
+    locale: str = update.message.from_user.language_code
 
     if chat_id < 0:
-        context.bot.sendMessage(chat_id=chat_id, text=f"! La funzione {executed_command} non è ammessa nei gruppi")
+        context.bot.sendMessage(chat_id=chat_id, text=get_locale(locale, TEXT_IDS.REPORT_ON_GROUP_WARNING_TEXT_ID).replace(PLACE_HOLDER, executed_command))
     elif not chat_user.username:
-        context.bot.sendMessage(chat_id=chat_id, text=f"La funzione {executed_command} non è ammessa se non si dispone di un username.")
+        context.bot.sendMessage(chat_id=chat_id, text=get_locale(locale, TEXT_IDS.REPORT_NO_USERNAME_WARNING_TEXT_ID).replace(PLACE_HOLDER, executed_command))
     else:
         if context.args:
-            message = "⚠️Segnalazione⚠️\n"\
+            message = "⚠ Report ⚠\n"\
                         f"Username: @{chat_user.username}\n"
 
             if chat_user.first_name is not None:
-                message += f"Nome: {chat_user.first_name}\n"
+                message += f"Nome/Name: {chat_user.first_name}\n"
             if chat_user.last_name is not None:
-                message += f"Cognome: {chat_user.last_name}\n"
+                message += f"Cognome/Surname: {chat_user.last_name}\n"
 
-            message += f"Segnalazione: {' '.join(context.args)}\n"
+            message += f"Segnalazione/Content: {' '.join(context.args)}\n"
 
             context.bot.sendMessage(chat_id=config_map['representatives_group'], text=message)
             context.bot.sendMessage(chat_id=chat_id,
-                                    text=f"Resoconto segnalazione: \n{message}"
-                                    "\n Grazie per la segnalazione, un rappresentante ti contatterà nel minor tempo possibile.")
+                                    text=get_locale(locale, TEXT_IDS.REPORT_RESPONSE_TEXT_ID).replace(PLACE_HOLDER, message))
         else:
             context.bot.sendMessage(chat_id=chat_id,
-                                    text=REP_WARNING)
+                                    text=get_locale(locale, TEXT_IDS.REPORT_WARNING_TEXT_ID))

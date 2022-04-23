@@ -25,12 +25,6 @@ CUSicon = {
     5: "🏊",
 }
 
-# keyboard menu
-HELP = "❔ Help"
-AULARIO = "📆 Aulario"
-CLOUD = "☁️ Cloud"
-SEGNALAZIONE = "📫 Segnalazione Rappresentanti"
-
 
 def send_message(update: Update, context: CallbackContext, messaggio: str):
     """Replies with a message, making sure the maximum lenght text allowed is respected

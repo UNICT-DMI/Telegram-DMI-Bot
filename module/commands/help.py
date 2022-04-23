@@ -1,12 +1,12 @@
 """/help command"""
-import random
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
-from module.shared import AULARIO, CLOUD, CUSicon, check_log
-from module.data.vars import ALL_COMMANDS, APPUNTI_CLOUD, BACK_TO_MENU, CLOSE, DIPARTIMENTO_CDL, ERSU_ORARI, PROGETTI_RICONOSCIMENTI, REGOLAMENTO_DIDATTICO, SEGRETERIA_CONTATTI
+from module.shared import check_log
+from module.data.vars import TEXT_IDS
+from module.utils.multi_lang_utils import get_locale
 
 
-def help_cmd(update: Update, context: CallbackContext, edit: bool = False):
+def help_cmd(update: Update, context: CallbackContext, edit: bool = False) -> None:
     """Called by the /help command.
     Shows all the actions supported by the bot
 
@@ -16,30 +16,37 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False):
         edit: bool flag that affects how the message should be handled 
     """
     check_log(update, "help")
-    chat_id = update.message.chat_id
-
-    message_text = "@DMI_Bot risponde ai seguenti comandi:"
+    chat_id: int = update.message.chat_id
+    locale: str = update.message.from_user.language_code
+    message_text: str = get_locale(locale, TEXT_IDS.HELP_HEADER_TEXT_ID)
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(DIPARTIMENTO_CDL, callback_data="sm_help_dip_cdl")])
-    keyboard.append([InlineKeyboardButton(APPUNTI_CLOUD, callback_data="sm_help_misc")])
-    keyboard.append([InlineKeyboardButton(SEGRETERIA_CONTATTI, callback_data="sm_help_segr")])
-    keyboard.append([InlineKeyboardButton(ERSU_ORARI, callback_data="sm_help_ersu")])
-    keyboard.append([InlineKeyboardButton(REGOLAMENTO_DIDATTICO, callback_data="reg_button_home")])
-    keyboard.append([InlineKeyboardButton(PROGETTI_RICONOSCIMENTI, callback_data="sm_help_projects_acknowledgements")])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_DIPARTIMENTO_CDL_KEYBOARD_TEXT_ID),
+                                          callback_data="sm_help_dip_cdl")])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_APPUNTI_CLOUD_KEYBOARD_TEXT_ID),
+                                          callback_data="sm_help_misc")])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_SEGRETERIA_CONTATTI_KEYBOARD_TEXT_ID),
+                                          callback_data="sm_help_segr")])
+    keyboard.append(
+        [InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_ERSU_ORARI_KEYBOARD_TEXT_ID), callback_data="sm_help_ersu")])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_REGOLAMENTO_DIDATTICO_KEYBOARD_TEXT_ID),
+                                          callback_data="reg_button_home")])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_PROGETTI_RICONOSCIMENTI_KEYBOARD_TEXT_ID),
+                                          callback_data="sm_help_projects_acknowledgements")])
     keyboard.append([
-        InlineKeyboardButton(ALL_COMMANDS, callback_data="md_help"),
-        InlineKeyboardButton(CLOSE,          callback_data="exit_cmd")
+        InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_ALL_COMMANDS_KEYBOARD_TEXT_ID), callback_data="localization_HELP_ALL_COMMANDS_TOOLTIP_ID"),
+        InlineKeyboardButton(get_locale(locale, TEXT_IDS.CLOSE_KEYBOARD_TEXT_ID), callback_data="exit_cmd")
     ])
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    if(edit):
-        context.bot.editMessageText(text=message_text, chat_id=update.message.chat_id, message_id=update.message.message_id, reply_markup=reply_markup)
+    reply_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(keyboard)
+    if edit:
+        context.bot.editMessageText(text=message_text, chat_id=update.message.chat_id,
+                                    message_id=update.message.message_id, reply_markup=reply_markup)
     else:
         context.bot.sendMessage(chat_id=chat_id, text=message_text, reply_markup=reply_markup)
-    
 
-def help_back_to_menu(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+
+def help_back_to_menu(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
     """Called by a sm_help_back_to_menu button from the sub menu.
     Allows the user to return back to the command list
 
@@ -51,7 +58,8 @@ def help_back_to_menu(update: Update, context: CallbackContext, chat_id: int, me
     """
     help_cmd(update, context, True)
 
-def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+
+def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
     """Called by the sm_help_dip_cdl button from the /help command.
     Lists to the user the commands related to the department or the CDL
 
@@ -61,33 +69,46 @@ def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    message_text = "Visualizzazione comandi relativi a:"
+    locale: str = update.message.from_user.language_code
+    message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton("🏢 Dipartimento e CdL", callback_data="NONE")])
-    keyboard.append([
-        InlineKeyboardButton("📖 Esami (link)",         callback_data="md_esami_link"),
-        InlineKeyboardButton(AULARIO,                   callback_data="sm_aulario"),
-    ])
+    keyboard.append(
+        [InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_DIPARTIMENTO_CDL_KEYBOARD_TEXT_ID), callback_data="NONE")])
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_EXAMS_TEXT_ID), callback_data="md_esami_link"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.AULARIO_KEYBOARD_TEXT_ID), callback_data="sm_aulario")
+        ]
+    )
 
-    keyboard.append([
-        InlineKeyboardButton("📘 Orari lezioni (link)",    callback_data="md_lezioni_link"),
-        InlineKeyboardButton("👨‍🏫 Info Professori",         callback_data="md_professori")
-    ])
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_LESSONS_TIMETABLE_TEXT_ID),
+                                 callback_data="md_lezioni_link"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_PROF_INFO_TEXT_ID), callback_data="localization_HELP_CDL_PROF_TOOLTIP_ID")
+        ]
+    )
 
-    keyboard.append([
-        InlineKeyboardButton("👥 Rappresentanti",                       callback_data="sm_help_rapp_menu"),
-        InlineKeyboardButton("📚 Biblioteca",                           callback_data="md_biblioteca"),
-        InlineKeyboardButton("📊 Gruppi",                               callback_data="md_gruppi"),
-    ])
-    keyboard.append([
-        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
-    ])
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_REPRS_TEXT_ID), callback_data="sm_help_rapp_menu"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_LIBRARY_TEXT_ID), callback_data="md_biblioteca"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_GROUPS_TEXT_ID), callback_data="md_gruppi"),
+        ]
+    )
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MENU_KEYBOARD_TEXT_ID),
+                                 callback_data="sm_help_back_to_menu"),
+        ]
+    )
+    reply_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
 
-def help_rapp_menu(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+
+def help_rapp_menu(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
     """Called by the sm_help_rapp_menu button from the /help command.
     Allows the user to select the department
 
@@ -97,24 +118,31 @@ def help_rapp_menu(update: Update, context: CallbackContext, chat_id: int, messa
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    message_text = "Quali rappresentanti vuoi contattare?"
+    locale: str = update.message.from_user.language_code
+    message_text: str = get_locale(locale, TEXT_IDS.REPRS_HEADER_TEXT_ID)
 
     keyboard = [[]]
     keyboard.append(
         [
-            InlineKeyboardButton("Rapp. DMI",         callback_data="md_rappresentanti_dmi"),
-            InlineKeyboardButton("Rapp. Informatica", callback_data="md_rappresentanti_informatica"),
-            InlineKeyboardButton("Rapp. Matematica",  callback_data="md_rappresentanti_matematica"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.REPRS_DMI_TEXT_ID), callback_data="md_rappresentanti_dmi"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.REPRS_DMI_CS_TEXT_ID),
+                                 callback_data="md_rappresentanti_informatica"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.REPRS_DMI_MATH_TEXT_ID),
+                                 callback_data="md_rappresentanti_matematica"),
         ]
     )
-    keyboard.append([
-        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
-    ])
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MENU_KEYBOARD_TEXT_ID),
+                                 callback_data="sm_help_back_to_menu"),
+        ]
+    )
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
 
-def help_segr(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+
+def help_segr(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
     """Called by the sm_help_segr button from the /help command.
     Lists to the user the commands related to the secretariats' office hours
 
@@ -124,24 +152,31 @@ def help_segr(update: Update, context: CallbackContext, chat_id: int, message_id
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    message_text = "Visualizzazione comandi relativi a:"
+    locale: str = update.message.from_user.language_code
+    message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(SEGRETERIA_CONTATTI, callback_data="NONE")])
-    
-    keyboard.append([
-        InlineKeyboardButton("Seg. Didattica",  callback_data="md_sdidattica"),
-        InlineKeyboardButton("Seg. Studenti",   callback_data="md_studenti"),
-        InlineKeyboardButton("CEA",             callback_data="md_cea")
-    ])
-    keyboard.append([
-        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
-    ])
+    keyboard.append(
+        [InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_SEGRETERIA_CONTATTI_KEYBOARD_TEXT_ID), callback_data="NONE")])
+
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEGR_DID_TEXT_ID), callback_data="md_sdidattica"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEGR_STU_TEXT_ID), callback_data="md_studenti"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEGR_CEA_TEXT_ID), callback_data="md_cea")
+        ]
+    )
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MENU_KEYBOARD_TEXT_ID), callback_data="sm_help_back_to_menu"),
+        ]
+    )
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
 
-def help_ersu(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+
+def help_ersu(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
     """Called by the sm_help_ersu button from the /help command.
     Lists to the user the commands related to the ERSU
 
@@ -151,24 +186,30 @@ def help_ersu(update: Update, context: CallbackContext, chat_id: int, message_id
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    message_text = "Visualizzazione comandi relativi a:"
+    locale: str = update.message.from_user.language_code
+    message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(ERSU_ORARI, callback_data="NONE")])
-    
-    keyboard.append([
-        InlineKeyboardButton("ERSU",          callback_data="md_ersu"),
-        InlineKeyboardButton("Ufficio ERSU",  callback_data="md_ufficioersu"),
-        InlineKeyboardButton("URP",           callback_data="md_urp")
-    ])
-    keyboard.append([
-        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
-    ])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_ERSU_ORARI_KEYBOARD_TEXT_ID), callback_data="NONE")])
+
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.ERSU_TEXT_ID), callback_data="md_ersu"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.ERSU_OFFICE_TEXT_ID), callback_data="md_ufficioersu"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.ERSU_URP_TEXT_ID), callback_data="md_urp")
+        ]
+    )
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MENU_KEYBOARD_TEXT_ID), callback_data="sm_help_back_to_menu"),
+        ]
+    )
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
-    
-def help_projects_acknowledgements(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+
+
+def help_projects_acknowledgements(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
     """Called by the sm_help_projects_acknowledgements button from the /help command.
     Lists to the user the commands related to the other's project and acknowledgements
 
@@ -178,23 +219,32 @@ def help_projects_acknowledgements(update: Update, context: CallbackContext, cha
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    message_text = "Visualizzazione comandi relativi a:"
+    locale: str = update.message.from_user.language_code
+    message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(PROGETTI_RICONOSCIMENTI, callback_data="NONE")])
-    
-    keyboard.append([
-        InlineKeyboardButton("📈 Opis Manager",      callback_data="md_opismanager"),
-        InlineKeyboardButton("Contributors",         callback_data="md_contributors")
-    ])
-    keyboard.append([
-        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
-    ])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_PROGETTI_RICONOSCIMENTI_KEYBOARD_TEXT_ID),
+                                          callback_data="NONE")])
+
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.PRJ_OPIS_TEXT_ID), callback_data="md_opismanager"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.CREDITS_CONTRIBUTORS_TEXT_ID),
+                                 callback_data="md_contributors")
+        ]
+    )
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MENU_KEYBOARD_TEXT_ID),
+                                 callback_data="sm_help_back_to_menu"),
+        ]
+    )
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
 
-def help_misc(update: Update, context: CallbackContext, chat_id: int, message_id: int):
+
+def help_misc(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
     """Called by the sm_help_misc button from the /help command.
     Lists to the user the commands related to the miscellaneous stuff
 
@@ -204,19 +254,25 @@ def help_misc(update: Update, context: CallbackContext, chat_id: int, message_id
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    message_text = "Visualizzazione comandi relativi a:"
+    locale: str = update.message.from_user.language_code
+    message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(APPUNTI_CLOUD, callback_data="NONE")])
-    
-    keyboard.append([
-        InlineKeyboardButton("📂 Drive",             callback_data="md_drive"),
-        InlineKeyboardButton("📂 GitLab",            callback_data="md_gitlab")
-    ])
-    keyboard.append([
-        InlineKeyboardButton(BACK_TO_MENU,                       callback_data="sm_help_back_to_menu"),
-    ])
+    keyboard.append(
+        [InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_APPUNTI_CLOUD_KEYBOARD_TEXT_ID), callback_data="NONE")])
+
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.MISC_GDRIVE_TEXT_ID), callback_data="localization_MISC_GDRIVE_TOOLTIP_ID"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.MISC_GITLAB_TEXT_ID), callback_data="localization_MISC_GITLAB_TOOLTIP_ID")
+        ]
+    )
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MENU_KEYBOARD_TEXT_ID),
+                                 callback_data="sm_help_back_to_menu"),
+        ]
+    )
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
-

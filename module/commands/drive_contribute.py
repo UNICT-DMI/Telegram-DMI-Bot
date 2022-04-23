@@ -1,3 +1,5 @@
+from typing import Optional
+
 import yaml
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
@@ -7,26 +9,28 @@ from telegram.ext import CallbackContext
 from telegram.error import BadRequest
 
 from module.utils.drive_contribute_utils import delete_drive_permission_job
-from module.data.vars import CONFIRM_ACCESS, NO_USERNAME_WARNING, USE_TEXT, VALIDATION_ERROR
+from module.data.vars import TEXT_IDS
+from module.utils.multi_lang_utils import get_locale
 
 with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
 
-def drive_contribute(update: Update, context: CallbackContext):
-    args = context.args
-    chat_id = update.message.chat_id
-    first_name = update.message.from_user.first_name
-    username = update.message.from_user.username
+def drive_contribute(update: Update, context: CallbackContext) -> None:
+    args: Optional[list[str]] = context.args
+    chat_id: int = update.message.chat_id
+    first_name: str = update.message.from_user.first_name
+    username: str = update.message.from_user.username
+    locale: str = update.message.from_user.language_code
     if username:
         username = f"@{username}"
     else:
-        username = NO_USERNAME_WARNING
+        username = get_locale(locale, TEXT_IDS.DRIVE_NO_USERNAME_WARNING_TEXT_ID)
 
     if len(args) < 2:
         context.bot.sendMessage(
             chat_id=chat_id,
-            text=USE_TEXT,
+            text=get_locale(locale, TEXT_IDS.DRIVE_USE_TEXT_TEXT_ID),
         )
         return
 
@@ -61,11 +65,11 @@ def drive_contribute(update: Update, context: CallbackContext):
 
         context.bot.sendMessage(
             chat_id=update.message.chat_id,
-            text=f'{CONFIRM_ACCESS}',
+            text=f'{get_locale(locale, TEXT_IDS.DRIVE_CONFIRM_ACCESS_TEXT_ID)}',
         )
     except (BadRequest, ApiRequestError):
         context.bot.sendMessage(
             chat_id=update.message.chat_id,
-            text=f'{VALIDATION_ERROR}',
+            text=f'{get_locale(locale, TEXT_IDS.DRIVE_VALIDATION_ERROR_TEXT_ID)}',
         )
 

@@ -17,5 +17,5 @@ async def test_start_cmd(client: TelegramClient):
         resp: Message = await conv.get_response()
 
         assert resp.text.startswith(
-            'Benvenuto! Questo bot è stato realizzato dagli studenti del Corso di Laurea in Informatica al fine di suppotare gli studenti del DMI!'
+            "Welcome! This bot is developed by Computer Science's students to help fellow DMI"
         )

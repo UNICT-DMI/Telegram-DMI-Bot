@@ -1,1 +1,0 @@
-Per accedere alla cartella Google Drive del dipartimento digita /drive

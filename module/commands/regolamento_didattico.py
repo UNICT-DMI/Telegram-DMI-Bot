@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """/regolamentodidattico command"""
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from typing import Optional
+
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
 from telegram.ext import CallbackContext
 from module.shared import check_log
 from module.commands.help import help_cmd
-from module.data.vars import GRAD_SELECT, INF_COURSE, MAT_COURSE, RET_FILE, YEAR_SELECT
+from module.data.vars import TEXT_IDS
+from module.utils.multi_lang_utils import get_locale
 
 reg_doc_triennale_L31 = {
     'Regolamento Didattico 2021/2022_L31': 'http://web.dmi.unict.it/sites/default/files/files/L%2031_%20Informatica.pdf',
@@ -46,18 +49,14 @@ reg_doc_magistrale_LM40 = {
 }
 
 REGOLAMENTI = {
-    'triennale_L31': reg_doc_triennale_L31, 
-    'magistrale_LM18': reg_doc_magistrale_LM18, 
-    'triennale_L35': reg_doc_triennale_L35, 
+    'triennale_L31': reg_doc_triennale_L31,
+    'magistrale_LM18': reg_doc_magistrale_LM18,
+    'triennale_L35': reg_doc_triennale_L35,
     'magistrale_LM40': reg_doc_magistrale_LM40
 }
 
-BACK_TO_MENU = InlineKeyboardButton('Menu principale  ⏪', callback_data='reg_button_help') # menu button
-RETURN_BUTTON = InlineKeyboardButton('Indietro  ◀️', callback_data='reg_button_home')
 
-
-
-def regolamentodidattico(update: Update, context: CallbackContext):
+def regolamentodidattico(update: Update, context: CallbackContext) -> None:
     """Called by the /regolamentodidattico command.
     Shows a menu from with the user can choose between (triennale | magistrale)
 
@@ -66,9 +65,11 @@ def regolamentodidattico(update: Update, context: CallbackContext):
         context: context passed by the handler
     """
     check_log(update, "regolamentodidattico")
-    update.message.reply_text(GRAD_SELECT, reply_markup=get_cdl_keyboard())
+    locale: str = update.message.from_user.language_code
+    update.message.reply_text(get_locale(locale, TEXT_IDS.REG_CDL_GRAD_SELECT_TEXT_ID), reply_markup=get_cdl_keyboard(locale))
 
-def regolamentodidattico_handler(update: Update, context: CallbackContext):
+
+def regolamentodidattico_handler(update: Update, context: CallbackContext) -> None:
     """Called by any of the /regolamentodidattico buttons.
     Data can be ( home | triennale | magistrale ).
     Allows the used to navigate between the rulebooks
@@ -77,38 +78,41 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext):
         update: update event
         context: context passed by the handler
     """
-    query = update.callback_query
-    data = query.data.replace("reg_button_", "")
+    query: Optional[CallbackQuery] = update.callback_query
+    data: str = query.data.replace("reg_button_", "")
+    locale: str = update.callback_query.from_user.language_code
     if data == "home":
         context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                  message_id=query.message.message_id,
-                                  text=GRAD_SELECT,
-                                  reply_markup=get_cdl_keyboard())
+                                      message_id=query.message.message_id,
+                                      text=get_locale(locale, TEXT_IDS.REG_CDL_GRAD_SELECT_TEXT_ID),
+                                      reply_markup=get_cdl_keyboard(locale))
     elif data == "help":
-        help_cmd(query, context, True)
+        help_cmd(update, context, True)
 
     else:
         context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                  message_id=query.message.message_id,
-                                  text=YEAR_SELECT,
-                                  reply_markup=get_cdl_keyboard(REGOLAMENTI[data]))
+                                      message_id=query.message.message_id,
+                                      text=get_locale(locale, TEXT_IDS.REG_CDL_YEAR_SELECT_TEXT_ID),
+                                      reply_markup=get_cdl_keyboard(locale, reg_doc=REGOLAMENTI[data]))
 
-def cdl_handler(update: Update, context: CallbackContext):
-    query = update.callback_query
-    data = query.data.replace("cdl_button_", "")
-    if data=="informatica":
+
+def cdl_handler(update: Update, context: CallbackContext) -> None:
+    query: Optional[CallbackQuery] = update.callback_query
+    data: str = query.data.replace("cdl_button_", "")
+    locale: str = update.callback_query.from_user.language_code
+    if data == "informatica":
         context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                  message_id=query.message.message_id,
-                                  text=INF_COURSE,
-                                  reply_markup=get_inf_keyboard())
+                                      message_id=query.message.message_id,
+                                      text=get_locale(locale, TEXT_IDS.REG_CDL_INF_COURSE_TEXT_ID),
+                                      reply_markup=get_inf_keyboard(locale))
     else:
         context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                    message_id=query.message.message_id,
-                                    text=MAT_COURSE,
-                                    reply_markup=get_mat_keyboard())
+                                      message_id=query.message.message_id,
+                                      text=get_locale(locale, TEXT_IDS.REG_CDL_MAT_COURSE_TEXT_ID),
+                                      reply_markup=get_mat_keyboard(locale))
 
 
-def send_regolamento(update: Update, context: CallbackContext):
+def send_regolamento(update: Update, context: CallbackContext) -> None:
     """Called by clicking on a rulebook.
     Sends said rulebook to the user.
 
@@ -116,9 +120,10 @@ def send_regolamento(update: Update, context: CallbackContext):
         update: update event
         context: context passed by the handler
     """
-    query = update.callback_query
-    data = query.data
-    chat_id = update.effective_chat.id
+    query: Optional[CallbackQuery] = update.callback_query
+    data: Optional[str] = query.data
+    chat_id: int = update.effective_chat.id
+    locale: str = update.callback_query.from_user.language_code
     if data in reg_doc_triennale_L31:
         doc = reg_doc_triennale_L31[data]
     elif data in reg_doc_triennale_L35:
@@ -129,42 +134,46 @@ def send_regolamento(update: Update, context: CallbackContext):
         doc = reg_doc_magistrale_LM40[data]
 
     context.bot.send_document(chat_id=chat_id, document=doc)
-    context.bot.edit_message_text(chat_id=query.message.chat_id, message_id=query.message.message_id, text=RET_FILE,)
+    context.bot.edit_message_text(chat_id=query.message.chat_id, message_id=query.message.message_id, text=get_locale(locale, TEXT_IDS.REG_CDL_RET_FILE_TEXT_ID), )
 
-def get_inf_keyboard():
+
+def get_inf_keyboard(locale: str) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup([[
-            InlineKeyboardButton('Triennale', callback_data='reg_button_triennale_L31'),
-            InlineKeyboardButton('Magistrale', callback_data='reg_button_magistrale_LM18')],
-            [RETURN_BUTTON],
-            [BACK_TO_MENU]
+        InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACHELOR_TEXT_ID), callback_data='reg_button_triennale_L31'),
+        InlineKeyboardButton(get_locale(locale, TEXT_IDS.MASTER_TEXT_ID), callback_data='reg_button_magistrale_LM18')],
+        [InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MAIN_MENU_KEYBOARD_TEXT_ID), callback_data='reg_button_help')],
+        [InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='reg_button_home')]
     ])
 
-def get_mat_keyboard():
+
+def get_mat_keyboard(locale: str) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup([[
-            InlineKeyboardButton('Triennale', callback_data='reg_button_triennale_L35'),
-            InlineKeyboardButton('Magistrale', callback_data='reg_button_magistrale_LM40')],
-            [RETURN_BUTTON],
-            [BACK_TO_MENU]
+        InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACHELOR_TEXT_ID), callback_data='reg_button_triennale_L35'),
+        InlineKeyboardButton(get_locale(locale, TEXT_IDS.MASTER_TEXT_ID), callback_data='reg_button_magistrale_LM40')],
+        [InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MAIN_MENU_KEYBOARD_TEXT_ID), callback_data='reg_button_help')],
+        [InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='reg_button_home')]
     ])
 
-def get_cdl_keyboard(reg_doc: dict = None) -> InlineKeyboardMarkup:
+
+def get_cdl_keyboard(locale: str, reg_doc: dict = None) -> InlineKeyboardMarkup:
     """Called by :meth:`regolamentodidattico` and :meth:`regolamentodidattico_handler`.
     Generates the whole list of rulebooks to append as an InlineKeyboard
 
     Args:
+        locale: the user language
         reg_doc: rulebooks to show
 
     Returns:
         list of rulebooks
     """
-    
+
     if reg_doc is None:
         return InlineKeyboardMarkup([[
             InlineKeyboardButton('Informatica', callback_data='cdl_button_informatica'),
             InlineKeyboardButton('Matematica', callback_data='cdl_button_matematica')],
-           [BACK_TO_MENU]
+            [InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='reg_button_home')]
         ])
     keyboard = [[InlineKeyboardButton(r.split('_')[0], callback_data=r)] for r in reg_doc]
-    keyboard.append([RETURN_BUTTON])  # return button
-    keyboard.append([BACK_TO_MENU])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MAIN_MENU_KEYBOARD_TEXT_ID), callback_data='reg_button_help')])  # return button
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='reg_button_home')])
     return InlineKeyboardMarkup(keyboard)

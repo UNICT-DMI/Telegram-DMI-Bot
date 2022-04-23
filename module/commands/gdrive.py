@@ -1,13 +1,16 @@
 """/drive command"""
 import os
+
 import yaml
 from pydrive2.auth import AuthError, GoogleAuth
 from pydrive2.drive import GoogleDrive
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from pydrive2.files import GoogleDriveFile
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, Bot
 from telegram.ext import CallbackContext
 from module.shared import check_log
 from module.debug import log_error
-from module.data.vars import ERROR_DEVS, NO_GROUP_WARNING
+from module.data.vars import TEXT_IDS, PLACE_HOLDER
+from module.utils.multi_lang_utils import get_locale
 
 gdrive_interface = None
 
@@ -15,7 +18,7 @@ with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
 
-def get_gdrive_interface():
+def get_gdrive_interface() -> GoogleDrive:
     global gdrive_interface
 
     if gdrive_interface is None:
@@ -26,7 +29,7 @@ def get_gdrive_interface():
     return gdrive_interface
 
 
-def drive(update: Update, context: CallbackContext):
+def drive(update: Update, context: CallbackContext) -> None:
     """Called by the /drive command.
     Lets the user navigate the drive folders, if he has the permissions
 
@@ -35,12 +38,12 @@ def drive(update: Update, context: CallbackContext):
         context: context passed by the handler
     """
     check_log(update, "drive")
-    gdrive = get_gdrive_interface()
-    chat_id = update.message.chat_id
-
+    gdrive: GoogleDrive = get_gdrive_interface()
+    chat_id: int = update.message.chat_id
+    locale: str = update.message.from_user.language_code
     if chat_id < 0:
         context.bot.sendMessage(
-            chat_id=chat_id, text=NO_GROUP_WARNING
+            chat_id=chat_id, text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/drive")
         )
         return
 
@@ -59,12 +62,12 @@ def drive(update: Update, context: CallbackContext):
     keyboard = get_files_keyboard(file_list, row_len=3)
     context.bot.sendMessage(
         chat_id=chat_id,
-        text="Appunti & Risorse:",
+        text=get_locale(locale, TEXT_IDS.DRIVE_HEADER_TEXT_ID),
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
 
 
-def drive_handler(update: Update, context: CallbackContext):
+def drive_handler(update: Update, context: CallbackContext) -> None:
     """Called by any of the buttons of the /drive command.
     Allows the user to navigate in the google drive and download files
 
@@ -72,15 +75,15 @@ def drive_handler(update: Update, context: CallbackContext):
         update: update event
         context: context passed by the handler
     """
-    bot = context.bot
+    bot: Bot = context.bot
     
-    gdrive = get_gdrive_interface()
+    gdrive: GoogleDrive = get_gdrive_interface()
 
-    query_data = update.callback_query.data.replace("drive_file_", "")
-    chat_id = update.callback_query.from_user.id
-    message_id = update.callback_query.message.message_id
-
-    fetched_file = gdrive.CreateFile({'id': query_data})
+    query_data: str = update.callback_query.data.replace("drive_file_", "")
+    chat_id: int = update.callback_query.from_user.id
+    message_id: int = update.callback_query.message.message_id
+    locale: str = update.callback_query.from_user.language_code
+    fetched_file: GoogleDriveFile = gdrive.CreateFile({'id': query_data})
 
     # the user clicked on a folder
     if fetched_file['mimeType'] == "application/vnd.google-apps.folder":
@@ -98,7 +101,7 @@ def drive_handler(update: Update, context: CallbackContext):
             bot.editMessageText(
                 chat_id=chat_id,
                 message_id=message_id,
-                text=ERROR_DEVS,
+                text=get_locale(locale, TEXT_IDS.DRIVE_ERROR_DEVS_TEXT_ID),
             )
             return
 
@@ -112,7 +115,7 @@ def drive_handler(update: Update, context: CallbackContext):
             keyboard.append(
                 [
                     InlineKeyboardButton(
-                        text="🔙",
+                        text=get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID),
                         callback_data=f"drive_file_{fetched_file['parents'][0]['id']}",
                     )
                 ]
@@ -129,10 +132,7 @@ def drive_handler(update: Update, context: CallbackContext):
     elif fetched_file['mimeType'] == "application/vnd.google-apps.document":
         bot.sendMessage(
             chat_id=chat_id,
-            text=(
-                "Impossibile scaricare questo file poichè esso è un google document...\n"
-                f"Andare sul seguente link: {fetched_file['exportLinks']['application/pdf']}"
-            ),
+            text=get_locale(locale, TEXT_IDS.DRIVE_ERROR_GFILE_TEXT_ID).replace(PLACE_HOLDER, fetched_file['exportLinks']['application/pdf'])
         )
 
     else:  # the user clicked on a file
@@ -152,8 +152,7 @@ def drive_handler(update: Update, context: CallbackContext):
             else:
                 bot.sendMessage(
                     chat_id=chat_id,
-                    text="File troppo grande per il download diretto...\n"
-                    f"Scarica dal seguente link: {file_d['alternateLink']}",
+                    text=get_locale(locale, TEXT_IDS.DRIVE_ERROR_TOO_BIG_TEXT_ID).replace(PLACE_HOLDER, file_d['alternateLink'])
                 )
 
         except Exception as e:

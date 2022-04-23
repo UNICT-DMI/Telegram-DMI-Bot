@@ -1,21 +1,22 @@
 """Aulario command"""
 import logging
 import calendar
-from datetime import date, datetime
+from datetime import date
 from io import BytesIO
-from typing import List, Optional
+from typing import Optional
 from PIL import Image, ImageDraw, ImageFont
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
 from telegram.ext import CallbackContext
 from module.data import TimetableSlot
 from module.shared import read_json
-from module.data.vars import AULARIO_WARNING, BACK_BUTTON_TEXT, DAY_SELECTION, LESSON_SELECTION, NO_LESSON_WARNING
+from module.data.vars import TEXT_IDS
+from module.utils.multi_lang_utils import get_locale
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def aulario(update: Update, context: CallbackContext, chat_id: int = None, message_id: int = None):
+def aulario(update: Update, context: CallbackContext, chat_id: int = None, message_id: int = None) -> None:
     """Called by the /aulario command.
     Shows the calendar to the user to allow him to select a day from the calendar
 
@@ -28,23 +29,24 @@ def aulario(update: Update, context: CallbackContext, chat_id: int = None, messa
     if not chat_id:
         chat_id = update.message.chat_id
 
-    days = TimetableSlot.get_max_giorno()
+    days: int = TimetableSlot.get_max_giorno()
+    locale: str = update.message.from_user.language_code
     if days:
         reply_markup = create_calendar(days)
-        text = DAY_SELECTION
+        text: str = get_locale(locale, TEXT_IDS.AULARIO_DAY_SELECTION_TEXT_ID)
         if message_id:
             context.bot.editMessageText(text=text, reply_markup=reply_markup, chat_id=chat_id, message_id=message_id)
         else:
             context.bot.sendMessage(text=text, reply_markup=reply_markup, chat_id=chat_id)
     else:
-        text = AULARIO_WARNING
+        text: str = get_locale(locale, TEXT_IDS.AULARIO_WARNING_TEXT_ID)
         if message_id:
             context.bot.editMessageText(text=text, chat_id=chat_id, message_id=message_id)
         else:
             context.bot.sendMessage(text=text, chat_id=chat_id)
 
 
-def month_handler(update: Update, context: CallbackContext):
+def month_handler(update: Update, context: CallbackContext) -> None:
     """Called when navigating the calendar of the /aulario command.
     Updates the calendar
 
@@ -52,16 +54,16 @@ def month_handler(update: Update, context: CallbackContext):
         update: update event
         context: context passed by the handler
     """
-    query = update.callback_query
-    data = query.data
-    chat_id = query.message.chat_id
-    message_id = query.message.message_id
+    query: Optional[CallbackQuery] = update.callback_query
+    data: Optional[str] = query.data
+    chat_id: int = query.message.chat_id
+    message_id: int = query.message.message_id
 
-    d = data.split("_")
-    direction = d[1]
-    year = int(d[2])
-    month = int(d[3])
-    days = int(d[4])
+    d: list[str] = data.split("_")
+    direction: str = d[1]
+    year: int = int(d[2])
+    month: int = int(d[3])
+    days: int = int(d[4])
 
     if direction == 'n':
         if month < 12:
@@ -79,7 +81,7 @@ def month_handler(update: Update, context: CallbackContext):
     context.bot.editMessageReplyMarkup(reply_markup=create_calendar(days, year, month), chat_id=chat_id, message_id=message_id)
 
 
-def calendar_handler(update: Update, context: CallbackContext):
+def calendar_handler(update: Update, context: CallbackContext) -> None:
     """Called by clicking on a day on the calendar of the /aulario command.
     Show the list of subject for the day
 
@@ -87,26 +89,27 @@ def calendar_handler(update: Update, context: CallbackContext):
         update: update event
         context: context passed by the handler
     """
-    query = update.callback_query
-    data = query.data
-    chat_id = query.message.chat_id
+    query: Optional[CallbackQuery] = update.callback_query
+    data: Optional[str] = query.data
+    chat_id: int = query.message.chat_id
+    locale: str = update.callback_query.from_user.language_code
 
-    day = data.split("_")[1]
-    daily_slots = TimetableSlot.find(giorno=day)
+    day: str = data.split("_")[1]
+    daily_slots: list[TimetableSlot] = TimetableSlot.find(giorno=day)
     if daily_slots:
-        text = LESSON_SELECTION
+        text = get_locale(locale, TEXT_IDS.AULARIO_LESSON_SELECTION_TEXT_ID)
         keyboard = get_subjs_keyboard(0, day)
-        keyboard.append([InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data='sm_aulario')])
+        keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='sm_aulario')])
         reply_markup = InlineKeyboardMarkup(keyboard)
     else:
-        text = NO_LESSON_WARNING
-        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data='sm_aulario')]])
+        text = get_locale(locale, TEXT_IDS.AULARIO_NO_LESSON_WARNING_TEXT_ID)
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='sm_aulario')]])
 
     context.bot.deleteMessage(chat_id=chat_id, message_id=query.message.message_id)
     context.bot.sendMessage(text=text, reply_markup=reply_markup, chat_id=chat_id)
 
 
-def subjects_handler(update: Update, context: CallbackContext):
+def subjects_handler(update: Update, context: CallbackContext) -> None:
     """Called when clicking on a subject of the /aulario command.
     Shows more information on the subject selected
 
@@ -114,17 +117,17 @@ def subjects_handler(update: Update, context: CallbackContext):
         update: update event
         context: context passed by the handler
     """
-    query = update.callback_query
-    chat_id = query.message.chat_id
+    query: Optional[CallbackQuery] = update.callback_query
+    chat_id: int = query.message.chat_id
+    locale: str = update.callback_query.from_user.language_code
+    ID: str = query.data.split("_")[1]
+    slot: TimetableSlot = TimetableSlot.find(ID=ID)[0]
 
-    ID = query.data.split("_")[1]
-    slot = TimetableSlot.find(ID=ID)[0]
+    h: str = f"{slot.ora_inizio} - {slot.end_hour}"
+    text: str = f"{slot.nome} {get_locale(locale, TEXT_IDS.AULARIO_LESSON_AT_TIME_TEXT_ID)}: {h}: {slot.aula}"
+    photo: Optional[BytesIO] = create_map(slot.nome, h, slot.aula)
 
-    h = f"{slot.ora_inizio} - {slot.end_hour}"
-    text = f"{slot.nome} Ore: {h}: {slot.aula}"
-    photo = create_map(slot.nome, h, slot.aula)
-
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data=f"cal_{slot.giorno}")]])
+    reply_markup: InlineKeyboardMarkup = InlineKeyboardMarkup([[InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data=f"cal_{slot.giorno}")]])
     context.bot.deleteMessage(chat_id=chat_id, message_id=query.message.message_id)
     if not photo:
         context.bot.sendMessage(text=text, reply_markup=reply_markup, chat_id=chat_id)
@@ -132,7 +135,7 @@ def subjects_handler(update: Update, context: CallbackContext):
         context.bot.sendPhoto(photo=photo, reply_markup=reply_markup, chat_id=chat_id)
 
 
-def subjects_arrow_handler(update: Update, context: CallbackContext):
+def subjects_arrow_handler(update: Update, context: CallbackContext) -> None:
     """Called when navigating the /aulario menu with the arrows.
     Shows the next or previous page
 
@@ -140,18 +143,18 @@ def subjects_arrow_handler(update: Update, context: CallbackContext):
         update: update event
         context: context passed by the handler
     """
-    query = update.callback_query
-    data = query.data
-    day = data.split('_')[1]
-    page = int(data.split('_')[2])
-
+    query: Optional[CallbackQuery] = update.callback_query
+    data: Optional[str] = query.data
+    day: str = data.split('_')[1]
+    page: int = int(data.split('_')[2])
+    locale: str = update.callback_query.from_user.language_code
     if data[-1] == 'r':
         page += 1
     elif data[-1] == 'l':
         page -= 1
 
     keyboard = get_subjs_keyboard(page, day)
-    keyboard.append([InlineKeyboardButton(BACK_BUTTON_TEXT, callback_data='sm_aulario')])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='sm_aulario')])
 
     context.bot.editMessageReplyMarkup(chat_id=query.message.chat_id, message_id=query.message.message_id, reply_markup=InlineKeyboardMarkup(keyboard))
 
@@ -215,7 +218,6 @@ def get_subjs_keyboard(page: int, day: str) -> list:
     Args:
         page: page of the subject selector
         day: day
-        daily_slots: list of timetable slots
 
     Returns:
         InlineKeyboard
