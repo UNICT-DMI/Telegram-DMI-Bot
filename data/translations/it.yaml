@@ -79,7 +79,7 @@ HELP_CDL_LIBRARY_TEXT_ID: "📚 Biblioteca"
 HELP_CDL_GROUPS_TEXT_ID: "📊 Gruppi"
 HELP_CDL_PROF_TOOLTIP_ID: |-
   Per avere info sui professori puoi utilizzare il seguente comando:
-  /prof Stanco"
+  /prof Stanco
 
 # /help-Reprs command
 REPRS_HEADER_TEXT_ID: "Quali rappresentanti vuoi contattare?"

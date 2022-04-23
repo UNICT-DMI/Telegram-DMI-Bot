@@ -80,7 +80,7 @@ HELP_CDL_LIBRARY_TEXT_ID: "📚 Library"
 HELP_CDL_GROUPS_TEXT_ID: "📊 Groups"
 HELP_CDL_PROF_TOOLTIP_ID: |-
   To get information about professors you can use the following command:
-  /prof Stanco"
+  /prof Stanco
 
 # /help-Reprs command
 REPRS_HEADER_TEXT_ID: "With which representatives you want to talk?"
