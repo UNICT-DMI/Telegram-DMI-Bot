@@ -87,7 +87,7 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext) -> No
                                       text=get_locale(locale, TEXT_IDS.REG_CDL_GRAD_SELECT_TEXT_ID),
                                       reply_markup=get_cdl_keyboard(locale))
     elif data == "help":
-        help_cmd(update, context, True)
+        help_cmd(query, context, True)
 
     else:
         context.bot.edit_message_text(chat_id=query.message.chat_id,
@@ -171,7 +171,7 @@ def get_cdl_keyboard(locale: str, reg_doc: dict = None) -> InlineKeyboardMarkup:
         return InlineKeyboardMarkup([[
             InlineKeyboardButton('Informatica', callback_data='cdl_button_informatica'),
             InlineKeyboardButton('Matematica', callback_data='cdl_button_matematica')],
-            [InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='reg_button_home')]
+            [InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='reg_button_help')]
         ])
     keyboard = [[InlineKeyboardButton(r.split('_')[0], callback_data=r)] for r in reg_doc]
     keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MAIN_MENU_KEYBOARD_TEXT_ID), callback_data='reg_button_help')])  # return button

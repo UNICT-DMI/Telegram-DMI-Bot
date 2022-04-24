@@ -77,7 +77,7 @@ def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message
         [InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_DIPARTIMENTO_CDL_KEYBOARD_TEXT_ID), callback_data="NONE")])
     keyboard.append(
         [
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_EXAMS_TEXT_ID), callback_data="md_esami_link"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_EXAMS_TEXT_ID), callback_data="localization_HELP_CDL_EXAMS_LINK_TOOLTIP_ID"),
             InlineKeyboardButton(get_locale(locale, TEXT_IDS.AULARIO_KEYBOARD_TEXT_ID), callback_data="sm_aulario")
         ]
     )
@@ -85,20 +85,26 @@ def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message
     keyboard.append(
         [
             InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_LESSONS_TIMETABLE_TEXT_ID),
-                                 callback_data="md_lezioni_link"),
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_PROF_INFO_TEXT_ID), callback_data="localization_HELP_CDL_PROF_TOOLTIP_ID")
+                                 callback_data="localization_HELP_CDL_CLASSES_LINK_TOOLTIP_ID"),
         ]
     )
 
     keyboard.append(
         [
             InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_REPRS_TEXT_ID), callback_data="sm_help_rapp_menu"),
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_LIBRARY_TEXT_ID), callback_data="md_biblioteca"),
+
+        ]
+    )
+
+    keyboard.append(
+        [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_LIBRARY_TEXT_ID), callback_data="localization_HELP_CDL_LIBRARY_TOOLTIP_ID"),
             InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_GROUPS_TEXT_ID), callback_data="md_gruppi"),
         ]
     )
     keyboard.append(
         [
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_CDL_PROF_INFO_TEXT_ID), callback_data="localization_HELP_CDL_PROF_TOOLTIP_ID"),
             InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MENU_KEYBOARD_TEXT_ID),
                                  callback_data="sm_help_back_to_menu"),
         ]
@@ -124,11 +130,19 @@ def help_rapp_menu(update: Update, context: CallbackContext, chat_id: int, messa
     keyboard = [[]]
     keyboard.append(
         [
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.REPRS_DMI_TEXT_ID), callback_data="md_rappresentanti_dmi"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.REPRS_DMI_TEXT_ID), callback_data="localization_REPRS_DMI_TOOLTIP_ID"),
+        ]
+    )
+    keyboard.append(
+        [
             InlineKeyboardButton(get_locale(locale, TEXT_IDS.REPRS_DMI_CS_TEXT_ID),
-                                 callback_data="md_rappresentanti_informatica"),
+                                 callback_data="localization_REPRS_DMI_CS_TOOLTIP_ID"),
+        ]
+    )
+    keyboard.append(
+        [
             InlineKeyboardButton(get_locale(locale, TEXT_IDS.REPRS_DMI_MATH_TEXT_ID),
-                                 callback_data="md_rappresentanti_matematica"),
+                                 callback_data="localization_REPRS_DMI_MATH_TOOLTIP_ID"),
         ]
     )
     keyboard.append(
@@ -161,9 +175,9 @@ def help_segr(update: Update, context: CallbackContext, chat_id: int, message_id
 
     keyboard.append(
         [
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEGR_DID_TEXT_ID), callback_data="md_sdidattica"),
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEGR_STU_TEXT_ID), callback_data="md_studenti"),
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEGR_CEA_TEXT_ID), callback_data="md_cea")
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEGR_DID_TEXT_ID), callback_data="localization_SEGR_DID_TOOLTIP_ID"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEGR_STU_TEXT_ID), callback_data="localization_SEGR_STU_TOOLTIP_ID"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEGR_CEA_TEXT_ID), callback_data="localization_SEGR_CEA_TOOLTIP_ID")
         ]
     )
     keyboard.append(
@@ -194,9 +208,9 @@ def help_ersu(update: Update, context: CallbackContext, chat_id: int, message_id
 
     keyboard.append(
         [
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.ERSU_TEXT_ID), callback_data="md_ersu"),
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.ERSU_OFFICE_TEXT_ID), callback_data="md_ufficioersu"),
-            InlineKeyboardButton(get_locale(locale, TEXT_IDS.ERSU_URP_TEXT_ID), callback_data="md_urp")
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.ERSU_TEXT_ID), callback_data="localization_ERSU_TOOLTIP_ID"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.ERSU_OFFICE_TEXT_ID), callback_data="localization_ERSU_OFFICE_TOOLTIP_ID"),
+            InlineKeyboardButton(get_locale(locale, TEXT_IDS.ERSU_URP_TEXT_ID), callback_data="localization_ERSU_URP_TOOLTIP_ID")
         ]
     )
     keyboard.append(

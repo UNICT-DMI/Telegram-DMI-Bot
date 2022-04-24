@@ -50,19 +50,31 @@ class TEXT_IDS(Enum):
     HELP_CDL_LIBRARY_TEXT_ID = auto()
     HELP_CDL_GROUPS_TEXT_ID = auto()
     HELP_CDL_PROF_TOOLTIP_ID = auto()
+    HELP_CDL_EXAMS_LINK_TOOLTIP_ID = auto()
+    HELP_CDL_CLASSES_LINK_TOOLTIP_ID = auto()
+    HELP_CDL_LIBRARY_TOOLTIP_ID = auto()
     # /help-Reprs command
     REPRS_HEADER_TEXT_ID = auto()
     REPRS_DMI_TEXT_ID = auto()
     REPRS_DMI_CS_TEXT_ID = auto()
     REPRS_DMI_MATH_TEXT_ID = auto()
+    REPRS_DMI_TOOLTIP_ID = auto()
+    REPRS_DMI_CS_TOOLTIP_ID = auto()
+    REPRS_DMI_MATH_TOOLTIP_ID = auto()
     # /help-Segr command
     SEGR_DID_TEXT_ID = auto()
     SEGR_STU_TEXT_ID = auto()
     SEGR_CEA_TEXT_ID = auto()
+    SEGR_DID_TOOLTIP_ID = auto()
+    SEGR_STU_TOOLTIP_ID = auto()
+    SEGR_CEA_TOOLTIP_ID = auto()
     # /help-ERSU command
     ERSU_TEXT_ID = auto()
     ERSU_OFFICE_TEXT_ID = auto()
     ERSU_URP_TEXT_ID = auto()
+    ERSU_TOOLTIP_ID = auto()
+    ERSU_OFFICE_TOOLTIP_ID = auto()
+    ERSU_URP_TOOLTIP_ID = auto()
     # /help-projct/credits command
     PRJ_OPIS_TEXT_ID = auto()
     CREDITS_CONTRIBUTORS_TEXT_ID = auto()
@@ -116,7 +128,41 @@ class TEXT_IDS(Enum):
     EXAMS_USAGE_TEXT_ID = auto()
 
 
+# Placeholder special string to be used in replace()
 PLACE_HOLDER: str = "%capybara%"
+
+
+# List of textx that are dynamic
+# The reverse is used as a translation table to bridge md and informative handlers into localization handler
+ON_DEMAND_TEXTS: dict[str, str] = {
+    "HELP_CDL_EXAMS_LINK_TOOLTIP_ID": "esami_link",
+    "HELP_CDL_CLASSES_LINK_TOOLTIP_ID": "lezioni_link",
+    "HELP_CDL_LIBRARY_TOOLTIP_ID": "biblioteca",
+    "REPRS_DMI_TOOLTIP_ID": "rappresentanti_dmi",
+    "REPRS_DMI_CS_TOOLTIP_ID": "rappresentanti_informatica",
+    "REPRS_DMI_MATH_TOOLTIP_ID": "rappresentanti_matematica",
+    "SEGR_DID_TOOLTIP_ID": "sdidattica",
+    "SEGR_STU_TOOLTIP_ID": "studenti",
+    "SEGR_CEA_TOOLTIP_ID": "cea",
+    "ERSU_TOOLTIP_ID": "ersu",
+    "ERSU_OFFICE_TOOLTIP_ID": "ufficioersu",
+    "ERSU_URP_TOOLTIP_ID": "urp"
+}
+
+# Describe the filling type single or multi, if multi the entries must be separated by '|'
+ON_DEMAND_FILL: dict[str, str] = {
+    "HELP_CDL_EXAMS_LINK_TOOLTIP_ID": "single",
+    "HELP_CDL_CLASSES_LINK_TOOLTIP_ID": "single",
+    "HELP_CDL_LIBRARY_TOOLTIP_ID": "multi",
+    "REPRS_DMI_CS_TOOLTIP_ID": "multi",
+    "REPRS_DMI_MATH_TOOLTIP_ID": "multi",
+    "SEGR_DID_TOOLTIP_ID": "multi",
+    "SEGR_STU_TOOLTIP_ID": "multi",
+    "SEGR_CEA_TOOLTIP_ID": "multi",
+    "ERSU_TOOLTIP_ID": "multi",
+    "ERSU_OFFICE_TOOLTIP_ID": "multi",
+    "ERSU_URP_TOOLTIP_ID": "multi"
+}
 
 """ stats.py """
 

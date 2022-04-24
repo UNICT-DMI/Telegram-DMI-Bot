@@ -1,4 +1,3 @@
-*Rappresentanti DMI*
 Campo Filippo - @filippocampo98
 Carnemolla Davide - @Herbrant
 Cascino Andrea - @Mag1candry

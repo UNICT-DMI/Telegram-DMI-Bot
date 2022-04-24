@@ -1,11 +1,15 @@
 import os.path
+import random
 from glob import glob
 from os.path import basename
-from module.data.vars import TEXT_IDS
+
+from module.data.vars import TEXT_IDS, ON_DEMAND_TEXTS, PLACE_HOLDER, ON_DEMAND_FILL
 import yaml
 
 
 # Translation Dictionary
+from module.shared import read_md, CUSicon
+
 translations: dict[str, dict[str, str]] = {}
 
 
@@ -29,4 +33,26 @@ def get_regex_multi_lang(text_id: TEXT_IDS) -> str:
     for language in translations:
         pattern = f'{pattern}{get_locale(language, text_id)}|'
     return f'({pattern[:-1]})'
+
+
+def get_on_demand_text(locale: str, text_id_name: str) -> str:
+    message_text: str = get_locale(locale, TEXT_IDS[text_id_name])
+    if text_id_name in ON_DEMAND_TEXTS:
+        dynamic_text: str = read_md(ON_DEMAND_TEXTS[text_id_name])
+        if text_id_name in ON_DEMAND_FILL:
+            # list is an ordered data structure, iterating is guaranteed to be ordered
+            fills: list[str] = dynamic_text.split("\n")
+            for fill in fills:
+                if not fill:
+                    continue
+                replacement: str = fill.split(":", 1)[1]
+                if ON_DEMAND_FILL[text_id_name] == "multi":
+                    replacement = replacement.replace("|", "\n")
+                message_text = message_text.replace(PLACE_HOLDER, replacement, 1)
+        else:
+            message_text = f'{message_text}\n{dynamic_text}'
+    if text_id_name == "HELP_ALL_COMMANDS_TOOLTIP_ID":
+        message_text = message_text.replace("<cusicon>", CUSicon[random.randint(0, 5)])
+    return message_text
+
 

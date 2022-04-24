@@ -80,22 +80,159 @@ HELP_CDL_GROUPS_TEXT_ID: "📊 Gruppi"
 HELP_CDL_PROF_TOOLTIP_ID: |-
   Per avere info sui professori puoi utilizzare il seguente comando:
   /prof Stanco
+HELP_CDL_EXAMS_LINK_TOOLTIP_ID: |-
+  *Link agli esami*
+  _Informatica triennale (L-31):_ [link](%capybara%)
+  _Matematica triennale (L-35):_ [link](%capybara%)
+  _Informatica magistrale (LM-18):_ [link](%capybara%)
+  _Matematica magistrale (LM-40):_ [link](%capybara%)
+HELP_CDL_CLASSES_LINK_TOOLTIP_ID: |-
+  *Link agli orari delle lezioni*
+  _Informatica triennale (L-31):_ [link](%capybara%)
+  _Matematica triennale (L-35):_ [link](%capybara%)
+  _Informatica magistrale (LM-18):_ [link](%capybara%)
+  _Matematica magistrale (LM-40):_ [link](%capybara%)
+HELP_CDL_LIBRARY_TOOLTIP_ID: |-
+  *Orari della biblioteca:*
+  
+  Sala Lettura:
+  
+  %capybara%
+
+  Servizio Distribuzione:
+  
+  %capybara%
 
 # /help-Reprs command
 REPRS_HEADER_TEXT_ID: "Quali rappresentanti vuoi contattare?"
 REPRS_DMI_TEXT_ID: "Rapp. DMI"
 REPRS_DMI_CS_TEXT_ID: "Rapp. Informatica"
 REPRS_DMI_MATH_TEXT_ID: "Rapp. Matematica"
+REPRS_DMI_TOOLTIP_ID: "*Rappresentanti DMI*"
+REPRS_DMI_CS_TOOLTIP_ID: |-
+  *Rappresentanti Corso di Laurea Informatica Triennale*
+  
+  %capybara%
+  
+  *Rappresentanti Corso di Laurea Informatica Magistrale*
+  
+  %capybara%
+REPRS_DMI_MATH_TOOLTIP_ID: |-
+  *Rappresentanti Corso di Laurea Matematica Triennale*
+  
+  %capybara%
+  
+  *Rappresentanti Corso di Laurea Matematica Magistrale*
+  
+  %capybara%
 
 # /help-Segr command
 SEGR_DID_TEXT_ID: "Seg. Didattica"
 SEGR_STU_TEXT_ID: "Seg. Studenti"
 SEGR_CEA_TEXT_ID: "CEA"
+SEGR_DID_TOOLTIP_ID: |-
+  Sede presso il Dipartimento di Matematica e Informatica (primo piano vicino alla direzione) 
+
+  **Personale di segreteria**
+  
+  %capybara%
+
+  **Segreteria didattica**
+
+  %capybara%
+
+  **Ulteriori Contatti DMI**
+
+  %capybara%
+SEGR_STU_TOOLTIP_ID: |-
+  *Segreteria studenti*
+  
+  Posizione:
+  
+  %capybara%
+  
+  Contatti:
+  
+  %capybara%
+
+  🕑 Orario invernale:
+  
+  %capybara%
+
+  Ufficio carriere studenti - Settore scientifico
+
+  Matematica Triennale e Magistrale (L-LM)
+  
+  %capybara%
+
+  Informatica Triennale (L)
+  
+  %capybara%
+  
+  Informatica Magistrale (LM)
+  
+  %capybara%
+SEGR_CEA_TOOLTIP_ID: |-
+  *Centro per i sistemi di elaborazione e le applicazioni scientifiche e didattiche (CEA)*
+  
+  Contatti:
+  
+  %capybara%
+  
+  Posizione:
+  
+  %capybara%
+  
+  Sito web:
+  
+  %capybara%
 
 # /help-ERSU command
 ERSU_TEXT_ID: "ERSU"
 ERSU_OFFICE_TEXT_ID: "Ufficio ERSU"
 ERSU_URP_TEXT_ID: "URP"
+ERSU_TOOLTIP_ID: |-
+  *ERSU Catania - sede centrale*
+  
+  Posizione:
+  
+  %capybara%
+  
+  Contatti:
+  
+  %capybara%
+
+  🕑 Orari:
+  
+  %capybara%
+ERSU_OFFICE_TOOLTIP_ID: |-
+  *ERSU Catania - Ufficio Tesserini*
+  
+  Posizione:
+  
+  %capybara%
+
+  🕑 Orari:
+  
+  %capybara%
+  
+  Posizione:
+
+  %capybara%
+
+  🕑 Orari:
+
+  %capybara%
+ERSU_URP_TOOLTIP_ID: |-
+  *URP Studenti*
+  
+  Posizione:
+  
+  %capybara%
+  
+  Contatti:
+  
+  %capybara%
 
 # /help-projct/credits command
 PRJ_OPIS_TEXT_ID: "Opis Manager"

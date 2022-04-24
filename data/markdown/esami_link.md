@@ -1,5 +1,4 @@
-*Link agli esami*
-_Informatica triennale (L-31):_ [link](http://web.dmi.unict.it/corsi/l-31/esami)
-_Matematica triennale (L-35):_ [link](http://web.dmi.unict.it/corsi/l-35/esami)
-_Informatica magistrale (LM-18):_ [link](http://web.dmi.unict.it/corsi/lm-18/esami)
-_Matematica magistrale (LM-40):_ [link](http://web.dmi.unict.it/corsi/lm-40/esami)
+L-31:http://web.dmi.unict.it/corsi/l-31/esami
+L-35:http://web.dmi.unict.it/corsi/l-35/esami
+LM-18:http://web.dmi.unict.it/corsi/lm-18/esami
+LM-40:http://web.dmi.unict.it/corsi/lm-40/esami
