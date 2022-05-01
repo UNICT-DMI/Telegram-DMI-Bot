@@ -55,7 +55,7 @@ def notify_error_admin(context: CallbackContext, traceback_str: str):
         context: context passed by the handler
     """
     text = (f'An exception was raised:\n' f'<pre>{html.escape(traceback_str)}</pre>')
-    context.bot.send_message(chat_id=config_map['dev_group_chatid'], text=text, parse_mode=ParseMode.HTML)
+    context.bot.send_message(chat_id=config_map['dev_group_chatid_logs'], text=text, parse_mode=ParseMode.HTML)
 
 
 def log_error(header: str, error: Exception):  # pylint: disable=unused-argument

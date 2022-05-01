@@ -22,6 +22,7 @@ def get_gdrive_interface() -> GoogleDrive:
     global gdrive_interface
 
     if gdrive_interface is None:
+        # gauth uses all the client_config of settings.yaml
         gauth = GoogleAuth(settings_file="config/settings.yaml")
         gauth.CommandLineAuth()
         gdrive_interface = GoogleDrive(gauth)
