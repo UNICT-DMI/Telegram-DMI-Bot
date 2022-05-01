@@ -101,7 +101,7 @@ def esami_button_anno(update: Update, context: CallbackContext, chat_id: int, me
         chat_id: id of the chat of the user
         message_id: id of the sub-menu message
     """
-    locale: str = update.message.from_user.language_code
+    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
     message_text: str = get_locale(locale, TEXT_IDS.SELECT_YEAR_TEXT_ID)
 
     keyboard = [[
@@ -124,7 +124,7 @@ def esami_button_sessione(update: Update, context: CallbackContext, chat_id: int
         chat_id: id of the chat of the user
         message_id: id of the sub-menu message
     """
-    locale: str = update.message.from_user.language_code
+    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
     message_text: str = get_locale(locale, TEXT_IDS.EXAMS_SELECT_SESSION_TEXT_ID)
 
     keyboard = [[]]
@@ -151,7 +151,7 @@ def esami_button_insegnamento(update: Update, context: CallbackContext, chat_id:
         chat_id: id of the chat of the user
         message_id: id of the sub-menu message
     """
-    locale: str = update.message.from_user.language_code
+    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
     context.user_data['esami']['cmd'] = "input_insegnamento"  # attende che venga impostato il campo insegnamento
     message_text = get_locale(locale, TEXT_IDS.EXAMS_USAGE_TEXT_ID)
 

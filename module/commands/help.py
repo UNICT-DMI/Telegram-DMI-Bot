@@ -1,5 +1,5 @@
 """/help command"""
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
 from telegram.ext import CallbackContext
 from module.shared import check_log
 from module.data.vars import TEXT_IDS
@@ -17,7 +17,7 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False) -> No
     """
     check_log(update, "help")
     chat_id: int = update.message.chat_id
-    locale: str = update.message.from_user.language_code
+    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
     message_text: str = get_locale(locale, TEXT_IDS.HELP_HEADER_TEXT_ID)
 
     keyboard = [[]]
@@ -69,7 +69,8 @@ def help_dip_cdl(update: Update, context: CallbackContext, chat_id: int, message
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    locale: str = update.message.from_user.language_code
+    # Needed due to router obfuscation
+    locale: str = update.from_user.language_code
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
@@ -124,7 +125,7 @@ def help_rapp_menu(update: Update, context: CallbackContext, chat_id: int, messa
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    locale: str = update.message.from_user.language_code
+    locale: str = update.from_user.language_code
     message_text: str = get_locale(locale, TEXT_IDS.REPRS_HEADER_TEXT_ID)
 
     keyboard = [[]]
@@ -166,7 +167,7 @@ def help_segr(update: Update, context: CallbackContext, chat_id: int, message_id
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    locale: str = update.message.from_user.language_code
+    locale: str = update.from_user.language_code
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
@@ -200,7 +201,7 @@ def help_ersu(update: Update, context: CallbackContext, chat_id: int, message_id
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    locale: str = update.message.from_user.language_code
+    locale: str = update.from_user.language_code
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
@@ -233,7 +234,7 @@ def help_projects_acknowledgements(update: Update, context: CallbackContext, cha
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    locale: str = update.message.from_user.language_code
+    locale: str = update.from_user.language_code
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
@@ -268,7 +269,7 @@ def help_misc(update: Update, context: CallbackContext, chat_id: int, message_id
         chat_id: id of the chat the command was invoked from
         message_id: id of the help message
     """
-    locale: str = update.message.from_user.language_code
+    locale: str = update.from_user.language_code
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
     keyboard = [[]]
