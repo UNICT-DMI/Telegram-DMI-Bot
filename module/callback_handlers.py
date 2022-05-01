@@ -80,7 +80,8 @@ def informative_callback(update: Update, context: CallbackContext) -> None:
         index_key: int = list(ON_DEMAND_TEXTS.values()).index(cmd)
         message_text: str = get_on_demand_text(locale, list(ON_DEMAND_TEXTS.keys())[index_key])
     else:
-        cmd = cmd if cmd != "report" else "segnalazione"
+        if cmd == "report":
+            cmd = "segnalazione" 
         message_text = read_md(cmd)
     check_log(update, cmd)
     if_disable_preview = True if cmd == 'cloud' else False
