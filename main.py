@@ -22,7 +22,6 @@ from module.gitlab import git, gitlab_handler
 from module.job_updater import updater_lep
 from module.shared import config_map
 from module.utils.multi_lang_utils import load_translations, get_regex_multi_lang
-from module.utils.send_utils import send_chat_ids, send_errors, send_log
 from module.debug import error_handler, log_message
 
 
@@ -115,9 +114,6 @@ def add_handlers(dp: Dispatcher) -> None:
     dp.add_handler(CommandHandler('rappresentanti_matematica', informative_callback))
     dp.add_handler(CommandHandler('report', report))
     dp.add_handler(CommandHandler('chatid', lambda u, c: u.message.reply_text(u.message.chat_id)))
-    dp.add_handler(CommandHandler('send_log', send_log))
-    dp.add_handler(CommandHandler('send_chat_ids', send_chat_ids))
-    dp.add_handler(CommandHandler('errors', send_errors))
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('cloud', informative_callback))
     dp.add_handler(MessageHandler(Filters.regex(get_regex_multi_lang(TEXT_IDS.CLOUD_KEYBOARD_TEXT_ID)), informative_callback))

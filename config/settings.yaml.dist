@@ -5,7 +5,6 @@ gitlab:
   root: <GITLAB_ROOT_GROUP>
 
 debug:
-    disable_chatid_logs: 0
     disable_db: 0
     disable_drive: 1
     disable_gitlab: 1
