@@ -3,6 +3,8 @@ import random
 from glob import glob
 from os.path import basename
 
+from telegram import Update
+
 from module.data.vars import TEXT_IDS, ON_DEMAND_TEXTS, PLACE_HOLDER, ON_DEMAND_FILL
 import yaml
 
@@ -54,5 +56,8 @@ def get_on_demand_text(locale: str, text_id_name: str) -> str:
     if text_id_name == "HELP_ALL_COMMANDS_TOOLTIP_ID":
         message_text = message_text.replace("<cusicon>", CUSicon[random.randint(0, 5)])
     return message_text
+
+def get_locale_code(update: Update) -> str:
+    return update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
 
 

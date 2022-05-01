@@ -1,9 +1,9 @@
 """/help command"""
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from module.shared import check_log
 from module.data.vars import TEXT_IDS
-from module.utils.multi_lang_utils import get_locale
+from module.utils.multi_lang_utils import get_locale, get_locale_code
 
 
 def help_cmd(update: Update, context: CallbackContext, edit: bool = False) -> None:
@@ -17,7 +17,7 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False) -> No
     """
     check_log(update, "help")
     chat_id: int = update.message.chat_id
-    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
+    locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.HELP_HEADER_TEXT_ID)
 
     keyboard = [[]]

@@ -8,7 +8,7 @@ from telegram.ext import CallbackContext
 from module.data import Lesson
 from module.shared import check_log, send_message
 from module.data.vars import TEXT_IDS, PLACE_HOLDER
-from module.utils.multi_lang_utils import get_locale
+from module.utils.multi_lang_utils import get_locale, get_locale_code
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -99,7 +99,7 @@ def lezioni_button_anno(update: Update, context: CallbackContext, chat_id, messa
         chat_id: id of the chat of the user
         message_id: id of the sub-menu message
     """
-    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
+    locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.SELECT_YEAR_TEXT_ID)
 
     keyboard = [[]]
@@ -126,7 +126,7 @@ def lezioni_button_giorno(update: Update, context: CallbackContext, chat_id, mes
         chat_id: id of the chat of the user
         message_id: id of the sub-menu message
     """
-    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
+    locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.CLASSES_SELECT_DAY_TEXT_ID)
 
     keyboard = [[]]
@@ -161,7 +161,7 @@ def lezioni_button_insegnamento(update: Update, context: CallbackContext, chat_i
         chat_id: id of the chat of the user
         message_id: id of the sub-menu message
     """
-    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
+    locale: str = get_locale_code(update)
     context.user_data['lezioni'][
         'cmd'] = "input_insegnamento"  # è in attesa di un messaggio nel formato corretto che imposti il valore del campo insegnamento
     message_text = get_locale(locale, TEXT_IDS.CLASSES_USAGE_TEXT_ID)
@@ -176,7 +176,7 @@ def lezioni_input_insegnamento(update: Update, context: CallbackContext) -> None
         update: update event
         context: context passed by the handler
     """
-    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
+    locale: str = get_locale_code(update)
     if context.user_data['lezioni'].get('cmd',
                                         'null') == "input_insegnamento":  # se effettivamente l'user aveva richiesto di modificare l'insegnamento...
         check_log(update, "lezioni_input_insegnamento")

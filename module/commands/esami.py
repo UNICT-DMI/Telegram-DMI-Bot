@@ -9,7 +9,7 @@ from telegram.ext import CallbackContext
 from module.data import Exam
 from module.shared import check_log, send_message
 from module.data.vars import TEXT_IDS, PLACE_HOLDER
-from module.utils.multi_lang_utils import get_locale
+from module.utils.multi_lang_utils import get_locale, get_locale_code
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -101,7 +101,7 @@ def esami_button_anno(update: Update, context: CallbackContext, chat_id: int, me
         chat_id: id of the chat of the user
         message_id: id of the sub-menu message
     """
-    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
+    locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.SELECT_YEAR_TEXT_ID)
 
     keyboard = [[
@@ -124,7 +124,7 @@ def esami_button_sessione(update: Update, context: CallbackContext, chat_id: int
         chat_id: id of the chat of the user
         message_id: id of the sub-menu message
     """
-    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
+    locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.EXAMS_SELECT_SESSION_TEXT_ID)
 
     keyboard = [[]]
@@ -151,7 +151,7 @@ def esami_button_insegnamento(update: Update, context: CallbackContext, chat_id:
         chat_id: id of the chat of the user
         message_id: id of the sub-menu message
     """
-    locale: str = update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
+    locale: str = get_locale_code(update)
     context.user_data['esami']['cmd'] = "input_insegnamento"  # attende che venga impostato il campo insegnamento
     message_text = get_locale(locale, TEXT_IDS.EXAMS_USAGE_TEXT_ID)
 
@@ -166,6 +166,7 @@ def esami_input_insegnamento(update: Update, context: CallbackContext) -> None:
         update: update event
         context: context passed by the handler
     """
+    locale: str = get_locale_code(update)
     if context.user_data['esami'].get('cmd', None) == "input_insegnamento":
         # se effettivamente l'user aveva richiesto di modificare l'insegnamento...
         check_log(update, "esami_input_insegnamento")
@@ -173,7 +174,7 @@ def esami_input_insegnamento(update: Update, context: CallbackContext) -> None:
         context.user_data['esami']['insegnamento'] = re.sub(r"^(?!=<[/])[Ii]ns:\s+", "", update.message.text)
         # elimina la possibilità di modificare l'insegnamento fino a quando l'apposito button non viene premuto di nuovo
         del context.user_data['esami']['cmd']
-        message_text, inline_keyboard = get_esami_text_inline_keyboard(update.message.from_user.language_code, context)
+        message_text, inline_keyboard = get_esami_text_inline_keyboard(locale, context)
         context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, reply_markup=inline_keyboard)
 
 
