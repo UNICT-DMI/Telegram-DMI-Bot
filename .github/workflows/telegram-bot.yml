@@ -7,7 +7,7 @@ on:
       - "README.md"
       - "docs/**"
   pull_request:
-    branches: [main]
+    branches: [master]
     paths-ignore:
       - "README.md"
       - "docs/**"
