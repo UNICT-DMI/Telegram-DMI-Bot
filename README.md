@@ -48,14 +48,14 @@ pip3 install -r requirements.txt
 ### docker-compose(recommended)
 
 ```yaml
-version: '2'
+version: "2"
 services:
-    dmibot:
-        image: unictdmi/dmibot
-        container_name: dmibot
-        volumes:
-            - </path/to/settings.yaml>:/dmibot/config/settings.yaml
-            - </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db
+  dmibot:
+    image: unictdmi/dmibot
+    container_name: dmibot
+    volumes:
+      - </path/to/settings.yaml>:/dmibot/config/settings.yaml
+      - </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db
 ```
 
 ### docker cli
@@ -68,10 +68,10 @@ docker run -v </path/to/settings.yaml>:/dmibot/config/settings.yaml -v </path/to
 
 Container images are configured using parameters passed at runtime (such as those above). These parameters are separated by a colon and indicate \<external>:\<internal> respectively.
 
-| Parameter | Function |
-| :----: | --- |
+|             Parameter             | Function            |
+| :-------------------------------: | ------------------- |
 | `-v /dmibot/config/settings.yaml` | configurations file |
-| `-v /dmibot/data/DMI_DB.db` | database |
+|    `-v /dmibot/data/DMI_DB.db`    | database            |
 
 ### Building locally
 
@@ -116,6 +116,20 @@ You can enable these commands setting **disable_drive = 0** and configuring the 
 pip3 install -r requirements_dev.txt
 ```
 
+Start **unit tests**:
+
+```bash
+pytest tests/unit/
+```
+
+If you want to check also the code coverage report through an HTML format use:
+
+```bash
+pytest --cov . tests/unit/ --cov-report=html
+```
+
+To run the end-to-end tests read the following steps below.
+
 Steps:
 
 - Sign in your Telegram account with your phone number **[here](https://my.telegram.org/auth)**. Then choose “API development tools”
@@ -147,10 +161,10 @@ python3 conftest.py .
 
 **Check [here](https://dev.to/blueset/how-to-write-integration-tests-for-a-telegram-bot-4c0e) if you want to have more information on the steps above**
 
-Start tests:
+Start **end-to-end tests**:
 
 ```bash
-pytest
+pytest tests/e2e/
 ```
 
 ## :books: Documentation
