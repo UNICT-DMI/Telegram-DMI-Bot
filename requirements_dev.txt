@@ -1,3 +1,5 @@
-pytest==6.2.5
+pytest
 Telethon==1.23.0
 pytest-asyncio==0.16.0
+pytest-mock
+pytest-cov
