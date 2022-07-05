@@ -155,6 +155,10 @@ SEGR_STU_TOOLTIP_ID: |-
   
   %capybara%
 
+  🕑 Orario ordinario:
+  
+  %capybara%
+
   🕑 Orario invernale:
   
   %capybara%
@@ -232,6 +236,10 @@ ERSU_URP_TOOLTIP_ID: |-
   
   Contatti:
   
+  %capybara%
+
+  🕑 Orari:
+
   %capybara%
 
 # /help-projct/credits command
