@@ -8,4 +8,4 @@ Accedi alla cartella condivisa di GoogleDrive mediante il comando /drive oppure 
 GitLab ha lo stesso contenuto di "GoogleDrive di Informatica", usalo solo se vuoi aggiungere nuovi contenuti.
 
 [Catalogo](https://unict-dmi.github.io/git-catalogue/#/home)  
-Vuoi consultare il catalogo dei progetti, dei bot e degli appunti? Accedi da [qui](https://unict-dmi.github.io/git-catalogue/#/home).
+Vuoi consultare il catalogo dei progetti, dei bot e degli appunti? Accedi da [qui](https://unict-dmi.github.io/git-catalogue/#/home) o direttamente [qui](https://unict-dmi.github.io/git-catalogue/#/tab/appunti) per gli appunti.
