@@ -17,6 +17,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,11 +53,55 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-module"><strong>Description</strong></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-module.callback_handlers">callback_handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-module.easter_egg_func">easter_egg_func</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-module.gitlab">gitlab</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-module.job_updater">job_updater</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-module.shared">shared</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-module.callback_handlers">callback_handlers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module.callback_handlers.exit_handler"><code class="docutils literal notranslate"><span class="pre">exit_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.callback_handlers.informative_callback"><code class="docutils literal notranslate"><span class="pre">informative_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.callback_handlers.localization_handler"><code class="docutils literal notranslate"><span class="pre">localization_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.callback_handlers.md_handler"><code class="docutils literal notranslate"><span class="pre">md_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.callback_handlers.none_handler"><code class="docutils literal notranslate"><span class="pre">none_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.callback_handlers.submenu_handler"><code class="docutils literal notranslate"><span class="pre">submenu_handler()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-module.easter_egg_func">easter_egg_func</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module.easter_egg_func.bladrim"><code class="docutils literal notranslate"><span class="pre">bladrim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.easter_egg_func.lei_che_ne_pensa_signorina"><code class="docutils literal notranslate"><span class="pre">lei_che_ne_pensa_signorina()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.easter_egg_func.prof_sticker"><code class="docutils literal notranslate"><span class="pre">prof_sticker()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.easter_egg_func.prof_sticker_id"><code class="docutils literal notranslate"><span class="pre">prof_sticker_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.easter_egg_func.santino"><code class="docutils literal notranslate"><span class="pre">santino()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.easter_egg_func.smonta_portoni"><code class="docutils literal notranslate"><span class="pre">smonta_portoni()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.easter_egg_func.uni_bandita"><code class="docutils literal notranslate"><span class="pre">uni_bandita()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-module.gitlab">gitlab</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.download_blob_file_async"><code class="docutils literal notranslate"><span class="pre">download_blob_file_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.download_blob_file_async_internal"><code class="docutils literal notranslate"><span class="pre">download_blob_file_async_internal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.explore_repository_tree"><code class="docutils literal notranslate"><span class="pre">explore_repository_tree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.format_keyboard_buttons"><code class="docutils literal notranslate"><span class="pre">format_keyboard_buttons()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.get_blob_file"><code class="docutils literal notranslate"><span class="pre">get_blob_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.get_chat_id"><code class="docutils literal notranslate"><span class="pre">get_chat_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.get_projects"><code class="docutils literal notranslate"><span class="pre">get_projects()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.get_repository_tree"><code class="docutils literal notranslate"><span class="pre">get_repository_tree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.get_subgroups"><code class="docutils literal notranslate"><span class="pre">get_subgroups()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.git"><code class="docutils literal notranslate"><span class="pre">git()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.gitlab_handler"><code class="docutils literal notranslate"><span class="pre">gitlab_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.init_api"><code class="docutils literal notranslate"><span class="pre">init_api()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.new_session"><code class="docutils literal notranslate"><span class="pre">new_session()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.gitlab.send_message"><code class="docutils literal notranslate"><span class="pre">send_message()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-module.job_updater">job_updater</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module.job_updater.updater_lep"><code class="docutils literal notranslate"><span class="pre">updater_lep()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-module.shared">shared</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module.shared.check_log"><code class="docutils literal notranslate"><span class="pre">check_log()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.shared.check_print_old_exams"><code class="docutils literal notranslate"><span class="pre">check_print_old_exams()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.shared.get_year_code"><code class="docutils literal notranslate"><span class="pre">get_year_code()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.shared.read_json"><code class="docutils literal notranslate"><span class="pre">read_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.shared.read_md"><code class="docutils literal notranslate"><span class="pre">read_md()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module.shared.send_message"><code class="docutils literal notranslate"><span class="pre">send_message()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">Tests package</a></li>
@@ -95,32 +140,231 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="module.commands.html">Commands package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands"><strong>Description</strong></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.aulario">aulario</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.esami">esami</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.gdrive">gdrive</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.help">help</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.lezioni">lezioni</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.professori">professori</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.regolamento_didattico">regolamento_didattico</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.report">report</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.start">start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.stats">stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.aulario">aulario</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.aulario.aulario"><code class="docutils literal notranslate"><span class="pre">aulario()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.aulario.calendar_handler"><code class="docutils literal notranslate"><span class="pre">calendar_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.aulario.create_calendar"><code class="docutils literal notranslate"><span class="pre">create_calendar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.aulario.create_map"><code class="docutils literal notranslate"><span class="pre">create_map()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.aulario.get_subjs_keyboard"><code class="docutils literal notranslate"><span class="pre">get_subjs_keyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.aulario.month_handler"><code class="docutils literal notranslate"><span class="pre">month_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.aulario.subjects_arrow_handler"><code class="docutils literal notranslate"><span class="pre">subjects_arrow_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.aulario.subjects_handler"><code class="docutils literal notranslate"><span class="pre">subjects_handler()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.esami">esami</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.esami.esami"><code class="docutils literal notranslate"><span class="pre">esami()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.esami.esami_button_anno"><code class="docutils literal notranslate"><span class="pre">esami_button_anno()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.esami.esami_button_insegnamento"><code class="docutils literal notranslate"><span class="pre">esami_button_insegnamento()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.esami.esami_button_sessione"><code class="docutils literal notranslate"><span class="pre">esami_button_sessione()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.esami.esami_handler"><code class="docutils literal notranslate"><span class="pre">esami_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.esami.esami_input_insegnamento"><code class="docutils literal notranslate"><span class="pre">esami_input_insegnamento()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.esami.generate_esami_text"><code class="docutils literal notranslate"><span class="pre">generate_esami_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.esami.get_esami_text_inline_keyboard"><code class="docutils literal notranslate"><span class="pre">get_esami_text_inline_keyboard()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.gdrive">gdrive</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.gdrive.drive"><code class="docutils literal notranslate"><span class="pre">drive()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.gdrive.drive_handler"><code class="docutils literal notranslate"><span class="pre">drive_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.gdrive.get_files_keyboard"><code class="docutils literal notranslate"><span class="pre">get_files_keyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.gdrive.get_gdrive_interface"><code class="docutils literal notranslate"><span class="pre">get_gdrive_interface()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.help">help</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.help.help_back_to_menu"><code class="docutils literal notranslate"><span class="pre">help_back_to_menu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.help.help_cmd"><code class="docutils literal notranslate"><span class="pre">help_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.help.help_dip_cdl"><code class="docutils literal notranslate"><span class="pre">help_dip_cdl()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.help.help_ersu"><code class="docutils literal notranslate"><span class="pre">help_ersu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.help.help_misc"><code class="docutils literal notranslate"><span class="pre">help_misc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.help.help_projects_acknowledgements"><code class="docutils literal notranslate"><span class="pre">help_projects_acknowledgements()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.help.help_rapp_menu"><code class="docutils literal notranslate"><span class="pre">help_rapp_menu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.help.help_segr"><code class="docutils literal notranslate"><span class="pre">help_segr()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.lezioni">lezioni</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.generate_lezioni_text"><code class="docutils literal notranslate"><span class="pre">generate_lezioni_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.get_lezioni_text_InLineKeyboard"><code class="docutils literal notranslate"><span class="pre">get_lezioni_text_InLineKeyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni"><code class="docutils literal notranslate"><span class="pre">lezioni()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_button_anno"><code class="docutils literal notranslate"><span class="pre">lezioni_button_anno()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_button_giorno"><code class="docutils literal notranslate"><span class="pre">lezioni_button_giorno()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_button_insegnamento"><code class="docutils literal notranslate"><span class="pre">lezioni_button_insegnamento()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_handler"><code class="docutils literal notranslate"><span class="pre">lezioni_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_input_insegnamento"><code class="docutils literal notranslate"><span class="pre">lezioni_input_insegnamento()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.professori">professori</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.professori.generate_prof_text"><code class="docutils literal notranslate"><span class="pre">generate_prof_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.professori.prof"><code class="docutils literal notranslate"><span class="pre">prof()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.regolamento_didattico">regolamento_didattico</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.regolamento_didattico.cdl_handler"><code class="docutils literal notranslate"><span class="pre">cdl_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.regolamento_didattico.get_cdl_keyboard"><code class="docutils literal notranslate"><span class="pre">get_cdl_keyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.regolamento_didattico.get_inf_keyboard"><code class="docutils literal notranslate"><span class="pre">get_inf_keyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.regolamento_didattico.get_mat_keyboard"><code class="docutils literal notranslate"><span class="pre">get_mat_keyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.regolamento_didattico.regolamentodidattico"><code class="docutils literal notranslate"><span class="pre">regolamentodidattico()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.regolamento_didattico.regolamentodidattico_handler"><code class="docutils literal notranslate"><span class="pre">regolamentodidattico_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.regolamento_didattico.send_regolamento"><code class="docutils literal notranslate"><span class="pre">send_regolamento()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.report">report</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.report.report"><code class="docutils literal notranslate"><span class="pre">report()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.start">start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.start.get_help_keyboard"><code class="docutils literal notranslate"><span class="pre">get_help_keyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.start.start"><code class="docutils literal notranslate"><span class="pre">start()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.stats">stats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.stats.send_graph"><code class="docutils literal notranslate"><span class="pre">send_graph()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.stats.stats"><code class="docutils literal notranslate"><span class="pre">stats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.stats.stats_gen"><code class="docutils literal notranslate"><span class="pre">stats_gen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.stats.stats_tot"><code class="docutils literal notranslate"><span class="pre">stats_tot()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="module.data.html">Data package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data"><strong>Description</strong></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.db_manager">db_manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.easter_egg">easter_egg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.exam">exam</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.lesson">lesson</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.professor">professor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.scrapable">scrapable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.timetable_slot">timetable_slot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.db_manager">db_manager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.db_manager.DbManager"><code class="docutils literal notranslate"><span class="pre">DbManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.db_manager.DbManager.count_from"><code class="docutils literal notranslate"><span class="pre">DbManager.count_from()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.db_manager.DbManager.delete_from"><code class="docutils literal notranslate"><span class="pre">DbManager.delete_from()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.db_manager.DbManager.get_db"><code class="docutils literal notranslate"><span class="pre">DbManager.get_db()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.db_manager.DbManager.insert_into"><code class="docutils literal notranslate"><span class="pre">DbManager.insert_into()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.db_manager.DbManager.query_from_file"><code class="docutils literal notranslate"><span class="pre">DbManager.query_from_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.db_manager.DbManager.query_from_string"><code class="docutils literal notranslate"><span class="pre">DbManager.query_from_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.db_manager.DbManager.select_from"><code class="docutils literal notranslate"><span class="pre">DbManager.select_from()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.db_manager.dict_factory"><code class="docutils literal notranslate"><span class="pre">dict_factory()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.easter_egg">easter_egg</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.easter_egg.EasterEgg"><code class="docutils literal notranslate"><span class="pre">EasterEgg</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.easter_egg.EasterEgg.get_bladrim"><code class="docutils literal notranslate"><span class="pre">EasterEgg.get_bladrim()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.easter_egg.EasterEgg.get_lei_che_ne_pensa_signorina"><code class="docutils literal notranslate"><span class="pre">EasterEgg.get_lei_che_ne_pensa_signorina()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.easter_egg.EasterEgg.get_santino"><code class="docutils literal notranslate"><span class="pre">EasterEgg.get_santino()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.easter_egg.EasterEgg.get_smonta_portoni"><code class="docutils literal notranslate"><span class="pre">EasterEgg.get_smonta_portoni()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.easter_egg.EasterEgg.get_uni_bandita"><code class="docutils literal notranslate"><span class="pre">EasterEgg.get_uni_bandita()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.exam">exam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.exam.Exam"><code class="docutils literal notranslate"><span class="pre">Exam</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.anno"><code class="docutils literal notranslate"><span class="pre">Exam.anno</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.cdl"><code class="docutils literal notranslate"><span class="pre">Exam.cdl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.insegnamento"><code class="docutils literal notranslate"><span class="pre">Exam.insegnamento</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.docenti"><code class="docutils literal notranslate"><span class="pre">Exam.docenti</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.prima"><code class="docutils literal notranslate"><span class="pre">Exam.prima</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.seconda"><code class="docutils literal notranslate"><span class="pre">Exam.seconda</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.terza"><code class="docutils literal notranslate"><span class="pre">Exam.terza</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.straordinaria"><code class="docutils literal notranslate"><span class="pre">Exam.straordinaria</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.COURSES"><code class="docutils literal notranslate"><span class="pre">Exam.COURSES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.SESSIONS"><code class="docutils literal notranslate"><span class="pre">Exam.SESSIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.append_session"><code class="docutils literal notranslate"><span class="pre">Exam.append_session()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.columns"><code class="docutils literal notranslate"><span class="pre">Exam.columns</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.delete"><code class="docutils literal notranslate"><span class="pre">Exam.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.find"><code class="docutils literal notranslate"><span class="pre">Exam.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.find_all"><code class="docutils literal notranslate"><span class="pre">Exam.find_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.get_session"><code class="docutils literal notranslate"><span class="pre">Exam.get_session()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.scrape"><code class="docutils literal notranslate"><span class="pre">Exam.scrape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.table"><code class="docutils literal notranslate"><span class="pre">Exam.table</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.exam.Exam.values"><code class="docutils literal notranslate"><span class="pre">Exam.values</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.lesson">lesson</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson"><code class="docutils literal notranslate"><span class="pre">Lesson</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.nome"><code class="docutils literal notranslate"><span class="pre">Lesson.nome</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.giorno_settimana"><code class="docutils literal notranslate"><span class="pre">Lesson.giorno_settimana</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.ora_inizio"><code class="docutils literal notranslate"><span class="pre">Lesson.ora_inizio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.ora_fine"><code class="docutils literal notranslate"><span class="pre">Lesson.ora_fine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.aula"><code class="docutils literal notranslate"><span class="pre">Lesson.aula</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.anno"><code class="docutils literal notranslate"><span class="pre">Lesson.anno</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.semestre"><code class="docutils literal notranslate"><span class="pre">Lesson.semestre</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.DAY_TO_INT"><code class="docutils literal notranslate"><span class="pre">Lesson.DAY_TO_INT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.IDS"><code class="docutils literal notranslate"><span class="pre">Lesson.IDS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.INT_TO_DAY"><code class="docutils literal notranslate"><span class="pre">Lesson.INT_TO_DAY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.columns"><code class="docutils literal notranslate"><span class="pre">Lesson.columns</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.find"><code class="docutils literal notranslate"><span class="pre">Lesson.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.find_all"><code class="docutils literal notranslate"><span class="pre">Lesson.find_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.scrape"><code class="docutils literal notranslate"><span class="pre">Lesson.scrape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.table"><code class="docutils literal notranslate"><span class="pre">Lesson.table</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.professor">professor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.professor.Professor"><code class="docutils literal notranslate"><span class="pre">Professor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.ID"><code class="docutils literal notranslate"><span class="pre">Professor.ID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.ruolo"><code class="docutils literal notranslate"><span class="pre">Professor.ruolo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.nome"><code class="docutils literal notranslate"><span class="pre">Professor.nome</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.scheda_dmi"><code class="docutils literal notranslate"><span class="pre">Professor.scheda_dmi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.fax"><code class="docutils literal notranslate"><span class="pre">Professor.fax</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.telefono"><code class="docutils literal notranslate"><span class="pre">Professor.telefono</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.email"><code class="docutils literal notranslate"><span class="pre">Professor.email</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.ufficio"><code class="docutils literal notranslate"><span class="pre">Professor.ufficio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.sito"><code class="docutils literal notranslate"><span class="pre">Professor.sito</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.URL_PROF"><code class="docutils literal notranslate"><span class="pre">Professor.URL_PROF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.columns"><code class="docutils literal notranslate"><span class="pre">Professor.columns</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.find"><code class="docutils literal notranslate"><span class="pre">Professor.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.find_all"><code class="docutils literal notranslate"><span class="pre">Professor.find_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.scrape"><code class="docutils literal notranslate"><span class="pre">Professor.scrape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.table"><code class="docutils literal notranslate"><span class="pre">Professor.table</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.professor.em"><code class="docutils literal notranslate"><span class="pre">em()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.scrapable">scrapable</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable"><code class="docutils literal notranslate"><span class="pre">Scrapable</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable.bulk_save"><code class="docutils literal notranslate"><span class="pre">Scrapable.bulk_save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable.columns"><code class="docutils literal notranslate"><span class="pre">Scrapable.columns</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable.count"><code class="docutils literal notranslate"><span class="pre">Scrapable.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable.delete"><code class="docutils literal notranslate"><span class="pre">Scrapable.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable.delete_all"><code class="docutils literal notranslate"><span class="pre">Scrapable.delete_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable.find_all"><code class="docutils literal notranslate"><span class="pre">Scrapable.find_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable.save"><code class="docutils literal notranslate"><span class="pre">Scrapable.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable.table"><code class="docutils literal notranslate"><span class="pre">Scrapable.table</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.scrapable.Scrapable.values"><code class="docutils literal notranslate"><span class="pre">Scrapable.values</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.timetable_slot">timetable_slot</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot"><code class="docutils literal notranslate"><span class="pre">TimetableSlot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.ID"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.ID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.nome"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.nome</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.giorno"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.giorno</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.ora_inizio"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.ora_inizio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.ora_fine"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.ora_fine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.aula"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.aula</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.columns"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.columns</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.end_hour"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.end_hour</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.find"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.find_all"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.find_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.get_max_giorno"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.get_max_giorno()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.is_still_to_come"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.is_still_to_come</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.scrape"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.scrape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.table"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.table</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="module.debug.html">Debug package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module.debug.html#module-module.debug"><strong>Description</strong></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module.debug.html#module-module.debug.log_manager">log_manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module.debug.html#module-module.debug.log_manager">log_manager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module.debug.html#module.debug.log_manager.error_handler"><code class="docutils literal notranslate"><span class="pre">error_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.debug.html#module.debug.log_manager.log_error"><code class="docutils literal notranslate"><span class="pre">log_error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.debug.html#module.debug.log_manager.log_message"><code class="docutils literal notranslate"><span class="pre">log_message()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.debug.html#module.debug.log_manager.notify_error_admin"><code class="docutils literal notranslate"><span class="pre">notify_error_admin()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="module.utils.html">Utils package</a><ul>
