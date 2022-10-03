@@ -51,27 +51,29 @@ pip3 install -r requirements.txt
 version: "2"
 services:
   dmibot:
-    image: unictdmi/dmibot
+    image: ghcr.io/unict-dmi/telegram-dmi-bot
     container_name: dmibot
     volumes:
       - </path/to/settings.yaml>:/dmibot/config/settings.yaml
       - </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db
+      - </path/to/drive_credentials.json>:/dmibot/config/drive_credentials.json
 ```
 
 ### docker cli
 
 ```bash
-docker run -v </path/to/settings.yaml>:/dmibot/config/settings.yaml -v </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db -t unictdmi/dmibot
+docker run -v </path/to/settings.yaml>:/dmibot/config/settings.yaml -v </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db -v </path/to/drive_credentials.json>:/dmibot/config/drive_credentials.json -t unictdmi/dmibot
 ```
 
 ### Parameter
 
 Container images are configured using parameters passed at runtime (such as those above). These parameters are separated by a colon and indicate \<external>:\<internal> respectively.
 
-|             Parameter             | Function            |
-| :-------------------------------: | ------------------- |
-| `-v /dmibot/config/settings.yaml` | configurations file |
-|    `-v /dmibot/data/DMI_DB.db`    | database            |
+|                 Parameter                  | Function            |
+| :----------------------------------------: | ------------------- |
+|     `-v /dmibot/config/settings.yaml`      | configurations file |
+|        `-v /dmibot/data/DMI_DB.db`         | database            |
+| `-v /dmibot/config/drive_credentials.json` | drive credentials   |
 
 ### Building locally
 
