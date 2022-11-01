@@ -67,6 +67,7 @@ def add_commands(up: Updater) -> None:
     up.bot.set_my_commands(commands=commands)
 
 
+# pylint: disable=too-many-statements
 def add_handlers(dp: Dispatcher) -> None:
     """Adds all the handlers the bot will react to
 

@@ -207,6 +207,7 @@ def get_lezioni_text_InLineKeyboard(locale: str, context: CallbackContext) -> Tu
     # stringa contenente l'insegnamento
     text_insegnamento = lezioni_user_data.get("insegnamento", "")
 
+    # pylint: disable=consider-using-f-string
     message_text: str = "{}: {}\n{}: {}\n{}: {}" \
         .format(get_locale(locale, TEXT_IDS.SEARCH_YEAR_TEXT_ID),
                 text_anno if text_anno else "tutti",

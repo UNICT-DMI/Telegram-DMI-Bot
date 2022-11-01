@@ -13,7 +13,7 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False) -> No
     Args:
         update: update event
         context: context passed by the handler
-        edit: bool flag that affects how the message should be handled 
+        edit: bool flag that affects how the message should be handled
     """
     check_log(update, "help")
     chat_id: int = update.message.chat_id
@@ -46,7 +46,7 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False) -> No
         context.bot.sendMessage(chat_id=chat_id, text=message_text, reply_markup=reply_markup)
 
 
-def help_back_to_menu(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
+def help_back_to_menu(update: Update, context: CallbackContext) -> None:
     """Called by a sm_help_back_to_menu button from the sub menu.
     Allows the user to return back to the command list
 

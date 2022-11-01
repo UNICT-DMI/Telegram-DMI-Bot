@@ -195,6 +195,7 @@ def get_esami_text_inline_keyboard(locale: str, context: CallbackContext) -> (st
     text_sessione = ", ".join([key for key in esami_user_data if "sessione" in key]).replace("sessione", "")
     text_insegnamento = esami_user_data.get("insegnamento", "")  # stringa contenente l'insegnamento
 
+    # pylint: disable=consider-using-f-string
     message_text: str = "{}: {}\n{}: {}\n{}: {}".format(
         get_locale(locale, TEXT_IDS.SEARCH_YEAR_TEXT_ID),
         text_anno if text_anno else "tutti",

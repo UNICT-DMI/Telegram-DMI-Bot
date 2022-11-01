@@ -2,15 +2,10 @@ import os.path
 import random
 from glob import glob
 from os.path import basename
-
 from telegram import Update
-
-from module.data.vars import TEXT_IDS, ON_DEMAND_TEXTS, PLACE_HOLDER, ON_DEMAND_FILL
 import yaml
-
-
-# Translation Dictionary
 from module.shared import read_md, CUSicon
+from module.data.vars import TEXT_IDS, ON_DEMAND_TEXTS, PLACE_HOLDER, ON_DEMAND_FILL
 
 translations: dict[str, dict[str, str]] = {}
 
@@ -59,5 +54,3 @@ def get_on_demand_text(locale: str, text_id_name: str) -> str:
 
 def get_locale_code(update: Update) -> str:
     return update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
-
-

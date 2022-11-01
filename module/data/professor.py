@@ -17,7 +17,7 @@ def em(text):
     """
     return escape_markdown(text, version=2)
 
-
+# pylint: disable=too-many-instance-attributes
 class Professor(Scrapable):
     """Professor
 
@@ -34,6 +34,7 @@ class Professor(Scrapable):
     """
     URL_PROF = "http://web.dmi.unict.it/docenti"
 
+    # pylint: disable=too-many-arguments
     def __init__(self,
                  ID: int = -1,
                  ruolo: str = "",
@@ -77,7 +78,7 @@ class Professor(Scrapable):
         contract = False
         mother_tongue = False
 
-        source = requests.get(cls.URL_PROF).text
+        source = requests.get(cls.URL_PROF, timeout=10).text
         soup = bs4.BeautifulSoup(source, "html.parser")
         table = soup.find(id="persone")
 
@@ -106,7 +107,7 @@ class Professor(Scrapable):
                 count += 1
                 professor = cls(ID=count, ruolo=role.title(), nome=name, scheda_dmi=f"http://web.dmi.unict.it{href}")
 
-                source = requests.get(professor.scheda_dmi).text
+                source = requests.get(professor.scheda_dmi, timeout=10).text
                 soup = bs4.BeautifulSoup(source, "html.parser")
                 div = soup.find(id="anagrafica")
                 for bi in div.find_all("b"):

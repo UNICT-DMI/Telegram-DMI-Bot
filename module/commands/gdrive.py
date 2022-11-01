@@ -14,7 +14,7 @@ from module.utils.multi_lang_utils import get_locale
 
 gdrive_interface = None
 
-with open('config/settings.yaml', 'r') as yaml_config:
+with open('config/settings.yaml', 'r', encoding='utf-8') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
 
@@ -56,8 +56,8 @@ def drive(update: Update, context: CallbackContext) -> None:
             }
         ).GetList()
 
-    except AuthError as e:
-        log_error(header="drive", error=e)
+    except AuthError as err:
+        log_error(header="drive", error=err)
 
     # keyboard that allows the user to navigate the folder
     keyboard = get_files_keyboard(file_list, row_len=3)
@@ -77,7 +77,7 @@ def drive_handler(update: Update, context: CallbackContext) -> None:
         context: context passed by the handler
     """
     bot: Bot = context.bot
-    
+
     gdrive: GoogleDrive = get_gdrive_interface()
 
     query_data: str = update.callback_query.data.replace("drive_file_", "")
@@ -97,6 +97,7 @@ def drive_handler(update: Update, context: CallbackContext) -> None:
             )
             file_list = istance_file.GetList()
 
+        # pylint: disable=broad-except
         except Exception as e:
             log_error(header="drive_handler", error=e)
             bot.editMessageText(
@@ -146,7 +147,9 @@ def drive_handler(update: Update, context: CallbackContext) -> None:
                 file_d.GetContentFile(file_path)
 
                 bot.sendChatAction(chat_id=chat_id, action="UPLOAD_DOCUMENT")
-                bot.sendDocument(chat_id=chat_id, document=open(file_path, 'rb'))
+
+                with open(file_path, 'rb') as f:
+                    bot.sendDocument(chat_id=chat_id, document=f)
 
                 os.remove(file_path)
 
@@ -156,8 +159,9 @@ def drive_handler(update: Update, context: CallbackContext) -> None:
                     text=get_locale(locale, TEXT_IDS.DRIVE_ERROR_TOO_BIG_TEXT_ID).replace(PLACE_HOLDER, file_d['alternateLink'])
                 )
 
-        except Exception as e:
-            log_error(header="drive_handler", error=e)
+        # pylint: disable=broad-except
+        except Exception as err:
+            log_error(header="drive_handler", error=err)
 
     update.callback_query.answer()  # stops the spinning
 
@@ -201,6 +205,7 @@ def get_files_keyboard(file_list: list, row_len: int = 2) -> list:
             text=f"{icon} {file['title']}", callback_data="drive_file_" + file['id']
         )
 
+        # pylint: disable=pointless-string-statement
         """"
         We add a new row when we have added the number of buttons specified by {row_len} argument
         In this way we have a maximum of {row_len} buttons in a row.

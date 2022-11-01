@@ -7,12 +7,9 @@ import requests
 import pandas as pd
 from module.data.db_manager import DbManager
 from module.data.scrapable import Scrapable
-from module.shared import read_md
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-
 class TimetableSlot(Scrapable):
     """TimetableSlot
 
@@ -25,6 +22,7 @@ class TimetableSlot(Scrapable):
         aula (:class:`str`): hall
     """
 
+    # pylint: disable=too-many-arguments
     def __init__(self, ID: int = 0, nome: str = "", giorno: int = 0, ora_inizio: str = "", ora_fine: str = "", aula: str = ""):
         self.ID = ID
         self.nome = nome
@@ -47,7 +45,7 @@ class TimetableSlot(Scrapable):
     def end_hour(self) -> str:
         """adds half an hour to the ora_fine value"""
         if self.ora_fine[3:] == '30':
-            return "{00}:00".format(int(self.ora_fine[:2]) + 1)
+            return "{00}:00".format(int(self.ora_fine[:2]) + 1) # pylint: disable=consider-using-f-string
         return self.ora_fine[:3] + '30'
 
     @property
@@ -66,7 +64,13 @@ class TimetableSlot(Scrapable):
             delete: whether the table contents should be deleted first. Defaults to False.
         """
         timetable_slots = []
-        response = requests.get(read_md("aulario")).text
+
+        # avoid circular import without using read_md
+        with open("data/markdown/aulario.md", "r", encoding="utf8") as in_file:
+            aulario_url = in_file.read()
+
+
+        response = requests.get(aulario_url, timeout=10).text
         tables = pd.read_html(response)
 
         for k, table in enumerate(tables):

@@ -12,7 +12,7 @@ from module.utils.drive_contribute_utils import delete_drive_permission_job
 from module.data.vars import TEXT_IDS
 from module.utils.multi_lang_utils import get_locale
 
-with open('config/settings.yaml', 'r') as yaml_config:
+with open('config/settings.yaml', 'r', encoding='UTF-8') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
 
@@ -72,4 +72,3 @@ def drive_contribute(update: Update, context: CallbackContext) -> None:
             chat_id=update.message.chat_id,
             text=f'{get_locale(locale, TEXT_IDS.DRIVE_VALIDATION_ERROR_TEXT_ID)}',
         )
-

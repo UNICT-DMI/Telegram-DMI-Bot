@@ -47,7 +47,7 @@ def git(update: Update, context: CallbackContext):
     executed_command = update.message.text.split(' ')[0]
 
     if chat_id < 0:
-        context.bot.sendMessage(chat_id=chat_id, text="❗️ La funzione %s non è ammessa nei gruppi" % executed_command)
+        context.bot.sendMessage(chat_id=chat_id, text=f"❗️ La funzione {executed_command} non è ammessa nei gruppi")
     else:
         gitlab_handler(update, context)
 
@@ -147,7 +147,7 @@ def get_repository_tree(project_id, path='/', recursive=False):
     except gitlab.GitlabGetError:
         return None
 
-
+# pylint: disable=redefined-outer-name
 def explore_repository_tree(origin_id, path='/', db=None):
     """
         Explore a repository analyzing for files and directories
@@ -173,13 +173,13 @@ def explore_repository_tree(origin_id, path='/', db=None):
             item_extension = os.path.splitext(item['name'])[1].replace('.', '')
             format_icon = formats.get(item_extension, "📄")
 
-            buttons.append(InlineKeyboardButton("%s %s" % (format_icon, item['name']), callback_data='git_b_%s_%s' % (origin_id, item['id'])))
+            buttons.append(InlineKeyboardButton(f"{format_icon} {item['name']}", callback_data=f'git_b_{origin_id}_{item["id"]}'))
         elif item['type'] == 'tree':
-            buttons.append(InlineKeyboardButton("🗂 %s" % item['name'], callback_data='git_t_%s_%s' % (origin_id, item['id'])))
+            buttons.append(InlineKeyboardButton(f"🗂 {item['name']}", callback_data=f'git_t_{origin_id}_{item["id"]}'))
 
     return buttons
 
-
+# pylint: disable=inconsistent-return-statements
 def get_blob_file(project_id, blob_id):
     """
         Return blob object
@@ -194,14 +194,14 @@ def get_blob_file(project_id, blob_id):
     try:
         blob_file = api.projects.get(project_id).repository_blob(blob_id)
 
-        if type(blob_file['content']) == str:
+        if isinstance(blob_file['content'], str):
             blob_content = blob_file['content']
         else:
             blob_content = base64.b64decode(blob_file['content']).decode()
         blob_size = blob_file['size']
 
         if blob_content.startswith('version https://git-lfs.github.com/spec/v1'):
-            blob_size = re.findall('size (\d+)?', blob_content)[0]
+            blob_size = re.findall(r'size (\d+)?', blob_content)[0]
 
         return {'size': blob_size, 'content': blob_content}
     except gitlab.GitlabGetError:
@@ -228,23 +228,24 @@ def download_blob_file_async_internal(update: Update, context: CallbackContext, 
     if chat_id:
         web_url, pathname, parent_id = db_result
         blob_info = get_blob_file(parent_id, blob_id)
-        download_url = "%s/raw/master/%s" % (web_url, quote(pathname))
+        download_url = f"{web_url}/raw/master/{quote(pathname)}"
 
         if int(blob_info['size']) < 4.5e+7:
-            file_name = "%s_%s" % (time.time(), blob_name)
+            file_name = f"{time.time()}_{blob_name}"
 
-            with open('file/%s' % file_name, 'wb') as file_handle:
+            file_path = f'file/{file_name}'
+            with open(file_path, 'wb') as file_handle:
                 with session.get(download_url, stream=True) as download:
                     file_handle.write(download.content)
 
-            with open('file/%s' % file_name, 'rb') as downloaded_file:
+            with open(file_path, 'rb') as downloaded_file:
                 context.bot.sendChatAction(chat_id=chat_id, action="UPLOAD_DOCUMENT")
                 context.bot.sendDocument(chat_id=chat_id, document=downloaded_file)
 
-            os.remove('file/%s' % file_name)
+            os.remove(file_path)
         else:
             context.bot.sendMessage(chat_id=chat_id,
-                                    text="⚠️ Il file è troppo grande per il download diretto!\nScaricalo al seguente link:\n%s" % download_url)
+                                    text=f"⚠️ Il file è troppo grande per il download diretto!\nScaricalo al seguente link:\n{download_url}")
 
 
 def download_blob_file_async(update: Update, context: CallbackContext, blob=None):
@@ -358,7 +359,7 @@ def gitlab_handler(update: Update, context: CallbackContext):
         for subgroup in subgroups:
             db.execute("INSERT OR REPLACE INTO gitlab (id, parent_id, name, type) VALUES (?, ?, ?, ?)",
                        (subgroup.id, subgroup.parent_id, subgroup.name, 'subgroup'))
-            buttons.append(InlineKeyboardButton("🗂 %s" % subgroup.name, callback_data='git_s_%s' % subgroup.id))
+            buttons.append(InlineKeyboardButton(f"🗂 {subgroup.name}", callback_data=f'git_s_{subgroup.id}'))
     else:
         action, origin_id, blob_id = (data.split('_') + [None] * 3)[:3]
 
@@ -369,13 +370,13 @@ def gitlab_handler(update: Update, context: CallbackContext):
 
             db_result = db.execute(query % (origin_id, blob_id)).fetchone()
         else:
-            db_result = db.execute("SELECT parent_id, name FROM gitlab WHERE id = %s" % origin_id).fetchone()
+            db_result = db.execute(f"SELECT parent_id, name FROM gitlab WHERE id = {origin_id}").fetchone()
 
         if db_result:
             parent = db_result
 
         if action == 'x':
-            _type = db.execute('SELECT type FROM gitlab WHERE id = %s' % origin_id).fetchone()
+            _type = db.execute(f'SELECT type FROM gitlab WHERE id = {origin_id}').fetchone()
             action = (_type[0] if _type else 'subgroup')[0]
 
         if action == 's':
@@ -385,24 +386,24 @@ def gitlab_handler(update: Update, context: CallbackContext):
                 for subgroup in subgroups:
                     db.execute("INSERT OR REPLACE INTO gitlab (id, parent_id, name, type) VALUES (?, ?, ?, ?)",
                                (subgroup.id, subgroup.parent_id, subgroup.name, 'subgroup'))
-                    buttons.append(InlineKeyboardButton("🗂 %s" % subgroup.name, callback_data='git_s_%s' % subgroup.id))
+                    buttons.append(InlineKeyboardButton(f"🗂 {subgroup.name}", callback_data=f'git_s_{subgroup.id}'))
 
             projects = get_projects(origin_id)
 
             for project in projects:
                 db.execute("INSERT OR REPLACE INTO gitlab (id, parent_id, name, web_url, type) VALUES (?, ?, ?, ?, ?)",
                            (project.id, origin_id, project.name, project.web_url, 'project'))
-                buttons.append(InlineKeyboardButton("🗂 %s" % project.name, callback_data='git_p_%s' % project.id))
+                buttons.append(InlineKeyboardButton(f"🗂 {project.name}", callback_data=f'git_p_{project.id}'))
         elif action == 'p':
             buttons.extend(explore_repository_tree(origin_id, '/', db))
         elif action == 't':
-            path = db.execute("SELECT pathname FROM gitlab WHERE id = '%s'" % blob_id).fetchone()
+            path = db.execute(f"SELECT pathname FROM gitlab WHERE id = '{blob_id}'").fetchone()
             buttons.extend(explore_repository_tree(origin_id, path, db))
         elif action == 'b':
             blob = {'id': blob_id, 'name': parent[2]}
 
         if origin_id != str(GITLAB_ROOT_GROUP):
-            buttons.append([InlineKeyboardButton("🔙", callback_data='git_x_%s' % parent[0])])
+            buttons.append([InlineKeyboardButton("🔙", callback_data=f'git_x_{parent[0]}')])
 
     title = parent[2] if blob_id and len(parent) == 3 else parent[1]
     send_message(update, context, title, buttons, blob)

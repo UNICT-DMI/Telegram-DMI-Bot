@@ -29,10 +29,10 @@ def main():
     args = vars(parser.parse_args())
 
     try:
-        with open(args['path'], "r") as yaml_file:
+        with open(args['path'], "r", encoding="UTF-8") as yaml_file:
             config_map = yaml.safe_load(yaml_file)
-    except FileNotFoundError as e:
-        print(e)
+    except FileNotFoundError as error:
+        print(error)
         sys.exit(2)
 
     config_map['token'] = args['token']
@@ -44,7 +44,7 @@ def main():
     config_map['test']['representatives_group'] = args['test_representatives_group']
     config_map['test']['dev_group_chatid'] = args['test_dev_group_chatid']
 
-    with open(args['path'], "w") as yaml_file:
+    with open(args['path'], "w", encoding='UTF-8') as yaml_file:
         yaml.dump(config_map, yaml_file)
 
 

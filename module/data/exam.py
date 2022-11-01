@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Exam class"""
-from typing import List
+from typing import List, Optional
 import logging
 import re
 import bs4
@@ -11,7 +11,7 @@ from module.data.db_manager import DbManager
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
+# pylint: disable=too-many-instance-attributes
 class Exam(Scrapable):
     """Exam
 
@@ -53,7 +53,8 @@ class Exam(Scrapable):
         """tuple of values that will be saved in the database"""
         return (self.anno, self.cdl, self.insegnamento, self.docenti, str(self.prima), str(self.seconda), str(self.terza), str(self.straordinaria))
 
-    def get_session(self, session_name: str) -> list:
+    # pylint: disable=inconsistent-return-statements
+    def get_session(self, session_name: str) -> Optional[list]:
         """Gets the session with the same name.
 
         Args:
@@ -63,6 +64,7 @@ class Exam(Scrapable):
             session
         """
         if session_name in self.__class__.SESSIONS:
+            # pylint: disable=unnecessary-dunder-call
             return self.__getattribute__(session_name)
 
     def append_session(self, session_name: str, to_append: str):
@@ -73,6 +75,7 @@ class Exam(Scrapable):
             to_append: element to append
         """
         if session_name in self.__class__.SESSIONS:
+            # pylint: disable=unnecessary-dunder-call
             self.__getattribute__(session_name).append(to_append)
 
     def delete(self):
@@ -114,9 +117,10 @@ class Exam(Scrapable):
         exams = []
         year = ""
 
+        # pylint: disable=too-many-nested-blocks
         for course in cls.COURSES:
             for count, url in enumerate(url_exams[course]):
-                source = requests.get(url).text
+                source = requests.get(url, timeout=10).text
                 soup = bs4.BeautifulSoup(source, "html.parser")
                 table = soup.find(id="tbl_small_font")
                 rows = table.find_all("tr")  # e dalla tabella estraiamo l'array con tutte le righe

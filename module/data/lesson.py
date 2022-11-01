@@ -27,6 +27,7 @@ class Lesson(Scrapable):
     DAY_TO_INT = {'LUN': 1, 'MAR': 2, 'MER': 3, 'GIO': 4, 'VEN': 5}
     INT_TO_DAY = {'1': "LUN", '2': "MAR", '3': "MER", '4': "GIO", '5': "VEN"}
 
+    # pylint: disable=too-many-arguments
     def __init__(self,
                  nome: str = "",
                  giorno_settimana: str = "",
@@ -62,13 +63,14 @@ class Lesson(Scrapable):
             delete: whether the table contents should be deleted first. Defaults to False.
         """
         lessons = []
+        # pylint: disable=too-many-nested-blocks
         for id_ in cls.IDS:
             urls = [
                 "http://web.dmi.unict.it/corsi/" + str(id_) + "/orario-lezioni?semestre=1&aa=" + year_exams,
                 "http://web.dmi.unict.it/corsi/" + str(id_) + "/orario-lezioni?semestre=2&aa=" + year_exams
             ]
             for url in urls:
-                sorgente = requests.get(url).text
+                sorgente = requests.get(url, timeout=10).text
                 soup = bs4.BeautifulSoup(sorgente, "html.parser")
 
                 if soup.find('b', id='attivo').text[0] == 'S':
@@ -79,6 +81,7 @@ class Lesson(Scrapable):
                 table = soup.find('table', id='tbl_small_font')
 
                 if not table:
+                    # pylint: disable=logging-not-lazy,logging-fstring-interpolation
                     logger.warning(f"Lessons table for `{url}` not found.")
                     break
 

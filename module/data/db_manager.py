@@ -27,7 +27,7 @@ class DbManager():
     """Class that handles the management of databases"""
 
     @classmethod
-    def __query_execute(cls, cur: sqlite3.Cursor, query: str, args: tuple = None, error_str: str = "", is_many: bool = False):
+    def __query_execute(cls, cur: sqlite3.Cursor, query: str, args: tuple = None, error_str: str = "", is_many: bool = False): # pylint: disable=too-many-arguments
         """Materially executes the requested query, while also catching and logging any exception that may be thrown
 
         Args:
@@ -70,7 +70,7 @@ class DbManager():
         Args:
             filename: path/name of the text file containing the queries
         """
-        with open(filename, "r") as f:
+        with open(filename, "r", encoding='utf-8') as f:
             conn, cur = cls.get_db()
             queries = re.split(pattern=r"(?<=\);)\s", string=f.read())
             for query in queries:
@@ -96,7 +96,7 @@ class DbManager():
         conn.close()
 
     @classmethod
-    def select_from(cls, table_name: str, select: str = "*", where: str = "", where_args: tuple = None, group_by: str = "", order_by: str = "") -> list:
+    def select_from(cls, table_name: str, select: str = "*", where: str = "", where_args: tuple = None, group_by: str = "", order_by: str = "") -> list: # pylint: disable=too-many-arguments
         """Returns the results of a query.
         Executes "SELECT select FROM table_name [WHERE where (with where_args)] [GROUP BY group_by] [ORDER BY order_by]"
 
@@ -126,7 +126,7 @@ class DbManager():
         return query_result
 
     @classmethod
-    def count_from(cls, table_name: str, select: str = "*", where: str = "", where_args: tuple = None, group_by: str = "") -> int:
+    def count_from(cls, table_name: str, select: str = "*", where: str = "", where_args: tuple = None, group_by: str = "") -> int: # pylint: disable=too-many-arguments
         """Returns the number of rows found with the query.
         Executes "SELECT COUNT(select) FROM table_name [WHERE where (with where_args)]"
 

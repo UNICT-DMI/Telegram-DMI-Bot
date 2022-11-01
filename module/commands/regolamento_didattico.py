@@ -56,7 +56,7 @@ REGOLAMENTI = {
 }
 
 
-def regolamentodidattico(update: Update, context: CallbackContext) -> None:
+def regolamentodidattico(update: Update, _: CallbackContext) -> None:
     """Called by the /regolamentodidattico command.
     Shows a menu from with the user can choose between (triennale | magistrale)
 
@@ -128,7 +128,7 @@ def send_regolamento(update: Update, context: CallbackContext) -> None:
         doc = reg_doc_triennale_L31[data]
     elif data in reg_doc_triennale_L35:
         doc = reg_doc_triennale_L35[data]
-    elif data in reg_doc_magistrale_LM18:
+    elif data in reg_doc_magistrale_LM18: # pylint: disable=consider-using-get
         doc = reg_doc_magistrale_LM18[data]
     else:
         doc = reg_doc_magistrale_LM40[data]
@@ -174,6 +174,6 @@ def get_cdl_keyboard(locale: str, reg_doc: dict = None) -> InlineKeyboardMarkup:
             [InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='reg_button_help')]
         ])
     keyboard = [[InlineKeyboardButton(r.split('_')[0], callback_data=r)] for r in reg_doc]
-    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MAIN_MENU_KEYBOARD_TEXT_ID), callback_data='reg_button_help')])  # return button
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MAIN_MENU_KEYBOARD_TEXT_ID), callback_data='reg_button_help')])
     keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='reg_button_home')])
     return InlineKeyboardMarkup(keyboard)

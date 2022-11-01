@@ -62,9 +62,9 @@ def generate_prof_text(locale: str, names: list) -> str:
 
     if names_number > 1:
         for name in names[1:-1]:
-            s_names.append('{0} '.format(name))
+            s_names.append(f'{name} ')
 
-        s_names.append(' {0}'.format(names[names_number - 1]))
+        s_names.append(f' {names[names_number - 1]}')
 
     professors.update(Professor.find(where_name=s_names))
 

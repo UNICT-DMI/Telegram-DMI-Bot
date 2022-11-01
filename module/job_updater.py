@@ -4,7 +4,7 @@ from module.shared import check_print_old_exams, get_year_code
 from module.data import Exam, Lesson, Professor, TimetableSlot
 
 
-def updater_lep(context: CallbackContext):
+def updater_lep(_: CallbackContext):
     """Called with a set frequence.
     Updates all the scrapables
 

@@ -18,6 +18,7 @@ class Scrapable():
     @property
     def values(self):
         """tuple of values that will be saved in the database"""
+        # pylint: disable=unnecessary-dunder-call
         return tuple(self.__getattribute__(column) for column in self.columns)
 
     def save(self):

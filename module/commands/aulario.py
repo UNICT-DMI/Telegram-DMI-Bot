@@ -178,7 +178,7 @@ def create_calendar(days: int, year: int = None, month: int = None) -> InlineKey
         month = today.month
 
     keyboard = []
-    keyboard.append([InlineKeyboardButton("🗓 {0} {1}".format(calendar.month_name[month], str(year)), callback_data="NONE")])
+    keyboard.append([InlineKeyboardButton(f"🗓 {calendar.month_name[month]} {str(year)}", callback_data="NONE")])
     week = ['L', 'M', 'M', 'G', 'V', 'S', 'D']
     row = []
     for w in week:
@@ -204,9 +204,9 @@ def create_calendar(days: int, year: int = None, month: int = None) -> InlineKey
             keyboard.append(row)
     row = []
     if today.month < month or today.year < year:
-        row.append(InlineKeyboardButton("◀️ {0}".format(calendar.month_name[((month - 2) % 12) + 1]), callback_data=f"m_p_{year}_{month}_{days}"))
+        row.append(InlineKeyboardButton(f"◀️ {calendar.month_name[((month - 2) % 12) + 1]}", callback_data=f"m_p_{year}_{month}_{days}"))
     if diff < days:
-        row.append(InlineKeyboardButton("{0} ▶️".format(calendar.month_name[((month) % 12) + 1]), callback_data=f"m_n_{year}_{month}_{days}"))
+        row.append(InlineKeyboardButton(f"{calendar.month_name[((month) % 12) + 1]} ▶️", callback_data=f"m_n_{year}_{month}_{days}"))
     keyboard.append(row)
     return InlineKeyboardMarkup(keyboard)
 
@@ -261,7 +261,7 @@ def create_map(sub: str, h: str, room: str) -> Optional[BytesIO]:
     b1_img = Image.open(b1_path)
     draw = ImageDraw.Draw(b1_img)
     font = ImageFont.truetype("data/fonts/arial.ttf", 30)
-    draw.text((30, 860), "{0} Ore: {1} ".format(sub, h), fill='black', font=font)
+    draw.text((30, 860), f"{sub} Ore: {h} ", fill='black', font=font)
     [x, y, w, z] = data[room]
     draw.rectangle((x, y, w, z), outline='red', width=5)
     bio = BytesIO()
