@@ -90,9 +90,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="module.html">Module package</a> &raquo;</li>
-      <li>Commands package</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="module.html">Module package</a></li>
+      <li class="breadcrumb-item active">Commands package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/module.commands.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -510,7 +510,7 @@ Generates the InlineKeyboard that allows the user to navigate among the files in
 <p>/help command</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="module.commands.help.help_back_to_menu">
-<span class="sig-prename descclassname"><span class="pre">module.commands.help.</span></span><span class="sig-name descname"><span class="pre">help_back_to_menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.help.help_back_to_menu" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">module.commands.help.</span></span><span class="sig-name descname"><span class="pre">help_back_to_menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.help.help_back_to_menu" title="Permalink to this definition"></a></dt>
 <dd><p>Called by a sm_help_back_to_menu button from the sub menu.
 Allows the user to return back to the command list</p>
 <dl class="field-list simple">
@@ -518,8 +518,8 @@ Allows the user to return back to the command list</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>update</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code>) – update event</p></li>
 <li><p><strong>context</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackContext</span></code>) – context passed by the handler</p></li>
-<li><p><strong>chat_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – id of the chat the command was invoked from</p></li>
-<li><p><strong>message_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – id of the help message</p></li>
+<li><p><strong>chat_id</strong> – id of the chat the command was invoked from</p></li>
+<li><p><strong>message_id</strong> – id of the help message</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -932,14 +932,14 @@ Generates the whole list of rulebooks to append as an InlineKeyboard</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="module.commands.regolamento_didattico.regolamentodidattico">
-<span class="sig-prename descclassname"><span class="pre">module.commands.regolamento_didattico.</span></span><span class="sig-name descname"><span class="pre">regolamentodidattico</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.regolamento_didattico.regolamentodidattico" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">module.commands.regolamento_didattico.</span></span><span class="sig-name descname"><span class="pre">regolamentodidattico</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.regolamento_didattico.regolamentodidattico" title="Permalink to this definition"></a></dt>
 <dd><p>Called by the /regolamentodidattico command.
 Shows a menu from with the user can choose between (triennale | magistrale)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>update</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code>) – update event</p></li>
-<li><p><strong>context</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackContext</span></code>) – context passed by the handler</p></li>
+<li><p><strong>context</strong> – context passed by the handler</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>

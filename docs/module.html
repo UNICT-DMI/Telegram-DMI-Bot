@@ -121,8 +121,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Module package</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Module package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/module.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -452,14 +452,14 @@ Removes the message from the user’s chat</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="module.callback_handlers.none_handler">
-<span class="sig-prename descclassname"><span class="pre">module.callback_handlers.</span></span><span class="sig-name descname"><span class="pre">none_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.callback_handlers.none_handler" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">module.callback_handlers.</span></span><span class="sig-name descname"><span class="pre">none_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.callback_handlers.none_handler" title="Permalink to this definition"></a></dt>
 <dd><p>Called when the user clicks an unactive button.
 Stops the spinning circle</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>update</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code>) – update event</p></li>
-<li><p><strong>context</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackContext</span></code>) – context passed by the handler</p></li>
+<li><p><strong>context</strong> – context passed by the handler</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -710,12 +710,12 @@ Opens the requested sub-menu, usually by editing the message and adding an Inlin
 <p>Job updater</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="module.job_updater.updater_lep">
-<span class="sig-prename descclassname"><span class="pre">module.job_updater.</span></span><span class="sig-name descname"><span class="pre">updater_lep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.job_updater.updater_lep" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">module.job_updater.</span></span><span class="sig-name descname"><span class="pre">updater_lep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.job_updater.updater_lep" title="Permalink to this definition"></a></dt>
 <dd><p>Called with a set frequence.
 Updates all the scrapables</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>context</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackContext</span></code>) – context passed by the handler</p>
+<dd class="field-odd"><p><strong>context</strong> – context passed by the handler</p>
 </dd>
 </dl>
 </dd></dl>
