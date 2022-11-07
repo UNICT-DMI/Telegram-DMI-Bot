@@ -10,6 +10,7 @@ from module.data.vars import TEXT_IDS
 from module.utils.multi_lang_utils import get_locale
 
 reg_doc_triennale_L31 = {
+    'Regolamento Didattico 2022/2023_L31': 'https://www.unict.it/sites/default/files/files/regolamenti_didattici_22_23/lauree/L%2031_%20Informatica.pdf',
     'Regolamento Didattico 2021/2022_L31': 'http://web.dmi.unict.it/sites/default/files/files/L%2031_%20Informatica.pdf',
     'Regolamento Didattico 2020/2021_L31': 'http://web.dmi.unict.it/sites/default/files/files/L%2031_Informatica%20AA%202020-21%20all\'albo.pdf',
     'Regolamento Didattico 2019/2020_L31': 'http://web.dmi.unict.it/sites/default/files/files/Regolamento%202019-20%20L%2031_Informatica.pdf',
@@ -23,6 +24,7 @@ reg_doc_triennale_L31 = {
 }
 
 reg_doc_magistrale_LM18 = {
+    'Regolamento Didattico 2022/2023_LM18': 'http://web.dmi.unict.it/sites/default/files/Regolamento%20Didattico%20LM%2018%202223.pdf',
     'Regolamento Didattico 2021/2022_LM18': 'http://web.dmi.unict.it/sites/default/files/Regolamento%20Didattico%20LM%2018%202122.pdf',
     'Regolamento Didattico 2020/2021_LM18': 'http://web.dmi.unict.it/sites/default/files/Regolamento%20Didattico%20LM%2018%202021.pdf',
     'Regolamento Didattico 2019/2020_LM18': 'http://web.dmi.unict.it/sites/default/files/Regolamento%20Didattico%20LM18%201920_0.pdf',
@@ -33,6 +35,7 @@ reg_doc_magistrale_LM18 = {
 }
 
 reg_doc_triennale_L35 = {
+    'Regolamento Didattico 2022/2023_L35': 'http://web.dmi.unict.it/sites/default/files/files/L%2035_Matematica%20approvato%20Senato.pdf',
     'Regolamento Didattico 2021/2022_L35': 'http://web.dmi.unict.it/sites/default/files/files/L%2035_Matematica21_22_rivisto.pdf',
     'Regolamento Didattico 2020/2021_L35': 'http://web.dmi.unict.it/sites/default/files/files/L%2035_Matematica_2020_21approvato.pdf',
     'Regolamento Didattico 2019/2020_L35': 'http://web.dmi.unict.it/sites/default/files/files/L%2035_Matematica.pdf',
@@ -42,6 +45,7 @@ reg_doc_triennale_L35 = {
 }
 
 reg_doc_magistrale_LM40 = {
+    'Regolamento Didattico 2022/2023_LM40' : 'http://web.dmi.unict.it/sites/default/files/documenti_sito/LM-40%20Regolamento%202022-23.pdf',
     'Regolamento Didattico 2021/2022_LM40': 'http://web.dmi.unict.it/sites/default/files/documenti_sito/Regolamento%20Didattico%20LM%2040%20senato%20approved%20.pdf',
     'Regolamento Didattico 2020/2021_LM40': 'http://web.dmi.unict.it/sites/default/files/documenti_sito/LM%2040_Matematica%202020-21%20approvato%20Senato.pdf',
     'Regolamento Didattico 2019/2020_LM40': 'http://web.dmi.unict.it/sites/default/files/documenti_sito/LM%2040_Matematica%2019-20%20approvato%20senato.pdf',
