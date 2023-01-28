@@ -27,8 +27,7 @@ def submenu_handler(update: Update, context: CallbackContext) -> None:
     func_name = data[3:len(data)]
     try:
         globals()[func_name](query, context, query.message.chat_id, query.message.message_id)
-    # pylint: disable=bare-except
-    except Exception as e:
+    except Exception as e: # pylint: disable=bare-except,broad-except
         print(str(e))
         globals()[func_name](query, context)
 
