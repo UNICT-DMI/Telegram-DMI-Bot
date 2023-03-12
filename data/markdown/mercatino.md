@@ -1,1 +1,1 @@
-Link: @UNICT\_Book\_Market\_Bot
+Bot per vendere i tuoi libri usati e comprare libri che i tuoi colleghi non utilizzano più: @UNICT\_Book\_Market\_Bot
