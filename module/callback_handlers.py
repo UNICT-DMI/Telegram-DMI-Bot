@@ -9,6 +9,9 @@ from module.shared import check_log, read_md
 # Needed to correctly run functions using globals()
 from module.utils.multi_lang_utils import get_on_demand_text
 
+from module.commands.help import * # pylint: disable=wildcard-import,unused-wildcard-import
+from module.commands.drive_contribute import * # pylint: disable=wildcard-import,unused-wildcard-import
+from module.commands.aulario import * # pylint: disable=wildcard-import,unused-wildcard-import
 
 def submenu_handler(update: Update, context: CallbackContext) -> None:
     """Called by sm_.* callbacks.
@@ -22,7 +25,11 @@ def submenu_handler(update: Update, context: CallbackContext) -> None:
     data = query.data
 
     func_name = data[3:len(data)]
-    globals()[func_name](query, context, query.message.chat_id, query.message.message_id)
+    try:
+        globals()[func_name](query, context, query.message.chat_id, query.message.message_id)
+    except Exception as e: # pylint: disable=bare-except,broad-except
+        print(str(e))
+        globals()[func_name](query, context)
 
 
 def localization_handler(update: Update, context: CallbackContext) -> None:

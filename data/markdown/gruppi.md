@@ -1,1 +1,1 @@
-https://unict-dmi.github.io/unict-telegram-channels-groups/#/groups
+https://telegram.unictdev.org/
