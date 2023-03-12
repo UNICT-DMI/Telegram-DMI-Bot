@@ -259,26 +259,6 @@ def help_projects_acknowledgements(update: Update, context: CallbackContext, cha
 
     context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=reply_markup)
 
-"""
-def help_mercatino(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
-    Called by the sm_help_mercatino button from the /help command.
-    Lists to the user the commands related to the miscellaneous stuff
-
-    Args:
-        update: update event
-        context: context passed by the handler
-        chat_id: id of the chat the command was invoked from
-        message_id: id of the help message
-    locale: str = get_locale_code(update)
-    message_text: str = get_locale(locale, TEXT_IDS.MERCATINO_LIBRI_KEYBOARD_TEXT_ID)
-
-    keyboard = [[]]
-    keyboard.append(
-        [InlineKeyboardButton()]
-    )
-
-    context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id)
-"""
 
 def help_misc(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
     """Called by the sm_help_misc button from the /help command.
