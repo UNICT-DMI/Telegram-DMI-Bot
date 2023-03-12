@@ -64,6 +64,7 @@ def add_commands(up: Updater) -> None:
         BotCommand("ricevimenti", "lista orari ricevimenti dei professori"),
         BotCommand("trasporto_urbano_unict", "link orari BRTU"),
         BotCommand("dmi_3d", "mappa in 3D del DMI"),
+        BotCommand("mercatino_libri", "bot per la vendita e l'acquisto di libri"),
     ]
     up.bot.set_my_commands(commands=commands)
 
@@ -99,6 +100,7 @@ def add_handlers(dp: Dispatcher) -> None:
     dp.add_handler(CommandHandler('ricevimenti', informative_callback))
     dp.add_handler(CommandHandler('trasporto_urbano_unict', informative_callback))
     dp.add_handler(CommandHandler('dmi_3d', informative_callback))
+    dp.add_handler(CommandHandler('mercatino_libri', informative_callback))
 
     dp.add_handler(CommandHandler('lezioni', lezioni))
     dp.add_handler(CommandHandler('esami', esami))
