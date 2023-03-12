@@ -28,7 +28,8 @@ def get_help_keyboard(locale: str) -> ReplyKeyboardMarkup:
     kb = [
         [
             KeyboardButton(get_locale(locale, TEXT_IDS.HELP_KEYBOARD_TEXT_ID)),
-            KeyboardButton(get_locale(locale, TEXT_IDS.REPORT_TO_KEYBOARD_TEXT_ID))
+            KeyboardButton(get_locale(locale, TEXT_IDS.REPORT_TO_KEYBOARD_TEXT_ID)),
+            KeyboardButton(get_locale(locale, TEXT_IDS.MERCATINO_LIBRI_KEYBOARD_TEXT_ID))
         ],
         [
             KeyboardButton(get_locale(locale, TEXT_IDS.AULARIO_KEYBOARD_TEXT_ID)),

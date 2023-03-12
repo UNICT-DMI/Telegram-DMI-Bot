@@ -28,6 +28,7 @@ HELP_KEYBOARD_TEXT_ID: "❔ Aiuto"
 AULARIO_KEYBOARD_TEXT_ID: "📆 Aulario"
 CLOUD_KEYBOARD_TEXT_ID: "☁ Cloud"
 REPORT_TO_KEYBOARD_TEXT_ID: "📫 Segnalazione Rappresentanti"
+MERCATINO_LIBRI_KEYBOARD_TEXT_ID: "📚 Mercatino Libri"
 
 # /start command
 START_TEXT_ID: |-
