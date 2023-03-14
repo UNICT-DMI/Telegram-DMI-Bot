@@ -43,6 +43,7 @@ class TEXT_IDS(Enum):
     HELP_PROGETTI_RICONOSCIMENTI_KEYBOARD_TEXT_ID = auto()
     HELP_ALL_COMMANDS_KEYBOARD_TEXT_ID = auto()
     HELP_ALL_COMMANDS_TOOLTIP_ID = auto()
+    HELP_FAQ_TOOLTIP_ID = auto()
     # /help-CDL command
     HELP_CDL_EXAMS_TEXT_ID = auto()
     HELP_CDL_LESSONS_TIMETABLE_TEXT_ID = auto()
@@ -133,7 +134,7 @@ class TEXT_IDS(Enum):
 PLACE_HOLDER: str = "%capybara%"
 
 
-# List of textx that are dynamic
+# List of texts that are dynamic
 # The reverse is used as a translation table to bridge md and informative handlers into localization handler
 ON_DEMAND_TEXTS: dict[str, str] = {
     "HELP_CDL_EXAMS_LINK_TOOLTIP_ID": "esami_link",

@@ -60,8 +60,8 @@ def md_handler(update: Update, context: CallbackContext) -> None:
     message_text = read_md(data)
 
     check_log(update, data, is_query=True)
-
-    context.bot.editMessageText(text=message_text, chat_id=query.message.chat_id, message_id=query.message.message_id, parse_mode=ParseMode.MARKDOWN)
+    if_disable_preview = (data == "faq")
+    context.bot.editMessageText(text=message_text, chat_id=query.message.chat_id, message_id=query.message.message_id, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=if_disable_preview)
 
 
 def informative_callback(update: Update, context: CallbackContext) -> None:
@@ -87,7 +87,7 @@ def informative_callback(update: Update, context: CallbackContext) -> None:
             cmd = "segnalazione"
         message_text = read_md(cmd)
     check_log(update, cmd)
-    if_disable_preview = (cmd == 'cloud')
+    if_disable_preview = (cmd == 'cloud' or cmd == 'faq')
     context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=if_disable_preview)
 
 
