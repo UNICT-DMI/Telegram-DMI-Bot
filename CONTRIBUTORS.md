@@ -23,3 +23,4 @@ This project is made possible thanks to the contributions of:
 - [Salvo Asero](https://github.com/Guberlo)
 - [Paolo Rabbito](https://github.com/IlRabbino)
 - [Andrea Maugeri](https://github.com/v0lp3)
+- [Salvo Polizzi](https://github.com/salvo-polizzi)
