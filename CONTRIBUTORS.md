@@ -24,3 +24,4 @@ This project is made possible thanks to the contributions of:
 - [Paolo Rabbito](https://github.com/IlRabbino)
 - [Andrea Maugeri](https://github.com/v0lp3)
 - [Simone Costanzo](https://github.com/scraccio)
+- [Salvo Polizzi](https://github.com/salvo-polizzi)
