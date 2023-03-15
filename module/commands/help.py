@@ -33,6 +33,8 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False) -> No
                                           callback_data="reg_button_home")])
     keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_PROGETTI_RICONOSCIMENTI_KEYBOARD_TEXT_ID),
                                           callback_data="sm_help_projects_acknowledgements")])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.MERCATINO_LIBRI_KEYBOARD_TEXT_ID), callback_data="md_mercatino")])
+    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_FAQ_TOOLTIP_ID), callback_data="md_faq")])
     keyboard.append([
         InlineKeyboardButton(get_locale(locale, TEXT_IDS.HELP_ALL_COMMANDS_KEYBOARD_TEXT_ID), callback_data="localization_HELP_ALL_COMMANDS_TOOLTIP_ID"),
         InlineKeyboardButton(get_locale(locale, TEXT_IDS.CLOSE_KEYBOARD_TEXT_ID), callback_data="exit_cmd")

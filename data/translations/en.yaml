@@ -57,8 +57,9 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   📂 /drive - _access to the drive_
   🤝 /drive\_contribute - _request upload permission to add new material on the drive_
   📂 /git o /gitlab - _access to gitlab_
-  🧑‍💻 /contributors - _show the developers that contributed to the bot development_
-  🧾 /regolamentodidattico - _give a pdf file of the desisered year's educational regulations_
+  🧑‍💻 /contributors - _shows the developers that contributed to the bot development_
+  🧾 /regolamentodidattico - _gives a pdf file of the desired year's educational regulations_
+  ❓ /faq - _shows the frequently asked questions_
   
   *Receptionist's contacts and working hours:*
   ✍ /sdidattica - _edcational receptionist_
@@ -70,6 +71,7 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   🗃 /ufficioersu - _(ersu office for student cards)_
   🗃 /urp - _students' URP_
 
+HELP_FAQ_TOOLTIP_ID: "❓ FAQ"
 # /help-CDL command
 HELP_CDL_EXAMS_TEXT_ID: "📖 Exams (link)"
 HELP_CDL_LESSONS_TIMETABLE_TEXT_ID: "📘 Classes' Timetable (link)"
