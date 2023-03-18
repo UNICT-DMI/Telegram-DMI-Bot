@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS `professors` (
   "telefono" VARCHAR(255),
   "email" VARCHAR(255),
   "ufficio" VARCHAR(255),
-  "sito" VARCHAR(255)
+  "sito" VARCHAR(255),
+  "photo_id" VARCHAR(255)
 );
 
 -- lessons

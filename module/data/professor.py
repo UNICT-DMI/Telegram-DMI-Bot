@@ -31,6 +31,7 @@ class Professor(Scrapable):
         email (:class:`str`): e-mail of the professor
         ufficio (:class:`str`): which office belogs to the professor
         sito (:class:`str`): orcid page of the professor
+        photo_id (:class:`str`): photo id of the professor's page
     """
     URL_PROF = "http://web.dmi.unict.it/docenti"
 
@@ -44,7 +45,8 @@ class Professor(Scrapable):
                  telefono: str = "",
                  email: str = "",
                  ufficio: str = "",
-                 sito: str = ""):
+                 sito: str = "",
+                 photo_id: str = ""):
         self.ID = ID
         self.ruolo = ruolo
         self.nome = nome
@@ -54,6 +56,7 @@ class Professor(Scrapable):
         self.email = email
         self.ufficio = ufficio
         self.sito = sito
+        self.photo_id = photo_id
 
     @property
     def table(self) -> str:
@@ -63,7 +66,7 @@ class Professor(Scrapable):
     @property
     def columns(self) -> tuple:
         """tuple of column names of the database table that will store this Professor"""
-        return ("ID", "ruolo", "nome", "scheda_dmi", "fax", "telefono", "email", "ufficio", "sito")
+        return ("ID", "ruolo", "nome", "scheda_dmi", "fax", "telefono", "email", "ufficio", "sito", "photo_id")
 
     @classmethod
     def scrape(cls, delete: bool = False):
@@ -121,6 +124,12 @@ class Professor(Scrapable):
                         professor.telefono = bi.next_sibling
                     elif bi.text == "Fax:":
                         professor.fax = bi.next_sibling
+                #print(name)
+                if soup.find(id="foto"):
+                    #print(soup.find(id="foto").find("img").get("src").split('/')[-1].split('.')[0])
+                    professor.photo_id = soup.find(id="foto").find("img").get("src").split('/')[-1].split('.')[0]
+                else:
+                    professor.photo_id = "Non presente"
 
                 professors.append(professor)
 
@@ -175,4 +184,6 @@ class Professor(Scrapable):
             string += f"*Telefono:* {em(self.telefono)}\n"
         if self.fax:
             string += f"*Fax:* {em(self.fax)}\n"
+        if self.photo_id:
+            string += f"*ID Foto:* {em(self.photo_id)}\n"
         return string
