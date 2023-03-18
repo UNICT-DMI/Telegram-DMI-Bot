@@ -6,4 +6,4 @@ def test_professor_table() -> None:
 
 def test_professor_columns() -> None:
     professor = Professor()
-    assert professor.columns == ("ID", "ruolo", "nome", "scheda_dmi", "fax", "telefono", "email", "ufficio", "sito") 
+    assert professor.columns == ("ID", "ruolo", "nome", "scheda_dmi", "fax", "telefono", "email", "ufficio", "sito", "photo_id")
