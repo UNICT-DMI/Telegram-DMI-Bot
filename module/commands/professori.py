@@ -24,7 +24,6 @@ def prof(update: Update, context: CallbackContext) -> None:
     message_text_list: list[str] = message_text.split('\n\n')
     message_text_no_photo_id = "\n".join(message_text.split('\n')[:-3]) + '\n\n' + message_text.split('\n')[-1]
     professors, total_profs = message_text_list[:-1], message_text_list[-1]
-
     if len(professors) == 0:
         context.bot.sendMessage(chat_id=update.message.chat_id,
                                 text=message_text)
@@ -32,10 +31,10 @@ def prof(update: Update, context: CallbackContext) -> None:
 
     if len(professors) == 1:
         # fetch the "ID Foto" property from the resulting markdown
-        id_photo = message_text.split('\n')[-3].split(':')[1].replace('*', "")[1:]
+        id_photo = message_text.split('\n')[-3].split(':')[1].replace('*', "").replace('\\', "")[1:]
         # only sends a photo if it exists and if the result is only one
         if id_photo != "Non presente":
-            photo_url = "http://web.dmi.unict.it/foto_docenti/" + id_photo + ".jpg"
+            photo_url = "http://web.dmi.unict.it" + id_photo
             context.bot.sendPhoto(chat_id=update.message.chat_id,
                                   photo=photo_url)
         context.bot.sendMessage(chat_id=update.message.chat_id,
