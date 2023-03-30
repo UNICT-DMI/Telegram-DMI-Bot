@@ -25,7 +25,7 @@ def esami(update: Update, context: CallbackContext) -> None:
     """
     check_log(update, "esami")
 
-    if 'esami' in context.user_data:  # ripulisce il dict dell'user relativo al comando /esami da eventuali dati presenti
+    if 'esami' in context.user_data:  # ripulisce il dict dell'user relativo a /esami da eventuali dati presenti
         context.user_data['esami'].clear()
     else:  # crea il dict che conterrà i dati del comando /esami all'interno della key ['esami'] di user data
         context.user_data['esami'] = {}
@@ -74,15 +74,15 @@ def esami_handler(update: Update, context: CallbackContext) -> None:
             # se non era presente, setta la key di sessione[prima|seconda|terza] a true...
             esami_user_data['sessione' + callback_data[22:]] = True
         else:
-            # ... o elmina la key se era già presente
+            # ... o elimina la key se era già presente
             del esami_user_data['sessione' + callback_data[22:]]
     elif "search" in callback_data:
         message_text = generate_esami_text(locale,
                                            esami_user_data)  # ottieni il risultato della query che soddisfa le richieste
         context.bot.editMessageText(chat_id=chat_id, message_id=message_id, text=update.callback_query.message.text)
         send_message(update, context,
-                     message_text)  # manda il risutato della query suddividendo la stringa in più messaggi
-        esami_user_data.clear()  # ripulisci il dict
+                     message_text)  # manda il risultato della query suddividendo la stringa in più messaggi
+        esami_user_data.clear()  # ripulisce il dict
         return
     else:
         logger.error("esami_handler: an error has occurred")

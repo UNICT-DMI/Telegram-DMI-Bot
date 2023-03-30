@@ -9,6 +9,8 @@ from module.shared import check_log, read_md
 # Needed to correctly run functions using globals()
 from module.utils.multi_lang_utils import get_on_demand_text
 
+from module.commands.esami import *  # pylint: disable=wildcard-import,unused-wildcard-import
+from module.commands.lezioni import *  # pylint: disable=wildcard-import,unused-wildcard-import
 from module.commands.help import * # pylint: disable=wildcard-import,unused-wildcard-import
 from module.commands.drive_contribute import * # pylint: disable=wildcard-import,unused-wildcard-import
 from module.commands.aulario import * # pylint: disable=wildcard-import,unused-wildcard-import
@@ -27,7 +29,7 @@ def submenu_handler(update: Update, context: CallbackContext) -> None:
     func_name = data[3:len(data)]
     try:
         globals()[func_name](query, context, query.message.chat_id, query.message.message_id)
-    except Exception as e: # pylint: disable=bare-except,broad-except
+    except Exception as e:  # pylint: disable=bare-except,broad-except
         print(str(e))
         globals()[func_name](query, context)
 
@@ -44,7 +46,8 @@ def localization_handler(update: Update, context: CallbackContext) -> None:
     data: str = query.data.replace("localization_", "")
     message_text: str = get_on_demand_text(locale, data)
     check_log(update, data, is_query=True)
-    context.bot.editMessageText(text=message_text, chat_id=query.message.chat_id, message_id=query.message.message_id, parse_mode=ParseMode.MARKDOWN)
+    context.bot.editMessageText(text=message_text, chat_id=query.message.chat_id, message_id=query.message.message_id,
+                                parse_mode=ParseMode.MARKDOWN)
 
 
 def md_handler(update: Update, context: CallbackContext) -> None:
@@ -61,7 +64,8 @@ def md_handler(update: Update, context: CallbackContext) -> None:
 
     check_log(update, data, is_query=True)
     if_disable_preview = data == "faq"
-    context.bot.editMessageText(text=message_text, chat_id=query.message.chat_id, message_id=query.message.message_id, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=if_disable_preview)
+    context.bot.editMessageText(text=message_text, chat_id=query.message.chat_id, message_id=query.message.message_id,
+                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=if_disable_preview)
 
 
 def informative_callback(update: Update, context: CallbackContext) -> None:
@@ -74,7 +78,8 @@ def informative_callback(update: Update, context: CallbackContext) -> None:
     locale: str = update.message.from_user.language_code
     # controllo per poter gestire i comandi (/comando) e i messaggi inviati premendo i bottoni (❔ Help)
     if update.message.text[0] == '/':
-        cmd = update.message.text.split(' ')[0][1:]  #prende solo la prima parola del messaggio (cioè il comando) escludendo lo slash
+        cmd = update.message.text.split(' ')[0][
+            1:]  #prende solo la prima parola del messaggio (cioè il comando) escludendo lo slash
         if cmd.find('@') != -1:
             cmd = cmd.split('@')[0]
     else:
@@ -88,7 +93,8 @@ def informative_callback(update: Update, context: CallbackContext) -> None:
         message_text = read_md(cmd)
     check_log(update, cmd)
     if_disable_preview = cmd in ('cloud', 'faq')
-    context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=if_disable_preview)
+    context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, parse_mode=ParseMode.MARKDOWN,
+                            disable_web_page_preview=if_disable_preview)
 
 
 def none_handler(update: Update, _: CallbackContext) -> None:
