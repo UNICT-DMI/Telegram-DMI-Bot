@@ -11,11 +11,13 @@ from telegram.utils.helpers import escape_markdown
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def em(text):
     """
     Alias for `escape_markdown` function
     """
     return escape_markdown(text, version=2)
+
 
 # pylint: disable=too-many-instance-attributes
 class Professor(Scrapable):
@@ -98,8 +100,8 @@ class Professor(Scrapable):
                     role = link.parent.next_sibling.text.split(" ")[1] if len(
                         link.parent.next_sibling.text.split(" ")) > 1 else link.parent.next_sibling.text
 
-                if link.parent.parent.next_sibling.next_sibling is not None\
-                    and link.parent.parent.next_sibling.next_sibling.find("td").find("b") is not None:
+                if link.parent.parent.next_sibling.next_sibling is not None \
+                        and link.parent.parent.next_sibling.next_sibling.find("td").find("b") is not None:
                     contract = False
                     mother_tongue = True
 
@@ -112,7 +114,9 @@ class Professor(Scrapable):
 
                 source = requests.get(professor.scheda_dmi, timeout=10).text
                 soup = bs4.BeautifulSoup(source, "html.parser")
-                div = soup.find(id="anagrafica")
+                div = soup.find("div", {"class": "card-body"})
+                if div is None:
+                    continue
                 for bi in div.find_all("b"):
                     if bi.text == "Ufficio:":
                         professor.ufficio = bi.next_sibling
@@ -124,10 +128,8 @@ class Professor(Scrapable):
                         professor.telefono = bi.next_sibling
                     elif bi.text == "Fax:":
                         professor.fax = bi.next_sibling
-                #print(name)
-                if soup.find(id="foto"):
-                    #print(soup.find(id="foto").find("img").get("src").split('/')[-1].split('.')[0])
-                    professor.photo_id = soup.find(id="foto").find("img").get("src").split('/')[-1].split('.')[0]
+                if soup.find("div", {"class": "avatar size-xxl size-xxxl"}):
+                    professor.photo_id = soup.find("div", {"class": "avatar size-xxl size-xxxl"}).find("img").get("src")
                 else:
                     professor.photo_id = "Non presente"
 
@@ -151,7 +153,6 @@ class Professor(Scrapable):
         where = " AND ".join(("nome LIKE ?" for name in where_name))
         where_args = tuple(f'%{name}%' for name in where_name)
 
-
         db_results = DbManager.select_from(table_name=cls().table,
                                            where=where,
                                            where_args=where_args)
@@ -170,8 +171,8 @@ class Professor(Scrapable):
         return f"Professor: {self.__dict__}"
 
     def __str__(self):
-        string = f"*Ruolo:* {em(self.ruolo)}\n"\
-                f"*Nome:* {em(self.nome)}\n"
+        string = f"*Ruolo:* {em(self.ruolo)}\n" \
+                 f"*Nome:* {em(self.nome)}\n"
         if self.email:
             string += f"*Indirizzo email:* {em(self.email)}\n"
         if self.scheda_dmi:
