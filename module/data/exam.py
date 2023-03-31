@@ -27,7 +27,7 @@ class Exam(Scrapable):
         straordinaria (:class:`list | str`): list of appeals in the "straordinaria" session
     """
     COURSES = ["l-31", "lm-18", "l-35", "lm-40"]
-    SESSIONS = ["prima", "seconda", "terza", "straordinaria"]  # "straordinaria" non è considerata per lo scraping
+    SESSIONS = ["prima", "seconda", "terza", "straordinaria"]
 
     def __init__(self, anno: str = "", cdl: str = "", insegnamento: str = "", docenti: str = ""):
         self.anno = anno
@@ -81,6 +81,16 @@ class Exam(Scrapable):
             # pylint: disable=unnecessary-dunder-call
             self.__getattribute__(session_name).append(to_append)
 
+    @classmethod
+    def append_multiple_sessions(cls, cells, exam, session):
+        for cell in cells:
+            cell_clean_text = cell.text.replace('\xa0', '').replace('\n', '').replace('DMI', '')
+            current_exams = [string.replace('DMI', '') for string in exam.get_session("prima") +
+                             exam.get_session("seconda") + exam.get_session("terza") +
+                             exam.get_session("straordinaria")]
+            if cell_clean_text not in current_exams and cell_clean_text != "":
+                exam.append_session(session, cell_clean_text)
+
     def delete(self):
         """Deletes this exam from the database"""
         where = "anno = ? and cdl = ? and insegnamento = ? and docenti = ?"
@@ -121,6 +131,14 @@ class Exam(Scrapable):
                 f"http://web.dmi.unict.it/corsi/lm-40/esami?sessione=4&aa=1{year_exams}"
             ]
         }
+
+        course_dict = {
+            "l-31": "Informatica Triennale",
+            "lm-18": "Informatica Magistrale",
+            "l-35": "Matematica Triennale",
+            "lm-40": "Matematica Magistrale"
+        }
+
         exams = []
         year = ""
 
@@ -151,47 +169,18 @@ class Exam(Scrapable):
                                 flag = True
                                 # dato che la materia è già presente nell'array, i primi 3 valori (id, docenti e
                                 # nome) non ci interessano
-                                for cell in cells[3:]:
-                                    cell_clean_text = cell.text.replace('\xa0', '').replace('\n', '')
-                                    current_exams = exam.get_session("prima") + exam.get_session("seconda") + \
-                                        exam.get_session("terza") + exam.get_session("straordinaria")
-                                    if (session == "straordinaria" or cells.index(cell) == 5) \
-                                            and cell_clean_text not in current_exams \
-                                            and cell_clean_text != "":
-                                        exam.append_session("straordinaria", cell_clean_text)
-                                    elif session in ["prima", "seconda", "terza"] \
-                                            and cell_clean_text not in current_exams \
-                                            and cell_clean_text != "":
-                                        exam.append_session(session, cell_clean_text)
+                                cls.append_multiple_sessions(cells[3:], exam, session)
 
                         # se non abbiamo trovato la materia che stiamo analizzando attualmente nell'array delle materie
                         # vuol dire che nelle sessioni precedenti non aveva appelli (oppure è la prima sessione)
                         if not flag:
-                            if course == "l-31":
-                                course_name = "Informatica Triennale"
-                            elif course == "lm-18":
-                                course_name = "Informatica Magistrale"
-                            elif course == "l-35":
-                                course_name = "Matematica Triennale"
-                            elif course == "lm-40":
-                                course_name = "Matematica Magistrale"
+                            course_name = course_dict[course]
 
                             # creiamo una nuova istanza di esame da riempire con i dati trovati
                             new_exam = cls(anno=year, cdl=course_name, insegnamento=cells[1].text,
                                            docenti=cells[2].text)
-                            for cell in cells[3:]:  # come sopra (riga ~154)
-                                cell_clean_text = cell.text.replace('\xa0', '').replace('\n', '')
-                                current_exams = new_exam.get_session("prima") + new_exam.get_session("seconda") + \
-                                    new_exam.get_session("terza") + new_exam.get_session("straordinaria")
-                                if (session == "straordinaria" or cells.index(cell) == 5) \
-                                        and cell_clean_text not in current_exams\
-                                        and cell_clean_text != "":
-                                    new_exam.append_session("straordinaria", cell_clean_text)
-                                elif session in ["prima", "seconda", "terza"] \
-                                        and cell_clean_text not in current_exams \
-                                        and cell_clean_text != "":
-                                    new_exam.append_session(session, cell_clean_text)
 
+                            cls.append_multiple_sessions(cells[3:], new_exam, session)
                             exams.append(new_exam)  # aggiungiamo l'esame trovato alla lista
 
                     else:  # se la row ha solo un td figlio, è la riga che indica l'anno delle materie successive
@@ -205,7 +194,7 @@ class Exam(Scrapable):
 
     @classmethod
     def find(cls, select_sessione: str = "", where_sessione: str = "", where_anno: str = "",
-            where_insegnamento: str = "") -> List['Exam']:
+             where_insegnamento: str = "") -> List['Exam']:
         """Produces a list of exams from the database, based on the provided parametes
 
         Args:
@@ -272,7 +261,7 @@ class Exam(Scrapable):
                     appeals[i] = re.sub(r"[*_](?![^(]*[)])", " ", appeals[i])
 
                 if "".join(appeals) != "":
-                    output += "\n*" + session.title() + ":*\n" + "\n".join(appeals)
+                    output += "\n\n*" + session.title() + ":*\n" + "\n".join(appeals)
 
         output += "\n*CDL:* " + self.cdl
         output += "\n*Anno:* " + self.anno + "\n"
