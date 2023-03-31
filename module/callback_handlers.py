@@ -9,9 +9,9 @@ from module.shared import check_log, read_md
 # Needed to correctly run functions using globals()
 from module.utils.multi_lang_utils import get_on_demand_text
 
-import logging  # pylint: disable=wildcard-import,unused-wildcard-import
-from module.commands.esami import esami_button_anno, esami_button_sessione, esami_button_insegnamento  #    pylint: disable=wildcard-import,unused-wildcard-import
-from module.commands.lezioni import lezioni_button_anno, lezioni_button_insegnamento, lezioni_button_giorno  # pylint: disable=wildcard-import,unused-wildcard-import
+import logging  # pylint: disable=unused-import
+from module.commands.esami import esami_button_anno, esami_button_sessione, esami_button_insegnamento  # pylint: disable=unused-import
+from module.commands.lezioni import lezioni_button_anno, lezioni_button_insegnamento, lezioni_button_giorno  # pylint: disable=unused-import
 from module.commands.help import *  # pylint: disable=wildcard-import,unused-wildcard-import
 from module.commands.drive_contribute import *  # pylint: disable=wildcard-import,unused-wildcard-import
 from module.commands.aulario import *  # pylint: disable=wildcard-import,unused-wildcard-import
