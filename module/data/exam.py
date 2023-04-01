@@ -85,9 +85,9 @@ class Exam(Scrapable):
     def append_multiple_sessions(cls, cells, exam, session):
         for cell in cells:
             cell_clean_text = cell.text.replace('\xa0', '').replace('\n', '').replace('DMI', '')
-            current_exams = [string.replace('DMI', '') for string in exam.get_session("prima") +
-                             exam.get_session("seconda") + exam.get_session("terza") +
-                             exam.get_session("straordinaria")]
+            exam_sessions = exam.get_session("prima") + exam.get_session("seconda") + exam.get_session(
+                "terza") + exam.get_session("straordinaria")
+            current_exams = [string.replace('DMI', '') for string in exam_sessions]
             if cell_clean_text not in current_exams and cell_clean_text != "":
                 exam.append_session(session, cell_clean_text)
 
