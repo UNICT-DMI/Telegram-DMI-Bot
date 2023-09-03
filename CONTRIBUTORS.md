@@ -17,7 +17,7 @@ This project is made possible thanks to the contributions of:
 - [Danilo Santitto](https://github.com/Warcreed)
 - [Ernesto Casablanca](https://github.com/TendTo)
 - [Graziano Di Grande](https://github.com/Drendog)
-- [Santo Cariotti](https://github.com/dcariotti)
+- [Santo Cariotti](https://github.com/boozec)
 - [Giuseppe Criscione](https://github.com/datalux)
 - [Stefano Origlio](https://github.com/InfernoMentale)
 - [Salvo Asero](https://github.com/Guberlo)

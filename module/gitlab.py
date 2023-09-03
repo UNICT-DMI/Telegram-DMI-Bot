@@ -5,6 +5,7 @@ from telegram.ext import run_async, CallbackContext
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 
 #Modules
+from module.debug.log_manager import notify_error_admin
 from module.shared import config_map, check_log
 
 # System libraries
@@ -98,7 +99,7 @@ def get_chat_id(update: Update):
     return chat_id
 
 
-def get_subgroups(group_id):
+def get_subgroups(context, group_id):
     """
         Returns an array containing subgroups of a group
 
@@ -110,7 +111,12 @@ def get_subgroups(group_id):
 
     try:
         return api.groups.get(group_id).subgroups.list()
-    except gitlab.GitlabGetError:
+    except (
+        gitlab.exceptions.GitlabAuthenticationError,
+        gitlab.exceptions.GitlabParsingError,
+        gitlab.GitlabGetError,
+    ) as error:
+        notify_error_admin(context=context, traceback_str=str(error)[:1024])
         return []
 
 
@@ -354,7 +360,7 @@ def gitlab_handler(update: Update, context: CallbackContext):
         data = query.data.replace("git_", "")
 
     if not data:
-        subgroups = get_subgroups(GITLAB_ROOT_GROUP)
+        subgroups = get_subgroups(context, GITLAB_ROOT_GROUP)
 
         for subgroup in subgroups:
             db.execute("INSERT OR REPLACE INTO gitlab (id, parent_id, name, type) VALUES (?, ?, ?, ?)",
@@ -380,7 +386,7 @@ def gitlab_handler(update: Update, context: CallbackContext):
             action = (_type[0] if _type else 'subgroup')[0]
 
         if action == 's':
-            subgroups = get_subgroups(origin_id)
+            subgroups = get_subgroups(context, origin_id)
 
             if subgroups:
                 for subgroup in subgroups:
