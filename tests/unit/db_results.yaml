@@ -1,0 +1,32 @@
+select_from_1:
+  - {id: 2, 
+  string1: test2, 
+  string2: TEST2}
+  - {id: 4, 
+    string1: test4, 
+    string2: TEST4}
+
+select_from_2:
+  - {id: 3, 
+    string2: TEST3}
+
+select_from_3:
+  - {string1: test1}
+  - {string1: test2}
+  - {string1: test3}
+  - {string1: test4}
+
+
+count_from_1: 2
+count_from_2: 1
+count_from_3: 4
+
+
+insert_into:
+  - {id: 7, string1: test_insert_into1, string2: TEST_INSERT_INTO1}
+  - {id: 8, string1: test_insert_into2, string2: TEST_INSERT_INTO2}
+  - {id: 9, string1: test_insert_into3, string2: TEST_INSERT_INTO3}
+  - {id: 10, string1: test_insert_into4, string2: TEST_INSERT_INTO4}
+
+delete_from_1: 6
+delete_from_2: 0
