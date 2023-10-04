@@ -15,7 +15,7 @@ In particolare:
   - Dal Primo Anno al Secondo Anno, se non si sono convalidati almeno 10 CFU;
   - Dal Secondo Anno al Terzo Anno, se non si sono convalidati almeno 25 CFU;
   - Dal Terzo Anno al Primo Anno Fuori Corso, se non si sono convalidati almeno 25 CFU;
-  - Dal Primo Anno Fuori Corso al Secondo Anno Fuori Corso, i crediti non sono più validi, e si è automaticamente          tenuti a pagare la Tassa da studente irregolare.
+  - Dal Primo Anno Fuori Corso al Secondo Anno Fuori Corso, i crediti non sono più validi, e si è automaticamente tenuti a pagare la Tassa da studente irregolare.
 La tassa per i casi sopra descritti ammonta a €200,00.
 
 • *Guida dello Studente:*
