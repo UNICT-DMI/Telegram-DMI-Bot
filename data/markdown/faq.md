@@ -10,7 +10,16 @@ https://www.unict.it/it/didattica/sospendere-la-carriera
 https://www.studentetop.it/come-funziona-universita-guida-definitiva/
 
 • *Tassa studente irregolare:*
-È necessario pagare 200€ di tassa nel momento in cui non si raggiunge una determinata quantità di CFU (senza fonte: 24 CFU in un anno), ci sono diverse casistiche per l'irregolarità ma poco documentate, molti pagano questa tassa all'inizio del terzo anno. 
+Lo studente è definito Studente Irregolare per Crediti se non ha convalidato un certo numero di CFU definiti dall'Ateneo. 
+In particolare:
+  - Dal Primo Anno al Secondo Anno, se non si sono convalidati almeno 10 CFU;
+  - Dal Secondo Anno al Terzo Anno, se non si sono convalidati almeno 25 CFU;
+  - Dal Terzo Anno al Primo Anno Fuori Corso, se non si sono convalidati almeno 25 CFU;
+  - Dal Primo Anno Fuori Corso al Secondo Anno Fuori Corso, i crediti non sono più validi, e si è automaticamente          tenuti a pagare la Tassa da studente irregolare.
+La tassa per i casi sopra descritti ammonta a €200,00.
+
+• *Guida dello Studente:*
+https://www.unict.it/it/didattica/news/online-la-guida-gli-studenti-202324
 
 • *Ottenere GitHub Student:*. 
 https://github.com/nickcacci/come-ottenere-github-pro-studenti-unict
