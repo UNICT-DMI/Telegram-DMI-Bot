@@ -9,8 +9,7 @@ from typing import Tuple, Optional
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
 from telegram.ext import CallbackContext
 from module.data import Lesson
-from module.shared import read_md
-from module.shared import check_log, send_message
+from module.shared import check_log, send_message, read_md
 from module.data.vars import TEXT_IDS, PLACE_HOLDER
 from module.utils.multi_lang_utils import get_locale, get_locale_code
 
@@ -32,7 +31,7 @@ def get_url(courses: str) -> str:
     return main_link
 
 
-def get_orario_file() -> bytes:
+def get_orario_file() -> Optional[bytes]:
     main_link = get_url(read_md("lezioni_link"))
 
     soup = BeautifulSoup(requests.get(main_link, timeout=10).content, "html.parser")
@@ -44,6 +43,9 @@ def get_orario_file() -> bytes:
 
             response = requests.get(full_pdf_link, timeout=10).content
             return response
+
+    return None
+
 
 def lezioni(update: Update, context: CallbackContext) -> None:
     """Called by the /lezioni command.
@@ -70,9 +72,13 @@ def lezioni(update: Update, context: CallbackContext) -> None:
         context.bot.sendMessage(chat_id=chat_id, text=get_locale(locale, TEXT_IDS.USE_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
         context.bot.sendMessage(chat_id=user_id, text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
 
-    file = BytesIO(get_orario_file())
-    file.name = "Orario.pdf"
-    context.bot.sendDocument(chat_id=update.effective_chat.id, document=file)
+    file = get_orario_file()
+    if file is None:
+        context.bot.sendMessage(chat_id=chat_id, text="Orario non disponibile. Ritenta più tardi")
+    else:
+        file = BytesIO(file)
+        file.name = "Orario.pdf"
+        context.bot.sendDocument(chat_id=update.effective_chat.id, document=file)
 
 
 def lezioni_handler(update: Update, context: CallbackContext) -> None:
