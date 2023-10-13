@@ -35,14 +35,14 @@ def get_url(courses: str) -> str:
 def get_orario_file() -> bytes:
     main_link = get_url(read_md("lezioni_link"))
 
-    soup = BeautifulSoup(requests.get(main_link).content, "html.parser")
+    soup = BeautifulSoup(requests.get(main_link, timeout=10).content, "html.parser")
 
     for item in soup.find_all("a"):
         if HREF_TOKEN in str(item):
             item = item.get("href")
             full_pdf_link = DMI_LINK + item
 
-            response = requests.get(full_pdf_link).content
+            response = requests.get(full_pdf_link, timeout=10).content
             return response
 
 def lezioni(update: Update, context: CallbackContext) -> None:
