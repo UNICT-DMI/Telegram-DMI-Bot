@@ -2,21 +2,52 @@
 """/lezioni command"""
 import logging
 import re
+import requests
+from io import BytesIO
+from bs4 import BeautifulSoup
 from typing import Tuple, Optional
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
 from telegram.ext import CallbackContext
 from module.data import Lesson
+from module.shared import read_md
 from module.shared import check_log, send_message
 from module.data.vars import TEXT_IDS, PLACE_HOLDER
 from module.utils.multi_lang_utils import get_locale, get_locale_code
+
+HREF_TOKEN = "sites/default"
+DMI_LINK = read_md("informatica_link")
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+def get_url(courses: str) -> str:
+    course_index = courses.find("L-31")
+    if course_index != -1:
+        token_pos = courses.find(":", course_index)
+        endl_index = courses.find("\n", course_index)
+
+        if token_pos != -1:
+            main_link = courses[token_pos + 1:endl_index]
+    return main_link
+
+
+def get_orario_file() -> bytes:
+    main_link = get_url(read_md("lezioni_link"))
+
+    soup = BeautifulSoup(requests.get(main_link).content, "html.parser")
+
+    for item in soup.find_all("a"):
+        if HREF_TOKEN in str(item):
+            item = item.get("href")
+            full_pdf_link = DMI_LINK + item
+
+            response = requests.get(full_pdf_link).content
+            return response
+
 def lezioni(update: Update, context: CallbackContext) -> None:
     """Called by the /lezioni command.
-    Shows the options available to execute a lesson query.
+    Sends a pdf file to user downloaded from website.
 
     Args:
         update: update event
@@ -39,8 +70,9 @@ def lezioni(update: Update, context: CallbackContext) -> None:
         context.bot.sendMessage(chat_id=chat_id, text=get_locale(locale, TEXT_IDS.USE_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
         context.bot.sendMessage(chat_id=user_id, text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
 
-    message_text, inline_keyboard = get_lezioni_text_InLineKeyboard(locale, context)
-    context.bot.sendMessage(chat_id=user_id, text=message_text, reply_markup=inline_keyboard)
+    file = BytesIO(get_orario_file())
+    file.name = "Orario.pdf"
+    context.bot.sendDocument(chat_id=update.effective_chat.id, document=file)
 
 
 def lezioni_handler(update: Update, context: CallbackContext) -> None:
