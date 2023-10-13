@@ -23,3 +23,6 @@ https://www.unict.it/it/didattica/news/online-la-guida-gli-studenti-202324
 
 • *Ottenere GitHub Student:*. 
 https://github.com/nickcacci/come-ottenere-github-pro-studenti-unict
+
+Non hai trovato quello che cercavi? Cerca nel canale @DMI_FAQ o crea un nuovo post nel canale stesso utilizzando @DMI_FAQ_Bot.
+ 
