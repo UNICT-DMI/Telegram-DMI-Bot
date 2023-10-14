@@ -35,3 +35,9 @@ test:
   token: ''
   representatives_group: ''
   dev_group_chatid: ''
+
+lectures:
+  href_token: "sites/default"
+  dmi_link: "https://web.dmi.unict.it/"
+  file_orario_path: "./data/Orario.pdf"
+  expire_time: 86400

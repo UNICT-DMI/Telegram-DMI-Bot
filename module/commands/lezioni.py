@@ -11,14 +11,10 @@ from typing import Tuple, Optional
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
 from telegram.ext import CallbackContext
 from module.data import Lesson
-from module.shared import check_log, send_message, read_md
+from module.shared import check_log, send_message, read_md, config_map
 from module.data.vars import TEXT_IDS, PLACE_HOLDER
 from module.utils.multi_lang_utils import get_locale, get_locale_code
 
-HREF_TOKEN = "sites/default"
-DMI_LINK = read_md("informatica_link")
-FILE_ORARIO_PATH = "./data/Orario.pdf"
-FILE_EXPIRATION = 86400 # one day
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -53,12 +49,12 @@ def get_orario_file() -> Optional[bytes]:
     soup = BeautifulSoup(requests.get(main_link, timeout=10).content, "html.parser")
 
     for item in soup.find_all("a"):
-        if HREF_TOKEN in str(item):
+        if config_map['lectures']['href_token'] in str(item):
             item = item.get("href")
-            full_pdf_link = DMI_LINK + item
+            full_pdf_link = config_map['lectures']['dmi_link'] + item
 
             response = requests.get(full_pdf_link, timeout=10).content
-            with open(FILE_ORARIO_PATH, "wb") as file:
+            with open(config_map['lectures']['file_orario_path'], "wb") as file:
                 file.write(response)
             return response
 
@@ -90,14 +86,14 @@ def lezioni(update: Update, context: CallbackContext) -> None:
         context.bot.sendMessage(chat_id=chat_id, text=get_locale(locale, TEXT_IDS.USE_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
         context.bot.sendMessage(chat_id=user_id, text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
 
-    if os.path.exists(FILE_ORARIO_PATH): # Exist local file
+    if os.path.exists(config_map['lectures']['file_orario_path']): # Exist local file
         current_time = time.time()
-        file_modified_time = os.path.getmtime(FILE_ORARIO_PATH)
+        file_modified_time = os.path.getmtime(config_map['lectures']['file_orario_path'])
         time_difference = current_time - file_modified_time
         formatted_time= datetime.datetime.fromtimestamp(file_modified_time).strftime('%d-%m-%Y %H:%M:%S')
 
-        if time_difference < FILE_EXPIRATION: # File not expired
-            with open(FILE_ORARIO_PATH, "rb") as file:
+        if time_difference < config_map['lectures']['expire_time']: # File not expired
+            with open(config_map['lectures']['file_orario_path'], "rb") as file:
                 context.bot.sendDocument(chat_id=update.effective_chat.id, document=file)
                 context.bot.sendMessage(chat_id=chat_id, text=f"Ultimo aggiornamento: {formatted_time}")
                 return
@@ -108,11 +104,11 @@ def lezioni(update: Update, context: CallbackContext) -> None:
 
     if file is None:
         context.bot.sendMessage(chat_id=chat_id, text="Orario non disponibile attualmente. Ritenta più tardi")
-        if os.path.exists(FILE_ORARIO_PATH):
-            with open(FILE_ORARIO_PATH, "rb") as file:
+        if os.path.exists(config_map['lectures']['file_orario_path']):
+            with open(config_map['lectures']['file_orario_path'], "rb") as file:
                 context.bot.sendDocument(chat_id=update.effective_chat.id, document=file)
     else:
-        with open(FILE_ORARIO_PATH, "rb") as file:
+        with open(config_map['lectures']['file_orario_path'], "rb") as file:
             context.bot.sendDocument(chat_id=update.effective_chat.id, document=file)
             context.bot.sendMessage(chat_id=chat_id, text="Ultimo aggiornamento: oggi")
 
