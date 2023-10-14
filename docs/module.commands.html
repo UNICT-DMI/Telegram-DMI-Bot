@@ -716,10 +716,41 @@ Executes the query and returns the text to send to the user</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="module.commands.lezioni.get_orario_file">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">get_orario_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.get_orario_file" title="Link to this definition"></a></dt>
+<dd><p>Download pdf file from website.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code>]</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None or downloaded file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="module.commands.lezioni.get_url">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">get_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">courses</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.get_url" title="Link to this definition"></a></dt>
+<dd><p>Extract the L-31 url from markdown file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>courses</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – all available courses</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>link of the website</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="module.commands.lezioni.lezioni">
 <span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni" title="Link to this definition"></a></dt>
 <dd><p>Called by the /lezioni command.
-Shows the options available to execute a lesson query.</p>
+Sends a pdf file to user downloaded from website.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
