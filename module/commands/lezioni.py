@@ -3,7 +3,9 @@
 import logging
 import re
 import requests
-import os, time, datetime
+import os
+import time
+import datetime
 from bs4 import BeautifulSoup
 from typing import Tuple, Optional
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
@@ -88,7 +90,7 @@ def lezioni(update: Update, context: CallbackContext) -> None:
         context.bot.sendMessage(chat_id=chat_id, text=get_locale(locale, TEXT_IDS.USE_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
         context.bot.sendMessage(chat_id=user_id, text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
 
-    if os.path.exists(FILE_ORARIO_PATH): # Exist local file 
+    if os.path.exists(FILE_ORARIO_PATH): # Exist local file
         current_time = time.time()
         file_modified_time = os.path.getmtime(FILE_ORARIO_PATH)
         time_difference = current_time - file_modified_time
@@ -101,7 +103,7 @@ def lezioni(update: Update, context: CallbackContext) -> None:
                 return
         else: # Not exists local file, so download it
             pass
-    
+
     file = get_orario_file()
 
     if file is None:
