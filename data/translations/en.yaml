@@ -51,6 +51,7 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   👔 /prof <nome> - _es. /prof Barbanera_
   👥 /rappresentanti - _list of representatives_
   📚 /biblioteca - _DMI's library working hours_
+  📚 /aule_studio - _DMI's aule working hours location_
   <cusicon> /cus - _location and contacts_
   ☁ /cloud - _ access to cloud shared folders_
   📣 /report - _submit a report to representatives_

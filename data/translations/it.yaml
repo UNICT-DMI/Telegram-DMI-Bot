@@ -52,6 +52,7 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   👔 /prof <nome> - _es. /prof Barbanera_
   👥 /rappresentanti - _elenco dei rappresentanti_
   📚 /biblioteca - _orario biblioteca DMI_
+  📚 /aule_studio - _orario locazione aule studio DMI_
   <cusicon> /cus - _sede e contatti_
   ☁ /cloud - _linka le cartelle condivise su cloud_
   📣 /report - _permette di inviare una segnalazione ai rappresentanti_
@@ -79,6 +80,7 @@ HELP_CDL_LESSONS_TIMETABLE_TEXT_ID: "📘 Orari lezioni (link)"
 HELP_CDL_PROF_INFO_TEXT_ID: "👨‍🏫 Info Professori"
 HELP_CDL_REPRS_TEXT_ID: "👥 Rappresentanti"
 HELP_CDL_LIBRARY_TEXT_ID: "📚 Biblioteca"
+HELP_CDL_AULESTUDIO_TEXT_ID: "📚 Aule_studio"
 HELP_CDL_GROUPS_TEXT_ID: "📊 Gruppi"
 HELP_CDL_PROF_TOOLTIP_ID: |-
   Per avere info sui professori puoi utilizzare il seguente comando:
@@ -103,6 +105,20 @@ HELP_CDL_LIBRARY_TOOLTIP_ID: |-
   %capybara%
 
   Servizio Distribuzione:
+  
+  %capybara%
+HELP_CDL_AULESTUDIO_TOOLTIP_ID: |-
+  *Orari della aule studio:*
+  
+  Aula Studio:
+  
+  &capybara%
+  
+  Orario di Accesso e Giorni:
+  
+  %capybara%
+
+  Dove si trova:
   
   %capybara%
 
