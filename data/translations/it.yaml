@@ -62,12 +62,12 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   🧑‍💻 /contributors - _mostra gli sviluppatori che hanno contribuito allo sviluppo del bot_
   🧾 /regolamentodidattico - _invia il pdf del regolamento didattico per l'anno desiderato_
   ❓ /faq - _mostra le domande chieste più frequentemente_
-  
+
   *Segreteria orari e contatti:*
   ✍ /sdidattica - _segreteria didattica_
   📓 /studenti - _segreteria studenti_
   /cea - _informazioni Centro per i sistemi di Elaborazione e Applicazioni scientifiche e didattiche_
-  
+
   *ERSU orari e contatti:*
   🗃 /ersu - _informazioni sede centrale ersu_
   🗃 /ufficioersu - _(ufficio tesserini)_
@@ -99,28 +99,19 @@ HELP_CDL_CLASSES_LINK_TOOLTIP_ID: |-
   _Matematica magistrale (LM-40):_ [link](%capybara%)
 HELP_CDL_LIBRARY_TOOLTIP_ID: |-
   *Orari della biblioteca:*
-  
+
   Sala Lettura:
-  
+
   %capybara%
 
   Servizio Distribuzione:
-  
-  %capybara%
-HELP_CDL_AULESTUDIO_TOOLTIP_ID: |-
-  *Orari della aule studio:*
-  
-  Aula Studio:
-  
-  &capybara%
-  
-  Orario di Accesso e Giorni:
-  
+
   %capybara%
 
-  Dove si trova:
-  
-  %capybara%
+HELP_CDL_AULESTUDIO_TOOLTIP_ID: |-
+  Aula Studio: %capybara%
+
+  Aula Studio: %capybara%
 
 # /help-Reprs command
 REPRS_HEADER_TEXT_ID: "Quali rappresentanti vuoi contattare?"
@@ -130,19 +121,19 @@ REPRS_DMI_MATH_TEXT_ID: "Rapp. Matematica"
 REPRS_DMI_TOOLTIP_ID: "*Rappresentanti DMI*"
 REPRS_DMI_CS_TOOLTIP_ID: |-
   *Rappresentanti Corso di Laurea Informatica Triennale*
-  
+
   %capybara%
-  
+
   *Rappresentanti Corso di Laurea Informatica Magistrale*
-  
+
   %capybara%
 REPRS_DMI_MATH_TOOLTIP_ID: |-
   *Rappresentanti Corso di Laurea Matematica Triennale*
-  
+
   %capybara%
-  
+
   *Rappresentanti Corso di Laurea Matematica Magistrale*
-  
+
   %capybara%
 
 # /help-Segr command
@@ -153,7 +144,7 @@ SEGR_DID_TOOLTIP_ID: |-
   Sede presso il Dipartimento di Matematica e Informatica (primo piano vicino alla direzione) 
 
   **Personale di segreteria**
-  
+
   %capybara%
 
   **Segreteria didattica**
@@ -165,49 +156,49 @@ SEGR_DID_TOOLTIP_ID: |-
   %capybara%
 SEGR_STU_TOOLTIP_ID: |-
   *Segreteria studenti*
-  
+
   Posizione:
-  
+
   %capybara%
-  
+
   Contatti:
-  
+
   %capybara%
 
   🕑 Orario ordinario:
-  
+
   %capybara%
 
   🕑 Orario invernale:
-  
+
   %capybara%
 
   Ufficio carriere studenti - Settore scientifico
 
   Matematica Triennale e Magistrale (L-LM)
-  
+
   %capybara%
 
   Informatica Triennale (L)
-  
+
   %capybara%
-  
+
   Informatica Magistrale (LM)
-  
+
   %capybara%
 SEGR_CEA_TOOLTIP_ID: |-
   *Centro per i sistemi di elaborazione e le applicazioni scientifiche e didattiche (CEA)*
-  
+
   Contatti:
-  
+
   %capybara%
-  
+
   Posizione:
-  
+
   %capybara%
-  
+
   Sito web:
-  
+
   %capybara%
 
 # /help-ERSU command
@@ -216,29 +207,29 @@ ERSU_OFFICE_TEXT_ID: "Ufficio ERSU"
 ERSU_URP_TEXT_ID: "URP"
 ERSU_TOOLTIP_ID: |-
   *ERSU Catania - sede centrale*
-  
+
   Posizione:
-  
+
   %capybara%
-  
+
   Contatti:
-  
+
   %capybara%
 
   🕑 Orari:
-  
+
   %capybara%
 ERSU_OFFICE_TOOLTIP_ID: |-
   *ERSU Catania - Ufficio Tesserini*
-  
+
   Posizione:
-  
+
   %capybara%
 
   🕑 Orari:
-  
+
   %capybara%
-  
+
   Posizione:
 
   %capybara%
@@ -248,13 +239,13 @@ ERSU_OFFICE_TOOLTIP_ID: |-
   %capybara%
 ERSU_URP_TOOLTIP_ID: |-
   *URP Studenti*
-  
+
   Posizione:
-  
+
   %capybara%
-  
+
   Contatti:
-  
+
   %capybara%
 
   🕑 Orari:

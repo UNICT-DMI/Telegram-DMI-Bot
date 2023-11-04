@@ -97,6 +97,7 @@ def add_handlers(dp: Dispatcher) -> None:
     dp.add_handler(CommandHandler('ufficioersu', informative_callback))
     dp.add_handler(CommandHandler('urp', informative_callback))
     dp.add_handler(CommandHandler('biblioteca', informative_callback))
+    dp.add_handler(CommandHandler('aule_studio', informative_callback))
     dp.add_handler(CommandHandler('gruppi', informative_callback))
     dp.add_handler(CommandHandler('cus', informative_callback))
     dp.add_handler(CommandHandler('ricevimenti', informative_callback))

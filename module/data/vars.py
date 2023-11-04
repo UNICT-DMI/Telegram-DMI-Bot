@@ -55,6 +55,7 @@ class TEXT_IDS(Enum):
     HELP_CDL_EXAMS_LINK_TOOLTIP_ID = auto()
     HELP_CDL_CLASSES_LINK_TOOLTIP_ID = auto()
     HELP_CDL_LIBRARY_TOOLTIP_ID = auto()
+    HELP_CDL_AULESTUDIO_TOOLTIP_ID = auto()
     # /help-Reprs command
     REPRS_HEADER_TEXT_ID = auto()
     REPRS_DMI_TEXT_ID = auto()
@@ -157,6 +158,7 @@ ON_DEMAND_FILL: dict[str, str] = {
     "HELP_CDL_EXAMS_LINK_TOOLTIP_ID": "single",
     "HELP_CDL_CLASSES_LINK_TOOLTIP_ID": "single",
     "HELP_CDL_LIBRARY_TOOLTIP_ID": "multi",
+    "HELP_CDL_AULESTUDIO_TOOLTIP_ID": "multi",
     "REPRS_DMI_CS_TOOLTIP_ID": "multi",
     "REPRS_DMI_MATH_TOOLTIP_ID": "multi",
     "SEGR_DID_TOOLTIP_ID": "multi",
