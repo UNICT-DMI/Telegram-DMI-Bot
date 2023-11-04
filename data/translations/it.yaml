@@ -107,7 +107,8 @@ HELP_CDL_LIBRARY_TOOLTIP_ID: |-
   Servizio Distribuzione:
   
   %capybara%
-HELP_CDL_LIBRARY_TOOLTIP_IAULESTUDIO*Orari della aule_studio:*
+HELP_CDL_AULESTUDIO_TOOLTIP_ID: |-
+  *Orari della aule studio:*
   
   Aula Studio:
   
