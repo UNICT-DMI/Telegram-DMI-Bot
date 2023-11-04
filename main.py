@@ -62,7 +62,7 @@ def add_commands(up: Updater) -> None:
         BotCommand("cloud", "risorse didattiche in cloud"),
         BotCommand("regolamentodidattico", "lista dei regolamenti didattici"),
         BotCommand("ricevimenti", "lista orari ricevimenti dei professori"),
-        BotCommand("trasporto_urbano_unict", "link orari Metro Shuttle FCE"),
+        BotCommand("trasporto_urbano_unict", "link orari BRTU"),
         BotCommand("dmi_3d", "mappa in 3D del DMI"),
         BotCommand("mercatino", "bot per la vendita e l'acquisto di libri"),
         BotCommand("faq", "mostra le domande chieste più frequentemente"),
@@ -99,6 +99,7 @@ def add_handlers(dp: Dispatcher) -> None:
     dp.add_handler(CommandHandler('gruppi', informative_callback))
     dp.add_handler(CommandHandler('cus', informative_callback))
     dp.add_handler(CommandHandler('ricevimenti', informative_callback))
+    dp.add_handler(CommandHandler('syllabus', informative_callback))
     dp.add_handler(CommandHandler('trasporto_urbano_unict', informative_callback))
     dp.add_handler(CommandHandler('dmi_3d', informative_callback))
     dp.add_handler(CommandHandler('faq', informative_callback))
