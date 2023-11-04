@@ -80,7 +80,7 @@ HELP_CDL_LESSONS_TIMETABLE_TEXT_ID: "📘 Orari lezioni (link)"
 HELP_CDL_PROF_INFO_TEXT_ID: "👨‍🏫 Info Professori"
 HELP_CDL_REPRS_TEXT_ID: "👥 Rappresentanti"
 HELP_CDL_LIBRARY_TEXT_ID: "📚 Biblioteca"
-HELP_CDL_LIBRARY_TEXT_ID: "📚 Aule_studio"
+HELP_CDL_AULESTUDIO_TEXT_ID: "📚 Aule_studio"
 HELP_CDL_GROUPS_TEXT_ID: "📊 Gruppi"
 HELP_CDL_PROF_TOOLTIP_ID: |-
   Per avere info sui professori puoi utilizzare il seguente comando:
@@ -107,8 +107,7 @@ HELP_CDL_LIBRARY_TOOLTIP_ID: |-
   Servizio Distribuzione:
   
   %capybara%
-HELP_CDL_LIBRARY_TOOLTIP_ID: |-
-  *Orari della aule_studio:*
+HELP_CDL_LIBRARY_TOOLTIP_IAULESTUDIO*Orari della aule_studio:*
   
   Aula Studio:
   

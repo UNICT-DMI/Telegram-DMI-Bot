@@ -140,7 +140,7 @@ ON_DEMAND_TEXTS: dict[str, str] = {
     "HELP_CDL_EXAMS_LINK_TOOLTIP_ID": "esami_link",
     "HELP_CDL_CLASSES_LINK_TOOLTIP_ID": "lezioni_link",
     "HELP_CDL_LIBRARY_TOOLTIP_ID": "biblioteca",
-    "HELP_CDL_LIBRARY_TOOLTIP_ID": "aule_studio",
+    "HELP_CDL_AULESTUDIO_TOOLTIP_ID": "aule_studio",
     "REPRS_DMI_TOOLTIP_ID": "rappresentanti_dmi",
     "REPRS_DMI_CS_TOOLTIP_ID": "rappresentanti_informatica",
     "REPRS_DMI_MATH_TOOLTIP_ID": "rappresentanti_matematica",

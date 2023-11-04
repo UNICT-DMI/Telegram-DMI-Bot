@@ -48,7 +48,7 @@ def add_commands(up: Updater) -> None:
         BotCommand("urp", "URP"),
         BotCommand("mensa", "orari e menù della mensa"),
         BotCommand("biblioteca", "orari della biblioteca"),
-        BotCommand("aule_studio", "orari delle aule studio", "dove si trova"),
+        BotCommand("aule_studio", "tutta la descrizione qui"),
         BotCommand("drive", "accedi alla cartella Drive"),
         BotCommand("drive_contribute", "ottieni i permessi per caricare materiale sulla cartella Drive"),
         BotCommand("git", "accedi al materiale didattico su GitLab"),
