@@ -7,6 +7,6 @@ Tragna Agnese
 Russo Miriana - @Miryrusso03
 Russo Mirko - @altair\_mr
 D'Anna Kamil - @Heavenly0000
-Sorbello Angelica - @ange\_l\_1c
+Sorbello Angelica - @ange\_l\_1c4
 Fragapane Leonardo - @leofragap06
 La Rocca Lorenzo - @lorelarocca
