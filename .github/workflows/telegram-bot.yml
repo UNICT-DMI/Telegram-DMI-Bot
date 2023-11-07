@@ -2,14 +2,12 @@ name: DMI_bot_deploy
 
 on:
   push:
-    branches:
-      - "main"
+    branches: [master]
     paths-ignore:
       - "README.md"
       - "docs/**"
   pull_request:
-    branches:
-      - "main"
+    branches: [master]
     paths-ignore:
       - "README.md"
       - "docs/**"
