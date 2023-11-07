@@ -1,2 +1,2 @@
-Triennale:Campo Filippo - @filippocampo98|Cascino Andrea - @Mag1candry|Cigna Gaia - @GaiaCigna|Coco Giuseppe - @peppe10001|Cocuzza Daniele - @danielecocuzza|Gibilterra Martin - @w8floosh|Parlavecchio Martina - @makapx|Patania Alex - @under3\_5|Pistorio Anna - @annapistorio
-Magistrale:Trupia Andrea - @andreatrups
+Triennale:Cambria Nicolò|Cipria Fabrizio - @FabrizioCipria|D'Anna Kamil - @Heavenly0000|Gigliuto Emily - @imemgi|La Rocca Lorenzo - @lorelarocca|Lo Castro Giuseppe - @shownunderlight|Mirabella Leonardo - @infra\_blue|Russo Mirko - @altair\_mr|Spina Simone - @simonze0|Vaccaro Giuseppe - @VaccSpacc
+Magistrale:Cigna Gaia - @GaiaCigna|Salemi Andrea Filippo - @AndreaNinetyFive

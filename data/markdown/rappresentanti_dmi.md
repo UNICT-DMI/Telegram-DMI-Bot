@@ -1,12 +1,12 @@
-Campo Filippo - @filippocampo98
-Carnemolla Davide - @Herbrant
-Cascino Andrea - @Mag1candry
+Curto Sofia - @Sofia\_Curto
+Frasca Valentina - @valentina\_frasca
+Minissale Giuseppe Virgilio - @pepp\_00
+Spina Simone - @simonze0
 Cigna Gaia - @GaiaCigna
-Cocuzza Daniele - @danielecocuzza
+Tragna Agnese
+Russo Miriana - @Miryrusso03
+Russo Mirko - @altair\_mr
+D'Anna Kamil - @Heavenly0000
+Sorbello Angelica - @ange\_l\_1c4
 Fragapane Leonardo - @leofragap06
-Gibilterra Martin - @w8floosh
-Ippolito Simone 
-Minissale Giuseppe Virgilio - @Pepp\_00
-Pistorio Anna - @annapistorio
-Seminara Luigi - @Gigii\_G
-Tilotta Fabio - @fatilo422
+La Rocca Lorenzo - @lorelarocca
