@@ -51,7 +51,7 @@ pip3 install -r requirements.txt
 version: "2"
 services:
   dmibot:
-    image: ghcr.io/unict-dmi/telegram-dmi-bot
+    image: ghcr.io/unict-dmi/telegram-dmi-bot:master
     container_name: dmibot
     volumes:
       - </path/to/settings.yaml>:/dmibot/config/settings.yaml
@@ -62,7 +62,7 @@ services:
 ### docker cli
 
 ```bash
-docker run -v </path/to/settings.yaml>:/dmibot/config/settings.yaml -v </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db -v </path/to/drive_credentials.json>:/dmibot/config/drive_credentials.json -t unictdmi/dmibot
+docker run -v </path/to/settings.yaml>:/dmibot/config/settings.yaml -v </path/to/DMI_DB.db>:/dmibot/data/DMI_DB.db -v </path/to/drive_credentials.json>:/dmibot/config/drive_credentials.json -t ghcr.io/unict-dmi/telegram-dmi-bot:master
 ```
 
 ### Parameter
