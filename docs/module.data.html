@@ -124,15 +124,15 @@ Executes “SELECT COUNT(select) FROM table_name [WHERE where (with where_args)]
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – name of the table used in the FROM</p></li>
-<li><p><strong>select</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – columns considered for the query. Defaults to “*”.</p></li>
-<li><p><strong>where</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – where clause, with ? placeholders for the where_args. Defaults to “”.</p></li>
-<li><p><strong>where_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]) – args used in the where clause. Defaults to None.</p></li>
-<li><p><strong>group_by</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – group by clause. Defaults to “”.</p></li>
+<li><p><strong>table_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – name of the table used in the FROM</p></li>
+<li><p><strong>select</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – columns considered for the query. Defaults to “*”.</p></li>
+<li><p><strong>where</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – where clause, with ? placeholders for the where_args. Defaults to “”.</p></li>
+<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]</span>) – args used in the where clause. Defaults to None.</p></li>
+<li><p><strong>group_by</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – group by clause. Defaults to “”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>number of rows</p>
@@ -148,9 +148,9 @@ Executes “DELETE FROM table_name [WHERE where (with where_args)]”</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – name of the table used in the DELETE FROM</p></li>
-<li><p><strong>where</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – where clause, with ? placeholders for the where args. Defaults to “”.</p></li>
-<li><p><strong>where_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]) – args used in the where clause. Defaults to None.</p></li>
+<li><p><strong>table_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – name of the table used in the DELETE FROM</p></li>
+<li><p><strong>where</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – where clause, with ? placeholders for the where args. Defaults to “”.</p></li>
+<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]</span>) – args used in the where clause. Defaults to None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -162,10 +162,10 @@ Executes “DELETE FROM table_name [WHERE where (with where_args)]”</p>
 <dd><p>Creates the connection to the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>db_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – path/name.</p>
+<dd class="field-odd"><p><strong>db_path</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – path/name.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Cursor</span></code>]</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Cursor</span></code>]</span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>sqlite database connection and cursor</p>
@@ -181,10 +181,10 @@ Executes “INSERT INTO table_name ([columns]) VALUES (placeholders)”</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – name of the table used in the INSERT INTO</p></li>
-<li><p><strong>values</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>) – values to be inserted. If multiple_rows is true, tuple of tuples of values to be inserted</p></li>
-<li><p><strong>columns</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>) – columns that will be inserted, as a tuple of strings. Defaults to None.</p></li>
-<li><p><strong>multiple_rows</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – whether or not multiple rows will be inserted at the same time</p></li>
+<li><p><strong>table_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – name of the table used in the INSERT INTO</p></li>
+<li><p><strong>values</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></span>) – values to be inserted. If multiple_rows is true, tuple of tuples of values to be inserted</p></li>
+<li><p><strong>columns</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></span>) – columns that will be inserted, as a tuple of strings. Defaults to None.</p></li>
+<li><p><strong>multiple_rows</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – whether or not multiple rows will be inserted at the same time</p></li>
 </ul>
 </dd>
 </dl>
@@ -197,7 +197,7 @@ Executes “INSERT INTO table_name ([columns]) VALUES (placeholders)”</p>
 Each query must end with a “);” and a carriage return</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – path/name of the text file containing the queries</p>
+<dd class="field-odd"><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – path/name of the text file containing the queries</p>
 </dd>
 </dl>
 </dd></dl>
@@ -209,7 +209,7 @@ Each query must end with a “);” and a carriage return</p>
 Should not be used to select something</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>queries</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – tuple of queries</p>
+<dd class="field-odd"><p><strong>queries</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – tuple of queries</p>
 </dd>
 </dl>
 </dd></dl>
@@ -222,16 +222,16 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – name of the table used in the FROM</p></li>
-<li><p><strong>select</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – columns considered for the query. Defaults to “*”.</p></li>
-<li><p><strong>where</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – where clause, with ? placeholders for the where_args. Defaults to “”.</p></li>
-<li><p><strong>where_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]) – args used in the where clause. Defaults to None.</p></li>
-<li><p><strong>group_by</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – group by clause. Defaults to “”.</p></li>
-<li><p><strong>order_by</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – order by clause. Defaults to “”.</p></li>
+<li><p><strong>table_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – name of the table used in the FROM</p></li>
+<li><p><strong>select</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – columns considered for the query. Defaults to “*”.</p></li>
+<li><p><strong>where</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – where clause, with ? placeholders for the where_args. Defaults to “”.</p></li>
+<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]</span>) – args used in the where clause. Defaults to None.</p></li>
+<li><p><strong>group_by</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – group by clause. Defaults to “”.</p></li>
+<li><p><strong>order_by</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – order by clause. Defaults to “”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>rows from the select</p>
@@ -248,12 +248,12 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cursor</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Cursor</span></code>) – cursor generated by the database</p></li>
-<li><p><strong>row</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code>) – rows of the database</p></li>
+<li><p><strong>cursor</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cursor</span></code></span>) – cursor generated by the database</p></li>
+<li><p><strong>row</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></span>) – rows of the database</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>structure of the database used used by the cursor</p>
@@ -275,7 +275,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_bladrim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_bladrim" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -285,7 +285,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_lei_che_ne_pensa_signorina</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_lei_che_ne_pensa_signorina" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -295,7 +295,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_santino</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_santino" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -305,7 +305,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_smonta_portoni</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_smonta_portoni" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -315,7 +315,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_uni_bandita</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_uni_bandita" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -440,8 +440,8 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>session_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – [ prima | seconda | terza | straordinaria ]</p></li>
-<li><p><strong>to_append</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – element to append</p></li>
+<li><p><strong>session_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – [ prima | seconda | terza | straordinaria ]</p></li>
+<li><p><strong>to_append</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – element to append</p></li>
 </ul>
 </dd>
 </dl>
@@ -466,14 +466,14 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>select_sessione</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – which sessions to select. Defaults to “”.</p></li>
-<li><p><strong>where_sessione</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – specifies what sessions can’t be []. Defaults to “”.</p></li>
-<li><p><strong>where_anno</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – specifies the year. Defaults to “”.</p></li>
-<li><p><strong>where_insegnamento</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – specifies the subject. Defaults to “”.</p></li>
+<li><p><strong>select_sessione</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – which sessions to select. Defaults to “”.</p></li>
+<li><p><strong>where_sessione</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – specifies what sessions can’t be []. Defaults to “”.</p></li>
+<li><p><strong>where_anno</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – specifies the year. Defaults to “”.</p></li>
+<li><p><strong>where_insegnamento</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – specifies the subject. Defaults to “”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.exam.Exam" title="module.data.exam.Exam"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exam</span></code></a>]</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.exam.Exam" title="module.data.exam.Exam"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exam</span></code></a>]</span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>result of the query on the database</p>
@@ -487,7 +487,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Finds all the exams present in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.exam.Exam" title="module.data.exam.Exam"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exam</span></code></a>]</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.exam.Exam" title="module.data.exam.Exam"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exam</span></code></a>]</span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of all the exams</p>
@@ -501,10 +501,10 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Gets the session with the same name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>session_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – [ prima | seconda | terza | straordinaria ]</p>
+<dd class="field-odd"><p><strong>session_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – [ prima | seconda | terza | straordinaria ]</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>]</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>]</span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>session</p>
@@ -519,8 +519,8 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>year_exams</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – current year</p></li>
-<li><p><strong>delete</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – whether the table contents should be deleted first. Defaults to False.</p></li>
+<li><p><strong>year_exams</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – current year</p></li>
+<li><p><strong>delete</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – whether the table contents should be deleted first. Defaults to False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -653,13 +653,13 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>where_anno</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – specifies the year. Defaults to “”.</p></li>
-<li><p><strong>where_giorno</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – specifies the day. Defaults to “”.</p></li>
-<li><p><strong>where_nome</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – specifies the name of the subject. Defaults to “”.</p></li>
+<li><p><strong>where_anno</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – specifies the year. Defaults to “”.</p></li>
+<li><p><strong>where_giorno</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – specifies the day. Defaults to “”.</p></li>
+<li><p><strong>where_nome</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – specifies the name of the subject. Defaults to “”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.lesson.Lesson" title="module.data.lesson.Lesson"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lesson</span></code></a>]</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.lesson.Lesson" title="module.data.lesson.Lesson"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lesson</span></code></a>]</span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>result of the query on the database</p>
@@ -673,7 +673,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Finds all the lessons present in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.lesson.Lesson" title="module.data.lesson.Lesson"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lesson</span></code></a>]</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.lesson.Lesson" title="module.data.lesson.Lesson"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lesson</span></code></a>]</span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of all the lessons</p>
@@ -688,8 +688,8 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>year_exams</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – current year</p></li>
-<li><p><strong>delete</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – whether the table contents should be deleted first. Defaults to False.</p></li>
+<li><p><strong>year_exams</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – current year</p></li>
+<li><p><strong>delete</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – whether the table contents should be deleted first. Defaults to False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -838,10 +838,10 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Produces a list of professors from the database, based on the provided parametes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>where_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – specifies the name of the professor</p>
+<dd class="field-odd"><p><strong>where_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – specifies the name of the professor</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.professor.Professor" title="module.data.professor.Professor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Professor</span></code></a>]</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.professor.Professor" title="module.data.professor.Professor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Professor</span></code></a>]</span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>result of the query on the database</p>
@@ -855,7 +855,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Finds all the professors present in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.professor.Professor" title="module.data.professor.Professor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Professor</span></code></a>]</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.professor.Professor" title="module.data.professor.Professor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Professor</span></code></a>]</span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of all the professors</p>
@@ -869,7 +869,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Scrapes all the professors and stores them in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>delete</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – whether the table contents should be deleted first. Defaults to False.</p>
+<dd class="field-odd"><p><strong>delete</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – whether the table contents should be deleted first. Defaults to False.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -903,7 +903,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Saves multiple Scrapable objects at once in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>scrapables</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>) – list of Scrapable objects to save</p>
+<dd class="field-odd"><p><strong>scrapables</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></span>) – list of Scrapable objects to save</p>
 </dd>
 </dl>
 </dd></dl>
@@ -921,13 +921,13 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>where</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – where clause, with ? placeholders for the where_args. Defaults to “”.</p></li>
-<li><p><strong>where_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]) – args used in the where clause. Defaults to None.</p></li>
-<li><p><strong>group_by</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – group by clause. Defaults to “”.</p></li>
+<li><p><strong>where</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – where clause, with ? placeholders for the where_args. Defaults to “”.</p></li>
+<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]</span>) – args used in the where clause. Defaults to None.</p></li>
+<li><p><strong>group_by</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – group by clause. Defaults to “”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>number of scrapable objects</p>
@@ -953,7 +953,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Finds all the scrapable objects present in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of all the scrapable objects</p>
@@ -1073,7 +1073,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Produces a list of scrapables from the database, based on the provided parametes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.timetable_slot.TimetableSlot" title="module.data.timetable_slot.TimetableSlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimetableSlot</span></code></a>]</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.timetable_slot.TimetableSlot" title="module.data.timetable_slot.TimetableSlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimetableSlot</span></code></a>]</span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>result of the query on the database</p>
@@ -1087,7 +1087,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Finds all the timetable slots present in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.timetable_slot.TimetableSlot" title="module.data.timetable_slot.TimetableSlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimetableSlot</span></code></a>]</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#module.data.timetable_slot.TimetableSlot" title="module.data.timetable_slot.TimetableSlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimetableSlot</span></code></a>]</span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of all the timetable slots</p>
@@ -1101,7 +1101,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Finds the maximum value of giorno</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>result of the query on the database</p>
@@ -1121,7 +1121,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd><p>Scrapes the timetable slots of the provided year and stores them in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>delete</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – whether the table contents should be deleted first. Defaults to False.</p>
+<dd class="field-odd"><p><strong>delete</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – whether the table contents should be deleted first. Defaults to False.</p>
 </dd>
 </dl>
 </dd></dl>
