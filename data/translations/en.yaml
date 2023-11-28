@@ -51,6 +51,7 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   👔 /prof <nome> - _es. /prof Barbanera_
   👥 /rappresentanti - _list of representatives_
   📚 /biblioteca - _DMI's library working hours_
+  📚 /aule_studio - _DMI's aule working hours location_
   <cusicon> /cus - _location and contacts_
   ☁ /cloud - _ access to cloud shared folders_
   📣 /report - _submit a report to representatives_
@@ -60,12 +61,12 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   🧑‍💻 /contributors - _shows the developers that contributed to the bot development_
   🧾 /regolamentodidattico - _gives a pdf file of the desired year's educational regulations_
   ❓ /faq - _shows the frequently asked questions_
-  
+
   *Receptionist's contacts and working hours:*
   ✍ /sdidattica - _edcational receptionist_
   📓 /studenti - _student receptionist_
   /cea - _information for Center for Computing Systems and Scientific and Educational Applications_
-  
+
   *ERSU's contactsand working hours:*
   🗃 /ersu - _location of the main ersu office_
   🗃 /ufficioersu - _(ersu office for student cards)_
@@ -96,14 +97,18 @@ HELP_CDL_CLASSES_LINK_TOOLTIP_ID: |-
   _Mathematics Master (LM-40):_ [link](%capybara%)
 HELP_CDL_LIBRARY_TOOLTIP_ID: |-
   *Library working hours:*
-  
+
   Reading room:
-  
+
   %capybara%
 
   Leasing Service:
-  
+
   %capybara%
+HELP_CDL_AULESTUDIO_TOOLTIP_ID: |-
+  Study Room: %capybara%
+
+  Study Room: %capybara%
 
 # /help-Reprs command
 REPRS_HEADER_TEXT_ID: "With which representatives you want to talk?"
@@ -113,19 +118,19 @@ REPRS_DMI_MATH_TEXT_ID: "Mathematics Reps"
 REPRS_DMI_TOOLTIP_ID: "*DMI's Representatives*"
 REPRS_DMI_CS_TOOLTIP_ID: |-
   *Computer Science Bachelor Program Representatives*
-  
+
   %capybara%
-  
+
   *Computer Science Master Program Representatives*
-  
+
   %capybara%
 REPRS_DMI_MATH_TOOLTIP_ID: |-
   *Mathematics Bachelor Program Representatives*
-  
+
   %capybara%
-  
+
   *Mathematics Master Program Representatives*
-  
+
   %capybara%
 
 # /help-Segr command
@@ -136,7 +141,7 @@ SEGR_DID_TOOLTIP_ID: |-
   Headquarters at the Department of Mathematics and Computer Science (second floor near the Directorate)  
 
   **Secretarial staff**
-  
+
   %capybara%
 
   **Didactic Secretariat**
@@ -148,49 +153,49 @@ SEGR_DID_TOOLTIP_ID: |-
   %capybara%
 SEGR_STU_TOOLTIP_ID: |-
   *Student receptionist*
-  
+
   Location:
-  
+
   %capybara%
-  
+
   Contacts:
-  
+
   %capybara%
 
   🕑 Working hours:
-  
+
   %capybara%
 
   🕑 Winter working hours:
-  
+
   %capybara%
 
   Student Careers Office - Scientific Area
 
   Mathematics Bachelor & Master Programs (L-LM)
-  
+
   %capybara%
 
   Master Program Bachelor Program (L)
-  
+
   %capybara%
-  
+
   Computer Science Master Program (LM)
-  
+
   %capybara%
 SEGR_CEA_TOOLTIP_ID: |-
   *Center for Computing Systems and Scientific and Educational Applications (CEA)*
-  
+
   Contacts:
-  
+
   %capybara%
-  
+
   Location:
-  
+
   %capybara%
-  
+
   Website:
-  
+
   %capybara%
 
 # /help-ERSU command
@@ -199,27 +204,27 @@ ERSU_OFFICE_TEXT_ID: "ERSU's Office"
 ERSU_URP_TEXT_ID: "URP"
 ERSU_TOOLTIP_ID: |-
   *ERSU Catania - Headquarters*
-  
+
   Location:
-  
+
   %capybara%
-  
+
   Contacts:
-  
+
   %capybara%
 
   🕑 Working hours:
-  
+
   %capybara%
 ERSU_OFFICE_TOOLTIP_ID: |-
   *ERSU Catania - Student ID Card Office*
-  
+
   Location:
-  
+
   %capybara%
-  
+
   🕑 Working hours:
-  
+
   %capybara%
 
   Location:
@@ -231,17 +236,17 @@ ERSU_OFFICE_TOOLTIP_ID: |-
   %capybara%
 ERSU_URP_TOOLTIP_ID: |-
   *URP Students*
-  
+
   Location:
-  
+
   %capybara%
-  
+
   Contacts:
-  
+
   %capybara%
 
   🕑 Working hours:
-  
+
   %capybara%
 
 # /help-projct/credits command

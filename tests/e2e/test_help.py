@@ -22,6 +22,7 @@ async def test_help_buttons(client: TelegramClient):
                 "md_professori",
                 "sm_help_rapp_menu",
                 "md_biblioteca",
+                "md_aule_studio",
                 "md_gruppi",
             ],
             'reg_button_home': [],  # tested by `/regolamentodidattico`

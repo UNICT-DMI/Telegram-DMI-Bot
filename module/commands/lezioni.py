@@ -2,21 +2,68 @@
 """/lezioni command"""
 import logging
 import re
+import requests
+import os
+import time
+import datetime
+from bs4 import BeautifulSoup
 from typing import Tuple, Optional
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
 from telegram.ext import CallbackContext
 from module.data import Lesson
-from module.shared import check_log, send_message
+from module.shared import check_log, send_message, read_md, config_map
 from module.data.vars import TEXT_IDS, PLACE_HOLDER
 from module.utils.multi_lang_utils import get_locale, get_locale_code
+
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+def get_url(courses: str) -> str:
+    """Extract the L-31 url from markdown file.
+
+    Args:
+        courses: all available courses
+
+    Returns:
+        link of the website
+    """
+    course_index = courses.find("L-31")
+    if course_index != -1:
+        token_pos = courses.find(":", course_index)
+        endl_index = courses.find("\n", course_index)
+
+        if token_pos != -1:
+            main_link = courses[token_pos + 1:endl_index]
+    return main_link
+
+
+def get_orario_file() -> Optional[bytes]:
+    """Download pdf file from website.
+    
+    Returns:
+        None or downloaded file
+    """
+    main_link = get_url(read_md("lezioni_link"))
+    soup = BeautifulSoup(requests.get(main_link, timeout=10).content, "html.parser")
+
+    for item in soup.find_all("a"):
+        if config_map['lectures']['href_token'] in str(item):
+            item = item.get("href")
+            full_pdf_link = config_map['lectures']['dmi_link'] + item
+
+            response = requests.get(full_pdf_link, timeout=10).content
+            with open(config_map['lectures']['file_orario_path'], "wb") as file:
+                file.write(response)
+            return response
+
+    return None
+
+
 def lezioni(update: Update, context: CallbackContext) -> None:
     """Called by the /lezioni command.
-    Shows the options available to execute a lesson query.
+    Sends a pdf file to user downloaded from website.
 
     Args:
         update: update event
@@ -39,8 +86,31 @@ def lezioni(update: Update, context: CallbackContext) -> None:
         context.bot.sendMessage(chat_id=chat_id, text=get_locale(locale, TEXT_IDS.USE_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
         context.bot.sendMessage(chat_id=user_id, text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/lezioni"))
 
-    message_text, inline_keyboard = get_lezioni_text_InLineKeyboard(locale, context)
-    context.bot.sendMessage(chat_id=user_id, text=message_text, reply_markup=inline_keyboard)
+    if os.path.exists(config_map['lectures']['file_orario_path']): # Exist local file
+        current_time = time.time()
+        file_modified_time = os.path.getmtime(config_map['lectures']['file_orario_path'])
+        time_difference = current_time - file_modified_time
+        formatted_time= datetime.datetime.fromtimestamp(file_modified_time).strftime('%d-%m-%Y %H:%M:%S')
+
+        if time_difference < config_map['lectures']['expire_time']: # File not expired
+            with open(config_map['lectures']['file_orario_path'], "rb") as file:
+                context.bot.sendDocument(chat_id=update.effective_chat.id, document=file)
+                context.bot.sendMessage(chat_id=chat_id, text=f"Ultimo aggiornamento: {formatted_time}")
+                return
+        else: # Not exists local file, so download it
+            pass
+
+    file = get_orario_file()
+
+    if file is None:
+        context.bot.sendMessage(chat_id=chat_id, text="Orario non disponibile attualmente. Ritenta più tardi")
+        if os.path.exists(config_map['lectures']['file_orario_path']):
+            with open(config_map['lectures']['file_orario_path'], "rb") as file:
+                context.bot.sendDocument(chat_id=update.effective_chat.id, document=file)
+    else:
+        with open(config_map['lectures']['file_orario_path'], "rb") as file:
+            context.bot.sendDocument(chat_id=update.effective_chat.id, document=file)
+            context.bot.sendMessage(chat_id=chat_id, text="Ultimo aggiornamento: oggi")
 
 
 def lezioni_handler(update: Update, context: CallbackContext) -> None:

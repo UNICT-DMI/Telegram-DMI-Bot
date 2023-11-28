@@ -129,4 +129,4 @@ pydrive/*
 .vscode
 .idea
 data/json/subjs.json
-.DS_store
+**/.DS_Store
