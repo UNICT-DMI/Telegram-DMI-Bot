@@ -23,7 +23,8 @@ from module.job_updater import updater_lep
 from module.shared import config_map
 from module.utils.multi_lang_utils import load_translations, get_regex_multi_lang
 from module.debug import error_handler, log_message
-
+from webapp.app import app
+import uvicorn
 
 def add_commands(up: Updater) -> None:
     """Adds the list of commands with their description to the bot
@@ -195,6 +196,7 @@ def main() -> None:
     add_jobs(updater.dispatcher)
 
     updater.start_polling()
+    uvicorn.run(app, host="0.0.0.0", port=8000)
     updater.idle()
 
 
