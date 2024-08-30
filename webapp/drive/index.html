@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DMI Drive</title>
+        <meta name = "viewport" content = "width=device-width, initial-scale=1" />
+        <link rel = "stylesheet" href = "static/style.css">
+        <script src = "https://telegram.org/js/telegram-web-app.js"></script>
+        <link href='https://unpkg.com/css.gg@2.0.0/icons/css/folder.css' rel='stylesheet'>
+        <script type = "module" src = "static/scripts/index.ts"></script>
+        <script type = "module" src = "static/scripts/back.ts"></script>
+    </head>
+    <body>
+        <header class = "w-full mt-10">
+            <div class = "w-full flex flex-row justify-center">
+                <img width = "100" src = "https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg">
+                <!-- <img width = "150" src = "../static/assets/logo.png"> -->
+            </div>
+        </header>
+        <div class = "w-full flex flex-col items-center justify-center">
+            <folders-div id = "folders-list">
+                <drive-back-button class = "folder hidden" id = "back-button"></drive-back-button>
+                <!-- <folder id = "folder" class = "bg-neutral-200 w-full h-10 p-6 flex flex-row items-center shadow-md hover:shadow-lg transition-shadow cursor-pointer rounded-md">
+                    <i class = "mr-5 gg-folder text-neutral-500"></i>
+                    <folder-name class = "font-bold text-neutral-700">Informatica</folder-name>
+                </folder> -->
+            </folders-div>
+            <files-div id = "files-list">
+                <!-- <file id = "file" class = "bg-neutral-300 flex flex-col p-5 shadow-md hover:shadow-lg transition-shadow cursor-pointer rounded-md">
+                    <img class = "w-32 rounded-md rounded-bl-[28px]" src = "https://telegra.ph/file/cc429f1e5d235f54a4500.png">
+                    <file-name class = "mt-5 font-bold text-neutral-900">Appunti.pdf</file-name>
+                </file> -->
+            </files-div> 
+        </div>
+    </body>
+    <!-- <pwa>
+        <meta name = "theme-color" content = "#ffffff">
+        <link rel = "manifest" href = "static/web/manifest.json">
+        <link sizes = "500x500" rel = "apple-touch-icon" href = "static/assets/logo.png">
+        
+        <script type = "module">
+            document.addEventListener('DOMContentLoaded', () => {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register(new URL('static/web/sw.js', import.meta.url), {scope: '/'});
+                }
+            });
+        </script>
+    </pwa> -->
+</html>

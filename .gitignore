@@ -130,3 +130,7 @@ pydrive/*
 .idea
 data/json/subjs.json
 **/.DS_Store
+
+# Webapp
+node_modules/
+.parcel-cache/
