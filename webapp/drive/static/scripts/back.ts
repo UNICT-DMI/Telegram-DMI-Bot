@@ -4,7 +4,7 @@ import { update_content } from "./update";
 export class BackButton extends Folder {
     foldersHistory = new Array<string>();
 
-    connectedCallback() {
+    connectedCallback(): void {
         this.update({
             title: '..',
             id: 'back',
@@ -12,7 +12,7 @@ export class BackButton extends Folder {
         })
     }
 
-    onFolderChange(folderId: string) {
+    onFolderChange(folderId: string): void {
         this.foldersHistory.push(folderId);
         if (folderId != '') {
             this.show();

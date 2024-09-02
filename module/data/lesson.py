@@ -75,7 +75,7 @@ class Lesson(Scrapable):
 
                 if soup.find('b', id='attivo').text[0] == 'S':
                     semestre = 2
-                elif soup.find('b', id='attivo').text[0] == 'P':
+                else:
                     semestre = 1
 
                 table = soup.find('table', id='tbl_small_font')

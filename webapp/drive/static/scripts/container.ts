@@ -19,14 +19,14 @@ export class Container<T> {
         this.elementType = elementType;
     }
 
-    setContent(content: T[]) {
+    setContent(content: T[]): void {
         // Displays the given list of objects
         for (var i=0; i < content.length; i++)
             this.addOrUpdate(content[i], i);
         this.hideFrom(i);
     }
 
-    addOrUpdate(data: T, i: number = 0) {
+    addOrUpdate(data: T, i: number = 0): void {
         if (this.content[i]) {
             // If an object has been created already,
             // update its content and show it
@@ -34,7 +34,7 @@ export class Container<T> {
             this.content[i].show();
         } else {
             // Otherwise, create a new one
-            let e = new this.elementType(this.parent, i);
+            const e = new this.elementType(this.parent, i);
             e.update(data);
             e.show();
             this.content.push(e);
@@ -42,7 +42,7 @@ export class Container<T> {
         }
     }
 
-    hideFrom(i: number = 0) {
+    hideFrom(i: number = 0): void {
         // Start hiding elements from i till the end
         for (; i < this.content.length; i++) {
             this.content[i].hide();

@@ -20,21 +20,21 @@ export class Folder extends HTMLElement {
         this.classList.add('drive-folder');
     }
 
-    onClick() {
+    onClick(): void {
         // this.classList.add('fadeout');
         update_content(this.data.id);
     }
 
-    update(data: DriveResource) {
+    update(data: DriveResource): void {
         this.data = data;
         this.label.textContent = this.data.title;
     }
 
-    show() {
+    show(): void {
         this.classList.remove('hidden');
     }
 
-    hide() {
+    hide(): void {
         this.classList.add('hidden');
     }
 };

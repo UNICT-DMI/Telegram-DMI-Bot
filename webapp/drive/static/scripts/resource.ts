@@ -1,4 +1,4 @@
-export class DriveResource {
+export interface DriveResource {
     // Represents a file or a folder
     // as received from Google Drive.
     id: string;

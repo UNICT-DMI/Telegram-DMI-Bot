@@ -22,7 +22,7 @@ class File extends HTMLElement {
         this.classList.add('drive-file');
     }
 
-    onClick() {
+    onClick(): void {
         if (!this.clicked) {
             this.clicked = true;
             this.classList.add('clicked');
@@ -36,17 +36,17 @@ class File extends HTMLElement {
         }
     }
 
-    update(data: DriveResource) {
+    update(data: DriveResource): void {
         this.data = data;
         this.label.textContent = this.data.title;
         this.image.src = match(data.mimeType)
     }
 
-    show() {
+    show(): void {
         this.classList.remove('hidden');
     }
 
-    hide() {
+    hide(): void {
         this.classList.add('hidden');
     }
 };

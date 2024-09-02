@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from pydrive2.files import MediaIoReadable
+from starlette.responses import ContentStream
 from module.utils.drive_utils import drive_utils
 
 
@@ -38,7 +40,7 @@ def _(file_id: str):
         }
     )
 
-def stream(content):
+def stream(content: MediaIoReadable) -> ContentStream:
     chunk = True
     while chunk:
         chunk = content.read()

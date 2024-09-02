@@ -1,5 +1,5 @@
 // Required for Progressive Web Apps.
-var cacheName = 'v1:static';
+const cacheName = 'v1:static';
 
 self.addEventListener('install', function(e) {
     e.waitUntil(

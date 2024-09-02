@@ -7,7 +7,7 @@ const images = {
 }
 
 
-export function match(mime: string) {
+export function match(mime: string): string {
     const entries = Object.entries(images);
     for (let i=0; i < entries.length; i++) {
         if (mime.includes(entries[i][0])) {

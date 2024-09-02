@@ -1,4 +1,4 @@
-import { Folder, FOLDERMIME, folders } from "./folder";
+import { FOLDERMIME, folders } from "./folder";
 import { files } from "./file";
 import { DriveResource } from "./resource";
 import { BackButton } from "./back";
@@ -6,7 +6,7 @@ import { BackButton } from "./back";
 
 const backButton = document.getElementById('back-button') as BackButton;
 
-export function update_content(folderId: string) {
+export function update_content(folderId: string): void {
     fetch(`/drive/folder?folder_id=${folderId}`)
     .then(response => response.json())
     .then((data: DriveResource[]) => {
