@@ -102,6 +102,7 @@ body {
 .drive-file.clicked {
     opacity: 50%;
     cursor: progress;
+
 }
 
 .hidden {
