@@ -1,9 +1,4 @@
 """/drive command"""
-import os
-
-import yaml
-from pydrive2.auth import AuthError, GoogleAuth
-from pydrive2.drive import GoogleDrive
 from pydrive2.files import GoogleDriveFile
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, Bot
 from telegram.ext import CallbackContext
@@ -11,23 +6,7 @@ from module.shared import check_log
 from module.debug import log_error
 from module.data.vars import TEXT_IDS, PLACE_HOLDER
 from module.utils.multi_lang_utils import get_locale
-
-gdrive_interface = None
-
-with open('config/settings.yaml', 'r', encoding='utf-8') as yaml_config:
-    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
-
-
-def get_gdrive_interface() -> GoogleDrive:
-    global gdrive_interface
-
-    if gdrive_interface is None:
-        # gauth uses all the client_config of settings.yaml
-        gauth = GoogleAuth(settings_file="config/settings.yaml")
-        gauth.CommandLineAuth()
-        gdrive_interface = GoogleDrive(gauth)
-
-    return gdrive_interface
+from module.utils.drive_utils import drive_utils
 
 
 def drive(update: Update, context: CallbackContext) -> None:
@@ -39,7 +18,6 @@ def drive(update: Update, context: CallbackContext) -> None:
         context: context passed by the handler
     """
     check_log(update, "drive")
-    gdrive: GoogleDrive = get_gdrive_interface()
     chat_id: int = update.message.chat_id
     locale: str = update.message.from_user.language_code
     if chat_id < 0:
@@ -48,24 +26,20 @@ def drive(update: Update, context: CallbackContext) -> None:
         )
         return
 
-    try:
-        file_list = gdrive.ListFile(
-            {
-                'q': f"'{config_map['drive_folder_id']}' in parents and trashed=false",
-                'orderBy': 'folder,title',
-            }
-        ).GetList()
-
-    except AuthError as err:
-        log_error(header="drive", error=err)
-
-    # keyboard that allows the user to navigate the folder
-    keyboard = get_files_keyboard(file_list, row_len=3)
-    context.bot.sendMessage(
-        chat_id=chat_id,
-        text=get_locale(locale, TEXT_IDS.DRIVE_HEADER_TEXT_ID),
-        reply_markup=InlineKeyboardMarkup(keyboard),
-    )
+    file_list = drive_utils.list_files()
+    if file_list:
+        # keyboard that allows the user to navigate the folder
+        keyboard = get_files_keyboard(file_list, row_len=3)
+        context.bot.sendMessage(
+            chat_id=chat_id,
+            text=get_locale(locale, TEXT_IDS.DRIVE_HEADER_TEXT_ID),
+            reply_markup=InlineKeyboardMarkup(keyboard),
+        )
+    else:
+        context.bot.sendMessage(
+            chat_id=chat_id,
+            text=get_locale(locale, TEXT_IDS.DRIVE_ERROR_DEVS_TEXT_ID),
+        )
 
 
 def drive_handler(update: Update, context: CallbackContext) -> None:
@@ -78,28 +52,17 @@ def drive_handler(update: Update, context: CallbackContext) -> None:
     """
     bot: Bot = context.bot
 
-    gdrive: GoogleDrive = get_gdrive_interface()
-
     query_data: str = update.callback_query.data.replace("drive_file_", "")
     chat_id: int = update.callback_query.from_user.id
     message_id: int = update.callback_query.message.message_id
     locale: str = update.callback_query.from_user.language_code
-    fetched_file: GoogleDriveFile = gdrive.CreateFile({'id': query_data})
+    fetched_file: GoogleDriveFile = drive_utils.get_file(query_data)
 
     # the user clicked on a folder
     if fetched_file['mimeType'] == "application/vnd.google-apps.folder":
-        try:
-            istance_file = gdrive.ListFile(
-                {
-                    'q': f"'{fetched_file['id']}' in parents and trashed=false",
-                    'orderBy': 'folder,title',
-                }
-            )
-            file_list = istance_file.GetList()
+        file_list = drive_utils.list_files(fetched_file['id'])
 
-        # pylint: disable=broad-except
-        except Exception as e:
-            log_error(header="drive_handler", error=e)
+        if file_list is None:
             bot.editMessageText(
                 chat_id=chat_id,
                 message_id=message_id,
@@ -139,19 +102,12 @@ def drive_handler(update: Update, context: CallbackContext) -> None:
 
     else:  # the user clicked on a file
         try:
-            file_d = gdrive.CreateFile({'id': fetched_file['id']})
-
+            file_d = drive_utils.get_file(fetched_file['id'])
             if int(file_d['fileSize']) < 5e7:
-
-                file_path = f"file/{fetched_file['title']}"
-                file_d.GetContentFile(file_path)
-
+                f = file_d.GetContentIOBuffer()
+                f.name = fetched_file['title']
                 bot.sendChatAction(chat_id=chat_id, action="UPLOAD_DOCUMENT")
-
-                with open(file_path, 'rb') as f:
-                    bot.sendDocument(chat_id=chat_id, document=f)
-
-                os.remove(file_path)
+                bot.sendDocument(chat_id=chat_id, document=f)
 
             else:
                 bot.sendMessage(

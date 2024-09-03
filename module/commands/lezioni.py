@@ -35,8 +35,8 @@ def get_url(courses: str) -> str:
         endl_index = courses.find("\n", course_index)
 
         if token_pos != -1:
-            main_link = courses[token_pos + 1:endl_index]
-    return main_link
+            return courses[token_pos + 1:endl_index]
+    return ''
 
 
 def get_orario_file() -> Optional[bytes]:

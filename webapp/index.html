@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DMI Bot</title>
+        <meta name = "viewport" content = "width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="static/style.css">
+        <script src = "https://telegram.org/js/telegram-web-app.js"></script>
+    </head>
+    <body>
+        <iframe id = "page-content" class = "hidden absolute top-0 left-0 h-full w-full"></iframe>
+        <script>
+            const iframe = document.getElementById('page-content');
+            window.globalThis.setUrl = function setUrl(url) {
+                window.Telegram.WebApp.BackButton.show();
+                window.Telegram.WebApp.BackButton.onClick(() => {iframe.classList.add('hidden'); window.Telegram.WebApp.BackButton.hide();});
+                iframe.src = url;
+                iframe.classList.remove('hidden');
+            }
+        </script>
+        <header class = "w-full mt-10">
+            <div class = "w-11/12 flex flex-row">
+                <div class = "w-full"></div>
+                <!-- <img width = "100" src = "https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg"> -->
+                <img width = "150" src = "static/assets/logo.png">
+            </div>
+        </header>
+        <div class = "p-4 flex flex-row flex-wrap justify-around">
+            <div class = "bubble rounded-md p-4 mb-3 cursor-pointer w-[45%] flex flex-col transition-colors" onclick = "setUrl('https://telegram.unictdev.org/');">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Card%20Index%20Dividers.webp" alt="Card Index Dividers" width="50" height="50" />
+                <b class = "mt-2">Telegram Hub</b>
+            </div>
+            <div class = "bubble rounded-md p-4 mb-3 cursor-pointer w-[45%] flex flex-col transition-colors" onclick = "window.open('https://t.me/UNICT_Book_Market_Bot?startapp=dmi-bot')">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Books.webp" alt="Books" width="50" height="50" />
+                <b class = "mt-2">Book Market</b>
+            </div>
+            <div class = "bubble rounded-md p-4 mb-3 cursor-pointer w-[45%] flex flex-col transition-colors" onclick = "setUrl('drive/index.html');">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/File%20Folder.webp" alt="File Folder" width="50" height="50" />
+                <b class = "mt-2">DMI Drive</b>
+            </div>
+            <div class = "bubble rounded-md p-4 mb-3 cursor-pointer w-[45%] flex flex-col transition-colors" onclick = "window.location.href='https://t.me/Spotted_DMI/';">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Symbols/Speech%20Balloon.webp" alt="Speech Balloon" width="50" height="50" />
+                <b class = "mt-2">Spotted DMI</b>
+            </div>
+            <div class = "bubble rounded-md p-4 mb-3 cursor-pointer w-[45%] flex flex-col transition-colors" onclick = "window.location.href='https://t.me/Ask_DMI/';">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Symbols/Question%20Mark.webp" alt="Question Mark" width="50" height="50" />
+                <b class = "mt-2">Ask DMI</b>
+            </div>
+            <div class = "bubble rounded-md p-4 mb-3 cursor-pointer w-[45%] flex flex-col transition-colors" onclick = "setUrl('https://unict-dmi.github.io/OPIS-Manager/#/');">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Bar%20Chart.webp" alt="Bar Chart" width="50" height="50" />
+                <b class = "mt-2">OPIS Manager</b>
+            </div>
+        </div>
+        <a href="drive/index.html"></a>
+    </body>
+</html>
