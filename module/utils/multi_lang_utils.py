@@ -9,11 +9,18 @@ from module.data.vars import TEXT_IDS, ON_DEMAND_TEXTS, PLACE_HOLDER, ON_DEMAND_
 
 translations: dict[str, dict[str, str]] = {}
 
+def check_load_translations() -> None:
+    # translations is empty running e2e
+    if not translations:
+        load_translations()
 
 def get_locale(language_code: str, text_id: TEXT_IDS) -> str:
+    check_load_translations()
     language = language_code if language_code in translations else "it"
+
     if text_id.name in translations[language]:
         return translations[language][text_id.name]
+
     return translations["it"][text_id.name]
 
 
@@ -26,6 +33,7 @@ def load_translations() -> None:
 
 
 def get_regex_multi_lang(text_id: TEXT_IDS) -> str:
+    check_load_translations()
     pattern: str = ""
     for language in translations:
         pattern = f'{pattern}{get_locale(language, text_id)}|'

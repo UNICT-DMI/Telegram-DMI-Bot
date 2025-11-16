@@ -19,7 +19,7 @@ async def test_report_cmd(client: TelegramClient):
 
         assert (
             resp.text
-            == 'Errore. Inserisci la tua segnalazione dopo /report (Ad esempio /report Invasione ingegneri in corso.)'
+            == 'Error. Enter your report after the /report (Example: /report Capyrabas are raining down from the sky.)'
         )
 
         commands = ("/report Test", "/report Test Report")

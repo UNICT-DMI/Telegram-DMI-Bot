@@ -28,7 +28,7 @@
 #         }
 
 #         for button, expected_test in buttons.items():
-#             await resp.click(data=button)  # click the button
+#             await resp.click(data=button)
 #             resp: Message = await conv.get_edit()
 
 #             assert resp.text == expected_test
