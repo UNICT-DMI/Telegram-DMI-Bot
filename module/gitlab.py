@@ -71,7 +71,6 @@ def init_api():
     """ Initialize the GitLab APIs """
 
     global api
-    global session
 
     if not api:
         logger.info(msg="API Initialized")
@@ -106,8 +105,6 @@ def get_subgroups(context, group_id):
         Paramaters:
             group_id: Parent group ID
     """
-
-    global api
 
     try:
         return api.groups.get(group_id).subgroups.list()
@@ -145,8 +142,6 @@ def get_repository_tree(project_id, path='/', recursive=False):
             path: Folder path of the project (default: '/')
             recursive: If True return every file or directory of the repository (default: False)
     """
-
-    global api
 
     try:
         return api.projects.get(project_id).repository_tree(path=path, recursive=recursive)
@@ -195,8 +190,6 @@ def get_blob_file(project_id, blob_id):
             blob_id: Blob ID
     """
 
-    global api
-
     try:
         blob_file = api.projects.get(project_id).repository_blob(blob_id)
 
@@ -226,8 +219,6 @@ def download_blob_file_async_internal(update: Update, context: CallbackContext, 
             blob_name: The name of file to download
             db_result: The result of query to achieve web_url, pathname and parent_id
     """
-
-    global session
 
     chat_id = get_chat_id(update)
 
@@ -263,10 +254,6 @@ def download_blob_file_async(update: Update, context: CallbackContext, blob=None
             update: "update" object of Telegram API
             blob: Object containing ID and name of a blob (default: None)
     """
-
-    global db
-    global api
-    global session
 
     if blob:
         blob_id, blob_name = blob['id'], blob['name']
