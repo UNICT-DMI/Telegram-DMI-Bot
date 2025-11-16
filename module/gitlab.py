@@ -125,8 +125,6 @@ def get_projects(group_id):
             group_id: Parent group ID
     """
 
-    global api
-
     try:
         return api.groups.get(group_id).projects.list()
     except gitlab.GitlabGetError:
