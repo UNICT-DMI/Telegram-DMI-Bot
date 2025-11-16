@@ -55,7 +55,7 @@ def stats_gen(update: Update, context: CallbackContext, days: int = 0) -> None:
     text = f"Record di {days} giorni:\n" if days > 0 else "Record Globale:\n"
 
     results = DbManager.select_from(select='type, COUNT(chat_id) as n', table_name='stat_list', where=where, group_by="type", order_by="n DESC")
-    print(results)
+
     rows = [row for row in results if row['Type'] not in EASTER_EGG]
 
     total = 0

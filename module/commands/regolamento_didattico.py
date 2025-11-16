@@ -180,4 +180,5 @@ def get_cdl_keyboard(locale: str, reg_doc: dict = None) -> InlineKeyboardMarkup:
     keyboard = [[InlineKeyboardButton(r.split('_')[0], callback_data=r)] for r in reg_doc]
     keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_TO_MAIN_MENU_KEYBOARD_TEXT_ID), callback_data='reg_button_help')])
     keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.BACK_BUTTON_TEXT_TEXT_ID), callback_data='reg_button_home')])
+
     return InlineKeyboardMarkup(keyboard)

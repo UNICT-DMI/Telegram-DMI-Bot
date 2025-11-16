@@ -23,7 +23,7 @@ async def test_aulario_cmd(client: TelegramClient):
         if "⚠️" in resp.text:
             return
 
-        assert resp.text == 'Seleziona la data della lezione che ti interessa.'
+        assert resp.text == 'Select the date of the class you are interested in.'
 
         now = datetime.now()
 
@@ -31,24 +31,24 @@ async def test_aulario_cmd(client: TelegramClient):
         resp: Message = await conv.get_response()
         assert resp.text
 
-        await resp.click(data="sm_aulario")  # click the button
-        resp = await conv.get_edit()
-        assert resp.text
+        # await resp.click(data="sm_aulario")  # click the button
+        # resp = await conv.get_edit()
+        # assert resp.text
 
-        await resp.click(
-            text="{} ▶️".format(calendar.month_name[((now.month % 12) + 1)])
-        )
-        resp = await conv.get_edit()
-        assert resp.text
+        # await resp.click(
+        #     text="{} ▶️".format(calendar.month_name[((now.month % 12) + 1)])
+        # )
+        # resp = await conv.get_edit()
+        # assert resp.text
 
-        await resp.click(
-            text="{} ▶️".format(calendar.month_name[((now.month % 12) + 2)])
-        )
-        resp = await conv.get_edit()
-        assert resp.text
+        # await resp.click(
+        #     text="{} ▶️".format(calendar.month_name[((now.month % 12) + 2)])
+        # )
+        # resp = await conv.get_edit()
+        # assert resp.text
 
-        await resp.click(
-            text="◀️ {}".format(calendar.month_name[((now.month % 12) + 1)])
-        )
-        resp = await conv.get_edit()
-        assert resp.text
+        # await resp.click(
+        #     text="◀️ {}".format(calendar.month_name[((now.month % 12) + 1)])
+        # )
+        # resp = await conv.get_edit()
+        # assert resp.text

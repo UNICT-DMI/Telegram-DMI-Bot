@@ -20,14 +20,12 @@ async def test_prof_cmd(client: TelegramClient):
             "/prof bilotta",
             "/prof giuseppe bilotta",
             "/prof rocco senteta",
-            "/prof Dario",
             "/prof a",
+            "/prof Allegra",
         )
 
         for command in commands:
-            await conv.send_message(command)  # send a command
+            await conv.send_message(command)
             resp: Message = await conv.get_response()
 
             assert resp.text
-
-            sleep(2)
