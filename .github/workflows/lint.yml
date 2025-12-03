@@ -1,0 +1,14 @@
+name: Linting
+
+on:
+  push:
+    paths-ignore:
+      - ".gitignore"
+      - "README.md"
+      - "docs/**"
+
+jobs:
+  build:
+    uses: unict-dmi/reusable-workflows/.github/workflows/python-lint.yml@main
+    with:
+      repo_ref: ${{ github.repository }}
