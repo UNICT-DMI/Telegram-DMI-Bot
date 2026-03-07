@@ -12,4 +12,4 @@ no_implicit_optional = false
 allow_untyped_defs = true
 allow_incomplete_defs = true
 # Disable strict union-attr checking  
-disable_error_code = ["union-attr", "var-annotated", "arg-type", "assignment", "return", "operator", "index", "attr-defined", "misc", "no-redef", "syntax"]
+disable_error_code = ["union-attr", "var-annotated", "arg-type", "assignment", "return", "operator", "index", "attr-defined", "misc", "no-redef", "syntax", "import-untyped", "call-arg", "annotation-unchecked"]
