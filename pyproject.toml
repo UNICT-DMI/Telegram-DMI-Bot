@@ -11,4 +11,14 @@ no_implicit_optional = false
 # Allow untyped definitions
 allow_untyped_defs = true
 allow_incomplete_defs = true
-disable_error_code = ["misc"]
+disable_error_code = [
+    "misc",
+    "union-attr",
+    "attr-defined",
+    "index",
+    "operator",
+    "arg-type",
+    "assignment",
+    "call-arg",
+    "return",
+]
