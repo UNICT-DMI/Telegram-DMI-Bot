@@ -4,14 +4,17 @@ import logging
 import re
 from typing import Optional
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, CallbackQuery
+from telegram import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
+
 from module.data import Exam
+from module.data.vars import PLACE_HOLDER, TEXT_IDS
 from module.shared import check_log, send_message
-from module.data.vars import TEXT_IDS, PLACE_HOLDER
 from module.utils.multi_lang_utils import get_locale, get_locale_code
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+)
 logger = logging.getLogger(__name__)
 
 
@@ -25,7 +28,9 @@ def esami(update: Update, context: CallbackContext) -> None:
     """
     check_log(update, "esami")
 
-    if 'esami' in context.user_data:  # ripulisce il dict dell'user relativo a /esami da eventuali dati presenti
+    if (
+        'esami' in context.user_data
+    ):  # ripulisce il dict dell'user relativo a /esami da eventuali dati presenti
         context.user_data['esami'].clear()
     else:  # crea il dict che conterrà i dati del comando /esami all'interno della key ['esami'] di user data
         context.user_data['esami'] = {}
@@ -34,13 +39,23 @@ def esami(update: Update, context: CallbackContext) -> None:
     chat_id: int = update.message.chat_id
     locale: str = update.message.from_user.language_code
     if chat_id != user_id:  # forza ad eseguire il comando in una chat privata
-        context.bot.sendMessage(chat_id=chat_id,
-                                text=get_locale(locale, TEXT_IDS.USE_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/esami"))
-        context.bot.sendMessage(chat_id=user_id,
-                                text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/esami"))
+        context.bot.sendMessage(
+            chat_id=chat_id,
+            text=get_locale(locale, TEXT_IDS.USE_WARNING_TEXT_ID).replace(
+                PLACE_HOLDER, "/esami"
+            ),
+        )
+        context.bot.sendMessage(
+            chat_id=user_id,
+            text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(
+                PLACE_HOLDER, "/esami"
+            ),
+        )
 
     message_text, inline_keyboard = get_esami_text_inline_keyboard(locale, context)
-    context.bot.sendMessage(chat_id=user_id, text=message_text, reply_markup=inline_keyboard)
+    context.bot.sendMessage(
+        chat_id=user_id, text=message_text, reply_markup=inline_keyboard
+    )
 
 
 def esami_handler(update: Update, context: CallbackContext) -> None:
@@ -77,21 +92,34 @@ def esami_handler(update: Update, context: CallbackContext) -> None:
             # ... o elimina la key se era già presente
             del esami_user_data['sessione' + callback_data[22:]]
     elif "search" in callback_data:
-        message_text = generate_esami_text(locale,
-                                           esami_user_data)  # ottieni il risultato della query che soddisfa le richieste
-        context.bot.editMessageText(chat_id=chat_id, message_id=message_id, text=update.callback_query.message.text)
-        send_message(update, context,
-                     message_text)  # manda il risultato della query suddividendo la stringa in più messaggi
+        message_text = generate_esami_text(
+            locale, esami_user_data
+        )  # ottieni il risultato della query che soddisfa le richieste
+        context.bot.editMessageText(
+            chat_id=chat_id,
+            message_id=message_id,
+            text=update.callback_query.message.text,
+        )
+        send_message(
+            update, context, message_text
+        )  # manda il risultato della query suddividendo la stringa in più messaggi
         esami_user_data.clear()  # ripulisce il dict
         return
     else:
         logger.error("esami_handler: an error has occurred")
 
     message_text, inline_keyboard = get_esami_text_inline_keyboard(locale, context)
-    context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id, reply_markup=inline_keyboard)
+    context.bot.editMessageText(
+        text=message_text,
+        chat_id=chat_id,
+        message_id=message_id,
+        reply_markup=inline_keyboard,
+    )
 
 
-def esami_button_anno(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
+def esami_button_anno(
+    update: Update, context: CallbackContext, chat_id: int, message_id: int
+) -> None:
     """Called by one of the buttons of the /esami command.
     Allows the user to choose an year among the ones proposed
 
@@ -104,17 +132,34 @@ def esami_button_anno(update: Update, context: CallbackContext, chat_id: int, me
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.SELECT_YEAR_TEXT_ID)
 
-    keyboard = [[
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.YEAR_1ST_TEXT_ID), callback_data="esami_button_anno_1° anno"),
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.YEAR_2ND_TEXT_ID), callback_data="esami_button_anno_2° anno"),
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.YEAR_3RD_TEXT_ID), callback_data="esami_button_anno_3° anno"),
-    ]]
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.YEAR_1ST_TEXT_ID),
+                callback_data="esami_button_anno_1° anno",
+            ),
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.YEAR_2ND_TEXT_ID),
+                callback_data="esami_button_anno_2° anno",
+            ),
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.YEAR_3RD_TEXT_ID),
+                callback_data="esami_button_anno_3° anno",
+            ),
+        ]
+    ]
 
-    context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id,
-                                reply_markup=InlineKeyboardMarkup(keyboard))
+    context.bot.editMessageText(
+        text=message_text,
+        chat_id=chat_id,
+        message_id=message_id,
+        reply_markup=InlineKeyboardMarkup(keyboard),
+    )
 
 
-def esami_button_sessione(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
+def esami_button_sessione(
+    update: Update, context: CallbackContext, chat_id: int, message_id: int
+) -> None:
     """Called by one of the buttons of the /esami command.
     Allows the user to choose a session among the ones proposed
 
@@ -128,20 +173,42 @@ def esami_button_sessione(update: Update, context: CallbackContext, chat_id: int
     message_text: str = get_locale(locale, TEXT_IDS.EXAMS_SELECT_SESSION_TEXT_ID)
 
     keyboard = [[]]
-    keyboard.append([
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.EXAMS_SESSION_1_TEXT_ID), callback_data="esami_button_sessione_prima"),
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.EXAMS_SESSION_2_TEXT_ID), callback_data="esami_button_sessione_seconda"),
-    ])
-    keyboard.append([
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.EXAMS_SESSION_3_TEXT_ID), callback_data="esami_button_sessione_terza"),
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.EXAMS_SESSION_4_TEXT_ID), callback_data="esami_button_sessione_straordinaria"),
-    ])
+    keyboard.append(
+        [
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.EXAMS_SESSION_1_TEXT_ID),
+                callback_data="esami_button_sessione_prima",
+            ),
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.EXAMS_SESSION_2_TEXT_ID),
+                callback_data="esami_button_sessione_seconda",
+            ),
+        ]
+    )
+    keyboard.append(
+        [
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.EXAMS_SESSION_3_TEXT_ID),
+                callback_data="esami_button_sessione_terza",
+            ),
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.EXAMS_SESSION_4_TEXT_ID),
+                callback_data="esami_button_sessione_straordinaria",
+            ),
+        ]
+    )
 
-    context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id,
-                                reply_markup=InlineKeyboardMarkup(keyboard))
+    context.bot.editMessageText(
+        text=message_text,
+        chat_id=chat_id,
+        message_id=message_id,
+        reply_markup=InlineKeyboardMarkup(keyboard),
+    )
 
 
-def esami_button_insegnamento(update: Update, context: CallbackContext, chat_id: int, message_id: int) -> None:
+def esami_button_insegnamento(
+    update: Update, context: CallbackContext, chat_id: int, message_id: int
+) -> None:
     """Called by one of the buttons of the /esami command.
     Allows the user to write the subject they want to search for
 
@@ -152,10 +219,14 @@ def esami_button_insegnamento(update: Update, context: CallbackContext, chat_id:
         message_id: id of the sub-menu message
     """
     locale: str = get_locale_code(update)
-    context.user_data['esami']['cmd'] = "input_insegnamento"  # attende che venga impostato il campo insegnamento
+    context.user_data['esami'][
+        'cmd'
+    ] = "input_insegnamento"  # attende che venga impostato il campo insegnamento
     message_text = get_locale(locale, TEXT_IDS.EXAMS_USAGE_TEXT_ID)
 
-    context.bot.editMessageText(text=message_text, chat_id=chat_id, message_id=message_id)
+    context.bot.editMessageText(
+        text=message_text, chat_id=chat_id, message_id=message_id
+    )
 
 
 def esami_input_insegnamento(update: Update, context: CallbackContext) -> None:
@@ -171,14 +242,22 @@ def esami_input_insegnamento(update: Update, context: CallbackContext) -> None:
         # se effettivamente l'user aveva richiesto di modificare l'insegnamento...
         check_log(update, "esami_input_insegnamento")
         # ottieni il nome dell'insegnamento e salvalo nel dict
-        context.user_data['esami']['insegnamento'] = re.sub(r"^(?!=<[/])[Ii]ns:\s+", "", update.message.text)
+        context.user_data['esami']['insegnamento'] = re.sub(
+            r"^(?!=<[/])[Ii]ns:\s+", "", update.message.text
+        )
         # elimina la possibilità di modificare l'insegnamento fino a quando l'apposito button non viene premuto di nuovo
         del context.user_data['esami']['cmd']
         message_text, inline_keyboard = get_esami_text_inline_keyboard(locale, context)
-        context.bot.sendMessage(chat_id=update.message.chat_id, text=message_text, reply_markup=inline_keyboard)
+        context.bot.sendMessage(
+            chat_id=update.message.chat_id,
+            text=message_text,
+            reply_markup=inline_keyboard,
+        )
 
 
-def get_esami_text_inline_keyboard(locale: str, context: CallbackContext) -> (str, InlineKeyboardMarkup):
+def get_esami_text_inline_keyboard(
+    locale: str, context: CallbackContext
+) -> (str, InlineKeyboardMarkup):
     """Generates the text and the InlineKeyboard for the /esami command, based on the current parameters.
 
     Args:
@@ -190,10 +269,16 @@ def get_esami_text_inline_keyboard(locale: str, context: CallbackContext) -> (st
     """
     esami_user_data = context.user_data['esami']
 
-    text_anno = ", ".join([key for key in esami_user_data if "anno" in key])  # stringa contenente gli anni
+    text_anno = ", ".join(
+        [key for key in esami_user_data if "anno" in key]
+    )  # stringa contenente gli anni
     # stringa contenente le sessioni
-    text_sessione = ", ".join([key for key in esami_user_data if "sessione" in key]).replace("sessione", "")
-    text_insegnamento = esami_user_data.get("insegnamento", "")  # stringa contenente l'insegnamento
+    text_sessione = ", ".join(
+        [key for key in esami_user_data if "sessione" in key]
+    ).replace("sessione", "")
+    text_insegnamento = esami_user_data.get(
+        "insegnamento", ""
+    )  # stringa contenente l'insegnamento
 
     # pylint: disable=consider-using-f-string
     message_text: str = "{}: {}\n{}: {}\n{}: {}".format(
@@ -202,18 +287,41 @@ def get_esami_text_inline_keyboard(locale: str, context: CallbackContext) -> (st
         get_locale(locale, TEXT_IDS.SEARCH_SESSION_TEXT_ID),
         text_sessione if text_sessione else "tutti",
         get_locale(locale, TEXT_IDS.SEARCH_COURSE_TEXT_ID),
-        text_insegnamento if text_insegnamento else "tutti")
+        text_insegnamento if text_insegnamento else "tutti",
+    )
 
     keyboard = [[]]
-    keyboard.append([InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEARCH_HEADER_TEXT_ID), callback_data="NONE")])
-    keyboard.append([
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEARCH_YEAR_TEXT_ID), callback_data="sm_esami_button_anno"),
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEARCH_SESSION_TEXT_ID), callback_data="sm_esami_button_sessione"),
-    ])
-    keyboard.append([
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEARCH_COURSE_TEXT_ID), callback_data="sm_esami_button_insegnamento"),
-        InlineKeyboardButton(get_locale(locale, TEXT_IDS.SEARCH_BUTTON_TEXT_ID), callback_data="esami_button_search")
-    ])
+    keyboard.append(
+        [
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.SEARCH_HEADER_TEXT_ID), callback_data="NONE"
+            )
+        ]
+    )
+    keyboard.append(
+        [
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.SEARCH_YEAR_TEXT_ID),
+                callback_data="sm_esami_button_anno",
+            ),
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.SEARCH_SESSION_TEXT_ID),
+                callback_data="sm_esami_button_sessione",
+            ),
+        ]
+    )
+    keyboard.append(
+        [
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.SEARCH_COURSE_TEXT_ID),
+                callback_data="sm_esami_button_insegnamento",
+            ),
+            InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.SEARCH_BUTTON_TEXT_ID),
+                callback_data="esami_button_search",
+            ),
+        ]
+    )
 
     return message_text, InlineKeyboardMarkup(keyboard)
 
@@ -230,9 +338,13 @@ def generate_esami_text(locale: str, user_dict: dict) -> str:
         result of the query to send to the user
     """
     # stringa contenente le sessioni per cui il dict contiene la key, separate da ", "
-    select_sessione = ", ".join([key for key in user_dict if "sessione" in key]).replace("sessione", "")
+    select_sessione = ", ".join(
+        [key for key in user_dict if "sessione" in key]
+    ).replace("sessione", "")
     # stringa contenente le sessioni per cui il dict contiene la key, separate da " = '[]' and not "
-    where_sessione = " = '[]' or not ".join([key for key in user_dict if "sessione" in key]).replace("sessione", "")
+    where_sessione = " = '[]' or not ".join(
+        [key for key in user_dict if "sessione" in key]
+    ).replace("sessione", "")
     # stringa contenente gli anni per cui il dict contiene la key, separate da "' or anno = '"
     where_anno = "' or anno = '".join([key for key in user_dict if "anno" in key])
     # stringa contenente l'insegnamento, se presente

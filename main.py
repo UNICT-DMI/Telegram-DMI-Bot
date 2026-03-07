@@ -1,30 +1,62 @@
 # -*- coding: utf-8 -*-
 """Main module"""
+import uvicorn
 from telegram import BotCommand
-from telegram.ext import CallbackQueryHandler, CommandHandler, Dispatcher, Filters, MessageHandler, Updater
+from telegram.ext import (
+    CallbackQueryHandler,
+    CommandHandler,
+    Dispatcher,
+    Filters,
+    MessageHandler,
+    Updater,
+)
 
-from module.commands.aulario import aulario, calendar_handler, month_handler, subjects_arrow_handler, subjects_handler
-from module.callback_handlers import exit_handler, informative_callback, md_handler, none_handler, submenu_handler, \
-    localization_handler
+from module.callback_handlers import (
+    exit_handler,
+    informative_callback,
+    localization_handler,
+    md_handler,
+    none_handler,
+    submenu_handler,
+)
+from module.commands.aulario import (
+    aulario,
+    calendar_handler,
+    month_handler,
+    subjects_arrow_handler,
+    subjects_handler,
+)
+from module.commands.drive_contribute import drive_contribute
 from module.commands.esami import esami, esami_handler, esami_input_insegnamento
+from module.commands.gdrive import drive, drive_handler
+from module.commands.help import help_cmd
 from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
 from module.commands.professori import prof
+from module.commands.regolamento_didattico import (
+    cdl_handler,
+    regolamentodidattico,
+    regolamentodidattico_handler,
+    send_regolamento,
+)
+from module.commands.report import report
 from module.commands.start import start
 from module.commands.stats import stats, stats_tot
-from module.commands.help import help_cmd
-from module.commands.report import report
-from module.commands.gdrive import drive, drive_handler
-from module.commands.drive_contribute import drive_contribute
-from module.commands.regolamento_didattico import regolamentodidattico, regolamentodidattico_handler, cdl_handler, send_regolamento
 from module.data.vars import TEXT_IDS
-from module.easter_egg_func import bladrim, lei_che_ne_pensa_signorina, prof_sticker, santino, smonta_portoni, uni_bandita
+from module.debug import error_handler, log_message
+from module.easter_egg_func import (
+    bladrim,
+    lei_che_ne_pensa_signorina,
+    prof_sticker,
+    santino,
+    smonta_portoni,
+    uni_bandita,
+)
 from module.gitlab import git, gitlab_handler
 from module.job_updater import updater_lep
 from module.shared import config_map
-from module.utils.multi_lang_utils import load_translations, get_regex_multi_lang
-from module.debug import error_handler, log_message
+from module.utils.multi_lang_utils import get_regex_multi_lang, load_translations
 from webapp.app import app
-import uvicorn
+
 
 def add_commands(up: Updater) -> None:
     """Adds the list of commands with their description to the bot
@@ -51,7 +83,10 @@ def add_commands(up: Updater) -> None:
         BotCommand("biblioteca", "orari della biblioteca"),
         BotCommand("aule_studio", "tutta la descrizione qui"),
         BotCommand("drive", "accedi alla cartella Drive"),
-        BotCommand("drive_contribute", "ottieni i permessi per caricare materiale sulla cartella Drive"),
+        BotCommand(
+            "drive_contribute",
+            "ottieni i permessi per caricare materiale sulla cartella Drive",
+        ),
         BotCommand("git", "accedi al materiale didattico su GitLab"),
         BotCommand("gitlab", "accedi al materiale didattico su GitLab"),
         BotCommand("rappresentanti", "lista rappresentanti"),
@@ -64,7 +99,9 @@ def add_commands(up: Updater) -> None:
         BotCommand("cloud", "risorse didattiche in cloud"),
         BotCommand("regolamentodidattico", "lista dei regolamenti didattici"),
         BotCommand("ricevimenti", "lista orari ricevimenti dei professori"),
-        BotCommand("syllabus", "lista e informazioni pe rogni materia di ogni corso di laurea"),
+        BotCommand(
+            "syllabus", "lista e informazioni pe rogni materia di ogni corso di laurea"
+        ),
         BotCommand("trasporto_urbano_unict", "link orari Metro Shuttle FCE"),
         BotCommand("dmi_3d", "mappa in 3D del DMI"),
         BotCommand("mercatino", "bot per la vendita e l'acquisto di libri"),
@@ -114,30 +151,60 @@ def add_handlers(dp: Dispatcher) -> None:
     dp.add_handler(CommandHandler('prof', prof))
 
     dp.add_handler(CommandHandler('aulario', aulario))
-    dp.add_handler(MessageHandler(Filters.regex(get_regex_multi_lang(TEXT_IDS.AULARIO_KEYBOARD_TEXT_ID)), aulario))
+    dp.add_handler(
+        MessageHandler(
+            Filters.regex(get_regex_multi_lang(TEXT_IDS.AULARIO_KEYBOARD_TEXT_ID)),
+            aulario,
+        )
+    )
     dp.add_handler(CommandHandler('help', help_cmd))
-    dp.add_handler(MessageHandler(Filters.regex(get_regex_multi_lang(TEXT_IDS.HELP_KEYBOARD_TEXT_ID)), help_cmd))
+    dp.add_handler(
+        MessageHandler(
+            Filters.regex(get_regex_multi_lang(TEXT_IDS.HELP_KEYBOARD_TEXT_ID)),
+            help_cmd,
+        )
+    )
     dp.add_handler(CommandHandler('contributors', informative_callback))
     dp.add_handler(CommandHandler('mercatino', informative_callback))
-    dp.add_handler(MessageHandler(Filters.regex(get_regex_multi_lang(TEXT_IDS.MERCATINO_LIBRI_KEYBOARD_TEXT_ID)), informative_callback))
-
+    dp.add_handler(
+        MessageHandler(
+            Filters.regex(
+                get_regex_multi_lang(TEXT_IDS.MERCATINO_LIBRI_KEYBOARD_TEXT_ID)
+            ),
+            informative_callback,
+        )
+    )
 
     dp.add_handler(CommandHandler('rappresentanti', informative_callback))
     dp.add_handler(CommandHandler('rappresentanti_dmi', informative_callback))
     dp.add_handler(CommandHandler('rappresentanti_informatica', informative_callback))
     dp.add_handler(CommandHandler('rappresentanti_matematica', informative_callback))
     dp.add_handler(CommandHandler('report', report))
-    dp.add_handler(CommandHandler('chatid', lambda u, c: u.message.reply_text(u.message.chat_id)))
+    dp.add_handler(
+        CommandHandler('chatid', lambda u, c: u.message.reply_text(u.message.chat_id))
+    )
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('cloud', informative_callback))
-    dp.add_handler(MessageHandler(Filters.regex(get_regex_multi_lang(TEXT_IDS.CLOUD_KEYBOARD_TEXT_ID)), informative_callback))
-    dp.add_handler(MessageHandler(Filters.regex(get_regex_multi_lang(TEXT_IDS.REPORT_TO_KEYBOARD_TEXT_ID)), informative_callback))
+    dp.add_handler(
+        MessageHandler(
+            Filters.regex(get_regex_multi_lang(TEXT_IDS.CLOUD_KEYBOARD_TEXT_ID)),
+            informative_callback,
+        )
+    )
+    dp.add_handler(
+        MessageHandler(
+            Filters.regex(get_regex_multi_lang(TEXT_IDS.REPORT_TO_KEYBOARD_TEXT_ID)),
+            informative_callback,
+        )
+    )
 
     # generic buttons
     dp.add_handler(CallbackQueryHandler(exit_handler, pattern='^(exit_cmd)'))
     dp.add_handler(CallbackQueryHandler(submenu_handler, pattern='sm_.*'))
     dp.add_handler(CallbackQueryHandler(md_handler, pattern='md_.*'))
-    dp.add_handler(CallbackQueryHandler(localization_handler, pattern='localization_.*'))
+    dp.add_handler(
+        CallbackQueryHandler(localization_handler, pattern='localization_.*')
+    )
     dp.add_handler(CallbackQueryHandler(none_handler, pattern='NONE'))
 
     # aulario and calendar
@@ -152,18 +219,28 @@ def add_handlers(dp: Dispatcher) -> None:
 
     # regolamento didattico
     dp.add_handler(CommandHandler('regolamentodidattico', regolamentodidattico))
-    dp.add_handler(CallbackQueryHandler(regolamentodidattico_handler, pattern=r'^reg_button_.*'))
+    dp.add_handler(
+        CallbackQueryHandler(regolamentodidattico_handler, pattern=r'^reg_button_.*')
+    )
     dp.add_handler(CallbackQueryHandler(cdl_handler, pattern=r'^cdl_button_.*'))
-    dp.add_handler(CallbackQueryHandler(send_regolamento, pattern=r'^Regolamento Didattico.*'))
+    dp.add_handler(
+        CallbackQueryHandler(send_regolamento, pattern=r'^Regolamento Didattico.*')
+    )
 
     # esami
-    #regex accetta [/ins: nome] oppure [/Ins: nome], per agevolare chi usa il cellulare
+    # regex accetta [/ins: nome] oppure [/Ins: nome], per agevolare chi usa il cellulare
     dp.add_handler(CallbackQueryHandler(esami_handler, pattern='esami_button_.*'))
-    dp.add_handler(MessageHandler(Filters.regex(r"^(?!=<[/])[Ii]ns:\s+"), esami_input_insegnamento))
+    dp.add_handler(
+        MessageHandler(Filters.regex(r"^(?!=<[/])[Ii]ns:\s+"), esami_input_insegnamento)
+    )
 
     # lezioni
     dp.add_handler(CallbackQueryHandler(lezioni_handler, pattern='lezioni_button_*'))
-    dp.add_handler(MessageHandler(Filters.regex(r"^(?!=<[/])[Nn]ome:\s+"), lezioni_input_insegnamento))
+    dp.add_handler(
+        MessageHandler(
+            Filters.regex(r"^(?!=<[/])[Nn]ome:\s+"), lezioni_input_insegnamento
+        )
+    )
 
     # drive and gitlab commands
     if config_map['debug']['disable_drive'] == 0:
@@ -186,13 +263,19 @@ def add_jobs(dp: Dispatcher) -> None:
     Args:
         dp: supplyed Dispatcher
     """
-    dp.job_queue.run_repeating(updater_lep, interval=86400, first=1)  # job_updater_lep (24h)
+    dp.job_queue.run_repeating(
+        updater_lep, interval=86400, first=1
+    )  # job_updater_lep (24h)
 
 
 def main() -> None:
     """Main function"""
     load_translations()
-    updater = Updater(config_map['token'], request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
+    updater = Updater(
+        config_map['token'],
+        request_kwargs={'read_timeout': 20, 'connect_timeout': 20},
+        use_context=True,
+    )
     add_commands(updater)
     add_handlers(updater.dispatcher)
     add_jobs(updater.dispatcher)

@@ -1,14 +1,19 @@
 """/stats command"""
+
 import os
 import warnings
 from datetime import date, timedelta
+
 import matplotlib.pyplot as plt
 from telegram import Bot, Update
 from telegram.ext import CallbackContext
+
 from module.data import DbManager
 from module.data.vars import EASTER_EGG
 
-warnings.filterwarnings("ignore", category=UserWarning, message='^Starting a Matplotlib')
+warnings.filterwarnings(
+    "ignore", category=UserWarning, message='^Starting a Matplotlib'
+)
 
 
 def stats(update: Update, context: CallbackContext) -> None:
@@ -51,10 +56,18 @@ def stats_gen(update: Update, context: CallbackContext, days: int = 0) -> None:
     """
     chat_id = update.message.chat_id
 
-    where = f"DateCommand > '{date.today() - timedelta(days=days)}\n'" if days > 0 else ""
+    where = (
+        f"DateCommand > '{date.today() - timedelta(days=days)}\n'" if days > 0 else ""
+    )
     text = f"Record di {days} giorni:\n" if days > 0 else "Record Globale:\n"
 
-    results = DbManager.select_from(select='type, COUNT(chat_id) as n', table_name='stat_list', where=where, group_by="type", order_by="n DESC")
+    results = DbManager.select_from(
+        select='type, COUNT(chat_id) as n',
+        table_name='stat_list',
+        where=where,
+        group_by="type",
+        order_by="n DESC",
+    )
 
     rows = [row for row in results if row['Type'] not in EASTER_EGG]
 
@@ -90,7 +103,12 @@ def send_graph(rows: list, bot: Bot, chat_id: int) -> None:
     ax.set_xlabel('Comandi')
 
     # Fix the graphic's aspect and save it as an image
-    plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='center', fontsize='xx-small')
+    plt.setp(
+        ax.get_xticklabels(),
+        rotation=30,
+        horizontalalignment='center',
+        fontsize='xx-small',
+    )
     plt.tight_layout()
     plt.savefig(str(chat_id))
 

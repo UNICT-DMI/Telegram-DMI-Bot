@@ -5,11 +5,11 @@ from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
 from pydrive2.files import ApiRequestError
 from telegram import Update
-from telegram.ext import CallbackContext
 from telegram.error import BadRequest
+from telegram.ext import CallbackContext
 
-from module.utils.drive_contribute_utils import delete_drive_permission_job
 from module.data.vars import TEXT_IDS
+from module.utils.drive_contribute_utils import delete_drive_permission_job
 from module.utils.multi_lang_utils import get_locale
 
 with open('config/settings.yaml', 'r', encoding='UTF-8') as yaml_config:

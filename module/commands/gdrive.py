@@ -1,12 +1,14 @@
 """/drive command"""
+
 from pydrive2.files import GoogleDriveFile
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, Bot
+from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
-from module.shared import check_log
+
+from module.data.vars import PLACE_HOLDER, TEXT_IDS
 from module.debug import log_error
-from module.data.vars import TEXT_IDS, PLACE_HOLDER
-from module.utils.multi_lang_utils import get_locale
+from module.shared import check_log
 from module.utils.drive_utils import drive_utils
+from module.utils.multi_lang_utils import get_locale
 
 
 def drive(update: Update, context: CallbackContext) -> None:
@@ -22,7 +24,10 @@ def drive(update: Update, context: CallbackContext) -> None:
     locale: str = update.message.from_user.language_code
     if chat_id < 0:
         context.bot.sendMessage(
-            chat_id=chat_id, text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(PLACE_HOLDER, "/drive")
+            chat_id=chat_id,
+            text=get_locale(locale, TEXT_IDS.GROUP_WARNING_TEXT_ID).replace(
+                PLACE_HOLDER, "/drive"
+            ),
         )
         return
 
@@ -97,7 +102,9 @@ def drive_handler(update: Update, context: CallbackContext) -> None:
     elif fetched_file['mimeType'] == "application/vnd.google-apps.document":
         bot.sendMessage(
             chat_id=chat_id,
-            text=get_locale(locale, TEXT_IDS.DRIVE_ERROR_GFILE_TEXT_ID).replace(PLACE_HOLDER, fetched_file['exportLinks']['application/pdf'])
+            text=get_locale(locale, TEXT_IDS.DRIVE_ERROR_GFILE_TEXT_ID).replace(
+                PLACE_HOLDER, fetched_file['exportLinks']['application/pdf']
+            ),
         )
 
     else:  # the user clicked on a file
@@ -112,7 +119,9 @@ def drive_handler(update: Update, context: CallbackContext) -> None:
             else:
                 bot.sendMessage(
                     chat_id=chat_id,
-                    text=get_locale(locale, TEXT_IDS.DRIVE_ERROR_TOO_BIG_TEXT_ID).replace(PLACE_HOLDER, file_d['alternateLink'])
+                    text=get_locale(
+                        locale, TEXT_IDS.DRIVE_ERROR_TOO_BIG_TEXT_ID
+                    ).replace(PLACE_HOLDER, file_d['alternateLink']),
                 )
 
         # pylint: disable=broad-except
