@@ -24,7 +24,10 @@
 #             'esami_button_anno_1° anno': 'Anno: 1° anno\nSessione: tutti\nInsegnamento: tutti',
 #             'sm_esami_button_sessione': 'Seleziona la sessione che ti interessa',
 #             'esami_button_sessione_prima': 'Anno: 1° anno\nSessione: prima\nInsegnamento: tutti',
-#             'sm_esami_button_insegnamento': 'Inserire l\'insegnamento desiderato nel formato:\nins: nome insegnamento\nEsempio:\nins: SisTeMi oPeRaTIvI',
+#             'sm_esami_button_insegnamento': (
+#                 'Inserire l\'insegnamento desiderato nel formato:\n'
+#                 'ins: nome insegnamento\nEsempio:\nins: SisTeMi oPeRaTIvI'
+#             ),
 #         }
 
 #         for button, expected_test in buttons.items():

@@ -7,6 +7,7 @@ import os
 import re
 import sqlite3
 import time
+from typing import Optional
 
 # System libraries
 from urllib.parse import quote
@@ -29,7 +30,7 @@ logger = logging.getLogger(__name__)
 GITLAB_AUTH_TOKEN = config_map['gitlab']['token']
 GITLAB_ROOT_GROUP = config_map['gitlab']['root']
 
-session = None
+session: Optional[requests.Session] = None
 api = None
 db = None
 
@@ -254,6 +255,8 @@ def download_blob_file_async_internal(
         if size and int(size) < 4.5e7:
             file_name = f"{time.time()}_{blob_name}"
 
+            if session is None:
+                return
             file_path = f'file/{file_name}'
             with open(file_path, 'wb') as file_handle:
                 with session.get(download_url, stream=True) as download:
