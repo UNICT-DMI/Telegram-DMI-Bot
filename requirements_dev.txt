@@ -5,3 +5,6 @@ pytest-mock
 pytest-cov
 pylint
 flake8
+mypy
+isort
+black
