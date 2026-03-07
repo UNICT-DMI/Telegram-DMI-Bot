@@ -283,7 +283,7 @@ def download_blob_file_async(update: Update, context: CallbackContext, blob=None
         update: "update" object of Telegram API
         blob: Object containing ID and name of a blob (default: None)
     """
-    global db
+    global db  # noqa: F824
 
     if blob:
         blob_id, blob_name = blob['id'], blob['name']
