@@ -80,7 +80,7 @@ class TimetableSlot(Scrapable):
         Args:
             delete: whether the table contents should be deleted first. Defaults to False.
         """
-        timetable_slots = []
+        timetable_slots: list[TimetableSlot] = []
 
         # avoid circular import without using read_md
         with open("data/markdown/aulario.md", "r", encoding="utf8") as in_file:

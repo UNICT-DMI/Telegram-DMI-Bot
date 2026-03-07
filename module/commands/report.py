@@ -32,7 +32,7 @@ def report(update: Update, context: CallbackContext) -> None:
                 PLACE_HOLDER, executed_command
             ),
         )
-    elif not chat_user.username:
+    elif not chat_user or not chat_user.username:
         context.bot.sendMessage(
             chat_id=chat_id,
             text=get_locale(

@@ -26,10 +26,10 @@ async def test_report_cmd(client: TelegramClient):
 
         for command in commands:
             await conv.send_message(command)  # send a command
-            resp: Message = await conv.get_response()
+            resp = await conv.get_response()
 
             assert resp.text
 
-            resp: Message = await conv.get_response()
+            resp = await conv.get_response()
 
             assert resp.text

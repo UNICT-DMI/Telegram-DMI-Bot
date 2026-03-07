@@ -246,9 +246,12 @@ def download_blob_file_async_internal(
     if chat_id:
         web_url, pathname, parent_id = db_result
         blob_info = get_blob_file(parent_id, blob_id)
+        if blob_info is None:
+            return
         download_url = f"{web_url}/raw/master/{quote(pathname)}"
 
-        if int(blob_info['size']) < 4.5e7:
+        size = blob_info.get('size', 0) if blob_info else 0  # type: ignore[union-attr]
+        if size and int(size) < 4.5e7:
             file_name = f"{time.time()}_{blob_name}"
 
             file_path = f'file/{file_name}'
@@ -277,9 +280,12 @@ def download_blob_file_async(update: Update, context: CallbackContext, blob=None
         update: "update" object of Telegram API
         blob: Object containing ID and name of a blob (default: None)
     """
+    global db
 
     if blob:
         blob_id, blob_name = blob['id'], blob['name']
+        if db is None:
+            return
 
         query = "SELECT * FROM\
             (SELECT web_url FROM gitlab WHERE id = (\
@@ -446,14 +452,20 @@ def gitlab_handler(update: Update, context: CallbackContext):
             ).fetchone()
             buttons.extend(explore_repository_tree(origin_id, path, db))
         elif action == 'b':
-            blob = {'id': blob_id, 'name': parent[2]}
+            if len(parent) >= 3:
+                blob = {'id': blob_id, 'name': parent[2]}
 
         if origin_id != str(GITLAB_ROOT_GROUP):
-            buttons.append(
-                [InlineKeyboardButton("🔙", callback_data=f'git_x_{parent[0]}')]
-            )
+            if len(parent) >= 1:
+                buttons.append(
+                    [InlineKeyboardButton("🔙", callback_data=f'git_x_{parent[0]}')]
+                )
 
-    title = parent[2] if blob_id and len(parent) == 3 else parent[1]
+    title = ""
+    if blob_id and len(parent) >= 3:
+        title = parent[2]
+    elif len(parent) >= 2:
+        title = parent[1]
     send_message(update, context, title, buttons, blob)
 
     db.commit()

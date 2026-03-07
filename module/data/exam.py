@@ -42,10 +42,10 @@ class Exam(Scrapable):
         self.cdl = cdl
         self.insegnamento = insegnamento
         self.docenti = docenti
-        self.prima = []
-        self.seconda = []
-        self.terza = []
-        self.straordinaria = []
+        self.prima: list[str] = []
+        self.seconda: list[str] = []
+        self.terza: list[str] = []
+        self.straordinaria: list[str] = []
 
     @property
     def table(self) -> str:
@@ -93,6 +93,7 @@ class Exam(Scrapable):
         if session_name in self.__class__.SESSIONS:
             # pylint: disable=unnecessary-dunder-call
             return self.__getattribute__(session_name)
+        return None
 
     def append_session(self, session_name: str, to_append: str):
         """Appends an element to a session based on its name.
@@ -169,7 +170,7 @@ class Exam(Scrapable):
             "lm-40": "Matematica Magistrale",
         }
 
-        exams = []
+        exams: list[Exam] = []
         year = ""
 
         # pylint: disable=too-many-nested-blocks
@@ -178,6 +179,8 @@ class Exam(Scrapable):
                 source = requests.get(url, timeout=10).text
                 soup = bs4.BeautifulSoup(source, "html.parser")
                 table = soup.find(id="table-exams")
+                if not isinstance(table, bs4.Tag):
+                    continue
                 rows = table.find_all("tr")[
                     1:
                 ]  # e dalla tabella estraiamo l'array con tutte le righe

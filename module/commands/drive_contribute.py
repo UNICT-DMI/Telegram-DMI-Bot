@@ -27,7 +27,7 @@ def drive_contribute(update: Update, context: CallbackContext) -> None:
     else:
         username = get_locale(locale, TEXT_IDS.DRIVE_NO_USERNAME_WARNING_TEXT_ID)
 
-    if len(args) < 2:
+    if not args or len(args) < 2:
         context.bot.sendMessage(
             chat_id=chat_id,
             text=get_locale(locale, TEXT_IDS.DRIVE_USE_TEXT_TEXT_ID),

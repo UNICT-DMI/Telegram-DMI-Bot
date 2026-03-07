@@ -3,7 +3,7 @@
 import logging
 import re
 import sqlite3
-from typing import Tuple
+from typing import Any, Callable, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -45,13 +45,13 @@ class DbManager:
             error_str: name of the method that caused the exception. Defaults to "".
             is_many: whether to use the :func:`sqlite3.Cursor.executemany` function. Defaults to False.
         """
-        query_func = cur.executemany if is_many else cur.execute
+        query_func = cur.executemany if is_many else cur.execute  # type: ignore[assignment]
 
         try:
             if args:
-                query_func(query, args)
+                query_func(query, args)  # type: ignore[operator]
             else:
-                query_func(query)
+                query_func(query)  # type: ignore[operator]
         except sqlite3.Error as e:
             logger.error("DbManager.%s(): %s", error_str, e)
 
@@ -193,7 +193,7 @@ class DbManager:
         cls,
         table_name: str,
         values: tuple,
-        columns: tuple = "",
+        columns: tuple = (),
         multiple_rows: bool = False,
     ):
         """Inserts the specified values in the database.
@@ -212,12 +212,13 @@ class DbManager:
         else:
             placeholders = ", ".join(["?" for _ in values])
 
+        columns_str = ""
         if columns:
-            columns = "(" + ", ".join(columns) + ")"
+            columns_str = "(" + ", ".join(columns) + ")"
 
         cls.__query_execute(
             cur=cur,
-            query=f"INSERT INTO {table_name} {columns} VALUES ({placeholders})",
+            query=f"INSERT INTO {table_name} {columns_str} VALUES ({placeholders})",
             args=values,
             error_str="insert_into",
             is_many=multiple_rows,

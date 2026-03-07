@@ -55,6 +55,8 @@ def localization_handler(update: Update, context: CallbackContext) -> None:
     """
     locale: str = update.callback_query.from_user.language_code
     query: Optional[CallbackQuery] = update.callback_query
+    if not query or not query.data:
+        return
     data: str = query.data.replace("localization_", "")
     message_text: str = get_on_demand_text(locale, data)
     check_log(update, data, is_query=True)

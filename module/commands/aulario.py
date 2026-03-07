@@ -56,7 +56,7 @@ def aulario(
                 text=text, reply_markup=reply_markup, chat_id=chat_id
             )
     else:
-        text: str = get_locale(locale, TEXT_IDS.AULARIO_WARNING_TEXT_ID)
+        text = get_locale(locale, TEXT_IDS.AULARIO_WARNING_TEXT_ID)
         if message_id:
             context.bot.editMessageText(
                 text=text, chat_id=chat_id, message_id=message_id
@@ -74,7 +74,9 @@ def month_handler(update: Update, context: CallbackContext) -> None:
         context: context passed by the handler
     """
     query: Optional[CallbackQuery] = update.callback_query
-    data: Optional[str] = query.data
+    if not query or not query.data:
+        return
+    data: str = query.data
     chat_id: int = query.message.chat_id
     message_id: int = query.message.message_id
 
@@ -113,7 +115,9 @@ def calendar_handler(update: Update, context: CallbackContext) -> None:
         context: context passed by the handler
     """
     query: Optional[CallbackQuery] = update.callback_query
-    data: Optional[str] = query.data
+    if not query or not query.data:
+        return
+    data: str = query.data
     chat_id: int = query.message.chat_id
     locale: str = update.callback_query.from_user.language_code
 
@@ -157,6 +161,8 @@ def subjects_handler(update: Update, context: CallbackContext) -> None:
         context: context passed by the handler
     """
     query: Optional[CallbackQuery] = update.callback_query
+    if not query or not query.data:
+        return
     chat_id: int = query.message.chat_id
     locale: str = update.callback_query.from_user.language_code
     ID: str = query.data.split("_")[1]
@@ -194,7 +200,9 @@ def subjects_arrow_handler(update: Update, context: CallbackContext) -> None:
         context: context passed by the handler
     """
     query: Optional[CallbackQuery] = update.callback_query
-    data: Optional[str] = query.data
+    if not query or not query.data:
+        return
+    data: str = query.data
     day: str = data.split('_')[1]
     page: int = int(data.split('_')[2])
     locale: str = update.callback_query.from_user.language_code
