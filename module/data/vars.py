@@ -150,7 +150,7 @@ ON_DEMAND_TEXTS: dict[str, str] = {
     "SEGR_CEA_TOOLTIP_ID": "cea",
     "ERSU_TOOLTIP_ID": "ersu",
     "ERSU_OFFICE_TOOLTIP_ID": "ufficioersu",
-    "ERSU_URP_TOOLTIP_ID": "urp"
+    "ERSU_URP_TOOLTIP_ID": "urp",
 }
 
 # Describe the filling type single or multi, if multi the entries must be separated by '|'
@@ -166,9 +166,16 @@ ON_DEMAND_FILL: dict[str, str] = {
     "SEGR_CEA_TOOLTIP_ID": "multi",
     "ERSU_TOOLTIP_ID": "multi",
     "ERSU_OFFICE_TOOLTIP_ID": "multi",
-    "ERSU_URP_TOOLTIP_ID": "multi"
+    "ERSU_URP_TOOLTIP_ID": "multi",
 }
 
 """ stats.py """
 
-EASTER_EGG = ("leiCheNePensaSignorina", "smonta_portoni", "santino", "bladrim", "prof_sticker", "universita_bandita")
+EASTER_EGG = (
+    "leiCheNePensaSignorina",
+    "smonta_portoni",
+    "santino",
+    "bladrim",
+    "prof_sticker",
+    "universita_bandita",
+)

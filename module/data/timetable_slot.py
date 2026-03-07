@@ -3,13 +3,19 @@
 import logging
 from datetime import datetime
 from typing import List
-import requests
+
 import pandas as pd
+import requests
+
 from module.data.db_manager import DbManager
 from module.data.scrapable import Scrapable
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+)
 logger = logging.getLogger(__name__)
+
+
 class TimetableSlot(Scrapable):
     """TimetableSlot
 
@@ -23,7 +29,15 @@ class TimetableSlot(Scrapable):
     """
 
     # pylint: disable=too-many-arguments
-    def __init__(self, ID: int = 0, nome: str = "", giorno: int = 0, ora_inizio: str = "", ora_fine: str = "", aula: str = ""):
+    def __init__(
+        self,
+        ID: int = 0,
+        nome: str = "",
+        giorno: int = 0,
+        ora_inizio: str = "",
+        ora_fine: str = "",
+        aula: str = "",
+    ):
         self.ID = ID
         self.nome = nome
         self.giorno = giorno
@@ -45,7 +59,7 @@ class TimetableSlot(Scrapable):
     def end_hour(self) -> str:
         """adds half an hour to the ora_fine value"""
         if self.ora_fine[3:] == '30':
-            return "{00}:00".format(int(self.ora_fine[:2]) + 1) # pylint: disable=consider-using-f-string
+            return f"{int(self.ora_fine[:2]) + 1:02d}:00"
         return self.ora_fine[:3] + '30'
 
     @property
@@ -53,7 +67,9 @@ class TimetableSlot(Scrapable):
         """whether or not the current time slot is still to come or has already passed"""
         end_time = self.end_hour.split(":")
         now = datetime.now()
-        last = now.replace(hour=int(end_time[0]), minute=int(end_time[1]), second=0, microsecond=0)
+        last = now.replace(
+            hour=int(end_time[0]), minute=int(end_time[1]), second=0, microsecond=0
+        )
         return now < last
 
     @classmethod
@@ -69,7 +85,6 @@ class TimetableSlot(Scrapable):
         with open("data/markdown/aulario.md", "r", encoding="utf8") as in_file:
             aulario_url = in_file.read()
 
-
         response = requests.get(aulario_url, timeout=10).text
         tables = pd.read_html(response)
 
@@ -84,11 +99,15 @@ class TimetableSlot(Scrapable):
                     if not pd.isnull(row):
                         r = row[:20] + rooms[i]
                         if not r in subjects:
-                            subjects[r] = cls(nome=row.replace('[]', '').replace('[', '(').replace(']', ')'),
-                                              giorno=k,
-                                              ora_inizio=time,
-                                              ora_fine=time,
-                                              aula=rooms[i])
+                            subjects[r] = cls(
+                                nome=row.replace('[]', '')
+                                .replace('[', '(')
+                                .replace(']', ')'),
+                                giorno=k,
+                                ora_inizio=time,
+                                ora_fine=time,
+                                aula=rooms[i],
+                            )
                         else:
                             subjects[r].ora_fine = time
             timetable_slots.extend(subjects.values())
@@ -96,9 +115,13 @@ class TimetableSlot(Scrapable):
         if delete:
             cls.delete_all()
 
-        offset = DbManager.count_from(table_name=cls().table)  # number of rows already present
+        offset = DbManager.count_from(
+            table_name=cls().table
+        )  # number of rows already present
         for i, timetable_slot in enumerate(timetable_slots):
-            timetable_slot.ID = i + offset  # generate the ID of the timetable slot based on its position in the array
+            timetable_slot.ID = (
+                i + offset
+            )  # generate the ID of the timetable slot based on its position in the array
         cls.bulk_save(timetable_slots)
         logger.info("Aulario loaded.")
 
@@ -127,7 +150,9 @@ class TimetableSlot(Scrapable):
         Returns:
             result of the query on the database
         """
-        db_results = DbManager.select_from(select="MAX(giorno) as g", table_name=cls().table)
+        db_results = DbManager.select_from(
+            select="MAX(giorno) as g", table_name=cls().table
+        )
         if not db_results or db_results[0]['g'] is None:
             return 0
         return int(db_results[0]['g'])

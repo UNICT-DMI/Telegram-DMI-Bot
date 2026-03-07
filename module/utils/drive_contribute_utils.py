@@ -1,5 +1,4 @@
 import yaml
-
 from pydrive2.files import GoogleDriveFile
 
 with open('config/settings.yaml', 'r', encoding='utf-8') as yaml_config:

@@ -2,17 +2,21 @@ import os.path
 import random
 from glob import glob
 from os.path import basename
-from telegram import Update
+
 import yaml
-from module.shared import read_md, CUSicon
-from module.data.vars import TEXT_IDS, ON_DEMAND_TEXTS, PLACE_HOLDER, ON_DEMAND_FILL
+from telegram import Update
+
+from module.data.vars import ON_DEMAND_FILL, ON_DEMAND_TEXTS, PLACE_HOLDER, TEXT_IDS
+from module.shared import CUSicon, read_md
 
 translations: dict[str, dict[str, str]] = {}
+
 
 def check_load_translations() -> None:
     # translations is empty running e2e
     if not translations:
         load_translations()
+
 
 def get_locale(language_code: str, text_id: TEXT_IDS) -> str:
     check_load_translations()
@@ -28,7 +32,9 @@ def load_translations() -> None:
     for language_file in glob(os.path.join("data", "translations", "*.yaml")):
         language_name: str = basename(language_file).split(".")[0]
         with open(language_file, 'r', encoding="UTF-8") as language_stream:
-            translations[language_name] = yaml.load(language_stream, Loader=yaml.SafeLoader)
+            translations[language_name] = yaml.load(
+                language_stream, Loader=yaml.SafeLoader
+            )
         language_stream.close()
 
 
@@ -60,5 +66,10 @@ def get_on_demand_text(locale: str, text_id_name: str) -> str:
         message_text = message_text.replace("<cusicon>", CUSicon[random.randint(0, 5)])
     return message_text
 
+
 def get_locale_code(update: Update) -> str:
-    return update.message.from_user.language_code if update.message.from_user.language_code else update.from_user.language_code
+    return (
+        update.message.from_user.language_code
+        if update.message.from_user.language_code
+        else update.from_user.language_code
+    )

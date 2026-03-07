@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 """Exam class"""
-from typing import List, Optional
 import logging
 import re
+from typing import List, Optional
+
 import bs4
 import requests
-from module.data.scrapable import Scrapable
-from module.data.db_manager import DbManager
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+from module.data.db_manager import DbManager
+from module.data.scrapable import Scrapable
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+)
 logger = logging.getLogger(__name__)
 
 
@@ -26,10 +30,13 @@ class Exam(Scrapable):
         terza (:class:`list | str`): list of appeals in the second session
         straordinaria (:class:`list | str`): list of appeals in the "straordinaria" session
     """
+
     COURSES = ["l-31", "lm-18", "l-35", "lm-40"]
     SESSIONS = ["prima", "seconda", "terza", "straordinaria"]
 
-    def __init__(self, anno: str = "", cdl: str = "", insegnamento: str = "", docenti: str = ""):
+    def __init__(
+        self, anno: str = "", cdl: str = "", insegnamento: str = "", docenti: str = ""
+    ):
         self.anno = anno
         self.cdl = cdl
         self.insegnamento = insegnamento
@@ -47,14 +54,30 @@ class Exam(Scrapable):
     @property
     def columns(self) -> tuple:
         """tuple of column names of the database table that will store this Exam"""
-        return ("anno", "cdl", "insegnamento", "docenti", "prima", "seconda", "terza", "straordinaria")
+        return (
+            "anno",
+            "cdl",
+            "insegnamento",
+            "docenti",
+            "prima",
+            "seconda",
+            "terza",
+            "straordinaria",
+        )
 
     @property
     def values(self) -> tuple:
         """tuple of values that will be saved in the database"""
         return (
-            self.anno, self.cdl, self.insegnamento, self.docenti, str(self.prima), str(self.seconda), str(self.terza),
-            str(self.straordinaria))
+            self.anno,
+            self.cdl,
+            self.insegnamento,
+            self.docenti,
+            str(self.prima),
+            str(self.seconda),
+            str(self.terza),
+            str(self.straordinaria),
+        )
 
     # pylint: disable=inconsistent-return-statements
     def get_session(self, session_name: str) -> Optional[list]:
@@ -84,9 +107,15 @@ class Exam(Scrapable):
     @classmethod
     def append_multiple_sessions(cls, cells, exam, session):
         for cell in cells:
-            cell_clean_text = cell.text.replace('\xa0', '').replace('\n', '').replace('DMI', '')
-            exam_sessions = exam.get_session("prima") + exam.get_session("seconda") + exam.get_session(
-                "terza") + exam.get_session("straordinaria")
+            cell_clean_text = (
+                cell.text.replace('\xa0', '').replace('\n', '').replace('DMI', '')
+            )
+            exam_sessions = (
+                exam.get_session("prima")
+                + exam.get_session("seconda")
+                + exam.get_session("terza")
+                + exam.get_session("straordinaria")
+            )
             current_exams = [string.replace('DMI', '') for string in exam_sessions]
             if cell_clean_text not in current_exams and cell_clean_text != "":
                 exam.append_session(session, cell_clean_text)
@@ -110,33 +139,33 @@ class Exam(Scrapable):
                 f"http://web.dmi.unict.it/corsi/l-31/esami?sessione=1&aa=1{year_exams}",
                 f"http://web.dmi.unict.it/corsi/l-31/esami?sessione=2&aa=1{year_exams}",
                 f"http://web.dmi.unict.it/corsi/l-31/esami?sessione=3&aa=1{year_exams}",
-                f"http://web.dmi.unict.it/corsi/l-31/esami?sessione=4&aa=1{year_exams}"
+                f"http://web.dmi.unict.it/corsi/l-31/esami?sessione=4&aa=1{year_exams}",
             ],
             "lm-18": [  # Informatica Magistrale
                 f"http://web.dmi.unict.it/corsi/lm-18/esami?sessione=1&aa=1{year_exams}",
                 f"http://web.dmi.unict.it/corsi/lm-18/esami?sessione=2&aa=1{year_exams}",
                 f"http://web.dmi.unict.it/corsi/lm-18/esami?sessione=3&aa=1{year_exams}",
-                f"http://web.dmi.unict.it/corsi/lm-18/esami?sessione=4&aa=1{year_exams}"
+                f"http://web.dmi.unict.it/corsi/lm-18/esami?sessione=4&aa=1{year_exams}",
             ],
             "l-35": [  # Matematica Triennale
                 f"http://web.dmi.unict.it/corsi/l-35/esami?sessione=1&aa=1{year_exams}",
                 f"http://web.dmi.unict.it/corsi/l-35/esami?sessione=2&aa=1{year_exams}",
                 f"http://web.dmi.unict.it/corsi/l-35/esami?sessione=3&aa=1{year_exams}",
-                f"http://web.dmi.unict.it/corsi/l-35/esami?sessione=4&aa=1{year_exams}"
+                f"http://web.dmi.unict.it/corsi/l-35/esami?sessione=4&aa=1{year_exams}",
             ],
             "lm-40": [  # Matematica Magistrale
                 f"http://web.dmi.unict.it/corsi/lm-40/esami?sessione=1&aa=1{year_exams}",
                 f"http://web.dmi.unict.it/corsi/lm-40/esami?sessione=2&aa=1{year_exams}",
                 f"http://web.dmi.unict.it/corsi/lm-40/esami?sessione=3&aa=1{year_exams}",
-                f"http://web.dmi.unict.it/corsi/lm-40/esami?sessione=4&aa=1{year_exams}"
-            ]
+                f"http://web.dmi.unict.it/corsi/lm-40/esami?sessione=4&aa=1{year_exams}",
+            ],
         }
 
         course_dict = {
             "l-31": "Informatica Triennale",
             "lm-18": "Informatica Magistrale",
             "l-35": "Matematica Triennale",
-            "lm-40": "Matematica Magistrale"
+            "lm-40": "Matematica Magistrale",
         }
 
         exams = []
@@ -148,7 +177,9 @@ class Exam(Scrapable):
                 source = requests.get(url, timeout=10).text
                 soup = bs4.BeautifulSoup(source, "html.parser")
                 table = soup.find(id="table-exams")
-                rows = table.find_all("tr")[1:]  # e dalla tabella estraiamo l'array con tutte le righe
+                rows = table.find_all("tr")[
+                    1:
+                ]  # e dalla tabella estraiamo l'array con tutte le righe
 
                 for row in rows:  # scorriamo riga per riga
                     # se la riga ha solo td, allora contiene solo l'anno della materia (non ci interessa)
@@ -163,7 +194,9 @@ class Exam(Scrapable):
 
                         # scorriamo tutte le materie fino ad ora inserite (inizialmente, banalmente, saranno 0)
                         for exam in exams:
-                            if (cells[1]).text == exam.insegnamento and (cells[2]).text == exam.docenti:
+                            if (cells[1]).text == exam.insegnamento and (
+                                cells[2]
+                            ).text == exam.docenti:
                                 # se abbiamo trovato la materia nell'array
                                 # dobbiamo solo aggiungere gli appelli della nuova sessione > 1
                                 flag = True
@@ -177,11 +210,17 @@ class Exam(Scrapable):
                             course_name = course_dict[course]
 
                             # creiamo una nuova istanza di esame da riempire con i dati trovati
-                            new_exam = cls(anno=year, cdl=course_name, insegnamento=cells[1].text,
-                                           docenti=cells[2].text)
+                            new_exam = cls(
+                                anno=year,
+                                cdl=course_name,
+                                insegnamento=cells[1].text,
+                                docenti=cells[2].text,
+                            )
 
                             cls.append_multiple_sessions(cells[3:], new_exam, session)
-                            exams.append(new_exam)  # aggiungiamo l'esame trovato alla lista
+                            exams.append(
+                                new_exam
+                            )  # aggiungiamo l'esame trovato alla lista
 
                     else:  # se la row ha solo un td figlio, è la riga che indica l'anno delle materie successive
                         # quindi aggiorniamo la variabile anno con il valore della prima cella della riga
@@ -193,8 +232,13 @@ class Exam(Scrapable):
         logger.info("Exams loaded.")
 
     @classmethod
-    def find(cls, select_sessione: str = "", where_sessione: str = "", where_anno: str = "",
-             where_insegnamento: str = "") -> List['Exam']:
+    def find(
+        cls,
+        select_sessione: str = "",
+        where_sessione: str = "",
+        where_anno: str = "",
+        where_insegnamento: str = "",
+    ) -> List['Exam']:
         """Produces a list of exams from the database, based on the provided parametes
 
         Args:
@@ -219,10 +263,12 @@ class Exam(Scrapable):
         else:
             where_anno = ""
 
-        db_results = DbManager.select_from(select=f"anno, cdl, docenti, insegnamento, {select_sessione}",
-                                           table_name=cls().table,
-                                           where=f"insegnamento LIKE ? {where_sessione} {where_anno}",
-                                           where_args=(f'%{where_insegnamento}%',))
+        db_results = DbManager.select_from(
+            select=f"anno, cdl, docenti, insegnamento, {select_sessione}",
+            table_name=cls().table,
+            where=f"insegnamento LIKE ? {where_sessione} {where_anno}",
+            where_args=(f'%{where_insegnamento}%',),
+        )
         return cls._query_result_initializer(db_results)
 
     @classmethod
@@ -244,9 +290,12 @@ class Exam(Scrapable):
         for session in self.__class__.SESSIONS:
             if self.get_session(session):
                 appeals = str(self.get_session(session))
-                #aggiunge un - per separare orario e luogo dell'esame
-                appeals = re.sub(r"(?P<ora>([01]?\d|2[0-3]):[0-5][0-9])(?P<parola>\w)", r"\g<ora> - \g<parola>",
-                                 appeals)
+                # aggiunge un - per separare orario e luogo dell'esame
+                appeals = re.sub(
+                    r"(?P<ora>([01]?\d|2[0-3]):[0-5][0-9])(?P<parola>\w)",
+                    r"\g<ora> - \g<parola>",
+                    appeals,
+                )
                 # separa i vari appelli della sessione
                 appeals = re.split(r"[\"'], [\"']", appeals)
 
@@ -256,7 +305,9 @@ class Exam(Scrapable):
                     # cattura eventuali link e li rende inoffensivi per il markdown
                     appeals[i] = re.sub(
                         r"(?P<link>https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))",
-                        r"[link](\g<link>)", appeals[i])
+                        r"[link](\g<link>)",
+                        appeals[i],
+                    )
                     # rimuove eventuali caratteri * e _ rimasti che non siano nei link
                     appeals[i] = re.sub(r"[*_](?![^(]*[)])", " ", appeals[i])
 

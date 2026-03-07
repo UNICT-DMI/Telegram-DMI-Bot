@@ -29,5 +29,5 @@ async def test_prof_cmd(client: TelegramClient):
             resp: Message = await conv.get_response()
 
             assert resp.text
-        
+
         sleep(5)

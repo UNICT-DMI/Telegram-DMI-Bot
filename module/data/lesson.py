@@ -2,12 +2,16 @@
 """Lesson class"""
 import logging
 from typing import List
+
 import bs4
 import requests
+
 from module.data.db_manager import DbManager
 from module.data.scrapable import Scrapable
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+)
 logger = logging.getLogger(__name__)
 
 
@@ -23,19 +27,22 @@ class Lesson(Scrapable):
         anno (:class:`str`): year
         semestre (:class:`str`): semester
     """
+
     IDS = ["l-31", "l-35", "lm-18", "lm-40"]
     DAY_TO_INT = {'LUN': 1, 'MAR': 2, 'MER': 3, 'GIO': 4, 'VEN': 5}
     INT_TO_DAY = {'1': "LUN", '2': "MAR", '3': "MER", '4': "GIO", '5': "VEN"}
 
     # pylint: disable=too-many-arguments
-    def __init__(self,
-                 nome: str = "",
-                 giorno_settimana: str = "",
-                 ora_inizio: str = "",
-                 ora_fine: str = "",
-                 aula: str = "",
-                 anno: str = "",
-                 semestre: str = ""):
+    def __init__(
+        self,
+        nome: str = "",
+        giorno_settimana: str = "",
+        ora_inizio: str = "",
+        ora_fine: str = "",
+        aula: str = "",
+        anno: str = "",
+        semestre: str = "",
+    ):
         self.nome = nome
         self.giorno_settimana = giorno_settimana
         self.ora_inizio = ora_inizio
@@ -52,7 +59,15 @@ class Lesson(Scrapable):
     @property
     def columns(self) -> tuple:
         """tuple of column names of the database table that will store this Lesson"""
-        return ("nome", "giorno_settimana", "ora_inizio", "ora_fine", "aula", "anno", "semestre")
+        return (
+            "nome",
+            "giorno_settimana",
+            "ora_inizio",
+            "ora_fine",
+            "aula",
+            "anno",
+            "semestre",
+        )
 
     @classmethod
     def scrape(cls, year_exams: str, delete: bool = False):
@@ -66,8 +81,14 @@ class Lesson(Scrapable):
         # pylint: disable=too-many-nested-blocks
         for id_ in cls.IDS:
             urls = [
-                "http://web.dmi.unict.it/corsi/" + str(id_) + "/orario-lezioni?semestre=1&aa=" + year_exams,
-                "http://web.dmi.unict.it/corsi/" + str(id_) + "/orario-lezioni?semestre=2&aa=" + year_exams
+                "http://web.dmi.unict.it/corsi/"
+                + str(id_)
+                + "/orario-lezioni?semestre=1&aa="
+                + year_exams,
+                "http://web.dmi.unict.it/corsi/"
+                + str(id_)
+                + "/orario-lezioni?semestre=2&aa="
+                + year_exams,
             ]
             for url in urls:
                 sorgente = requests.get(url, timeout=10).text
@@ -92,7 +113,9 @@ class Lesson(Scrapable):
                     td_all = tr.find_all('td')
                     # Calcola anno materia
                     td_anno = tr.find('td')
-                    if td_anno is not None and (td_anno.text[0] == '2' or td_anno.text[0] == '3'):
+                    if td_anno is not None and (
+                        td_anno.text[0] == '2' or td_anno.text[0] == '3'
+                    ):
                         anno = td_anno.text[0]
 
                     if len(td_all) == 4:
@@ -100,19 +123,21 @@ class Lesson(Scrapable):
                         for orario in orari:
                             if str(orario) != '<br/>':
                                 giorno = cls.DAY_TO_INT.get(orario[0:3], 0)
-                                orario = orario.replace(orario[0:3], '')  #GIORNO
-                                ora_inizio = orario[1:6]  #ORA INIZIO
-                                ora_fine = orario[7:12]  #ORA FINE
+                                orario = orario.replace(orario[0:3], '')  # GIORNO
+                                ora_inizio = orario[1:6]  # ORA INIZIO
+                                ora_fine = orario[7:12]  # ORA FINE
                                 orario = orario.replace(ora_inizio + "-" + ora_fine, '')
                                 aula = orario[2:]
 
-                                lesson = cls(nome=td_all[0].text,
-                                             giorno_settimana=str(giorno),
-                                             ora_inizio=ora_inizio,
-                                             ora_fine=ora_fine,
-                                             aula=str(aula),
-                                             anno=str(anno),
-                                             semestre=str(semestre))
+                                lesson = cls(
+                                    nome=td_all[0].text,
+                                    giorno_settimana=str(giorno),
+                                    ora_inizio=ora_inizio,
+                                    ora_fine=ora_fine,
+                                    aula=str(aula),
+                                    anno=str(anno),
+                                    semestre=str(semestre),
+                                )
                                 lessons.append(lesson)
 
         if delete:
@@ -121,7 +146,9 @@ class Lesson(Scrapable):
         logger.info("Lessons loaded.")
 
     @classmethod
-    def find(cls, where_anno: str = "", where_giorno: str = "", where_nome: str = "") -> List['Lesson']:
+    def find(
+        cls, where_anno: str = "", where_giorno: str = "", where_nome: str = ""
+    ) -> List['Lesson']:
         """Produces a list of lessons from the database, based on the provided parametes
 
         Args:
@@ -142,7 +169,11 @@ class Lesson(Scrapable):
         else:
             where_anno = ""
 
-        db_results = DbManager.select_from(table_name=cls().table, where=f"nome LIKE ? {where_giorno} {where_anno}", where_args=(f'%{where_nome}%',))
+        db_results = DbManager.select_from(
+            table_name=cls().table,
+            where=f"nome LIKE ? {where_giorno} {where_anno}",
+            where_args=(f'%{where_nome}%',),
+        )
         return cls._query_result_initializer(db_results)
 
     @classmethod
@@ -158,8 +189,10 @@ class Lesson(Scrapable):
         return f"Lesson: {self.__dict__}"
 
     def __str__(self):
-        return f"*Insegnamento:* {self.nome}"\
-                f"\n*Giorno:* {self.__class__.INT_TO_DAY[self.giorno_settimana]}"\
-                f"\n*Ora:* {self.ora_inizio} - {self.ora_fine}"\
-                f"\n*Anno:* {self.anno}"\
-                f"\n*Aula:* {self.aula}\n"
+        return (
+            f"*Insegnamento:* {self.nome}"
+            f"\n*Giorno:* {self.__class__.INT_TO_DAY[self.giorno_settimana]}"
+            f"\n*Ora:* {self.ora_inizio} - {self.ora_fine}"
+            f"\n*Anno:* {self.anno}"
+            f"\n*Aula:* {self.aula}\n"
+        )

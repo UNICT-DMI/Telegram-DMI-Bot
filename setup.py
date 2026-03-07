@@ -1,6 +1,8 @@
 """Used to set secret variables, like the token, when using the Dockerfile"""
-import sys
+
 import argparse
+import sys
+
 import yaml
 
 
@@ -10,16 +12,41 @@ def create_argparser() -> argparse.ArgumentParser:
     Returns:
         the argparser used to parse the arguments
     """
-    parser = argparse.ArgumentParser(description="Settings utility to edit the config/settings.yaml file", allow_abbrev=True)
+    parser = argparse.ArgumentParser(
+        description="Settings utility to edit the config/settings.yaml file",
+        allow_abbrev=True,
+    )
     parser.add_argument('token', help="the token of your telegram bot")
-    parser.add_argument('--test_api_hash', help="hash of the telegram app used for testing")
-    parser.add_argument('--test_api_id', type=int, help="id of the telegram app used for testing")
-    parser.add_argument('--test_session', help="session of the telegram app used for testing")
-    parser.add_argument('--test_tag', help="tag of the telegram bot used for testing. Include the '@' character")
-    parser.add_argument('--test_token', help="token for the telegram bot used for testing")
-    parser.add_argument('--test_representatives_group', help="id of the representatives group used for testing")
-    parser.add_argument('--test_dev_group_chatid', help="id of the representatives group used for testing")
-    parser.add_argument('-p', '--path', help="path of the setting file (default: %(default)s)", default="config/settings.yaml")
+    parser.add_argument(
+        '--test_api_hash', help="hash of the telegram app used for testing"
+    )
+    parser.add_argument(
+        '--test_api_id', type=int, help="id of the telegram app used for testing"
+    )
+    parser.add_argument(
+        '--test_session', help="session of the telegram app used for testing"
+    )
+    parser.add_argument(
+        '--test_tag',
+        help="tag of the telegram bot used for testing. Include the '@' character",
+    )
+    parser.add_argument(
+        '--test_token', help="token for the telegram bot used for testing"
+    )
+    parser.add_argument(
+        '--test_representatives_group',
+        help="id of the representatives group used for testing",
+    )
+    parser.add_argument(
+        '--test_dev_group_chatid',
+        help="id of the representatives group used for testing",
+    )
+    parser.add_argument(
+        '-p',
+        '--path',
+        help="path of the setting file (default: %(default)s)",
+        default="config/settings.yaml",
+    )
     return parser
 
 

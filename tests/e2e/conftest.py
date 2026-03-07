@@ -1,13 +1,15 @@
 """Test configuration"""
+
 import asyncio
 import warnings
 
 import pytest
-from main import add_handlers
-from module.shared import config_map
 from telegram.ext import Updater
 from telethon.sessions import StringSession
 from telethon.sync import TelegramClient
+
+from main import add_handlers
+from module.shared import config_map
 
 warnings.filterwarnings(
     "ignore",
@@ -74,7 +76,9 @@ async def bot():
 
 
 @pytest.fixture(scope="session")
-async def client(bot) -> TelegramClient:
+async def client() -> (
+    TelegramClient
+):  # pylint: disable=redefined-outer-name,unused-argument
     """Called at the beginning of the testing session.
     Creates the telegram client that will simulate the user
 

@@ -1,8 +1,9 @@
 """Scrapable abstract class"""
+
 from module.data.db_manager import DbManager
 
 
-class Scrapable():
+class Scrapable:
     """Abstract class base of everything that is to be scraped and saved in the database"""
 
     @property
@@ -23,12 +24,16 @@ class Scrapable():
 
     def save(self):
         """Saves this scrapable object in the database"""
-        DbManager.insert_into(table_name=self.table, columns=self.columns, values=self.values)
+        DbManager.insert_into(
+            table_name=self.table, columns=self.columns, values=self.values
+        )
 
     def delete(self):
         """Deletes this scrapable object from the database"""
         where = " = ? and ".join(self.columns) + " = ?"
-        DbManager.delete_from(table_name=self.table, where=where, where_args=self.values)
+        DbManager.delete_from(
+            table_name=self.table, where=where, where_args=self.values
+        )
 
     @classmethod
     def bulk_save(cls, scrapables: list):
@@ -41,9 +46,14 @@ class Scrapable():
             return
         values = tuple(scrapable.values for scrapable in scrapables)
         if len(values) == 0:
-            return # nothing to save
+            return  # nothing to save
 
-        DbManager.insert_into(table_name=cls().table, columns=cls().columns, values=values, multiple_rows=True)
+        DbManager.insert_into(
+            table_name=cls().table,
+            columns=cls().columns,
+            values=values,
+            multiple_rows=True,
+        )
 
     @classmethod
     def _find(cls, **kwargs) -> list:
@@ -54,7 +64,9 @@ class Scrapable():
         """
         where = "and".join((f" {c} = ? " for c in kwargs))
         values = tuple(v for v in kwargs.values())
-        db_results = DbManager.select_from(table_name=cls().table, where=where, where_args=values)
+        db_results = DbManager.select_from(
+            table_name=cls().table, where=where, where_args=values
+        )
         return cls._query_result_initializer(db_results)
 
     @classmethod
@@ -68,7 +80,9 @@ class Scrapable():
         return cls._query_result_initializer(db_results)
 
     @classmethod
-    def count(cls, where: str = "", where_args: tuple = None, group_by: str = "") -> int:
+    def count(
+        cls, where: str = "", where_args: tuple = None, group_by: str = ""
+    ) -> int:
         """Count the number of scrapable objects present in the database, based on the parameters
 
         Args:
@@ -79,7 +93,12 @@ class Scrapable():
         Returns:
             number of scrapable objects
         """
-        return DbManager.count_from(table_name=cls().table, where=where, where_args=where_args, group_by=group_by)
+        return DbManager.count_from(
+            table_name=cls().table,
+            where=where,
+            where_args=where_args,
+            group_by=group_by,
+        )
 
     @classmethod
     def delete_all(cls):

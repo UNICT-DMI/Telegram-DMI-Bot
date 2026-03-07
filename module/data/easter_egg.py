@@ -3,7 +3,7 @@
 from random import choice
 
 
-class EasterEgg():
+class EasterEgg:
     """You got gnomed"""
 
     @staticmethod
@@ -43,6 +43,7 @@ class EasterEgg():
             "Vieni tu a spiegare, così io mi riposo!",
         ]
         return choice(elements)
+
     @staticmethod
     def get_uni_bandita() -> str:
         elements = [
@@ -51,6 +52,6 @@ class EasterEgg():
             "[PresaDiretta!](https://www.youtube.com/watch?v=6jgN9Vcti8g)",
             "[Che resti fra noi!](https://www.youtube.com/watch?v=G4QXL6NHMi8)",
             "[Siamo su YT!](https://www.youtube.com/results?search_query=intercettazioni+universit%C3%A0+bandita)",
-            "[Privilegiati? Ma no!](https://www.amazon.it/universit%C3%A0-Privilegi-baronali-gestione-truccati/dp/8832963914)"
+            "[Privilegiati? Ma no!](https://www.amazon.it/universit%C3%A0-Privilegi-baronali-gestione-truccati/dp/8832963914)",
         ]
         return choice(elements)
