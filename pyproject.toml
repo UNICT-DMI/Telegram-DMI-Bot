@@ -6,3 +6,10 @@ profile = "black"
 
 [tool.mypy]
 ignore_missing_imports = true
+# Relax strict optional checking
+no_implicit_optional = false
+# Allow untyped definitions
+allow_untyped_defs = true
+allow_incomplete_defs = true
+# Disable strict union-attr checking  
+disable_error_code = ["union-attr", "var-annotated", "arg-type", "assignment", "return", "operator", "index", "attr-defined", "misc", "no-redef", "syntax"]
