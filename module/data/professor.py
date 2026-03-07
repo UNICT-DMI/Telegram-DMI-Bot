@@ -90,6 +90,40 @@ class Professor(Scrapable):
         )
 
     @classmethod
+    def _scrape_professor_details(
+        cls, professor: 'Professor', soup: bs4.BeautifulSoup
+    ) -> None:
+        """Fills in extra details (office, email, phone, photo) for a professor from their profile page."""
+        div = soup.find("div", {"class": "card-body"})
+        if not isinstance(div, bs4.Tag):
+            return
+        for bi in div.find_all("b"):
+            if bi.text == "Ufficio:":
+                professor.ufficio = bi.next_sibling
+            elif bi.text == "Email:":
+                email_elem = bi.next_sibling.next_sibling if bi.next_sibling else None
+                if email_elem and hasattr(email_elem, 'text'):
+                    professor.email = email_elem.text
+            elif bi.text == "Sito web:":
+                sito_elem = bi.next_sibling.next_sibling if bi.next_sibling else None
+                if sito_elem and hasattr(sito_elem, 'text'):
+                    professor.sito = sito_elem.text
+            elif bi.text == "Telefono:":
+                professor.telefono = bi.next_sibling
+            elif bi.text == "Fax:":
+                professor.fax = bi.next_sibling
+        avatar_div = soup.find("div", {"class": "avatar size-xxl size-xxxl"})
+        if isinstance(avatar_div, bs4.Tag):
+            img = avatar_div.find("img")
+            if isinstance(img, bs4.Tag):
+                src = img.get("src")
+                professor.photo_id = str(src) if src else "Non presente"
+            else:
+                professor.photo_id = "Non presente"
+        else:
+            professor.photo_id = "Non presente"
+
+    @classmethod
     def scrape(cls, delete: bool = False):
         """Scrapes all the professors and stores them in the database
 
@@ -148,38 +182,7 @@ class Professor(Scrapable):
 
                 source = requests.get(professor.scheda_dmi, timeout=10).text
                 soup = bs4.BeautifulSoup(source, "html.parser")
-                div = soup.find("div", {"class": "card-body"})
-                if not isinstance(div, bs4.Tag):
-                    continue
-                for bi in div.find_all("b"):
-                    if bi.text == "Ufficio:":
-                        professor.ufficio = bi.next_sibling
-                    elif bi.text == "Email:":
-                        email_elem = (
-                            bi.next_sibling.next_sibling if bi.next_sibling else None
-                        )
-                        if email_elem and hasattr(email_elem, 'text'):
-                            professor.email = email_elem.text
-                    elif bi.text == "Sito web:":
-                        sito_elem = (
-                            bi.next_sibling.next_sibling if bi.next_sibling else None
-                        )
-                        if sito_elem and hasattr(sito_elem, 'text'):
-                            professor.sito = sito_elem.text
-                    elif bi.text == "Telefono:":
-                        professor.telefono = bi.next_sibling
-                    elif bi.text == "Fax:":
-                        professor.fax = bi.next_sibling
-                avatar_div = soup.find("div", {"class": "avatar size-xxl size-xxxl"})
-                if isinstance(avatar_div, bs4.Tag):
-                    img = avatar_div.find("img")
-                    if isinstance(img, bs4.Tag):
-                        src = img.get("src")
-                        professor.photo_id = str(src) if src else "Non presente"
-                    else:
-                        professor.photo_id = "Non presente"
-                else:
-                    professor.photo_id = "Non presente"
+                cls._scrape_professor_details(professor, soup)
 
                 professors.append(professor)
 

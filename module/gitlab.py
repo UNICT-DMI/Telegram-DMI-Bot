@@ -355,6 +355,33 @@ def send_message(
             )
 
 
+def _handle_subgroup_action(context, origin_id, buttons):
+    """Populate buttons with subgroups and projects for a given origin_id."""
+    subgroups = get_subgroups(context, origin_id)
+    if subgroups:
+        for subgroup in subgroups:
+            db.execute(
+                "INSERT OR REPLACE INTO gitlab (id, parent_id, name, type) VALUES (?, ?, ?, ?)",
+                (subgroup.id, subgroup.parent_id, subgroup.name, 'subgroup'),
+            )
+            buttons.append(
+                InlineKeyboardButton(
+                    f"🗂 {subgroup.name}", callback_data=f'git_s_{subgroup.id}'
+                )
+            )
+
+    for project in get_projects(origin_id):
+        db.execute(
+            "INSERT OR REPLACE INTO gitlab (id, parent_id, name, web_url, type) VALUES (?, ?, ?, ?, ?)",
+            (project.id, origin_id, project.name, project.web_url, 'project'),
+        )
+        buttons.append(
+            InlineKeyboardButton(
+                f"🗂 {project.name}", callback_data=f'git_p_{project.id}'
+            )
+        )
+
+
 def gitlab_handler(update: Update, context: CallbackContext):
     """
     Handle every action of /git and /gitlab command
@@ -382,9 +409,7 @@ def gitlab_handler(update: Update, context: CallbackContext):
         data = query.data.replace("git_", "")
 
     if not data:
-        subgroups = get_subgroups(context, GITLAB_ROOT_GROUP)
-
-        for subgroup in subgroups:
+        for subgroup in get_subgroups(context, GITLAB_ROOT_GROUP):
             db.execute(
                 "INSERT OR REPLACE INTO gitlab (id, parent_id, name, type) VALUES (?, ?, ?, ?)",
                 (subgroup.id, subgroup.parent_id, subgroup.name, 'subgroup'),
@@ -418,32 +443,7 @@ def gitlab_handler(update: Update, context: CallbackContext):
             action = (_type[0] if _type else 'subgroup')[0]
 
         if action == 's':
-            subgroups = get_subgroups(context, origin_id)
-
-            if subgroups:
-                for subgroup in subgroups:
-                    db.execute(
-                        "INSERT OR REPLACE INTO gitlab (id, parent_id, name, type) VALUES (?, ?, ?, ?)",
-                        (subgroup.id, subgroup.parent_id, subgroup.name, 'subgroup'),
-                    )
-                    buttons.append(
-                        InlineKeyboardButton(
-                            f"🗂 {subgroup.name}", callback_data=f'git_s_{subgroup.id}'
-                        )
-                    )
-
-            projects = get_projects(origin_id)
-
-            for project in projects:
-                db.execute(
-                    "INSERT OR REPLACE INTO gitlab (id, parent_id, name, web_url, type) VALUES (?, ?, ?, ?, ?)",
-                    (project.id, origin_id, project.name, project.web_url, 'project'),
-                )
-                buttons.append(
-                    InlineKeyboardButton(
-                        f"🗂 {project.name}", callback_data=f'git_p_{project.id}'
-                    )
-                )
+            _handle_subgroup_action(context, origin_id, buttons)
         elif action == 'p':
             buttons.extend(explore_repository_tree(origin_id, '/', db))
         elif action == 't':

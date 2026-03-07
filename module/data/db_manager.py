@@ -3,7 +3,7 @@
 import logging
 import re
 import sqlite3
-from typing import Any, Callable, Tuple
+from typing import Tuple
 
 logger = logging.getLogger(__name__)
 
