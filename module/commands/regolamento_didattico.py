@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """/regolamentodidattico command"""
+
 from typing import Optional
 
 from telegram import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Update

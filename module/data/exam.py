@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Exam class"""
+
 import logging
 import re
 from typing import List, Optional

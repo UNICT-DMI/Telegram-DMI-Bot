@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """EasterEgg class"""
+
 from random import choice
 
 

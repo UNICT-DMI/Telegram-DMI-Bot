@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """/esami command"""
+
 import logging
 import re
 from typing import Optional

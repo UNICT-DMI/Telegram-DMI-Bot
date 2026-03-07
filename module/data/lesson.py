@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Lesson class"""
+
 import logging
 from typing import List
 

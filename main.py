@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Main module"""
+
 import uvicorn
 from telegram import BotCommand
 from telegram.ext import (

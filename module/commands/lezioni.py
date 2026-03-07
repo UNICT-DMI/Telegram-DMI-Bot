@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """/lezioni command"""
+
 import datetime
 import logging
 import os

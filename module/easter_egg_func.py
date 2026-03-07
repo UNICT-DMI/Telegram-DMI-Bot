@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Nobody knows what those functions do"""
+
 import sqlite3
 
 from telegram import Update
