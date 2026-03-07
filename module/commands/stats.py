@@ -75,7 +75,7 @@ def stats_gen(update: Update, context: CallbackContext, days: int = 0) -> None:
     for row in rows:
         text += f"{row['Type']} : {row['n']}\n"
         total += row['n']
-    text += f"\nTotale: {total}\nMedia per comando: {round(total/(len(rows) if rows else 1), 2)}"
+    text += f"\nTotale: {total}\nMedia per comando: {round(total / (len(rows) if rows else 1), 2)}"
 
     context.bot.sendMessage(chat_id=chat_id, text=text)
     send_graph(rows, context.bot, chat_id)

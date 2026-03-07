@@ -98,7 +98,7 @@ class TimetableSlot(Scrapable):
                         time = time[:3] + "30"
                     if not pd.isnull(row):
                         r = row[:20] + rooms[i]
-                        if not r in subjects:
+                        if r not in subjects:
                             subjects[r] = cls(
                                 nome=row.replace('[]', '')
                                 .replace('[', '(')

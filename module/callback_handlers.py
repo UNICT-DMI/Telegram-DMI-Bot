@@ -1,6 +1,5 @@
 """Common query callback families"""
 
-import logging  # pylint: disable=unused-import
 from typing import Optional
 
 from telegram import CallbackQuery, ParseMode, Update

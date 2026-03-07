@@ -4,3 +4,4 @@ pytest-asyncio==0.16.0
 pytest-mock
 pytest-cov
 pylint
+flake8

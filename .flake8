@@ -1,0 +1,26 @@
+[flake8]
+max-line-length = 127
+max-complexity = 10
+exclude = 
+    .git,
+    __pycache__,
+    venv,
+    .venv,
+    build,
+    dist,
+    .eggs,
+    *.egg-info
+# E203: whitespace before ':' (conflicts with black)
+# W503: line break before binary operator (conflicts with black)
+# C901: function is too complex (we'll handle complexity separately)
+ignore = E203, W503, C901
+per-file-ignores =
+    # __init__.py files export modules, so F401 is expected
+    */__init__.py:F401
+    # callback_handlers uses star imports intentionally for handlers
+    module/callback_handlers.py:F403,F401
+    # Long URLs and strings that can't be easily broken
+    module/commands/regolamento_didattico.py:E501
+    module/data/easter_egg.py:E501
+    module/data/exam.py:E501
+    module/commands/drive_contribute.py:E501
