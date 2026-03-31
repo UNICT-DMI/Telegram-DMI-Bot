@@ -88,8 +88,6 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext) -> No
         context: context passed by the handler
     """
     query: Optional[CallbackQuery] = update.callback_query
-    if not query or not query.data:
-        return
     data: str = query.data.replace("reg_button_", "")
     locale: str = update.callback_query.from_user.language_code
     if data == "home":
@@ -113,8 +111,6 @@ def regolamentodidattico_handler(update: Update, context: CallbackContext) -> No
 
 def cdl_handler(update: Update, context: CallbackContext) -> None:
     query: Optional[CallbackQuery] = update.callback_query
-    if not query or not query.data:
-        return
     data: str = query.data.replace("cdl_button_", "")
     locale: str = update.callback_query.from_user.language_code
     if data == "informatica":
@@ -142,9 +138,7 @@ def send_regolamento(update: Update, context: CallbackContext) -> None:
         context: context passed by the handler
     """
     query: Optional[CallbackQuery] = update.callback_query
-    if not query or not query.data:
-        return
-    data: str = query.data
+    data: Optional[str] = query.data
     chat_id: int = update.effective_chat.id
     locale: str = update.callback_query.from_user.language_code
     if data in reg_doc_triennale_L31:

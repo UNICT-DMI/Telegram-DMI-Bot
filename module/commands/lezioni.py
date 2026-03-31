@@ -6,11 +6,11 @@ import logging
 import os
 import re
 import time
-from typing import List, Optional, Tuple
+from typing import Optional, Tuple
 
 import requests
 from bs4 import BeautifulSoup
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 
 from module.data import Lesson
@@ -126,9 +126,9 @@ def lezioni(update: Update, context: CallbackContext) -> None:
         else:  # Not exists local file, so download it
             pass
 
-    pdf_content = get_orario_file()
+    file = get_orario_file()
 
-    if pdf_content is None:
+    if file is None:
         context.bot.sendMessage(
             chat_id=chat_id,
             text="Orario non disponibile attualmente. Ritenta più tardi",
@@ -156,11 +156,9 @@ def lezioni_handler(update: Update, context: CallbackContext) -> None:
         update: update event
         context: context passed by the handler
     """
-    callback_data: Optional[str] = update.callback_query.data
+    callback_data: Optional[CallbackQuery] = update.callback_query.data
     chat_id: int = update.callback_query.message.chat_id
     message_id: int = update.callback_query.message.message_id
-    if not context.user_data or 'lezioni' not in context.user_data or not callback_data:
-        return
     lezioni_user_data = context.user_data['lezioni']
     locale: str = update.callback_query.from_user.language_code
     if "anno" in callback_data:
@@ -218,7 +216,7 @@ def lezioni_button_anno(
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.SELECT_YEAR_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(
@@ -259,7 +257,7 @@ def lezioni_button_giorno(
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.CLASSES_SELECT_DAY_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(
@@ -388,7 +386,7 @@ def get_lezioni_text_InLineKeyboard(
         text_insegnamento if text_insegnamento else "tutti",
     )
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(

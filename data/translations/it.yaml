@@ -22,6 +22,9 @@ SELECT_YEAR_TEXT_ID: "Seleziona l'anno che ti interessa"
 YEAR_1ST_TEXT_ID: "Primo Anno"
 YEAR_2ND_TEXT_ID: "Secondo Anno"
 YEAR_3RD_TEXT_ID: "Terzo Anno"
+CONFIRM: "Conferma"
+UNDO: "Annulla"
+UNDO_OPERATION: "Operazione annullata"
 
 # sticky keyboard
 HELP_KEYBOARD_TEXT_ID: "❔ Aiuto"
@@ -331,3 +334,28 @@ EXAMS_USAGE_TEXT_ID: |-
     ins: nome insegnamento
   Esempio:
     ins: SisTeMi oPeRaTIvI
+  
+# /reminder command
+REMINDER_SELECT_EXAM_DATE_TEXT_ID: "Seleziona la data dell'appello che ti interessa:"
+REMINDER_NOT_FOUND_SUBJECT_TEXT_ID: "Non ho trovato nessuna materia corrispondente a %capybara% nel database."
+REMINDER_NOT_FOUND_PROFESSOR_TEXT_ID: "Non ho trovato nessun professore che insegna la materia %capybara%."
+REMINDER_ADD: "Aggiungi reminder"
+REMINDER_DELETE: "Cancella reminder"
+REMINDER_DELETE_SELECTION: "Quale reminder desideri eliminare?"
+REMINDER_FIRST_SELECTION: "Cosa desideri fare?"
+REMINDER_DELETE_ALL: "Cancella tutti"
+REMINDER_CONFIRM_DELETE: "Reminder per l'esame di %capybara% del %capybara% eliminato!"
+REMINDER_CONFIRM_REGISTRATION: "Reminder registrato!"
+REMINDER_CONFIRM_DELETE_ALL: "Reminders cancellati!"
+REMINDER_SELECT_EXAM_PROFESSOR: "Seleziona il docente corretto."
+REMINDER_DUPLICATE_WARNING: "Errore nella registrazione. Non puoi registrare lo stesso reminder due volte."
+REMINDER_RECAP: |-
+  Riepilogo del reminder
+  Materia: %capybara%
+  Professore: %capybara%
+  Data: %capybara%
+  Vuoi confermare?
+REMINDER_FIRST_MESSAGE: "La prenotazione per l'esame di %capybara%, col Professore %capybara%, di giorno %capybara% é ora aperta!"
+REMINDER_SECOND_MESSAGE: "La possibilitá di prenotarsi per l'esame di %capybara%, col Professore %capybara%, di giorno %capybara% sta per terminare!"
+REMINDER_TOO_LATE: "Probabilmente le prenotazioni stanno per chiudere o sono già chiuse. Controlla tu stess*."
+REMINDER_NO_EXAM_DATE: "Non ci sono date disponibili."

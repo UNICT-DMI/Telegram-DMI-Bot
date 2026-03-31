@@ -3,7 +3,7 @@
 
 import logging
 import re
-from typing import List, Optional, Tuple
+from typing import Optional
 
 from telegram import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
@@ -76,8 +76,6 @@ def esami_handler(update: Update, context: CallbackContext) -> None:
     message_id: int = update.callback_query.message.message_id
     locale: str = update.callback_query.from_user.language_code
 
-    if not context.user_data or 'esami' not in context.user_data or not callback_data:
-        return
     esami_user_data = context.user_data['esami']
 
     if "anno" in callback_data:
@@ -175,7 +173,7 @@ def esami_button_sessione(
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.EXAMS_SELECT_SESSION_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(
@@ -240,6 +238,10 @@ def esami_input_insegnamento(update: Update, context: CallbackContext) -> None:
         update: update event
         context: context passed by the handler
     """
+
+    if not context.user_data or 'esami' not in context.user_data:
+        return
+
     locale: str = get_locale_code(update)
     if context.user_data['esami'].get('cmd', None) == "input_insegnamento":
         # se effettivamente l'user aveva richiesto di modificare l'insegnamento...
@@ -260,7 +262,7 @@ def esami_input_insegnamento(update: Update, context: CallbackContext) -> None:
 
 def get_esami_text_inline_keyboard(
     locale: str, context: CallbackContext
-) -> Tuple[str, InlineKeyboardMarkup]:
+) -> tuple[str, InlineKeyboardMarkup]:
     """Generates the text and the InlineKeyboard for the /esami command, based on the current parameters.
 
     Args:
@@ -293,7 +295,7 @@ def get_esami_text_inline_keyboard(
         text_insegnamento if text_insegnamento else "tutti",
     )
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(

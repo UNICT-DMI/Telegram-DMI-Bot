@@ -1,5 +1,3 @@
-"""Test cases for database manager"""
-
 # pylint: disable=redefined-outer-name
 import pytest
 import yaml

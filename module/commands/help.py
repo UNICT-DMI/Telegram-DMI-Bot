@@ -1,7 +1,5 @@
 """/help command"""
 
-from typing import List
-
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 
@@ -24,7 +22,7 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False) -> No
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.HELP_HEADER_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(
@@ -148,7 +146,7 @@ def help_dip_cdl(
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(
@@ -237,7 +235,7 @@ def help_rapp_menu(
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.REPRS_HEADER_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(
@@ -295,7 +293,7 @@ def help_segr(
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(
@@ -354,7 +352,7 @@ def help_ersu(
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(
@@ -413,7 +411,7 @@ def help_projects_acknowledgements(
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(
@@ -470,7 +468,7 @@ def help_misc(
     locale: str = get_locale_code(update)
     message_text: str = get_locale(locale, TEXT_IDS.SHOW_RELATED_COMMANDS_TEXT_ID)
 
-    keyboard: List[List[InlineKeyboardButton]] = [[]]
+    keyboard = [[]]
     keyboard.append(
         [
             InlineKeyboardButton(

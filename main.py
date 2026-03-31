@@ -39,6 +39,18 @@ from module.commands.regolamento_didattico import (
     regolamentodidattico_handler,
     send_regolamento,
 )
+from module.commands.reminder import (
+    reminder,
+    reminder_annullato_handler,
+    reminder_appello_handler,
+    reminder_confermato_handler,
+    reminder_del_button,
+    reminder_del_handler,
+    reminder_input_insegnamento,
+    reminder_new_handler,
+    reminder_prof_handler,
+    reminder_sessione_handler,
+)
 from module.commands.report import report
 from module.commands.start import start
 from module.commands.stats import stats, stats_tot
@@ -53,7 +65,7 @@ from module.easter_egg_func import (
     uni_bandita,
 )
 from module.gitlab import git, gitlab_handler
-from module.job_updater import updater_lep
+from module.job_updater import check_exam_reminders, updater_lep
 from module.shared import config_map
 from module.utils.multi_lang_utils import get_regex_multi_lang, load_translations
 from webapp.app import app
@@ -70,6 +82,7 @@ def add_commands(up: Updater) -> None:
         BotCommand("help ", "help"),
         BotCommand("gruppi", "link alla lista dei gruppi telegram delle materie"),
         BotCommand("esami", "cerca informazioni sugli esami"),
+        BotCommand("reminder", "imposta un reminder per la prenotazione ad un appello"),
         BotCommand("lezioni", "cerca informazioni sulle lezioni"),
         BotCommand("prof", "cerca informazioni sui professori"),
         BotCommand("aulario", "cerca informazioni sull'aulario"),
@@ -148,6 +161,7 @@ def add_handlers(dp: Dispatcher) -> None:
 
     dp.add_handler(CommandHandler('lezioni', lezioni))
     dp.add_handler(CommandHandler('esami', esami))
+    dp.add_handler(CommandHandler('reminder', reminder))
 
     dp.add_handler(CommandHandler('prof', prof))
 
@@ -235,6 +249,31 @@ def add_handlers(dp: Dispatcher) -> None:
         MessageHandler(Filters.regex(r"^(?!=<[/])[Ii]ns:\s+"), esami_input_insegnamento)
     )
 
+    # reminder
+    # regex accetta [/ins: nome] oppure [\Ins:nome], per agevolare chi usa il cellulare
+    dp.add_handler(CallbackQueryHandler(reminder_prof_handler, pattern='^rem_prof_'))
+    dp.add_handler(CallbackQueryHandler(reminder_new_handler, pattern='rem_add'))
+    dp.add_handler(CallbackQueryHandler(reminder_del_button, pattern='rem_del$'))
+    dp.add_handler(CallbackQueryHandler(reminder_del_handler, pattern='^rem_delete_*'))
+    dp.add_handler(
+        CallbackQueryHandler(reminder_sessione_handler, pattern='^rem_sess_')
+    )
+    dp.add_handler(
+        CallbackQueryHandler(reminder_appello_handler, pattern='^rem_appello_')
+    )
+    dp.add_handler(
+        CallbackQueryHandler(reminder_annullato_handler, pattern='^rem_conf_no')
+    )
+    dp.add_handler(
+        CallbackQueryHandler(reminder_confermato_handler, pattern='^rem_conf_yes')
+    )
+    dp.add_handler(
+        MessageHandler(
+            Filters.regex(r"^(?!=<[/])[Ii]ns:\s+"), reminder_input_insegnamento
+        ),
+        2,
+    )
+
     # lezioni
     dp.add_handler(CallbackQueryHandler(lezioni_handler, pattern='lezioni_button_*'))
     dp.add_handler(
@@ -267,6 +306,10 @@ def add_jobs(dp: Dispatcher) -> None:
     dp.job_queue.run_repeating(
         updater_lep, interval=86400, first=1
     )  # job_updater_lep (24h)
+
+    dp.job_queue.run_repeating(
+        check_exam_reminders, interval=86400, first=100
+    )  # ogni 24h ma first=100 per evitare overlapping con le DB queries di updater_lep
 
 
 def main() -> None:

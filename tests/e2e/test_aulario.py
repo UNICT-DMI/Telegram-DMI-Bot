@@ -27,7 +27,7 @@ async def test_aulario_cmd(client: TelegramClient):
         now = datetime.now()
 
         await resp.click(text=f"{now.day}")
-        resp = await conv.get_response()
+        resp: Message = await conv.get_response()
         assert resp.text
 
         # await resp.click(data="sm_aulario")

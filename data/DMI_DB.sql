@@ -42,6 +42,16 @@ CREATE TABLE IF NOT EXISTS `exams` (
   `straordinaria` VARCHAR(255)
 );
 
+-- exams registrations
+CREATE TABLE IF NOT EXISTS `exams_reg` (
+  `studenti` VARCHAR(255),
+  `insegnamento` VARCHAR(255),
+  `docenti` VARCHAR(255),
+  'data' DATE,
+  `lingua` VARCHAR(255),
+  PRIMARY KEY('studenti', 'insegnamento', 'docenti')
+);
+
 -- timetable_slots
 CREATE TABLE IF NOT EXISTS `timetable_slots` (
   `ID` INTEGER PRIMARY KEY,

@@ -28,14 +28,14 @@ class DbManager:
     """Class that handles the management of databases"""
 
     @classmethod
-    def __query_execute(  # pylint: disable=too-many-arguments
+    def __query_execute(
         cls,
         cur: sqlite3.Cursor,
         query: str,
         args: tuple = None,
         error_str: str = "",
         is_many: bool = False,
-    ):
+    ):  # pylint: disable=too-many-arguments
         """Materially executes the requested query, while also catching and logging any exception that may be thrown
 
         Args:
@@ -45,13 +45,13 @@ class DbManager:
             error_str: name of the method that caused the exception. Defaults to "".
             is_many: whether to use the :func:`sqlite3.Cursor.executemany` function. Defaults to False.
         """
-        query_func = cur.executemany if is_many else cur.execute  # type: ignore[assignment]
+        query_func = cur.executemany if is_many else cur.execute
 
         try:
             if args:
-                query_func(query, args)  # type: ignore[operator]
+                query_func(query, args)
             else:
-                query_func(query)  # type: ignore[operator]
+                query_func(query)
         except sqlite3.Error as e:
             logger.error("DbManager.%s(): %s", error_str, e)
 
@@ -106,7 +106,7 @@ class DbManager:
         conn.close()
 
     @classmethod
-    def select_from(  # pylint: disable=too-many-arguments
+    def select_from(
         cls,
         table_name: str,
         select: str = "*",
@@ -114,7 +114,7 @@ class DbManager:
         where_args: tuple = None,
         group_by: str = "",
         order_by: str = "",
-    ) -> list:
+    ) -> list:  # pylint: disable=too-many-arguments
         """Returns the results of a query.
         Executes "SELECT select FROM table_name [WHERE where (with where_args)] [GROUP BY group_by] [ORDER BY order_by]"
 
@@ -149,14 +149,14 @@ class DbManager:
         return query_result
 
     @classmethod
-    def count_from(  # pylint: disable=too-many-arguments
+    def count_from(
         cls,
         table_name: str,
         select: str = "*",
         where: str = "",
         where_args: tuple = None,
         group_by: str = "",
-    ) -> int:
+    ) -> int:  # pylint: disable=too-many-arguments
         """Returns the number of rows found with the query.
         Executes "SELECT COUNT(select) FROM table_name [WHERE where (with where_args)]"
 
@@ -193,7 +193,7 @@ class DbManager:
         cls,
         table_name: str,
         values: tuple,
-        columns: tuple = (),
+        columns: tuple = "",
         multiple_rows: bool = False,
     ):
         """Inserts the specified values in the database.
@@ -212,13 +212,12 @@ class DbManager:
         else:
             placeholders = ", ".join(["?" for _ in values])
 
-        columns_str = ""
         if columns:
-            columns_str = "(" + ", ".join(columns) + ")"
+            columns = "(" + ", ".join(columns) + ")"
 
         cls.__query_execute(
             cur=cur,
-            query=f"INSERT INTO {table_name} {columns_str} VALUES ({placeholders})",
+            query=f"INSERT INTO {table_name} {columns} VALUES ({placeholders})",
             args=values,
             error_str="insert_into",
             is_many=multiple_rows,

@@ -25,6 +25,9 @@ class TEXT_IDS(Enum):
     YEAR_1ST_TEXT_ID = auto()
     YEAR_2ND_TEXT_ID = auto()
     YEAR_3RD_TEXT_ID = auto()
+    CONFIRM = auto()
+    UNDO = auto()
+    UNDO_OPERATION = auto()
     # /start
     START_TEXT_ID = auto()
     # sticky keyboard
@@ -129,6 +132,25 @@ class TEXT_IDS(Enum):
     EXAMS_SESSION_3_TEXT_ID = auto()
     EXAMS_SESSION_4_TEXT_ID = auto()
     EXAMS_USAGE_TEXT_ID = auto()
+    # /reminder
+    REMINDER_SELECT_EXAM_DATE_TEXT_ID = auto()
+    REMINDER_NOT_FOUND_SUBJECT_TEXT_ID = auto()
+    REMINDER_ADD = auto()
+    REMINDER_DELETE = auto()
+    REMINDER_DELETE_SELECTION = auto()
+    REMINDER_FIRST_SELECTION = auto()
+    REMINDER_DELETE_ALL = auto()
+    REMINDER_CONFIRM_DELETE = auto()
+    REMINDER_CONFIRM_DELETE_ALL = auto()
+    REMINDER_SELECT_EXAM_PROFESSOR = auto()
+    REMINDER_CONFIRM_REGISTRATION = auto()
+    REMINDER_DUPLICATE_WARNING = auto()
+    REMINDER_RECAP = auto()
+    REMINDER_FIRST_MESSAGE = auto()
+    REMINDER_SECOND_MESSAGE = auto()
+    REMINDER_TOO_LATE = auto()
+    REMINDER_NO_EXAM_DATE = auto()
+    REMINDER_NOT_FOUND_PROFESSOR_TEXT_ID = auto()
 
 
 # Placeholder special string to be used in replace()

@@ -21,6 +21,6 @@ async def test_stats_cmd(client: TelegramClient):
 
             assert resp.text
 
-            resp = await conv.get_response()
+            resp: Message = await conv.get_response()
 
             assert resp.photo

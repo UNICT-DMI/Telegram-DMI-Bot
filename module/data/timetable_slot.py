@@ -60,7 +60,7 @@ class TimetableSlot(Scrapable):
     def end_hour(self) -> str:
         """adds half an hour to the ora_fine value"""
         if self.ora_fine[3:] == '30':
-            return f"{int(self.ora_fine[:2]) + 1:02d}:00"
+            return f"{int(self.ora_fine[:2]) + 1}:00"
         return self.ora_fine[:3] + '30'
 
     @property
@@ -80,7 +80,7 @@ class TimetableSlot(Scrapable):
         Args:
             delete: whether the table contents should be deleted first. Defaults to False.
         """
-        timetable_slots: list[TimetableSlot] = []
+        timetable_slots = []
 
         # avoid circular import without using read_md
         with open("data/markdown/aulario.md", "r", encoding="utf8") as in_file:

@@ -95,15 +95,14 @@ class Lesson(Scrapable):
                 sorgente = requests.get(url, timeout=10).text
                 soup = bs4.BeautifulSoup(sorgente, "html.parser")
 
-                attivo_elem = soup.find('b', id='attivo')
-                if attivo_elem and attivo_elem.text[0] == 'S':
+                if soup.find('b', id='attivo').text[0] == 'S':
                     semestre = 2
                 else:
                     semestre = 1
 
                 table = soup.find('table', id='tbl_small_font')
 
-                if not isinstance(table, bs4.Tag):
+                if not table:
                     # pylint: disable=logging-not-lazy,logging-fstring-interpolation
                     logger.warning(f"Lessons table for `{url}` not found.")
                     break
