@@ -375,16 +375,23 @@ def test_reminder_appello_handler():
 # ---- reminder_confrmato_handler() in module/commands/reminder.py
 
 
+@patch("module.commands.reminder.DbManager.select_from")
+@patch("module.commands.reminder.date")
 @patch("module.commands.reminder.ExamRegistration")
-def test_reminder_confermato_handler(mock_exam_reg):
+def test_reminder_confermato_handler(mock_exam_reg, mock_date, mock_select):
     """Test reminder_confermato_handler() successfully saves to DB."""
     mock_update = MagicMock()
     mock_update.callback_query.from_user.language_code = "it"
 
+    base_date = datetime(2026, 6, 1)
+    mock_date.today.return_value = base_date.date()
+    appello_str = (base_date + timedelta(days=14)).strftime("%d/%m/%Y")
+    mock_select.return_value = []
+
     mock_context = MagicMock()
     mock_context.user_data = {
         "reminder": {
-            "appello": "15/06/2026",
+            "appello": appello_str,
             "insegnamento": "Analisi",
             "professore": "Rossi",
         }
