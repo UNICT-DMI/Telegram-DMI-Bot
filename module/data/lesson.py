@@ -95,7 +95,13 @@ class Lesson(Scrapable):
                 sorgente = requests.get(url, timeout=10).text
                 soup = bs4.BeautifulSoup(sorgente, "html.parser")
 
-                if soup.find('b', id='attivo').text[0] == 'S':
+                attivo = soup.find('b', id='attivo')
+                if attivo is None:
+                    # pylint: disable=logging-not-lazy,logging-fstring-interpolation
+                    logger.warning(f"`attivo` marker for `{url}` not found.")
+                    continue
+
+                if attivo.text[0] == 'S':
                     semestre = 2
                 else:
                     semestre = 1
