@@ -65,6 +65,7 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   🧑‍💻 /contributors - _mostra gli sviluppatori che hanno contribuito allo sviluppo del bot_
   🧾 /regolamentodidattico - _invia il pdf del regolamento didattico per l'anno desiderato_
   ❓ /faq - _mostra le domande chieste più frequentemente_
+  🕹 /minigames - _mini giochi: gioca a Tris contro la CPU_
 
   *Segreteria orari e contatti:*
   ✍ /sdidattica - _segreteria didattica_
@@ -77,6 +78,21 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   🗃 /urp - _URP studenti_
 
 HELP_FAQ_TOOLTIP_ID: "❓ FAQ"
+
+# /minigames - Tris
+MINI_GAMES_KEYBOARD_TEXT_ID: "🕹 Mini Games"
+MINI_GAMES_HEADER_TEXT_ID: "Scegli un gioco:"
+TRIS_GAME_NAME_TEXT_ID: "❌ Tris ⭕"
+TRIS_SELECT_DIFFICULTY_TEXT_ID: "Scegli la difficoltà:"
+TRIS_DIFF_EASY_TEXT_ID: "🟢 Facile"
+TRIS_DIFF_MEDIUM_TEXT_ID: "🟡 Medio"
+TRIS_DIFF_HARD_TEXT_ID: "🔴 Difficile"
+TRIS_YOUR_TURN_TEXT_ID: "Tocca a te! Sei ❌"
+TRIS_WIN_TEXT_ID: "🎉 Hai vinto!"
+TRIS_LOSE_TEXT_ID: "😢 Hai perso!"
+TRIS_DRAW_TEXT_ID: "🤝 Pareggio!"
+TRIS_PLAY_AGAIN_TEXT_ID: "🔄 Gioca ancora"
+
 # /help-CDL command
 HELP_CDL_EXAMS_TEXT_ID: "📖 Esami (link)"
 HELP_CDL_LESSONS_TIMETABLE_TEXT_ID: "📘 Orari lezioni (link)"
@@ -334,7 +350,7 @@ EXAMS_USAGE_TEXT_ID: |-
     ins: nome insegnamento
   Esempio:
     ins: SisTeMi oPeRaTIvI
-  
+
 # /reminder command
 REMINDER_SELECT_EXAM_DATE_TEXT_ID: "Seleziona la data dell'appello che ti interessa:"
 REMINDER_NOT_FOUND_SUBJECT_TEXT_ID: "Non ho trovato nessuna materia corrispondente a %capybara% nel database."

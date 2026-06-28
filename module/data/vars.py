@@ -151,6 +151,19 @@ class TEXT_IDS(Enum):
     REMINDER_TOO_LATE = auto()
     REMINDER_NO_EXAM_DATE = auto()
     REMINDER_NOT_FOUND_PROFESSOR_TEXT_ID = auto()
+    # /minigames - Tris
+    MINI_GAMES_KEYBOARD_TEXT_ID = auto()
+    MINI_GAMES_HEADER_TEXT_ID = auto()
+    TRIS_GAME_NAME_TEXT_ID = auto()
+    TRIS_SELECT_DIFFICULTY_TEXT_ID = auto()
+    TRIS_DIFF_EASY_TEXT_ID = auto()
+    TRIS_DIFF_MEDIUM_TEXT_ID = auto()
+    TRIS_DIFF_HARD_TEXT_ID = auto()
+    TRIS_YOUR_TURN_TEXT_ID = auto()
+    TRIS_WIN_TEXT_ID = auto()
+    TRIS_LOSE_TEXT_ID = auto()
+    TRIS_DRAW_TEXT_ID = auto()
+    TRIS_PLAY_AGAIN_TEXT_ID = auto()
 
 
 # Placeholder special string to be used in replace()

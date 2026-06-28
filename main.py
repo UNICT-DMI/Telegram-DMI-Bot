@@ -32,6 +32,7 @@ from module.commands.esami import esami, esami_handler, esami_input_insegnamento
 from module.commands.gdrive import drive, drive_handler
 from module.commands.help import help_cmd
 from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
+from module.commands.minigames import minigames
 from module.commands.professori import prof
 from module.commands.regolamento_didattico import (
     cdl_handler,
@@ -54,6 +55,7 @@ from module.commands.reminder import (
 from module.commands.report import report
 from module.commands.start import start
 from module.commands.stats import stats, stats_tot
+from module.commands.tris import tictactoe_handler
 from module.data.vars import TEXT_IDS
 from module.debug import error_handler, log_message
 from module.easter_egg_func import (
@@ -120,6 +122,7 @@ def add_commands(up: Updater) -> None:
         BotCommand("dmi_3d", "mappa in 3D del DMI"),
         BotCommand("mercatino", "bot per la vendita e l'acquisto di libri"),
         BotCommand("faq", "mostra le domande chieste più frequentemente"),
+        BotCommand("minigames", "mini giochi: gioca a Tris contro la CPU"),
     ]
     up.bot.set_my_commands(commands=commands)
 
@@ -199,6 +202,13 @@ def add_handlers(dp: Dispatcher) -> None:
         CommandHandler('chatid', lambda u, c: u.message.reply_text(u.message.chat_id))
     )
     dp.add_handler(CommandHandler('start', start))
+    dp.add_handler(CommandHandler('minigames', minigames))
+    dp.add_handler(
+        MessageHandler(
+            Filters.regex(get_regex_multi_lang(TEXT_IDS.MINI_GAMES_KEYBOARD_TEXT_ID)),
+            minigames,
+        )
+    )
     dp.add_handler(CommandHandler('cloud', informative_callback))
     dp.add_handler(
         MessageHandler(
@@ -221,6 +231,9 @@ def add_handlers(dp: Dispatcher) -> None:
         CallbackQueryHandler(localization_handler, pattern='localization_.*')
     )
     dp.add_handler(CallbackQueryHandler(none_handler, pattern='NONE'))
+
+    # minigames (tris)
+    dp.add_handler(CallbackQueryHandler(tictactoe_handler, pattern='ttt_.*'))
 
     # aulario and calendar
     dp.add_handler(CallbackQueryHandler(calendar_handler, pattern='cal_.*'))
