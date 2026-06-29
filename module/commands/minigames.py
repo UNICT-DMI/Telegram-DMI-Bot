@@ -30,7 +30,7 @@ def _hub_keyboard(locale: str) -> List[List[InlineKeyboardButton]]:
         [
             InlineKeyboardButton(
                 get_locale(locale, TEXT_IDS.TRIS_GAME_NAME_TEXT_ID),
-                callback_data="ttt_diff",
+                callback_data="ttt_mode",
             )
         ],
         [

@@ -55,7 +55,7 @@ from module.commands.reminder import (
 from module.commands.report import report
 from module.commands.start import start
 from module.commands.stats import stats, stats_tot
-from module.commands.tris import tictactoe_handler
+from module.commands.tris import expire_tris_waiters, tictactoe_handler
 from module.data.vars import TEXT_IDS
 from module.debug import error_handler, log_message
 from module.easter_egg_func import (
@@ -122,7 +122,9 @@ def add_commands(up: Updater) -> None:
         BotCommand("dmi_3d", "mappa in 3D del DMI"),
         BotCommand("mercatino", "bot per la vendita e l'acquisto di libri"),
         BotCommand("faq", "mostra le domande chieste più frequentemente"),
-        BotCommand("minigames", "mini giochi: gioca a Tris contro la CPU"),
+        BotCommand(
+            "minigames", "mini giochi: gioca a Tris contro la CPU o un altro giocatore"
+        ),
     ]
     up.bot.set_my_commands(commands=commands)
 
@@ -323,6 +325,8 @@ def add_jobs(dp: Dispatcher) -> None:
     dp.job_queue.run_repeating(
         check_exam_reminders, interval=86400, first=100
     )  # ogni 24h ma first=100 per evitare overlapping con le DB queries di updater_lep
+
+    dp.job_queue.run_repeating(expire_tris_waiters, interval=5, first=5)
 
 
 def main() -> None:

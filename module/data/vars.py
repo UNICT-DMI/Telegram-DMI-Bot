@@ -155,6 +155,9 @@ class TEXT_IDS(Enum):
     MINI_GAMES_KEYBOARD_TEXT_ID = auto()
     MINI_GAMES_HEADER_TEXT_ID = auto()
     TRIS_GAME_NAME_TEXT_ID = auto()
+    TRIS_SELECT_MODE_TEXT_ID = auto()
+    TRIS_MODE_VS_CPU_TEXT_ID = auto()
+    TRIS_MODE_VS_PLAYER_TEXT_ID = auto()
     TRIS_SELECT_DIFFICULTY_TEXT_ID = auto()
     TRIS_DIFF_EASY_TEXT_ID = auto()
     TRIS_DIFF_MEDIUM_TEXT_ID = auto()
@@ -164,6 +167,13 @@ class TEXT_IDS(Enum):
     TRIS_LOSE_TEXT_ID = auto()
     TRIS_DRAW_TEXT_ID = auto()
     TRIS_PLAY_AGAIN_TEXT_ID = auto()
+    TRIS_PVP_WAITING_TEXT_ID = auto()
+    TRIS_PVP_CANCEL_TEXT_ID = auto()
+    TRIS_PVP_TURN_TEXT_ID = auto()
+    TRIS_PVP_WIN_TEXT_ID = auto()
+    TRIS_PVP_NOT_YOUR_TURN_TEXT_ID = auto()
+    TRIS_PVP_NOT_IN_GAME_TEXT_ID = auto()
+    TRIS_PVP_TIMEOUT_TEXT_ID = auto()
 
 
 # Placeholder special string to be used in replace()
