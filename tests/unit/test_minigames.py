@@ -501,6 +501,29 @@ def test_anonymous_player_with_custom_name_queues_wrapped_in_ninja():
     assert _queue()[0]["name"] == f"{NINJA_ICON} Mario {NINJA_ICON}"
 
 
+def test_each_player_is_told_their_mark():
+    def loc(code, tid):
+        if tid.name == "MINI_GAMES_YOU_ARE_TEXT_ID":
+            return "You are {player}"
+        return tid.name
+
+    with patch("module.commands.tris.get_locale", side_effect=loc):
+        u1, q1 = _pvp_query("ttt_pvp", 100)
+        q1.message.chat_id = 10
+        tictactoe_handler(u1, MagicMock())
+        u2, q2 = _pvp_query("ttt_pvp", 200)
+        q2.message.chat_id = 20
+        context = MagicMock()
+        tictactoe_handler(u2, context)
+    first_lines = [
+        call.kwargs["text"].splitlines()[0]
+        for call in context.bot.editMessageText.call_args_list
+    ]
+    assert all(line.startswith("You are") for line in first_lines)
+    assert any(GLYPHS[PLAYER] in line for line in first_lines)
+    assert any(GLYPHS[CPU] in line for line in first_lines)
+
+
 def test_player_label_uses_stored_name_verbatim():
     game = {"players": {PLAYER: {"name": "🥷 Mario 🥷"}, CPU: {"name": "🎓 Luigi"}}}
     assert tris._player_label(game, PLAYER) == f"🥷 Mario 🥷 - {GLYPHS[PLAYER]}"

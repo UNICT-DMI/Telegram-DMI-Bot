@@ -27,6 +27,7 @@ from module.commands.aulario import (
     subjects_arrow_handler,
     subjects_handler,
 )
+from module.commands.chess_game import chess_handler, expire_chess_waiters
 from module.commands.drive_contribute import drive_contribute
 from module.commands.esami import esami, esami_handler, esami_input_insegnamento
 from module.commands.gdrive import drive, drive_handler
@@ -127,7 +128,8 @@ def add_commands(up: Updater) -> None:
         BotCommand("mercatino", "bot per la vendita e l'acquisto di libri"),
         BotCommand("faq", "mostra le domande chieste più frequentemente"),
         BotCommand(
-            "minigames", "mini giochi: gioca a Tris contro la CPU o un altro giocatore"
+            "minigames",
+            "mini giochi: gioca a Tris o a Scacchi contro la CPU o un altro giocatore",
         ),
     ]
     up.bot.set_my_commands(commands=commands)
@@ -238,8 +240,9 @@ def add_handlers(dp: Dispatcher) -> None:
     )
     dp.add_handler(CallbackQueryHandler(none_handler, pattern='NONE'))
 
-    # minigames (tris)
+    # minigames (tris, chess)
     dp.add_handler(CallbackQueryHandler(tictactoe_handler, pattern='ttt_.*'))
+    dp.add_handler(CallbackQueryHandler(chess_handler, pattern='chess_.*'))
     dp.add_handler(CallbackQueryHandler(minigames_settings_handler, pattern='mg_.*'))
     dp.add_handler(
         MessageHandler(Filters.regex(r"^(?!=<[/])[Nn]ick:\s+"), minigames_input_name)
@@ -335,6 +338,7 @@ def add_jobs(dp: Dispatcher) -> None:
     )  # ogni 24h ma first=100 per evitare overlapping con le DB queries di updater_lep
 
     dp.job_queue.run_repeating(expire_tris_waiters, interval=5, first=5)
+    dp.job_queue.run_repeating(expire_chess_waiters, interval=5, first=5)
 
 
 def main() -> None:

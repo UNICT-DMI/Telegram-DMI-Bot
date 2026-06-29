@@ -120,6 +120,14 @@ def _hub_keyboard(locale: str) -> List[List[InlineKeyboardButton]]:
                 callback_data="ttt_mode",
             )
         ],
+        # chess is implemented but still a work in progress, so it is hidden from the hub
+        # for now; re-add this button to expose it again
+        # [
+        #     InlineKeyboardButton(
+        #         get_locale(locale, TEXT_IDS.CHESS_GAME_NAME_TEXT_ID),
+        #         callback_data="chess_play",
+        #     )
+        # ],
         [
             InlineKeyboardButton(
                 get_locale(locale, TEXT_IDS.MINI_GAMES_SETTINGS_TEXT_ID),

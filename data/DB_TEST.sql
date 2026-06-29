@@ -48,3 +48,23 @@ CREATE TABLE IF NOT EXISTS `tris_game` (
   `o_locale` TEXT,
   `updated_at` REAL NOT NULL
 );
+
+-- chess live games (state as a FEN string; w_ is the white player, b_ the black one)
+CREATE TABLE IF NOT EXISTS `chess_game` (
+  `game_id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `fen` TEXT NOT NULL,
+  `white_captured` TEXT NOT NULL DEFAULT '',
+  `black_captured` TEXT NOT NULL DEFAULT '',
+  `last_san` TEXT,
+  `w_user_id` INTEGER NOT NULL,
+  `w_chat_id` INTEGER NOT NULL,
+  `w_message_id` INTEGER NOT NULL,
+  `w_name` TEXT NOT NULL,
+  `w_locale` TEXT,
+  `b_user_id` INTEGER NOT NULL,
+  `b_chat_id` INTEGER NOT NULL,
+  `b_message_id` INTEGER NOT NULL,
+  `b_name` TEXT NOT NULL,
+  `b_locale` TEXT,
+  `updated_at` REAL NOT NULL
+);

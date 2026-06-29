@@ -10,3 +10,4 @@ Pillow==10.3.0
 lxml==6.0.2
 uvicorn==0.30.6
 fastapi==0.112.2
+chess==1.11.2

@@ -583,6 +583,7 @@ def _render_game(context: CallbackContext, game: dict) -> None:
         else:
             text = _pvp_result_text(game, outcome, locale)
             tappable = False
+        text = f"{_you_are_text(game, mark, locale)}\n\n{text}"
         keyboard = _pvp_board_keyboard(game, tappable, win_line)
         if outcome is not None:
             keyboard = keyboard + _pvp_replay_row(locale)
@@ -607,6 +608,13 @@ def _player_label(game: dict, mark: str) -> str:
 
 def _pvp_names_block(game: dict) -> str:
     return f"{_player_label(game, PLAYER)}\n{_player_label(game, CPU)}"
+
+
+def _you_are_text(game: dict, mark: str, locale: str) -> str:
+    # both players can be anonymous aliases, so each message names which side is theirs
+    return get_locale(locale, TEXT_IDS.MINI_GAMES_YOU_ARE_TEXT_ID).format(
+        player=_player_label(game, mark)
+    )
 
 
 def _pvp_turn_text(game: dict, current_mark: str, locale: str) -> str:
