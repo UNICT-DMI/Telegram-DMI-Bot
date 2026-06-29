@@ -43,6 +43,7 @@ def get_help_keyboard(locale: str) -> ReplyKeyboardMarkup:
         [
             KeyboardButton(get_locale(locale, TEXT_IDS.AULARIO_KEYBOARD_TEXT_ID)),
             KeyboardButton(get_locale(locale, TEXT_IDS.CLOUD_KEYBOARD_TEXT_ID)),
+            KeyboardButton(get_locale(locale, TEXT_IDS.MINI_GAMES_KEYBOARD_TEXT_ID)),
         ],
     ]
     return ReplyKeyboardMarkup(kb, resize_keyboard=True)

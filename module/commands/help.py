@@ -93,6 +93,14 @@ def help_cmd(update: Update, context: CallbackContext, edit: bool = False) -> No
     keyboard.append(
         [
             InlineKeyboardButton(
+                get_locale(locale, TEXT_IDS.MINI_GAMES_KEYBOARD_TEXT_ID),
+                callback_data="ttt_hub",
+            )
+        ]
+    )
+    keyboard.append(
+        [
+            InlineKeyboardButton(
                 get_locale(locale, TEXT_IDS.HELP_ALL_COMMANDS_KEYBOARD_TEXT_ID),
                 callback_data="localization_HELP_ALL_COMMANDS_TOOLTIP_ID",
             ),

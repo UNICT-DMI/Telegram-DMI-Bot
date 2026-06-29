@@ -64,6 +64,7 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   🧑‍💻 /contributors - _shows the developers that contributed to the bot development_
   🧾 /regolamentodidattico - _gives a pdf file of the desired year's educational regulations_
   ❓ /faq - _shows the frequently asked questions_
+  🕹 /minigames - _mini games: play Tris against the CPU_
 
   *Receptionist's contacts and working hours:*
   ✍ /sdidattica - _edcational receptionist_
@@ -76,6 +77,68 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   🗃 /urp - _students' URP_
 
 HELP_FAQ_TOOLTIP_ID: "❓ FAQ"
+
+# /minigames - Tris
+MINI_GAMES_KEYBOARD_TEXT_ID: "🕹 Mini Games"
+MINI_GAMES_HEADER_TEXT_ID: "Choose a game:"
+TRIS_GAME_NAME_TEXT_ID: "❌ Tris ⭕"
+TRIS_SELECT_MODE_TEXT_ID: "Choose the mode:"
+TRIS_MODE_VS_CPU_TEXT_ID: " vs CPU 🤖"
+TRIS_MODE_VS_PLAYER_TEXT_ID: " vs Player "
+TRIS_SELECT_DIFFICULTY_TEXT_ID: "Choose the difficulty:"
+TRIS_DIFF_EASY_TEXT_ID: "🟢 Easy"
+TRIS_DIFF_MEDIUM_TEXT_ID: "🟡 Medium"
+TRIS_DIFF_HARD_TEXT_ID: "🔴 Hard"
+TRIS_YOUR_TURN_TEXT_ID: "Your turn! You are ❌"
+TRIS_WIN_TEXT_ID: "🎉 You won!"
+TRIS_LOSE_TEXT_ID: "😢 You lost!"
+TRIS_DRAW_TEXT_ID: "🤝 Draw!"
+TRIS_PLAY_AGAIN_TEXT_ID: "🔄 Play again"
+TRIS_PVP_WAITING_TEXT_ID: "🔎 Looking for an opponent..."
+TRIS_PVP_CANCEL_TEXT_ID: "❌ Cancel"
+TRIS_PVP_TURN_TEXT_ID: "{player}'s turn"
+TRIS_PVP_WIN_TEXT_ID: "🎉 {player} won!"
+TRIS_PVP_NOT_YOUR_TURN_TEXT_ID: "It's not your turn!"
+TRIS_PVP_NOT_IN_GAME_TEXT_ID: "This game is no longer available!"
+TRIS_PVP_TIMEOUT_TEXT_ID: "⌛ No opponent found. Try again whenever you like."
+CHESS_GAME_NAME_TEXT_ID: "♟ Chess 🚧 (beta)"
+CHESS_PVP_WAITING_TEXT_ID: "🔎 Looking for an opponent..."
+CHESS_PVP_CANCEL_TEXT_ID: "❌ Cancel"
+CHESS_PVP_TURN_TEXT_ID: "{player}'s turn"
+CHESS_PVP_CHECK_TEXT_ID: "⚠️ Check!"
+CHESS_PVP_WIN_TEXT_ID: "🎉 {player} won!"
+CHESS_PVP_DRAW_TEXT_ID: "🤝 Draw!"
+CHESS_PVP_RESIGN_TEXT_ID: "🏳 Resign"
+CHESS_PVP_RESIGNED_TEXT_ID: "🏳 {player} resigned."
+CHESS_PVP_LAST_MOVE_TEXT_ID: "Last move: {move}"
+CHESS_PVP_CAPTURED_TEXT_ID: "Captured:"
+CHESS_PVP_NOT_YOUR_TURN_TEXT_ID: "It's not your turn!"
+CHESS_PVP_NOT_IN_GAME_TEXT_ID: "This game is no longer available!"
+CHESS_PVP_TIMEOUT_TEXT_ID: "⌛ No opponent found. Try again whenever you like."
+CHESS_PLAY_AGAIN_TEXT_ID: "🔄 Play again"
+MINI_GAMES_YOU_ARE_TEXT_ID: "You are {player}"
+MINI_GAMES_OPPONENT_TEXT_ID: "Opponent: {player}"
+MINI_GAMES_RATING_CHANGE_TEXT_ID: "📊 Rating: {rating} ({change})"
+MINI_GAMES_SETTINGS_TEXT_ID: "⚙️ Settings"
+MINI_GAMES_SETTINGS_HEADER_TEXT_ID: "Mini games settings:"
+MINI_GAMES_INFO_TEXT_ID: "ℹ️ Info"
+MINI_GAMES_INFO_BODY_TEXT_ID: "ℹ️ Your mini games profile:\n\n🕵️ Anonymous: {anonymous}\n🏆 Ranked match: {ranked}\n🥷 Anonymous name: {name}\n📊 Rating: {rating}"
+MINI_GAMES_ANONYMOUS_TEXT_ID: "🕵️ Anonymous"
+MINI_GAMES_RANKED_TEXT_ID: "🏆 Ranked match"
+MINI_GAMES_SET_NAME_TEXT_ID: "🥷 Set anonymous name"
+MINI_GAMES_SET_NAME_PROMPT_TEXT_ID: "Send me your anonymous name in this format:\nNick: your name\n\nIt cannot contain the @ character."
+MINI_GAMES_NAME_SAVED_TEXT_ID: "✅ Anonymous name saved!"
+MINI_GAMES_NAME_INVALID_TEXT_ID: "⚠️ Invalid name. It cannot be empty or contain @. Try again with Nick: your name"
+MINI_GAMES_RANKING_TEXT_ID: "🏆 Leaderboard"
+MINI_GAMES_RANKING_HEADER_TEXT_ID: "🏆 Leaderboard"
+MINI_GAMES_RANKING_EMPTY_TEXT_ID: "No scores yet. Play a ranked match!"
+MINI_GAMES_ANON_PLAYER_TEXT_ID: "Player #{id}"
+MINI_GAMES_STATS_HEADER_TEXT_ID: "🕹 Mini games stats"
+MINI_GAMES_STATS_LAST_DAYS_TEXT_ID: "📅 Last {days} days:"
+MINI_GAMES_STATS_OVERALL_TEXT_ID: "🌍 Overall:"
+MINI_GAMES_STATS_TOTAL_TEXT_ID: "Total: {total}"
+MINI_GAMES_STATS_EMPTY_TEXT_ID: "No matches played yet."
+
 # /help-CDL command
 HELP_CDL_EXAMS_TEXT_ID: "📖 Exams (link)"
 HELP_CDL_LESSONS_TIMETABLE_TEXT_ID: "📘 Classes' Timetable (link)"
@@ -332,7 +395,6 @@ EXAMS_USAGE_TEXT_ID: |-
   Example:
     ins: SisTeMi oPeRaTIvI
 
-  
 # /reminder command
 REMINDER_SELECT_EXAM_DATE_TEXT_ID: "Select the exam date you are interested in:"
 REMINDER_NOT_FOUND_SUBJECT_TEXT_ID: "No subject matching '%capybara%' was found."

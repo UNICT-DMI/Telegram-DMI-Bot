@@ -65,6 +65,7 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   🧑‍💻 /contributors - _mostra gli sviluppatori che hanno contribuito allo sviluppo del bot_
   🧾 /regolamentodidattico - _invia il pdf del regolamento didattico per l'anno desiderato_
   ❓ /faq - _mostra le domande chieste più frequentemente_
+  🕹 /minigames - _mini giochi: gioca a Tris contro la CPU_
 
   *Segreteria orari e contatti:*
   ✍ /sdidattica - _segreteria didattica_
@@ -77,6 +78,68 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   🗃 /urp - _URP studenti_
 
 HELP_FAQ_TOOLTIP_ID: "❓ FAQ"
+
+# /minigames - Tris
+MINI_GAMES_KEYBOARD_TEXT_ID: "🕹 Mini Games"
+MINI_GAMES_HEADER_TEXT_ID: "Scegli un gioco:"
+TRIS_GAME_NAME_TEXT_ID: "❌ Tris ⭕"
+TRIS_SELECT_MODE_TEXT_ID: "Scegli la modalità:"
+TRIS_MODE_VS_CPU_TEXT_ID: " vs CPU 🤖"
+TRIS_MODE_VS_PLAYER_TEXT_ID: " vs Player "
+TRIS_SELECT_DIFFICULTY_TEXT_ID: "Scegli la difficoltà:"
+TRIS_DIFF_EASY_TEXT_ID: "🟢 Facile"
+TRIS_DIFF_MEDIUM_TEXT_ID: "🟡 Medio"
+TRIS_DIFF_HARD_TEXT_ID: "🔴 Difficile"
+TRIS_YOUR_TURN_TEXT_ID: "Tocca a te! Sei ❌"
+TRIS_WIN_TEXT_ID: "🎉 Hai vinto!"
+TRIS_LOSE_TEXT_ID: "😢 Hai perso!"
+TRIS_DRAW_TEXT_ID: "🤝 Pareggio!"
+TRIS_PLAY_AGAIN_TEXT_ID: "🔄 Gioca ancora"
+TRIS_PVP_WAITING_TEXT_ID: "🔎 In attesa di un avversario..."
+TRIS_PVP_CANCEL_TEXT_ID: "❌ Annulla"
+TRIS_PVP_TURN_TEXT_ID: "Tocca a {player}"
+TRIS_PVP_WIN_TEXT_ID: "🎉 {player} ha vinto!"
+TRIS_PVP_NOT_YOUR_TURN_TEXT_ID: "Non è il tuo turno!"
+TRIS_PVP_NOT_IN_GAME_TEXT_ID: "Questa partita non è più valida!"
+TRIS_PVP_TIMEOUT_TEXT_ID: "⌛ Nessun avversario trovato. Riprova quando vuoi."
+CHESS_GAME_NAME_TEXT_ID: "♟ Scacchi 🚧 (beta)"
+CHESS_PVP_WAITING_TEXT_ID: "🔎 In attesa di un avversario..."
+CHESS_PVP_CANCEL_TEXT_ID: "❌ Annulla"
+CHESS_PVP_TURN_TEXT_ID: "Tocca a {player}"
+CHESS_PVP_CHECK_TEXT_ID: "⚠️ Scacco!"
+CHESS_PVP_WIN_TEXT_ID: "🎉 {player} ha vinto!"
+CHESS_PVP_DRAW_TEXT_ID: "🤝 Patta!"
+CHESS_PVP_RESIGN_TEXT_ID: "🏳 Abbandona"
+CHESS_PVP_RESIGNED_TEXT_ID: "🏳 {player} ha abbandonato."
+CHESS_PVP_LAST_MOVE_TEXT_ID: "Ultima mossa: {move}"
+CHESS_PVP_CAPTURED_TEXT_ID: "Catturati:"
+CHESS_PVP_NOT_YOUR_TURN_TEXT_ID: "Non è il tuo turno!"
+CHESS_PVP_NOT_IN_GAME_TEXT_ID: "Questa partita non è più valida!"
+CHESS_PVP_TIMEOUT_TEXT_ID: "⌛ Nessun avversario trovato. Riprova quando vuoi."
+CHESS_PLAY_AGAIN_TEXT_ID: "🔄 Gioca ancora"
+MINI_GAMES_YOU_ARE_TEXT_ID: "Sei {player}"
+MINI_GAMES_OPPONENT_TEXT_ID: "Avversario: {player}"
+MINI_GAMES_RATING_CHANGE_TEXT_ID: "📊 Rating: {rating} ({change})"
+MINI_GAMES_SETTINGS_TEXT_ID: "⚙️ Impostazioni"
+MINI_GAMES_SETTINGS_HEADER_TEXT_ID: "Impostazioni mini giochi:"
+MINI_GAMES_INFO_TEXT_ID: "ℹ️ Info"
+MINI_GAMES_INFO_BODY_TEXT_ID: "ℹ️ Il tuo profilo mini giochi:\n\n🕵️ Anonimo: {anonymous}\n🏆 Partita classificata: {ranked}\n🥷 Nome anonimo: {name}\n📊 Rating: {rating}"
+MINI_GAMES_ANONYMOUS_TEXT_ID: "🕵️ Anonimo"
+MINI_GAMES_RANKED_TEXT_ID: "🏆 Partita classificata"
+MINI_GAMES_SET_NAME_TEXT_ID: "🥷 Imposta nome anonimo"
+MINI_GAMES_SET_NAME_PROMPT_TEXT_ID: "Inviami il tuo nome anonimo in questo formato:\nNick: il tuo nome\n\nNon può contenere il carattere @."
+MINI_GAMES_NAME_SAVED_TEXT_ID: "✅ Nome anonimo salvato!"
+MINI_GAMES_NAME_INVALID_TEXT_ID: "⚠️ Nome non valido. Non può essere vuoto né contenere @. Riprova con Nick: il tuo nome"
+MINI_GAMES_RANKING_TEXT_ID: "🏆 Classifica"
+MINI_GAMES_RANKING_HEADER_TEXT_ID: "🏆 Classifica"
+MINI_GAMES_RANKING_EMPTY_TEXT_ID: "Nessun punteggio ancora. Gioca una partita classificata!"
+MINI_GAMES_ANON_PLAYER_TEXT_ID: "Giocatore #{id}"
+MINI_GAMES_STATS_HEADER_TEXT_ID: "🕹 Statistiche mini giochi"
+MINI_GAMES_STATS_LAST_DAYS_TEXT_ID: "📅 Ultimi {days} giorni:"
+MINI_GAMES_STATS_OVERALL_TEXT_ID: "🌍 Globale:"
+MINI_GAMES_STATS_TOTAL_TEXT_ID: "Totale: {total}"
+MINI_GAMES_STATS_EMPTY_TEXT_ID: "Nessuna partita giocata."
+
 # /help-CDL command
 HELP_CDL_EXAMS_TEXT_ID: "📖 Esami (link)"
 HELP_CDL_LESSONS_TIMETABLE_TEXT_ID: "📘 Orari lezioni (link)"
@@ -334,7 +397,7 @@ EXAMS_USAGE_TEXT_ID: |-
     ins: nome insegnamento
   Esempio:
     ins: SisTeMi oPeRaTIvI
-  
+
 # /reminder command
 REMINDER_SELECT_EXAM_DATE_TEXT_ID: "Seleziona la data dell'appello che ti interessa:"
 REMINDER_NOT_FOUND_SUBJECT_TEXT_ID: "Non ho trovato nessuna materia corrispondente a %capybara% nel database."
