@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """Test suite for the /minigames command (Tris)."""
 
+# pylint: disable=protected-access,import-outside-toplevel,unused-variable,unused-argument,implicit-str-concat,chained-comparison
+
 from datetime import date, timedelta
 from unittest.mock import MagicMock, patch
 
 import pytest
 
-import module.commands.tris as tris
+from module.commands import tris
 from module.commands.minigames import (
     DEFAULT_RATING,
     NINJA_ICON,

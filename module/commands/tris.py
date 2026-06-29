@@ -442,7 +442,7 @@ def _match_or_enqueue(player: dict) -> Optional[dict]:
     return _load_game(game_id) if game_id is not None else None
 
 
-def _insert_game(cur: sqlite3.Cursor, a: dict, b: dict, now: float) -> int:
+def _insert_game(cur: sqlite3.Cursor, a: dict, b: dict, now: float) -> Optional[int]:
     """Insert a game between two players, randomizing who is X (moves first)."""
     first, second = (a, b) if random.random() < 0.5 else (b, a)
     cur.execute(

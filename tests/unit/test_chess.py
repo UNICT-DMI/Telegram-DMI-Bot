@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """Test suite for the chess mini game (player vs player)."""
 
+# pylint: disable=protected-access,import-outside-toplevel,unused-variable,unused-argument
+
 from unittest.mock import MagicMock, patch
 
 import chess
 import pytest
 
-import module.commands.chess_game as chess_game
+from module.commands import chess_game
 from module.commands.chess_game import (
     BLACK,
     KING_GLYPHS,
