@@ -101,6 +101,13 @@ TRIS_PVP_WIN_TEXT_ID: "🎉 {player} won!"
 TRIS_PVP_NOT_YOUR_TURN_TEXT_ID: "It's not your turn!"
 TRIS_PVP_NOT_IN_GAME_TEXT_ID: "This game is no longer available!"
 TRIS_PVP_TIMEOUT_TEXT_ID: "⌛ No opponent found. Try again whenever you like."
+MINI_GAMES_SETTINGS_TEXT_ID: "⚙️ Settings"
+MINI_GAMES_SETTINGS_HEADER_TEXT_ID: "Mini games settings:"
+MINI_GAMES_ANONYMOUS_TEXT_ID: "🕵️ Anonymous"
+MINI_GAMES_SET_NAME_TEXT_ID: "🥷 Set anonymous name"
+MINI_GAMES_SET_NAME_PROMPT_TEXT_ID: "Send me your anonymous name in this format:\nNick: your name\n\nIt cannot contain the @ character."
+MINI_GAMES_NAME_SAVED_TEXT_ID: "✅ Anonymous name saved!"
+MINI_GAMES_NAME_INVALID_TEXT_ID: "⚠️ Invalid name. It cannot be empty or contain @. Try again with Nick: your name"
 
 # /help-CDL command
 HELP_CDL_EXAMS_TEXT_ID: "📖 Exams (link)"

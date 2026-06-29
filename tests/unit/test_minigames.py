@@ -6,6 +6,19 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 import module.commands.tris as tris
+from module.commands.minigames import (
+    NINJA_ICON,
+    _hub_keyboard,
+    _settings_keyboard,
+    anonymous_display_name,
+    get_anonymous_name,
+    is_anonymous,
+    minigames_input_name,
+    minigames_settings_handler,
+    random_anonymous_name,
+    set_anonymous,
+    set_anonymous_name,
+)
 from module.commands.tris import (
     CPU,
     EMPTY,
@@ -203,9 +216,11 @@ def _backdate(user_id, seconds):
 def _reset_pvp_state():
     DbManager.delete_from("minigames_queue")
     DbManager.delete_from("tris_game")
+    DbManager.delete_from("minigames_settings")
     yield
     DbManager.delete_from("minigames_queue")
     DbManager.delete_from("tris_game")
+    DbManager.delete_from("minigames_settings")
 
 
 def _pvp_query(data, user_id):
@@ -400,3 +415,161 @@ def test_deliver_keeps_message_on_not_modified():
 
     context.bot.sendMessage.assert_not_called()
     assert player["message_id"] == original
+
+
+# ---- settings (anonymity, shared across mini games)
+
+
+def test_hub_keyboard_has_settings_button():
+    with patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        keyboard = _hub_keyboard("it")
+    assert any(btn.callback_data == "mg_settings" for row in keyboard for btn in row)
+
+
+def test_player_is_anonymous_by_default():
+    assert is_anonymous(100) is True
+
+
+def test_set_anonymous_persists_and_toggles():
+    set_anonymous(100, False)
+    assert is_anonymous(100) is False
+    set_anonymous(100, True)
+    assert is_anonymous(100) is True
+
+
+def test_random_anonymous_name_comes_from_file():
+    from module.shared import read_md
+
+    names = {n.strip() for n in read_md("anonymous_names").splitlines() if n.strip()}
+    for _ in range(20):
+        assert random_anonymous_name() in names
+
+
+def test_settings_keyboard_reflects_state():
+    with patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        on = _settings_keyboard("it", True, None)
+        off = _settings_keyboard("it", False, None)
+    assert on[0][0].callback_data == "mg_anon"
+    assert on[0][0].text.endswith("✅")
+    assert off[0][0].text.endswith("❌")
+
+
+def test_settings_keyboard_shows_custom_name():
+    with patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        keyboard = _settings_keyboard("it", True, "Mario")
+    name_button = keyboard[1][0]
+    assert name_button.callback_data == "mg_setname"
+    assert name_button.text == f"{NINJA_ICON} Mario {NINJA_ICON}"
+
+
+def test_settings_handler_toggle_persists_and_redraws():
+    update, query = _make_query("mg_anon")
+    query.from_user.id = 100
+    context = MagicMock()
+    with patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        minigames_settings_handler(update, context)
+    # default was anonymous (True); the toggle flips it off and persists
+    assert is_anonymous(100) is False
+    context.bot.editMessageText.assert_called_once()
+
+
+def test_anonymous_player_queues_under_alias():
+    from module.shared import read_md
+
+    aliases = {n.strip() for n in read_md("anonymous_names").splitlines() if n.strip()}
+    _enqueue(100, chat_id=10)  # anonymous by default
+    assert _queue()[0]["name"] in aliases
+
+
+def test_non_anonymous_player_queues_under_real_name():
+    set_anonymous(100, False)
+    _enqueue(100, chat_id=10)
+    assert _queue()[0]["name"] == f"{tris.PLAYER_ICON} User100"
+
+
+def test_anonymous_player_with_custom_name_queues_wrapped_in_ninja():
+    set_anonymous_name(100, "Mario")
+    _enqueue(100, chat_id=10)  # anonymous by default
+    assert _queue()[0]["name"] == f"{NINJA_ICON} Mario {NINJA_ICON}"
+
+
+def test_player_label_uses_stored_name_verbatim():
+    game = {"players": {PLAYER: {"name": "🥷 Mario 🥷"}, CPU: {"name": "🎓 Luigi"}}}
+    assert tris._player_label(game, PLAYER) == f"🥷 Mario 🥷 - {GLYPHS[PLAYER]}"
+    assert tris._player_label(game, CPU) == f"🎓 Luigi - {GLYPHS[CPU]}"
+
+
+# ---- custom anonymous name
+
+
+def test_set_and_get_anonymous_name():
+    assert get_anonymous_name(100) is None
+    set_anonymous_name(100, "Mario")
+    assert get_anonymous_name(100) == "Mario"
+
+
+def test_set_anonymous_preserves_custom_name():
+    set_anonymous_name(100, "Mario")
+    set_anonymous(100, False)
+    assert get_anonymous_name(100) == "Mario"
+    assert is_anonymous(100) is False
+
+
+def test_set_anonymous_name_preserves_anonymous_flag():
+    set_anonymous(100, False)
+    set_anonymous_name(100, "Mario")
+    assert is_anonymous(100) is False
+
+
+def test_anonymous_display_name_falls_back_to_random_alias():
+    from module.shared import read_md
+
+    aliases = {n.strip() for n in read_md("anonymous_names").splitlines() if n.strip()}
+    assert anonymous_display_name(100) in aliases  # no custom name set
+
+
+def _input_name(user_id, text):
+    update, query = _make_query(text)
+    update.message.text = text
+    update.message.chat_id = 10
+    update.message.from_user.id = user_id
+    update.message.from_user.language_code = "it"
+    context = MagicMock()
+    context.user_data = {"minigames": {"awaiting_name": True}}
+    with patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        minigames_input_name(update, context)
+    return context
+
+
+def test_input_name_stores_valid_name():
+    context = _input_name(100, "Nick: Mario Rossi")
+    assert get_anonymous_name(100) == "Mario Rossi"
+    context.bot.sendMessage.assert_called_once()
+
+
+def test_input_name_rejects_at_sign():
+    context = _input_name(100, "Nick: Mario@home")
+    assert get_anonymous_name(100) is None  # nothing stored
+    sent = context.bot.sendMessage.call_args.kwargs["text"]
+    assert sent == "MINI_GAMES_NAME_INVALID_TEXT_ID"
+
+
+def test_input_name_ignored_without_awaiting_flag():
+    update, query = _make_query("Nick: Mario")
+    update.message.text = "Nick: Mario"
+    update.message.from_user.id = 100
+    context = MagicMock()
+    context.user_data = {"minigames": {}}
+    minigames_input_name(update, context)
+    assert get_anonymous_name(100) is None
+    context.bot.sendMessage.assert_not_called()

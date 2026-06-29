@@ -32,7 +32,11 @@ from module.commands.esami import esami, esami_handler, esami_input_insegnamento
 from module.commands.gdrive import drive, drive_handler
 from module.commands.help import help_cmd
 from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
-from module.commands.minigames import minigames
+from module.commands.minigames import (
+    minigames,
+    minigames_input_name,
+    minigames_settings_handler,
+)
 from module.commands.professori import prof
 from module.commands.regolamento_didattico import (
     cdl_handler,
@@ -236,6 +240,10 @@ def add_handlers(dp: Dispatcher) -> None:
 
     # minigames (tris)
     dp.add_handler(CallbackQueryHandler(tictactoe_handler, pattern='ttt_.*'))
+    dp.add_handler(CallbackQueryHandler(minigames_settings_handler, pattern='mg_.*'))
+    dp.add_handler(
+        MessageHandler(Filters.regex(r"^(?!=<[/])[Nn]ick:\s+"), minigames_input_name)
+    )
 
     # aulario and calendar
     dp.add_handler(CallbackQueryHandler(calendar_handler, pattern='cal_.*'))

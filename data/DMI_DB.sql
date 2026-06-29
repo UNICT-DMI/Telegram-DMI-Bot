@@ -106,6 +106,13 @@ CREATE TABLE IF NOT EXISTS `minigames_queue` (
   PRIMARY KEY (`game`, `user_id`)
 );
 
+-- mini games per-user settings (shared by every game)
+CREATE TABLE IF NOT EXISTS `minigames_settings` (
+  `user_id` INTEGER PRIMARY KEY,
+  `anonymous` INTEGER NOT NULL DEFAULT 1,
+  `name` TEXT
+);
+
 -- tris (tic-tac-toe) live games (game-specific board and player columns)
 CREATE TABLE IF NOT EXISTS `tris_game` (
   `game_id` INTEGER PRIMARY KEY AUTOINCREMENT,

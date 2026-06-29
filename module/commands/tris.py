@@ -16,8 +16,9 @@ vs CPU: <s> in {x, o} is the symbol the human's marks are drawn as (picked at ra
 game); it only changes the rendered glyphs, the internal player is always 'x' and moves
 first. vs player pairs two users from their own private chats; that game state can't fit
 in callback_data so it is stored in the database (see the matchmaking section below). Marks
-stay ❌/⭕, each player is labelled with the 🎓 glyph, and the "vs player" menu button shows a
-random graduate icon.
+stay ❌/⭕; each player is labelled with their stored name (a 🎓-prefixed real name, or an
+anonymous alias per the mini games settings) and the "vs player" menu button shows a random
+graduate icon.
 """
 
 import logging
@@ -31,7 +32,12 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.error import TelegramError
 from telegram.ext import CallbackContext
 
-from module.commands.minigames import _edit, _hub_keyboard
+from module.commands.minigames import (
+    _edit,
+    _hub_keyboard,
+    anonymous_display_name,
+    is_anonymous,
+)
 from module.data import DbManager
 from module.data.vars import TEXT_IDS
 from module.utils.multi_lang_utils import get_locale
@@ -337,11 +343,17 @@ GAME_TABLE = "tris_game"
 def _start_pvp(context: CallbackContext, query, locale: str) -> None:
     """Queue the player, or pair them with the player who has waited longest."""
     user = query.from_user
+    if is_anonymous(user.id):
+        name = anonymous_display_name(user.id)
+    elif user.first_name:
+        name = f"{PLAYER_ICON} {user.first_name}"
+    else:
+        name = PLAYER_ICON
     player = {
         'user_id': user.id,
         'chat_id': query.message.chat_id,
         'message_id': query.message.message_id,
-        'name': user.first_name or PLAYER_ICON,
+        'name': name,
         'locale': locale,
     }
     game = _match_or_enqueue(player)
@@ -588,7 +600,9 @@ def _pvp_outcome(board: List[str]) -> Optional[str]:
 
 
 def _player_label(game: dict, mark: str) -> str:
-    return f"{PLAYER_ICON} {game['players'][mark]['name']} {GLYPHS[mark]}"
+    # the stored name already carries its decoration (🎓 for a real name, the alias's own
+    # emoji, or a 🥷-wrapped custom alias), set when the player joined the queue
+    return f"{game['players'][mark]['name']} - {GLYPHS[mark]}"
 
 
 def _pvp_names_block(game: dict) -> str:

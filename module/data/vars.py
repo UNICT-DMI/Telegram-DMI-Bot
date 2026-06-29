@@ -174,6 +174,13 @@ class TEXT_IDS(Enum):
     TRIS_PVP_NOT_YOUR_TURN_TEXT_ID = auto()
     TRIS_PVP_NOT_IN_GAME_TEXT_ID = auto()
     TRIS_PVP_TIMEOUT_TEXT_ID = auto()
+    MINI_GAMES_SETTINGS_TEXT_ID = auto()
+    MINI_GAMES_SETTINGS_HEADER_TEXT_ID = auto()
+    MINI_GAMES_ANONYMOUS_TEXT_ID = auto()
+    MINI_GAMES_SET_NAME_TEXT_ID = auto()
+    MINI_GAMES_SET_NAME_PROMPT_TEXT_ID = auto()
+    MINI_GAMES_NAME_SAVED_TEXT_ID = auto()
+    MINI_GAMES_NAME_INVALID_TEXT_ID = auto()
 
 
 # Placeholder special string to be used in replace()
