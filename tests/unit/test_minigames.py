@@ -7,17 +7,25 @@ import pytest
 
 import module.commands.tris as tris
 from module.commands.minigames import (
+    DEFAULT_RATING,
     NINJA_ICON,
     _hub_keyboard,
+    _leaderboard_name,
+    _leaderboard_rows,
     _settings_keyboard,
     anonymous_display_name,
+    apply_match_result,
+    ensure_score,
     get_anonymous_name,
+    get_rating,
     is_anonymous,
+    is_ranked,
     minigames_input_name,
     minigames_settings_handler,
     random_anonymous_name,
     set_anonymous,
     set_anonymous_name,
+    set_ranked,
 )
 from module.commands.tris import (
     CPU,
@@ -214,13 +222,21 @@ def _backdate(user_id, seconds):
 
 @pytest.fixture(autouse=True)
 def _reset_pvp_state():
-    DbManager.delete_from("minigames_queue")
-    DbManager.delete_from("tris_game")
-    DbManager.delete_from("minigames_settings")
+    for table in (
+        "minigames_queue",
+        "tris_game",
+        "minigames_settings",
+        "minigames_score",
+    ):
+        DbManager.delete_from(table)
     yield
-    DbManager.delete_from("minigames_queue")
-    DbManager.delete_from("tris_game")
-    DbManager.delete_from("minigames_settings")
+    for table in (
+        "minigames_queue",
+        "tris_game",
+        "minigames_settings",
+        "minigames_score",
+    ):
+        DbManager.delete_from(table)
 
 
 def _pvp_query(data, user_id):
@@ -379,6 +395,29 @@ def test_pvp_winning_move_ends_game():
     assert _game_rows() == []  # finished games are dropped
 
 
+def test_ranked_match_updates_ratings_and_shows_change():
+    set_ranked(100, True)
+    set_ranked(200, True)
+    game = _active_game()
+    _set_board(game["id"], "xx-oo----")
+    x_player_id = game["players"][PLAYER]["user_id"]
+    _, context = _move(game, x_player_id, 2)  # completes the top row, wins
+    texts = [c.kwargs["text"] for c in context.bot.editMessageText.call_args_list]
+    assert all("Rating:" in t for t in texts)  # both players see their change
+    winner_rating = get_rating(x_player_id)
+    assert winner_rating > DEFAULT_RATING
+
+
+def test_unranked_match_leaves_ratings_untouched():
+    game = _active_game()  # both players unranked by default
+    _set_board(game["id"], "xx-oo----")
+    x_player_id = game["players"][PLAYER]["user_id"]
+    _, context = _move(game, x_player_id, 2)
+    texts = [c.kwargs["text"] for c in context.bot.editMessageText.call_args_list]
+    assert not any("Rating:" in t for t in texts)
+    assert get_rating(x_player_id) == DEFAULT_RATING
+
+
 def test_pvp_board_keyboard_encodes_game_id():
     game = {"id": "7", "board": list("x--------"), "players": {}}
     keyboard = tris._pvp_board_keyboard(game, True, None)
@@ -428,6 +467,115 @@ def test_hub_keyboard_has_settings_button():
     assert any(btn.callback_data == "mg_settings" for row in keyboard for btn in row)
 
 
+def test_hub_keyboard_has_ranking_button():
+    with patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        keyboard = _hub_keyboard("it")
+    assert any(btn.callback_data == "mg_ranking" for row in keyboard for btn in row)
+
+
+# ---- ranked preference and MMR (shared score profile)
+
+
+def test_player_is_unranked_by_default():
+    assert is_ranked(100) is False
+
+
+def test_set_ranked_persists_and_toggles():
+    set_ranked(100, True)
+    assert is_ranked(100) is True
+    set_ranked(100, False)
+    assert is_ranked(100) is False
+
+
+def test_setting_ranked_does_not_disturb_anonymity():
+    set_anonymous(100, False)
+    set_anonymous_name(100, "Mario")
+    set_ranked(100, True)
+    assert is_anonymous(100) is False
+    assert get_anonymous_name(100) == "Mario"
+    assert is_ranked(100) is True
+
+
+def test_settings_handler_ranked_toggle_persists():
+    update, query = _make_query("mg_ranked")
+    query.from_user.id = 100
+    with patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        minigames_settings_handler(update, MagicMock())
+    assert is_ranked(100) is True  # default off, toggled on
+
+
+def test_default_rating_when_no_games_played():
+    assert get_rating(100) == DEFAULT_RATING
+
+
+def test_winner_gains_and_loser_loses_equal_points_from_even_rating():
+    ensure_score(100, "A")
+    ensure_score(200, "B")
+    deltas = apply_match_result(winner_id=100, loser_id=200)
+    win_rating, win_delta = deltas[100]
+    lose_rating, lose_delta = deltas[200]
+    assert win_delta > 0 and lose_delta < 0
+    assert win_delta == -lose_delta  # symmetric at equal starting ratings
+    assert get_rating(100) == win_rating
+    assert get_rating(200) == lose_rating
+    assert win_rating + lose_rating == 2 * DEFAULT_RATING  # zero-sum
+
+
+def test_draw_barely_moves_equal_ratings():
+    ensure_score(100, "A")
+    ensure_score(200, "B")
+    deltas = apply_match_result(100, 200, draw=True)
+    assert deltas[100][1] == 0  # K*(0.5 - 0.5) rounds to 0 between equals
+    assert deltas[200][1] == 0
+
+
+def test_underdog_win_gains_more_than_favourite():
+    ensure_score(100, "Favourite")
+    ensure_score(200, "Underdog")
+    apply_match_result(winner_id=100, loser_id=200)  # favourite pulls ahead
+    assert get_rating(100) > get_rating(200)
+    # underdog beating the now-higher favourite should swing more than an even game's 16
+    deltas = apply_match_result(winner_id=200, loser_id=100)
+    assert deltas[200][1] > 16
+
+
+def test_leaderboard_lists_only_players_with_games_ordered_by_rating():
+    ensure_score(100, "A")  # never finishes a ranked game
+    ensure_score(200, "B")
+    ensure_score(300, "C")
+    apply_match_result(winner_id=200, loser_id=300)
+    rows = _leaderboard_rows()
+    listed = [r["user_id"] for r in rows]
+    assert listed == [200, 300]  # 100 has no games; winner first
+    assert 100 not in listed
+
+
+def test_leaderboard_name_uses_real_name_when_public():
+    set_anonymous(100, False)
+    ensure_score(100, "Mario")
+    row = {"user_id": 100, "first_name": "Mario", "public_id": 7}
+    assert _leaderboard_name(row, "it") == "🎓 Mario"
+
+
+def test_leaderboard_name_uses_custom_alias():
+    set_anonymous_name(100, "Drago")  # anonymous by default, with a custom alias
+    row = {"user_id": 100, "first_name": "Mario", "public_id": 7}
+    assert _leaderboard_name(row, "it") == f"{NINJA_ICON} Drago {NINJA_ICON}"
+
+
+def test_leaderboard_name_uses_public_id_when_fully_anonymous():
+    row = {"user_id": 100, "first_name": "Mario", "public_id": 7}  # anon, no alias
+    with patch(
+        "module.commands.minigames.get_locale",
+        side_effect=lambda loc, tid: "Player #{id}",
+    ):
+        assert _leaderboard_name(row, "it") == "Player #7"
+
+
 def test_player_is_anonymous_by_default():
     assert is_anonymous(100) is True
 
@@ -451,19 +599,74 @@ def test_settings_keyboard_reflects_state():
     with patch(
         "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
     ):
-        on = _settings_keyboard("it", True, None)
-        off = _settings_keyboard("it", False, None)
+        on = _settings_keyboard("it", True, None, False)
+        off = _settings_keyboard("it", False, None, False)
     assert on[0][0].callback_data == "mg_anon"
     assert on[0][0].text.endswith("✅")
     assert off[0][0].text.endswith("❌")
+
+
+def test_settings_keyboard_reflects_ranked_state():
+    with patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        on = _settings_keyboard("it", True, None, True)
+        off = _settings_keyboard("it", True, None, False)
+    assert on[1][0].callback_data == "mg_ranked"
+    assert on[1][0].text.endswith("✅")
+    assert off[1][0].text.endswith("❌")
+
+
+def test_settings_keyboard_has_info_button():
+    with patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        keyboard = _settings_keyboard("it", True, None, False)
+    assert any(btn.callback_data == "mg_info" for row in keyboard for btn in row)
+
+
+def test_info_handler_shows_profile_summary():
+    set_anonymous(100, False)
+    set_ranked(100, True)
+    set_anonymous_name(100, "Drago")
+
+    def loc(code, tid):
+        if tid.name == "MINI_GAMES_INFO_BODY_TEXT_ID":
+            return "anon={anonymous} ranked={ranked} name={name} rating={rating}"
+        return tid.name
+
+    update, query = _make_query("mg_info")
+    query.from_user.id = 100
+    context = MagicMock()
+    with patch("module.commands.minigames.get_locale", side_effect=loc):
+        minigames_settings_handler(update, context)
+    text = context.bot.editMessageText.call_args.kwargs["text"]
+    assert "anon=❌" in text  # set non-anonymous above
+    assert "ranked=✅" in text
+    assert "name=Drago" in text
+    assert "rating=1000" in text  # default, no ranked games played yet
+
+
+def test_info_handler_shows_dash_when_no_custom_name():
+    def loc(code, tid):
+        if tid.name == "MINI_GAMES_INFO_BODY_TEXT_ID":
+            return "name={name}"
+        return tid.name
+
+    update, query = _make_query("mg_info")
+    query.from_user.id = 100
+    context = MagicMock()
+    with patch("module.commands.minigames.get_locale", side_effect=loc):
+        minigames_settings_handler(update, context)
+    assert context.bot.editMessageText.call_args.kwargs["text"] == "name=—"
 
 
 def test_settings_keyboard_shows_custom_name():
     with patch(
         "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
     ):
-        keyboard = _settings_keyboard("it", True, "Mario")
-    name_button = keyboard[1][0]
+        keyboard = _settings_keyboard("it", True, "Mario", False)
+    name_button = keyboard[2][0]
     assert name_button.callback_data == "mg_setname"
     assert name_button.text == f"{NINJA_ICON} Mario {NINJA_ICON}"
 
@@ -501,13 +704,18 @@ def test_anonymous_player_with_custom_name_queues_wrapped_in_ninja():
     assert _queue()[0]["name"] == f"{NINJA_ICON} Mario {NINJA_ICON}"
 
 
-def test_each_player_is_told_their_mark():
+def test_each_player_is_told_their_mark_and_opponent():
     def loc(code, tid):
         if tid.name == "MINI_GAMES_YOU_ARE_TEXT_ID":
             return "You are {player}"
+        if tid.name == "MINI_GAMES_OPPONENT_TEXT_ID":
+            return "Opponent: {player}"
         return tid.name
 
-    with patch("module.commands.tris.get_locale", side_effect=loc):
+    # you_are/opponent text comes from the minigames module, the turn line from tris
+    with patch("module.commands.minigames.get_locale", side_effect=loc), patch(
+        "module.commands.tris.get_locale", side_effect=loc
+    ):
         u1, q1 = _pvp_query("ttt_pvp", 100)
         q1.message.chat_id = 10
         tictactoe_handler(u1, MagicMock())
@@ -515,11 +723,13 @@ def test_each_player_is_told_their_mark():
         q2.message.chat_id = 20
         context = MagicMock()
         tictactoe_handler(u2, context)
-    first_lines = [
-        call.kwargs["text"].splitlines()[0]
-        for call in context.bot.editMessageText.call_args_list
-    ]
-    assert all(line.startswith("You are") for line in first_lines)
+    texts = [call.kwargs["text"] for call in context.bot.editMessageText.call_args_list]
+    # each player's message leads with their own side, then the opponent (shown once)
+    for text in texts:
+        lines = text.splitlines()
+        assert lines[0].startswith("You are")
+        assert lines[1].startswith("Opponent:")
+    first_lines = [t.splitlines()[0] for t in texts]
     assert any(GLYPHS[PLAYER] in line for line in first_lines)
     assert any(GLYPHS[CPU] in line for line in first_lines)
 

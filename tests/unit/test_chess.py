@@ -177,13 +177,12 @@ def _backdate(user_id, seconds):
 
 @pytest.fixture(autouse=True)
 def _reset_pvp_state():
-    DbManager.delete_from("minigames_queue")
-    DbManager.delete_from("chess_game")
-    DbManager.delete_from("minigames_settings")
+    tables = ("minigames_queue", "chess_game", "minigames_settings", "minigames_score")
+    for table in tables:
+        DbManager.delete_from(table)
     yield
-    DbManager.delete_from("minigames_queue")
-    DbManager.delete_from("chess_game")
-    DbManager.delete_from("minigames_settings")
+    for table in tables:
+        DbManager.delete_from(table)
 
 
 def _pvp_query(data, user_id):
@@ -344,6 +343,21 @@ def test_checkmate_ends_and_drops_the_game():
     context.bot.editMessageText.assert_called()  # both players see the result
 
 
+def test_ranked_checkmate_updates_ratings():
+    from module.commands.minigames import get_rating, set_ranked
+
+    game = _active_game()
+    white_id = game["players"][WHITE]["user_id"]
+    black_id = game["players"][BLACK]["user_id"]
+    set_ranked(white_id, True)
+    set_ranked(black_id, True)
+    _set_fen(game["id"], "6k1/5ppp/8/8/8/8/8/3QK3 w - - 0 1")
+    _, context = _move(game, white_id, chess.D1, chess.D8)  # white mates
+    texts = [c.kwargs["text"] for c in context.bot.editMessageText.call_args_list]
+    assert all("Rating:" in t for t in texts)
+    assert get_rating(white_id) > get_rating(black_id)
+
+
 def test_resign_drops_game_and_refreshes_both():
     game = _active_game()
     black_id = game["players"][BLACK]["user_id"]
@@ -410,14 +424,19 @@ def test_player_label_uses_king_glyph_and_name():
     assert chess_game._player_label(game, BLACK) == f"{KING_GLYPHS[BLACK]} 🥷 Mario 🥷"
 
 
-def _loc_with_you_are(code, tid):
+def _loc_header(code, tid):
     if tid.name == "MINI_GAMES_YOU_ARE_TEXT_ID":
         return "You are {player}"
+    if tid.name == "MINI_GAMES_OPPONENT_TEXT_ID":
+        return "Opponent: {player}"
     return tid.name
 
 
 def test_each_player_is_told_which_side_they_are():
-    with patch("module.commands.chess_game.get_locale", side_effect=_loc_with_you_are):
+    # you_are/opponent text comes from the minigames module, the rest from chess
+    with patch("module.commands.minigames.get_locale", side_effect=_loc_header), patch(
+        "module.commands.chess_game.get_locale", side_effect=_loc_header
+    ):
         u1, q1 = _pvp_query("chess_play", 100)
         q1.message.chat_id = 10
         chess_handler(u1, MagicMock())
@@ -425,24 +444,27 @@ def test_each_player_is_told_which_side_they_are():
         q2.message.chat_id = 20
         context = MagicMock()
         chess_handler(u2, context)
-    first_lines = [
-        call.kwargs["text"].splitlines()[0]
-        for call in context.bot.editMessageText.call_args_list
-    ]
-    assert all(line.startswith("You are") for line in first_lines)
+    texts = [call.kwargs["text"] for call in context.bot.editMessageText.call_args_list]
+    for text in texts:
+        lines = text.splitlines()
+        assert lines[0].startswith("You are")
+        assert lines[1].startswith("Opponent:")
+    first_lines = [t.splitlines()[0] for t in texts]
     assert any(KING_GLYPHS[WHITE] in line for line in first_lines)
     assert any(KING_GLYPHS[BLACK] in line for line in first_lines)
 
 
-def test_names_block_shows_captured_pieces():
+def test_header_shows_captured_pieces():
     game = {
         "white_captured": "pn",
         "black_captured": "",
         "players": {WHITE: {"name": "A"}, BLACK: {"name": "B"}},
     }
-    with patch(
+    with patch("module.commands.minigames.get_locale", side_effect=_loc_header), patch(
         "module.commands.chess_game.get_locale",
-        side_effect=lambda loc, tid: "Catturati:",
+        side_effect=lambda loc, tid: (
+            "Captured:" if tid.name == "CHESS_PVP_CAPTURED_TEXT_ID" else tid.name
+        ),
     ):
-        block = chess_game._names_block(game, "it")
-    assert f"Catturati: {PIECE_GLYPHS['p']}{PIECE_GLYPHS['n']}" in block
+        block = chess_game._header(game, WHITE, "it")
+    assert f"Captured: {PIECE_GLYPHS['p']}{PIECE_GLYPHS['n']}" in block

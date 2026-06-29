@@ -36,7 +36,13 @@ from module.commands.minigames import (
     _edit,
     _hub_keyboard,
     anonymous_display_name,
+    apply_match_result,
+    ensure_score,
     is_anonymous,
+    is_ranked,
+    opponent_text,
+    rating_change_text,
+    you_are_text,
 )
 from module.data import DbManager
 from module.data.vars import TEXT_IDS
@@ -343,6 +349,7 @@ GAME_TABLE = "tris_game"
 def _start_pvp(context: CallbackContext, query, locale: str) -> None:
     """Queue the player, or pair them with the player who has waited longest."""
     user = query.from_user
+    ensure_score(user.id, user.first_name)
     if is_anonymous(user.id):
         name = anonymous_display_name(user.id)
     elif user.first_name:
@@ -517,7 +524,7 @@ def _handle_pvp_move(context: CallbackContext, query, locale: str, data: str) ->
 
     query.answer()
     if status == 'ok':
-        _render_game(context, game)
+        _render_game(context, game, _settle_ratings(game))
 
 
 def _apply_pvp_move(
@@ -569,25 +576,58 @@ def _apply_pvp_move(
     return game, 'ok'
 
 
-def _render_game(context: CallbackContext, game: dict) -> None:
-    """Edit both players' messages to reflect the current board state."""
+def _render_game(
+    context: CallbackContext, game: dict, deltas: Optional[dict] = None
+) -> None:
+    """Edit both players' messages to reflect the current board state.
+
+    ``deltas`` maps a mark to its ``(rating, change)`` when a ranked match has just ended.
+    """
     board = game['board']
     outcome = _pvp_outcome(board)
     current_mark = PLAYER if board.count(PLAYER) == board.count(CPU) else CPU
     win_line = _winning_line(board)
     for mark, player in game['players'].items():
         locale = player['locale']
+        opponent_mark = CPU if mark == PLAYER else PLAYER
+        header = (
+            f"{you_are_text(_player_label(game, mark), locale)}\n"
+            f"{opponent_text(_player_label(game, opponent_mark), locale)}"
+        )
         if outcome is None:
-            text = _pvp_turn_text(game, current_mark, locale)
+            body = _turn_line(game, current_mark, locale)
             tappable = mark == current_mark
         else:
-            text = _pvp_result_text(game, outcome, locale)
+            body = _result_line(game, outcome, locale)
             tappable = False
-        text = f"{_you_are_text(game, mark, locale)}\n\n{text}"
+        text = f"{header}\n\n{body}"
+        if outcome is not None and deltas is not None:
+            rating, change = deltas[mark]
+            text += f"\n{rating_change_text(rating, change, locale)}"
         keyboard = _pvp_board_keyboard(game, tappable, win_line)
         if outcome is not None:
             keyboard = keyboard + _pvp_replay_row(locale)
         _deliver(context, game['id'], mark, player, text, keyboard)
+
+
+def _settle_ratings(game: dict) -> Optional[dict]:
+    """Update both ratings if the match just ended and is ranked. Returns per-mark deltas."""
+    outcome = _pvp_outcome(game['board'])
+    if outcome is None:
+        return None
+    player_id = game['players'][PLAYER]['user_id']
+    cpu_id = game['players'][CPU]['user_id']
+    if not (is_ranked(player_id) and is_ranked(cpu_id)):
+        return None
+    if outcome == 'draw':
+        result = apply_match_result(player_id, cpu_id, draw=True)
+    else:
+        loser_mark = CPU if outcome == PLAYER else PLAYER
+        result = apply_match_result(
+            game['players'][outcome]['user_id'],
+            game['players'][loser_mark]['user_id'],
+        )
+    return {mark: result[game['players'][mark]['user_id']] for mark in (PLAYER, CPU)}
 
 
 def _pvp_outcome(board: List[str]) -> Optional[str]:
@@ -606,32 +646,18 @@ def _player_label(game: dict, mark: str) -> str:
     return f"{game['players'][mark]['name']} - {GLYPHS[mark]}"
 
 
-def _pvp_names_block(game: dict) -> str:
-    return f"{_player_label(game, PLAYER)}\n{_player_label(game, CPU)}"
-
-
-def _you_are_text(game: dict, mark: str, locale: str) -> str:
-    # both players can be anonymous aliases, so each message names which side is theirs
-    return get_locale(locale, TEXT_IDS.MINI_GAMES_YOU_ARE_TEXT_ID).format(
-        player=_player_label(game, mark)
-    )
-
-
-def _pvp_turn_text(game: dict, current_mark: str, locale: str) -> str:
-    turn = get_locale(locale, TEXT_IDS.TRIS_PVP_TURN_TEXT_ID).format(
+def _turn_line(game: dict, current_mark: str, locale: str) -> str:
+    return get_locale(locale, TEXT_IDS.TRIS_PVP_TURN_TEXT_ID).format(
         player=_player_label(game, current_mark)
     )
-    return f"{_pvp_names_block(game)}\n\n{turn}"
 
 
-def _pvp_result_text(game: dict, outcome: str, locale: str) -> str:
+def _result_line(game: dict, outcome: str, locale: str) -> str:
     if outcome == 'draw':
-        result = get_locale(locale, TEXT_IDS.TRIS_DRAW_TEXT_ID)
-    else:
-        result = get_locale(locale, TEXT_IDS.TRIS_PVP_WIN_TEXT_ID).format(
-            player=_player_label(game, outcome)
-        )
-    return f"{_pvp_names_block(game)}\n\n{result}"
+        return get_locale(locale, TEXT_IDS.TRIS_DRAW_TEXT_ID)
+    return get_locale(locale, TEXT_IDS.TRIS_PVP_WIN_TEXT_ID).format(
+        player=_player_label(game, outcome)
+    )
 
 
 def _pvp_board_keyboard(

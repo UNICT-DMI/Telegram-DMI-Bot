@@ -42,7 +42,13 @@ from module.commands.minigames import (
     _edit,
     _hub_keyboard,
     anonymous_display_name,
+    apply_match_result,
+    ensure_score,
     is_anonymous,
+    is_ranked,
+    opponent_text,
+    rating_change_text,
+    you_are_text,
 )
 from module.data import DbManager
 from module.data.vars import TEXT_IDS
@@ -106,6 +112,7 @@ def chess_handler(update: Update, context: CallbackContext) -> None:
 def _start_pvp(context: CallbackContext, query, locale: str) -> None:
     """Queue the player, or pair them with the player who has waited longest."""
     user = query.from_user
+    ensure_score(user.id, user.first_name)
     if is_anonymous(user.id):
         name = anonymous_display_name(user.id)
     elif user.first_name:
@@ -299,7 +306,7 @@ def _handle_pvp_move(context: CallbackContext, query, locale: str, data: str) ->
 
     query.answer()
     if status == 'ok':
-        _render_game(context, game)
+        _render_game(context, game, deltas=_settle_ratings(game))
 
 
 def _apply_pvp_move(
@@ -405,7 +412,12 @@ def _handle_resign(context: CallbackContext, query, locale: str, data: str) -> N
         )
         return
     query.answer()
-    _render_game(context, game, resigned_mark=loser_mark)
+    _render_game(
+        context,
+        game,
+        resigned_mark=loser_mark,
+        deltas=_settle_ratings(game, resigned_mark=loser_mark),
+    )
 
 
 def _apply_resign(
@@ -471,7 +483,7 @@ def _render_selection(
             selected = None
 
     query.answer()
-    text = f"{_you_are_text(game, turn_mark, locale)}\n\n{_turn_text(game, board, turn_mark, locale)}"
+    text = f"{_header(game, turn_mark, locale)}\n\n{_turn_body(game, board, locale)}"
     keyboard = _board_keyboard(
         game, board, turn_mark, tappable=True, selected=selected
     ) + _controls_row(game['id'], locale)
@@ -482,27 +494,56 @@ def _render_selection(
 
 
 def _render_game(
-    context: CallbackContext, game: dict, resigned_mark: Optional[str] = None
+    context: CallbackContext,
+    game: dict,
+    resigned_mark: Optional[str] = None,
+    deltas: Optional[dict] = None,
 ) -> None:
-    """Edit both players' messages to reflect the current position."""
+    """Edit both players' messages to reflect the current position.
+
+    ``deltas`` maps a mark to its ``(rating, change)`` when a ranked match has just ended.
+    """
     board = chess.Board(game['fen'])
     result = _game_result(board, resigned_mark)
     turn_mark = WHITE if board.turn == chess.WHITE else BLACK
     for mark, player in game['players'].items():
         locale = player['locale']
         if result is None:
-            text = _turn_text(game, board, turn_mark, locale)
+            body = _turn_body(game, board, locale)
             tappable = mark == turn_mark
             keyboard = _board_keyboard(
                 game, board, mark, tappable=tappable, selected=None
             ) + _controls_row(game['id'], locale)
         else:
-            text = _result_text(game, result, locale)
+            body = _result_body(game, result, locale)
             keyboard = _board_keyboard(
                 game, board, mark, tappable=False, selected=None
             ) + _replay_row(locale)
-        text = f"{_you_are_text(game, mark, locale)}\n\n{text}"
+        text = f"{_header(game, mark, locale)}\n\n{body}"
+        if result is not None and deltas is not None:
+            rating, change = deltas[mark]
+            text += f"\n{rating_change_text(rating, change, locale)}"
         _deliver(context, game['id'], mark, player, text, keyboard)
+
+
+def _settle_ratings(game: dict, resigned_mark: Optional[str] = None) -> Optional[dict]:
+    """Update both ratings if the match just ended and is ranked. Returns per-mark deltas."""
+    board = chess.Board(game['fen'])
+    result = _game_result(board, resigned_mark)
+    if result is None:
+        return None
+    white_id = game['players'][WHITE]['user_id']
+    black_id = game['players'][BLACK]['user_id']
+    if not (is_ranked(white_id) and is_ranked(black_id)):
+        return None
+    kind, winner, loser = result
+    if kind == 'draw':
+        outcome = apply_match_result(white_id, black_id, draw=True)
+    else:
+        outcome = apply_match_result(
+            game['players'][winner]['user_id'], game['players'][loser]['user_id']
+        )
+    return {mark: outcome[game['players'][mark]['user_id']] for mark in (WHITE, BLACK)}
 
 
 def _game_result(
@@ -596,24 +637,25 @@ def _player_label(game: dict, mark: str) -> str:
     return f"{KING_GLYPHS[mark]} {game['players'][mark]['name']}"
 
 
-def _you_are_text(game: dict, mark: str, locale: str) -> str:
-    # both players can be anonymous aliases, so each message names which side is theirs
-    return get_locale(locale, TEXT_IDS.MINI_GAMES_YOU_ARE_TEXT_ID).format(
-        player=_player_label(game, mark)
+def _captured_suffix(game: dict, mark: str, locale: str) -> str:
+    """The "Captured: …" tail for a player's line, or empty when they have taken nothing."""
+    captured = game['white_captured'] if mark == WHITE else game['black_captured']
+    taken = _render_captured(captured)
+    if not taken:
+        return ""
+    return f"  {get_locale(locale, TEXT_IDS.CHESS_PVP_CAPTURED_TEXT_ID)} {taken}"
+
+
+def _header(game: dict, viewer_mark: str, locale: str) -> str:
+    """The two identity lines: the viewer's own side then the opponent, each with its captures."""
+    opponent_mark = OTHER[viewer_mark]
+    you = you_are_text(_player_label(game, viewer_mark), locale) + _captured_suffix(
+        game, viewer_mark, locale
     )
-
-
-def _names_block(game: dict, locale: str) -> str:
-    captured_label = get_locale(locale, TEXT_IDS.CHESS_PVP_CAPTURED_TEXT_ID)
-    captured = {WHITE: game['white_captured'], BLACK: game['black_captured']}
-    lines = []
-    for mark in (WHITE, BLACK):
-        line = _player_label(game, mark)
-        taken = _render_captured(captured[mark])
-        if taken:
-            line += f"  {captured_label} {taken}"
-        lines.append(line)
-    return '\n'.join(lines)
+    opp = opponent_text(_player_label(game, opponent_mark), locale) + _captured_suffix(
+        game, opponent_mark, locale
+    )
+    return f"{you}\n{opp}"
 
 
 def _last_move_line(game: dict, locale: str) -> Optional[str]:
@@ -624,8 +666,9 @@ def _last_move_line(game: dict, locale: str) -> Optional[str]:
     )
 
 
-def _turn_text(game: dict, board: chess.Board, turn_mark: str, locale: str) -> str:
-    parts = [_names_block(game, locale), ""]
+def _turn_body(game: dict, board: chess.Board, locale: str) -> str:
+    turn_mark = WHITE if board.turn == chess.WHITE else BLACK
+    parts = []
     last = _last_move_line(game, locale)
     if last:
         parts.append(last)
@@ -639,11 +682,11 @@ def _turn_text(game: dict, board: chess.Board, turn_mark: str, locale: str) -> s
     return '\n'.join(parts)
 
 
-def _result_text(
+def _result_body(
     game: dict, result: Tuple[str, Optional[str], Optional[str]], locale: str
 ) -> str:
     kind, winner, loser = result
-    parts = [_names_block(game, locale), ""]
+    parts = []
     last = _last_move_line(game, locale)
     if last:
         parts.append(last)

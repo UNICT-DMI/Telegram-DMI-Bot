@@ -32,6 +32,18 @@ CREATE TABLE IF NOT EXISTS `minigames_settings` (
   `name` TEXT
 );
 
+-- mini games per-user score profile (shared by every game)
+CREATE TABLE IF NOT EXISTS `minigames_score` (
+  `public_id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `user_id` INTEGER NOT NULL UNIQUE,
+  `first_name` TEXT,
+  `rating` INTEGER NOT NULL DEFAULT 1000,
+  `wins` INTEGER NOT NULL DEFAULT 0,
+  `losses` INTEGER NOT NULL DEFAULT 0,
+  `draws` INTEGER NOT NULL DEFAULT 0,
+  `ranked` INTEGER NOT NULL DEFAULT 0
+);
+
 -- tris (tic-tac-toe) live games (game-specific board and player columns)
 CREATE TABLE IF NOT EXISTS `tris_game` (
   `game_id` INTEGER PRIMARY KEY AUTOINCREMENT,
