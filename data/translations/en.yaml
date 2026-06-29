@@ -133,6 +133,11 @@ MINI_GAMES_RANKING_TEXT_ID: "🏆 Leaderboard"
 MINI_GAMES_RANKING_HEADER_TEXT_ID: "🏆 Leaderboard"
 MINI_GAMES_RANKING_EMPTY_TEXT_ID: "No scores yet. Play a ranked match!"
 MINI_GAMES_ANON_PLAYER_TEXT_ID: "Player #{id}"
+MINI_GAMES_STATS_HEADER_TEXT_ID: "🕹 Mini games stats"
+MINI_GAMES_STATS_LAST_DAYS_TEXT_ID: "📅 Last {days} days:"
+MINI_GAMES_STATS_OVERALL_TEXT_ID: "🌍 Overall:"
+MINI_GAMES_STATS_TOTAL_TEXT_ID: "Total: {total}"
+MINI_GAMES_STATS_EMPTY_TEXT_ID: "No matches played yet."
 
 # /help-CDL command
 HELP_CDL_EXAMS_TEXT_ID: "📖 Exams (link)"

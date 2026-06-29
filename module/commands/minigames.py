@@ -18,6 +18,7 @@ helpers here are called by each game when a ranked match ends.
 import logging
 import re
 import sqlite3
+from datetime import date, timedelta
 from random import choice
 from typing import Dict, List, Optional, Tuple
 
@@ -33,6 +34,8 @@ logger = logging.getLogger(__name__)
 
 SETTINGS_TABLE = "minigames_settings"
 SCORE_TABLE = "minigames_score"
+MATCH_LOG_TABLE = "minigames_match_log"
+STATS_WINDOW_DAYS = 30  # the "recent" window shown by /minigames_stats
 NINJA_ICON = "🥷"  # wraps a custom anonymous alias
 GRADUATE_ICON = "🎓"  # prefixes a non-anonymous player's real name
 MAX_ANON_NAME_LEN = 30
@@ -51,6 +54,16 @@ def minigames(update: Update, context: CallbackContext) -> None:
         chat_id=update.message.chat_id,
         text=get_locale(locale, TEXT_IDS.MINI_GAMES_HEADER_TEXT_ID),
         reply_markup=InlineKeyboardMarkup(_hub_keyboard(locale)),
+    )
+
+
+def minigames_stats(update: Update, context: CallbackContext) -> None:
+    """Called by /minigames_stats. Shows how many matches were played recently and overall."""
+    check_log(update, "minigames_stats")
+    locale: str = update.message.from_user.language_code
+    context.bot.sendMessage(
+        chat_id=update.message.chat_id,
+        text=_stats_text(locale),
     )
 
 
@@ -401,6 +414,59 @@ def rating_change_text(rating: int, delta: int, locale: str) -> str:
     return get_locale(locale, TEXT_IDS.MINI_GAMES_RATING_CHANGE_TEXT_ID).format(
         rating=rating, change=f"{delta:+d}"
     )
+
+
+# ---- match log and /minigames_stats (counts per game, shared by every game)
+
+
+def log_match(game: str) -> None:
+    """Record one finished match of ``game`` so /minigames_stats can count it."""
+    DbManager.insert_into(
+        MATCH_LOG_TABLE,
+        values=(game, date.today()),
+        columns=("game", "finished_at"),
+    )
+
+
+def _match_counts(days: int = 0) -> List[dict]:
+    """Rows of ``{game, n}`` for finished matches; only the last ``days`` when days > 0."""
+    where, where_args = "", None
+    if days > 0:
+        where = "finished_at > ?"
+        where_args = (str(date.today() - timedelta(days=days)),)
+    return DbManager.select_from(
+        select="game, COUNT(*) as n",
+        table_name=MATCH_LOG_TABLE,
+        where=where,
+        where_args=where_args,
+        group_by="game",
+        order_by="n DESC",
+    )
+
+
+def _count_lines(rows: List[dict], locale: str) -> List[str]:
+    if not rows:
+        return [get_locale(locale, TEXT_IDS.MINI_GAMES_STATS_EMPTY_TEXT_ID)]
+    lines = [f"{row['game'].capitalize()}: {row['n']}" for row in rows]
+    total = sum(row["n"] for row in rows)
+    lines.append(
+        get_locale(locale, TEXT_IDS.MINI_GAMES_STATS_TOTAL_TEXT_ID).format(total=total)
+    )
+    return lines
+
+
+def _stats_text(locale: str) -> str:
+    parts = [get_locale(locale, TEXT_IDS.MINI_GAMES_STATS_HEADER_TEXT_ID), ""]
+    parts.append(
+        get_locale(locale, TEXT_IDS.MINI_GAMES_STATS_LAST_DAYS_TEXT_ID).format(
+            days=STATS_WINDOW_DAYS
+        )
+    )
+    parts += _count_lines(_match_counts(days=STATS_WINDOW_DAYS), locale)
+    parts.append("")
+    parts.append(get_locale(locale, TEXT_IDS.MINI_GAMES_STATS_OVERALL_TEXT_ID))
+    parts += _count_lines(_match_counts(), locale)
+    return "\n".join(parts)
 
 
 def opponent_text(opponent_label: str, locale: str) -> str:

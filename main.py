@@ -37,6 +37,7 @@ from module.commands.minigames import (
     minigames,
     minigames_input_name,
     minigames_settings_handler,
+    minigames_stats,
 )
 from module.commands.professori import prof
 from module.commands.regolamento_didattico import (
@@ -131,6 +132,10 @@ def add_commands(up: Updater) -> None:
             "minigames",
             "mini giochi: gioca a Tris o a Scacchi contro la CPU o un altro giocatore",
         ),
+        BotCommand(
+            "minigames_stats",
+            "statistiche dei mini giochi giocati negli ultimi 30 giorni e in totale",
+        ),
     ]
     up.bot.set_my_commands(commands=commands)
 
@@ -211,6 +216,7 @@ def add_handlers(dp: Dispatcher) -> None:
     )
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('minigames', minigames))
+    dp.add_handler(CommandHandler('minigames_stats', minigames_stats))
     dp.add_handler(
         MessageHandler(
             Filters.regex(get_regex_multi_lang(TEXT_IDS.MINI_GAMES_KEYBOARD_TEXT_ID)),

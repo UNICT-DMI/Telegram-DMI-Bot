@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test suite for the /minigames command (Tris)."""
 
+from datetime import date, timedelta
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -12,7 +13,9 @@ from module.commands.minigames import (
     _hub_keyboard,
     _leaderboard_name,
     _leaderboard_rows,
+    _match_counts,
     _settings_keyboard,
+    _stats_text,
     anonymous_display_name,
     apply_match_result,
     ensure_score,
@@ -20,8 +23,10 @@ from module.commands.minigames import (
     get_rating,
     is_anonymous,
     is_ranked,
+    log_match,
     minigames_input_name,
     minigames_settings_handler,
+    minigames_stats,
     random_anonymous_name,
     set_anonymous,
     set_anonymous_name,
@@ -220,22 +225,21 @@ def _backdate(user_id, seconds):
     conn.close()
 
 
+_PVP_TABLES = (
+    "minigames_queue",
+    "tris_game",
+    "minigames_settings",
+    "minigames_score",
+    "minigames_match_log",
+)
+
+
 @pytest.fixture(autouse=True)
 def _reset_pvp_state():
-    for table in (
-        "minigames_queue",
-        "tris_game",
-        "minigames_settings",
-        "minigames_score",
-    ):
+    for table in _PVP_TABLES:
         DbManager.delete_from(table)
     yield
-    for table in (
-        "minigames_queue",
-        "tris_game",
-        "minigames_settings",
-        "minigames_score",
-    ):
+    for table in _PVP_TABLES:
         DbManager.delete_from(table)
 
 
@@ -418,6 +422,14 @@ def test_unranked_match_leaves_ratings_untouched():
     assert get_rating(x_player_id) == DEFAULT_RATING
 
 
+def test_finishing_pvp_match_is_logged():
+    game = _active_game()
+    _set_board(game["id"], "xx-oo----")
+    x_player_id = game["players"][PLAYER]["user_id"]
+    _move(game, x_player_id, 2)  # completes the top row
+    assert sum(r["n"] for r in _match_counts()) == 1
+
+
 def test_pvp_board_keyboard_encodes_game_id():
     game = {"id": "7", "board": list("x--------"), "players": {}}
     keyboard = tris._pvp_board_keyboard(game, True, None)
@@ -574,6 +586,78 @@ def test_leaderboard_name_uses_public_id_when_fully_anonymous():
         side_effect=lambda loc, tid: "Player #{id}",
     ):
         assert _leaderboard_name(row, "it") == "Player #7"
+
+
+# ---- match log and /minigames_stats
+
+
+def test_log_match_counts_per_game():
+    log_match("tris")
+    log_match("tris")
+    log_match("chess")
+    assert {r["game"]: r["n"] for r in _match_counts()} == {"tris": 2, "chess": 1}
+
+
+def test_recent_window_excludes_old_matches():
+    log_match("tris")  # today
+    old = str(date.today() - timedelta(days=60))
+    DbManager.insert_into(
+        "minigames_match_log", values=("tris", old), columns=("game", "finished_at")
+    )
+    assert {r["game"]: r["n"] for r in _match_counts()} == {"tris": 2}  # overall
+    assert {r["game"]: r["n"] for r in _match_counts(days=30)} == {"tris": 1}  # recent
+
+
+def test_stats_text_shows_recent_and_overall_counts():
+    log_match("tris")
+    log_match("chess")
+
+    def loc(code, tid):
+        return {
+            "MINI_GAMES_STATS_HEADER_TEXT_ID": "HEAD",
+            "MINI_GAMES_STATS_LAST_DAYS_TEXT_ID": "last {days}",
+            "MINI_GAMES_STATS_OVERALL_TEXT_ID": "overall",
+            "MINI_GAMES_STATS_TOTAL_TEXT_ID": "tot {total}",
+            "MINI_GAMES_STATS_EMPTY_TEXT_ID": "empty",
+        }.get(tid.name, tid.name)
+
+    with patch("module.commands.minigames.get_locale", side_effect=loc):
+        text = _stats_text("it")
+    assert "last 30" in text and "overall" in text
+    assert "Tris: 1" in text and "Chess: 1" in text
+    assert text.count("tot 2") == 2  # same totals for recent and overall here
+
+
+def test_stats_text_when_no_matches():
+    def loc(code, tid):
+        return "empty" if tid.name == "MINI_GAMES_STATS_EMPTY_TEXT_ID" else tid.name
+
+    with patch("module.commands.minigames.get_locale", side_effect=loc):
+        text = _stats_text("it")
+    assert text.count("empty") == 2  # both sections report no matches
+
+
+def test_minigames_stats_command_sends_message():
+    log_match("tris")
+    update = MagicMock()
+    update.message.from_user.language_code = "it"
+    update.message.chat_id = 5
+    context = MagicMock()
+    with patch("module.commands.minigames.check_log"), patch(
+        "module.commands.minigames.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        minigames_stats(update, context)
+    text = context.bot.sendMessage.call_args.kwargs["text"]
+    assert "Tris: 1" in text
+
+
+def test_finishing_cpu_game_is_logged():
+    update, query = _make_query("ttt_mv_h_x_xx-oo----_2")  # completes the top row
+    with patch(
+        "module.commands.tris.get_locale", side_effect=lambda loc, tid: tid.name
+    ):
+        tictactoe_handler(update, MagicMock())
+    assert sum(r["n"] for r in _match_counts()) == 1
 
 
 def test_player_is_anonymous_by_default():

@@ -32,6 +32,12 @@ CREATE TABLE IF NOT EXISTS `minigames_settings` (
   `name` TEXT
 );
 
+-- mini games completed-match log (one row per finished match)
+CREATE TABLE IF NOT EXISTS `minigames_match_log` (
+  `game` TEXT NOT NULL,
+  `finished_at` DATE NOT NULL
+);
+
 -- mini games per-user score profile (shared by every game)
 CREATE TABLE IF NOT EXISTS `minigames_score` (
   `public_id` INTEGER PRIMARY KEY AUTOINCREMENT,

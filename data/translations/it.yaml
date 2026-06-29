@@ -134,6 +134,11 @@ MINI_GAMES_RANKING_TEXT_ID: "🏆 Classifica"
 MINI_GAMES_RANKING_HEADER_TEXT_ID: "🏆 Classifica"
 MINI_GAMES_RANKING_EMPTY_TEXT_ID: "Nessun punteggio ancora. Gioca una partita classificata!"
 MINI_GAMES_ANON_PLAYER_TEXT_ID: "Giocatore #{id}"
+MINI_GAMES_STATS_HEADER_TEXT_ID: "🕹 Statistiche mini giochi"
+MINI_GAMES_STATS_LAST_DAYS_TEXT_ID: "📅 Ultimi {days} giorni:"
+MINI_GAMES_STATS_OVERALL_TEXT_ID: "🌍 Globale:"
+MINI_GAMES_STATS_TOTAL_TEXT_ID: "Totale: {total}"
+MINI_GAMES_STATS_EMPTY_TEXT_ID: "Nessuna partita giocata."
 
 # /help-CDL command
 HELP_CDL_EXAMS_TEXT_ID: "📖 Esami (link)"

@@ -113,6 +113,12 @@ CREATE TABLE IF NOT EXISTS `minigames_settings` (
   `name` TEXT
 );
 
+-- mini games completed-match log (one row per finished match), for the /minigames_stats counts
+CREATE TABLE IF NOT EXISTS `minigames_match_log` (
+  `game` TEXT NOT NULL,
+  `finished_at` DATE NOT NULL
+);
+
 -- mini games per-user score profile (shared by every game): the MMR rating plus the public_id
 -- shown on the leaderboard when a player stays anonymous, and the ranked-match preference
 CREATE TABLE IF NOT EXISTS `minigames_score` (

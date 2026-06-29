@@ -46,6 +46,7 @@ from module.commands.minigames import (
     ensure_score,
     is_anonymous,
     is_ranked,
+    log_match,
     opponent_text,
     rating_change_text,
     you_are_text,
@@ -306,6 +307,8 @@ def _handle_pvp_move(context: CallbackContext, query, locale: str, data: str) ->
 
     query.answer()
     if status == 'ok':
+        if chess.Board(game['fen']).outcome() is not None:
+            log_match(GAME_CHESS)
         _render_game(context, game, deltas=_settle_ratings(game))
 
 
@@ -412,6 +415,7 @@ def _handle_resign(context: CallbackContext, query, locale: str, data: str) -> N
         )
         return
     query.answer()
+    log_match(GAME_CHESS)
     _render_game(
         context,
         game,

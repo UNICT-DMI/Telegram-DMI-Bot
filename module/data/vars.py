@@ -206,6 +206,11 @@ class TEXT_IDS(Enum):
     MINI_GAMES_RANKING_HEADER_TEXT_ID = auto()
     MINI_GAMES_RANKING_EMPTY_TEXT_ID = auto()
     MINI_GAMES_ANON_PLAYER_TEXT_ID = auto()
+    MINI_GAMES_STATS_HEADER_TEXT_ID = auto()
+    MINI_GAMES_STATS_LAST_DAYS_TEXT_ID = auto()
+    MINI_GAMES_STATS_OVERALL_TEXT_ID = auto()
+    MINI_GAMES_STATS_TOTAL_TEXT_ID = auto()
+    MINI_GAMES_STATS_EMPTY_TEXT_ID = auto()
 
 
 # Placeholder special string to be used in replace()

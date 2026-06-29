@@ -40,6 +40,7 @@ from module.commands.minigames import (
     ensure_score,
     is_anonymous,
     is_ranked,
+    log_match,
     opponent_text,
     rating_change_text,
     you_are_text,
@@ -136,6 +137,7 @@ def _handle_move(context: CallbackContext, query, locale: str, data: str) -> Non
         end_text = _end_text(board, locale)
 
     if end_text is not None:
+        log_match(GAME_TRIS)
         keyboard = _board_keyboard(
             board, diff, player_symbol, False, _winning_line(board)
         ) + _replay_row(locale)
@@ -524,6 +526,8 @@ def _handle_pvp_move(context: CallbackContext, query, locale: str, data: str) ->
 
     query.answer()
     if status == 'ok':
+        if _pvp_outcome(game['board']) is not None:
+            log_match(GAME_TRIS)
         _render_game(context, game, _settle_ratings(game))
 
 

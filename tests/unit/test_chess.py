@@ -177,7 +177,13 @@ def _backdate(user_id, seconds):
 
 @pytest.fixture(autouse=True)
 def _reset_pvp_state():
-    tables = ("minigames_queue", "chess_game", "minigames_settings", "minigames_score")
+    tables = (
+        "minigames_queue",
+        "chess_game",
+        "minigames_settings",
+        "minigames_score",
+        "minigames_match_log",
+    )
     for table in tables:
         DbManager.delete_from(table)
     yield
@@ -356,6 +362,17 @@ def test_ranked_checkmate_updates_ratings():
     texts = [c.kwargs["text"] for c in context.bot.editMessageText.call_args_list]
     assert all("Rating:" in t for t in texts)
     assert get_rating(white_id) > get_rating(black_id)
+
+
+def test_checkmate_is_logged_as_a_match():
+    from module.commands.minigames import _match_counts
+
+    game = _active_game()
+    white_id = game["players"][WHITE]["user_id"]
+    _set_fen(game["id"], "6k1/5ppp/8/8/8/8/8/3QK3 w - - 0 1")
+    _move(game, white_id, chess.D1, chess.D8)  # white mates
+    counts = {r["game"]: r["n"] for r in _match_counts()}
+    assert counts == {"chess": 1}
 
 
 def test_resign_drops_game_and_refreshes_both():
