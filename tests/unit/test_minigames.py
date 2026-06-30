@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test suite for the /minigames command (Tris)."""
 
-# pylint: disable=protected-access,import-outside-toplevel,unused-variable,unused-argument,implicit-str-concat,chained-comparison
+# pylint: disable=protected-access,import-outside-toplevel,unused-variable
+# pylint: disable=unused-argument,implicit-str-concat,chained-comparison
 
 from datetime import date, timedelta
 from unittest.mock import MagicMock, patch
