@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test suite for the /minigames command (Tris)."""
 
-# pylint: disable=protected-access,import-outside-toplevel,unused-variable,unused-argument,implicit-str-concat,chained-comparison
+# pylint: disable=protected-access,import-outside-toplevel,unused-variable
+# pylint: disable=unused-argument,implicit-str-concat,chained-comparison
 
 from datetime import date, timedelta
 from unittest.mock import MagicMock, patch
@@ -43,6 +44,7 @@ from module.commands.tris import (
     WIN_GLYPHS,
     _ai_move,
     _board_keyboard,
+    _cpu_turn_text,
     _minimax,
     _mode_keyboard,
     _winner,
@@ -142,6 +144,20 @@ def test_handler_new_game_renders_board():
         tictactoe_handler(update, context)
     query.answer.assert_called_once()
     context.bot.editMessageText.assert_called_once()
+
+
+def test_cpu_turn_text_uses_the_actual_player_symbol():
+    def loc(code, tid):
+        if tid.name == "TRIS_YOUR_TURN_TEXT_ID":
+            return "Your turn!"
+        if tid.name == "MINI_GAMES_YOU_ARE_TEXT_ID":
+            return "You are {player}"
+        return tid.name
+
+    with patch("module.commands.tris.get_locale", side_effect=loc), patch(
+        "module.commands.minigames.get_locale", side_effect=loc
+    ):
+        assert _cpu_turn_text(CPU, "en") == f"Your turn!\nYou are {GLYPHS[CPU]}"
 
 
 def test_handler_winning_move_shows_result():

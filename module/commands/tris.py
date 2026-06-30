@@ -115,7 +115,7 @@ def tictactoe_handler(update: Update, context: CallbackContext) -> None:
         _edit(
             context,
             query,
-            get_locale(locale, TEXT_IDS.TRIS_YOUR_TURN_TEXT_ID),
+            _cpu_turn_text(player_symbol, locale),
             _board_keyboard(board, diff, player_symbol, True),
         )
     elif data.startswith("ttt_mv_"):
@@ -146,7 +146,7 @@ def _handle_move(context: CallbackContext, query, locale: str, data: str) -> Non
         _edit(
             context,
             query,
-            get_locale(locale, TEXT_IDS.TRIS_YOUR_TURN_TEXT_ID),
+            _cpu_turn_text(player_symbol, locale),
             _board_keyboard(board, diff, player_symbol, True),
         )
 
@@ -161,6 +161,13 @@ def _end_text(board: List[str], locale: str) -> Optional[str]:
     if EMPTY not in board:
         return get_locale(locale, TEXT_IDS.TRIS_DRAW_TEXT_ID)
     return None
+
+
+def _cpu_turn_text(player_symbol: str, locale: str) -> str:
+    return (
+        f"{get_locale(locale, TEXT_IDS.TRIS_YOUR_TURN_TEXT_ID)}\n"
+        f"{you_are_text(GLYPHS[player_symbol], locale)}"
+    )
 
 
 def _winning_line(board: List[str]) -> Optional[Tuple[int, int, int]]:
