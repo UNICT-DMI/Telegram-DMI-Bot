@@ -1,18 +1,20 @@
 """Common query callback families"""
 
+# pylint: disable=wildcard-import,unused-wildcard-import
+
 from typing import Optional
 
 from telegram import CallbackQuery, ParseMode, Update
 from telegram.ext import CallbackContext
 
-from module.commands.aulario import *  # pylint: disable=wildcard-import,unused-wildcard-import
-from module.commands.drive_contribute import *  # pylint: disable=wildcard-import,unused-wildcard-import
+from module.commands.aulario import *
+from module.commands.drive_contribute import *
 from module.commands.esami import (  # pylint: disable=unused-import
     esami_button_anno,
     esami_button_insegnamento,
     esami_button_sessione,
 )
-from module.commands.help import *  # pylint: disable=wildcard-import,unused-wildcard-import
+from module.commands.help import *
 from module.commands.lezioni import (  # pylint: disable=unused-import
     lezioni_button_anno,
     lezioni_button_giorno,
