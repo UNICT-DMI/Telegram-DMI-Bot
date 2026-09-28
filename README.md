@@ -7,7 +7,7 @@
 The bot is live on Telegram with the username [@DMI_Bot](https://telegram.me/DMI_Bot).
 Send **`/start`** to start it, **`/help`** to see a list of commands.
 
-Please note that the commands and their answers are in Italian. 
+Please note that the commands and their answers are in Italian.
 
 ---
 
@@ -174,6 +174,10 @@ pytest tests/e2e/
 Check the gh-pages branch
 
 [Link to the documentation](https://unict-dmi.github.io/Telegram-DMI-Bot/)
+
+## :robot: AI agents
+
+Agent instructions live in [AGENTS.md](AGENTS.md); [.agents/docs/agents-setup.md](.agents/docs/agents-setup.md) explains the layout and how to hook up your agent.
 
 ### License
 

@@ -135,3 +135,10 @@ data/json/subjs.json
 node_modules/
 .parcel-cache/
 Orario.pdf
+
+# AI agents
+.agents/plans/**
+.claude/plans/**
+.claude/worktrees/**
+.claude/settings.local.json
+CLAUDE.local.md
