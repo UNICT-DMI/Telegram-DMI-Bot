@@ -36,8 +36,7 @@ class DriveUtils:
                     'orderBy': 'folder,title',
                 }
             ).GetList()
-        # pylint: disable=broad-except
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             log_error(header="drive_handler", error=e)
             return None
 
