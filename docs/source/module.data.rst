@@ -33,14 +33,6 @@ exam
    :undoc-members:
    :show-inheritance:
 
-lesson
--------------------------
-
-.. automodule:: module.data.lesson
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 professor
 ----------------------------
 

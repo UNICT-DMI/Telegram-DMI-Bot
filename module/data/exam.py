@@ -178,6 +178,10 @@ class Exam(Scrapable):
                 source = requests.get(url, timeout=10).text
                 soup = bs4.BeautifulSoup(source, "html.parser")
                 table = soup.find(id="table-exams")
+                if table is None:
+                    # sessions of a new academic year are published gradually
+                    logger.warning("Exams table for `%s` not found.", url)
+                    continue
                 rows = table.find_all("tr")[
                     1:
                 ]  # e dalla tabella estraiamo l'array con tutte le righe

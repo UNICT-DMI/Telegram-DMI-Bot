@@ -2,8 +2,8 @@
 """TimetableSlot class"""
 
 import logging
-from datetime import datetime
-from typing import List
+from datetime import date, datetime
+from typing import List, Optional
 
 import pandas as pd
 import requests
@@ -23,7 +23,7 @@ class TimetableSlot(Scrapable):
     Attributes:
         ID (:class:`int`): id of the TimetableSlot
         nome (:class:`str`): name of the subject
-        giorno (:class:`str`): days from today
+        giorno (:class:`str`): date of the lesson, in ISO format (YYYY-MM-DD)
         ora_inizio (:class:`str`): starting time of the lesson
         ora_fine (:class:`str`): ending time of the lesson
         aula (:class:`str`): hall
@@ -34,7 +34,7 @@ class TimetableSlot(Scrapable):
         self,
         ID: int = 0,
         nome: str = "",
-        giorno: int = 0,
+        giorno: str = "",
         ora_inizio: str = "",
         ora_fine: str = "",
         aula: str = "",
@@ -89,7 +89,15 @@ class TimetableSlot(Scrapable):
         response = requests.get(aulario_url, timeout=10).text
         tables = pd.read_html(response)
 
-        for k, table in enumerate(tables):
+        for table in tables:
+            # the first header cell holds the day, e.g. "Venerdì, 09/10/2026"
+            day = (
+                datetime.strptime(
+                    str(table.columns[0]).rsplit(", ", maxsplit=1)[-1], "%d/%m/%Y"
+                )
+                .date()
+                .isoformat()
+            )
             rooms = table.iloc[:, 0]
             schedule = table.iloc[:, 1:]
             subjects = {}
@@ -104,7 +112,7 @@ class TimetableSlot(Scrapable):
                                 nome=row.replace('[]', '')
                                 .replace('[', '(')
                                 .replace(']', ')'),
-                                giorno=k,
+                                giorno=day,
                                 ora_inizio=time,
                                 ora_fine=time,
                                 aula=rooms[i],
@@ -145,18 +153,22 @@ class TimetableSlot(Scrapable):
         return super().find_all()
 
     @classmethod
-    def get_max_giorno(cls) -> int:
-        """Finds the maximum value of giorno
+    def get_last_day(cls) -> Optional[date]:
+        """Finds the last day with at least one timetable slot
 
         Returns:
-            result of the query on the database
+            the last day, or None if there are no timetable slots
         """
+        # rows scraped by older versions store giorno as an integer day offset,
+        # and stay in the table until the next successful scrape replaces them
         db_results = DbManager.select_from(
-            select="MAX(giorno) as g", table_name=cls().table
+            select="MAX(giorno) as g",
+            table_name=cls().table,
+            where="typeof(giorno) = 'text'",
         )
         if not db_results or db_results[0]['g'] is None:
-            return 0
-        return int(db_results[0]['g'])
+            return None
+        return date.fromisoformat(db_results[0]['g'])
 
     def __repr__(self):
         return f"TimetableSlot: {self.__dict__}"

@@ -19,17 +19,6 @@ CREATE TABLE IF NOT EXISTS `professors` (
   "photo_id" VARCHAR(255)
 );
 
--- lessons
-CREATE TABLE IF NOT EXISTS `lessons` (
-  `nome` VARCHAR(255),
-  `giorno_settimana` VARCHAR(255),
-  `ora_inizio` VARCHAR(255),
-  `ora_fine` VARCHAR(255),
-  `aula` INT(4),
-  `anno` INT(1),
-  `semestre` VARCHAR(255)
-);
-
 -- exams
 CREATE TABLE IF NOT EXISTS `exams` (
   `anno` INT(2),
@@ -56,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `exams_reg` (
 CREATE TABLE IF NOT EXISTS `timetable_slots` (
   `ID` INTEGER PRIMARY KEY,
   `nome` VARCHAR(255) NOT NULL,
-  `giorno` INT(4) NOT NULL,
+  `giorno` VARCHAR(10) NOT NULL,
   `ora_inizio` VARCHAR(255) NOT NULL,
   `ora_fine` VARCHAR(255) NOT NULL,
   `aula` VARCHAR(255) NOT NULL

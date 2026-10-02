@@ -2,11 +2,12 @@
 
 import logging
 from datetime import datetime, timedelta
+from typing import Callable, List
 
 from telegram.ext import CallbackContext
 
 from module.commands.reminder import reminder_send_message
-from module.data import Exam, Lesson, Professor, TimetableSlot
+from module.data import Exam, Professor, TimetableSlot
 from module.data.db_manager import DbManager
 from module.shared import check_print_old_exams, get_year_code
 
@@ -52,14 +53,22 @@ def updater_lep(_: CallbackContext):
         11, 30
     )  # aaaa/12/01 (cambio nuovo anno esami) data dal quale esami del vecchio a nuovo anno coesistono
 
-    Exam.scrape(
-        f"1{year_exam}", delete=True
-    )  # flag che permette di eliminare tutti gli esami presenti in tabella exams
-    if check_print_old_exams(year_exam):
-        Exam.scrape(f"1{int(year_exam) - 1}")
+    def scrape_exams() -> None:
+        Exam.scrape(
+            f"1{year_exam}", delete=True
+        )  # flag che permette di eliminare tutti gli esami presenti in tabella exams
+        if check_print_old_exams(year_exam):
+            Exam.scrape(f"1{int(year_exam) - 1}")
 
-    Professor.scrape(delete=True)
-    TimetableSlot.scrape(delete=True)
-    Lesson.scrape(
-        f"1{get_year_code(9, 20)}", delete=True
-    )  # aaaa/09/21 (cambio nuovo anno lezioni) data dal quale vengono prelevate le lezioni del nuovo anno
+    scrapers: List[Callable[[], None]] = [
+        scrape_exams,
+        lambda: Professor.scrape(delete=True),
+        lambda: TimetableSlot.scrape(delete=True),
+    ]
+
+    # a failing source must not leave the other tables stale
+    for scraper in scrapers:
+        try:
+            scraper()
+        except Exception:  # pylint: disable=broad-exception-caught
+            logger.exception("Scraper failed")

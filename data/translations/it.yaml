@@ -11,7 +11,6 @@ MASTER_TEXT_ID: "Magistrale"
 FOUND_RESULT_TEXT_ID: "Risultati trovati: %capybara%"
 NO_RESULT_FOUND_TEXT_ID: "Nessun risultato trovato\n"
 SEARCH_YEAR_TEXT_ID: "Anno"
-SEARCH_DAY_TEXT_ID: "Giorno"
 SEARCH_SESSION_TEXT_ID: "Sessione"
 SEARCH_COURSE_TEXT_ID: "Insegnamento"
 SEARCH_HEADER_TEXT_ID: "~ Personalizza la ricerca ~"
@@ -50,7 +49,7 @@ HELP_ALL_COMMANDS_KEYBOARD_TEXT_ID: "Tutti i comandi"
 HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   *@DMI_Bot risponde ai seguenti comandi:*
   📖 /esami - _effettua una ricerca delle informazioni degli esami secondo i parametri immessi_
-  📘 /lezioni - _effettua una ricerca delle lezioni secondo i parametri immessi_
+  📘 /lezioni - _orario delle lezioni dei corsi di laurea_
   🗓 /aulario - _visualizza aulario e mappa delle aule_
   👔 /prof <nome> - _es. /prof Barbanera_
   👥 /rappresentanti - _elenco dei rappresentanti_
@@ -371,17 +370,10 @@ REG_CDL_RET_FILE_TEXT_ID: "Ecco il file richiesto:"
 PROF_USE_TEXT_ID: "La sintassi del comando è: /prof <nome_professore>\n"
 
 # /lezioni command
-CLASSES_SELECT_DAY_TEXT_ID: "Seleziona il giorno che ti interessa"
-CLASSES_SELECT_DAY1_TEXT_ID: "Lunedì"
-CLASSES_SELECT_DAY2_TEXT_ID: "Martedì"
-CLASSES_SELECT_DAY3_TEXT_ID: "Mercoledì"
-CLASSES_SELECT_DAY4_TEXT_ID: "Giovedì"
-CLASSES_SELECT_DAY5_TEXT_ID: "Vederdì"
-CLASSES_USAGE_TEXT_ID: |-
-  Inserire il nome della materia nel formato:
-    nome: nome insegnamento
-  Esempio:
-    nome: SisTeMi oPeRaTIvI
+CLASSES_SELECT_COURSE_TEXT_ID: "Seleziona il corso di laurea"
+CLASSES_SELECT_CURRICULUM_TEXT_ID: "Seleziona il curriculum"
+CLASSES_TIMETABLE_TEXT_ID: "📘 Orario delle lezioni %capybara%"
+CLASSES_UNAVAILABLE_TEXT_ID: "Orario non disponibile al momento, puoi consultarlo qui: %capybara%"
 
 # /exams command
 EXAMS_SELECT_SESSION_TEXT_ID: "Seleziona la sessione che ti interessa"

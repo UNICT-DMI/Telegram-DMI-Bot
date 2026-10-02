@@ -39,10 +39,10 @@ def aulario(
     if not chat_id:
         chat_id = update.message.chat_id
 
-    days: int = TimetableSlot.get_max_giorno()
+    last_day: Optional[date] = TimetableSlot.get_last_day()
     locale: str = update.message.from_user.language_code
-    if days:
-        reply_markup = create_calendar(days)
+    if last_day and last_day >= date.today():
+        reply_markup = create_calendar(last_day)
         text: str = get_locale(locale, TEXT_IDS.AULARIO_DAY_SELECTION_TEXT_ID)
         if message_id:
             context.bot.editMessageText(
@@ -82,7 +82,7 @@ def month_handler(update: Update, context: CallbackContext) -> None:
     direction: str = d[1]
     year: int = int(d[2])
     month: int = int(d[3])
-    days: int = int(d[4])
+    last_day: date = date.fromisoformat(d[4])
 
     if direction == 'n':
         if month < 12:
@@ -98,7 +98,7 @@ def month_handler(update: Update, context: CallbackContext) -> None:
             year -= 1
 
     context.bot.editMessageReplyMarkup(
-        reply_markup=create_calendar(days, year, month),
+        reply_markup=create_calendar(last_day, year, month),
         chat_id=chat_id,
         message_id=message_id,
     )
@@ -221,13 +221,13 @@ def subjects_arrow_handler(update: Update, context: CallbackContext) -> None:
 
 
 def create_calendar(
-    days: int, year: int = None, month: int = None
+    last_day: date, year: int = None, month: int = None
 ) -> InlineKeyboardMarkup:
     """Called by :meth:`aulario` and :meth:`month_handler`.
     Creates an InlineKeyboard to append to the message
 
     Args:
-        days: day
+        last_day: last selectable day
         year: yeat. Defaults to None.
         month: month. Defaults to None.
 
@@ -254,23 +254,20 @@ def create_calendar(
         row.append(InlineKeyboardButton(w, callback_data="NONE"))
     keyboard.append(row)
     my_cal = calendar.monthcalendar(year, month)
-    diff = 0
     for my_week in my_cal:
         row = []
         empty = True
         for day in my_week:
-            if day < today.day and (day == 0 or month == today.month):
-                row.append(InlineKeyboardButton(" ", callback_data="NONE"))
-            else:
-                curr = date(year, month, day)
-                diff = (curr - today).days
-                if diff < days:
-                    empty = False
-                    row.append(
-                        InlineKeyboardButton(str(day), callback_data=f"cal_{diff}")
+            curr = date(year, month, day) if day else None
+            if curr and today <= curr <= last_day:
+                empty = False
+                row.append(
+                    InlineKeyboardButton(
+                        str(day), callback_data=f"cal_{curr.isoformat()}"
                     )
-                else:
-                    row.append(InlineKeyboardButton(" ", callback_data="NONE"))
+                )
+            else:
+                row.append(InlineKeyboardButton(" ", callback_data="NONE"))
         if not empty:
             keyboard.append(row)
     row = []
@@ -278,14 +275,14 @@ def create_calendar(
         row.append(
             InlineKeyboardButton(
                 f"◀️ {calendar.month_name[((month - 2) % 12) + 1]}",
-                callback_data=f"m_p_{year}_{month}_{days}",
+                callback_data=f"m_p_{year}_{month}_{last_day.isoformat()}",
             )
         )
-    if diff < days:
+    if date(year, month, calendar.monthrange(year, month)[1]) < last_day:
         row.append(
             InlineKeyboardButton(
                 f"{calendar.month_name[((month) % 12) + 1]} ▶️",
-                callback_data=f"m_n_{year}_{month}_{days}",
+                callback_data=f"m_n_{year}_{month}_{last_day.isoformat()}",
             )
         )
     keyboard.append(row)
@@ -298,14 +295,14 @@ def get_subjs_keyboard(page: int, day: str) -> list:
 
     Args:
         page: page of the subject selector
-        day: day
+        day: day, in ISO format (YYYY-MM-DD)
 
     Returns:
         InlineKeyboard
     """
     daily_slots = TimetableSlot.find(giorno=day)
     now_slots = daily_slots
-    if day == '0':  # add only the slots that are still to come
+    if day == date.today().isoformat():  # add only the slots that are still to come
         now_slots = [slot for slot in daily_slots if slot.is_still_to_come]
 
     keyboard = []
