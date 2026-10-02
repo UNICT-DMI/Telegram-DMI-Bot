@@ -15,11 +15,6 @@ from module.commands.esami import (  # pylint: disable=unused-import
     esami_button_sessione,
 )
 from module.commands.help import *
-from module.commands.lezioni import (  # pylint: disable=unused-import
-    lezioni_button_anno,
-    lezioni_button_giorno,
-    lezioni_button_insegnamento,
-)
 from module.data.vars import ON_DEMAND_TEXTS
 from module.shared import check_log, read_md
 

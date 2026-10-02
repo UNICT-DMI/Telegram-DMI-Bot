@@ -14,7 +14,6 @@ class TEXT_IDS(Enum):
     FOUND_RESULT_TEXT_ID = auto()
     NO_RESULT_FOUND_TEXT_ID = auto()
     SEARCH_YEAR_TEXT_ID = auto()
-    SEARCH_DAY_TEXT_ID = auto()
     SEARCH_SESSION_TEXT_ID = auto()
     SEARCH_COURSE_TEXT_ID = auto()
     SEARCH_HEADER_TEXT_ID = auto()
@@ -118,13 +117,10 @@ class TEXT_IDS(Enum):
     # /prof
     PROF_USE_TEXT_ID = auto()
     # /lezioni
-    CLASSES_SELECT_DAY_TEXT_ID = auto()
-    CLASSES_SELECT_DAY1_TEXT_ID = auto()
-    CLASSES_SELECT_DAY2_TEXT_ID = auto()
-    CLASSES_SELECT_DAY3_TEXT_ID = auto()
-    CLASSES_SELECT_DAY4_TEXT_ID = auto()
-    CLASSES_SELECT_DAY5_TEXT_ID = auto()
-    CLASSES_USAGE_TEXT_ID = auto()
+    CLASSES_SELECT_COURSE_TEXT_ID = auto()
+    CLASSES_SELECT_CURRICULUM_TEXT_ID = auto()
+    CLASSES_TIMETABLE_TEXT_ID = auto()
+    CLASSES_UNAVAILABLE_TEXT_ID = auto()
     # /esami
     EXAMS_SELECT_SESSION_TEXT_ID = auto()
     EXAMS_SESSION_1_TEXT_ID = auto()
