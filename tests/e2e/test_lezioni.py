@@ -16,5 +16,18 @@ async def test_lezioni_cmd(client: TelegramClient):
 
         await conv.send_message("/lezioni")  # send a command
         resp: Message = await conv.get_response()
+        assert resp.text
 
-        assert resp.file.name == "Orario.pdf"
+        await resp.click(data="lezioni_cdl_LM-18")
+        resp = await conv.get_edit()
+        assert resp.buttons
+
+        await resp.click(data="lezioni_cur_LM-18_0")
+        resp = await conv.get_edit()
+        assert resp.text
+
+        await conv.send_message("/lezioni")
+        resp = await conv.get_response()
+        await resp.click(data="lezioni_cdl_L-31")
+        resp = await conv.get_response()
+        assert resp.file.mime_type == "application/pdf"

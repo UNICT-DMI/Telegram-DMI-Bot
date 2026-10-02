@@ -374,6 +374,10 @@ REG_CDL_RET_FILE_TEXT_ID: "Ecco il file richiesto:"
 PROF_USE_TEXT_ID: "La sintassi del comando è: /prof <nome_professore>\n"
 
 # /lezioni command
+CLASSES_SELECT_COURSE_TEXT_ID: "Seleziona il corso di laurea"
+CLASSES_SELECT_CURRICULUM_TEXT_ID: "Seleziona il curriculum"
+CLASSES_TIMETABLE_TEXT_ID: "📘 Orario delle lezioni %capybara%"
+CLASSES_UNAVAILABLE_TEXT_ID: "Orario non disponibile al momento, puoi consultarlo qui: %capybara%"
 CLASSES_SELECT_DAY_TEXT_ID: "Seleziona il giorno che ti interessa"
 CLASSES_SELECT_DAY1_TEXT_ID: "Lunedì"
 CLASSES_SELECT_DAY2_TEXT_ID: "Martedì"

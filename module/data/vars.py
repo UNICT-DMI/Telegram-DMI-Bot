@@ -118,6 +118,10 @@ class TEXT_IDS(Enum):
     # /prof
     PROF_USE_TEXT_ID = auto()
     # /lezioni
+    CLASSES_SELECT_COURSE_TEXT_ID = auto()
+    CLASSES_SELECT_CURRICULUM_TEXT_ID = auto()
+    CLASSES_TIMETABLE_TEXT_ID = auto()
+    CLASSES_UNAVAILABLE_TEXT_ID = auto()
     CLASSES_SELECT_DAY_TEXT_ID = auto()
     CLASSES_SELECT_DAY1_TEXT_ID = auto()
     CLASSES_SELECT_DAY2_TEXT_ID = auto()

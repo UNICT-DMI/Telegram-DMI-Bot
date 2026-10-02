@@ -32,7 +32,14 @@ from module.commands.drive_contribute import drive_contribute
 from module.commands.esami import esami, esami_handler, esami_input_insegnamento
 from module.commands.gdrive import drive, drive_handler
 from module.commands.help import help_cmd
-from module.commands.lezioni import lezioni, lezioni_handler, lezioni_input_insegnamento
+from module.commands.lezioni import (
+    lezioni,
+    lezioni_course_handler,
+    lezioni_courses_handler,
+    lezioni_curriculum_handler,
+    lezioni_handler,
+    lezioni_input_insegnamento,
+)
 from module.commands.minigames import (
     minigames,
     minigames_input_name,
@@ -307,6 +314,15 @@ def add_handlers(dp: Dispatcher) -> None:
     )
 
     # lezioni
+    dp.add_handler(
+        CallbackQueryHandler(lezioni_courses_handler, pattern=r'^lezioni_home$')
+    )
+    dp.add_handler(
+        CallbackQueryHandler(lezioni_course_handler, pattern=r'^lezioni_cdl_')
+    )
+    dp.add_handler(
+        CallbackQueryHandler(lezioni_curriculum_handler, pattern=r'^lezioni_cur_')
+    )
     dp.add_handler(CallbackQueryHandler(lezioni_handler, pattern='lezioni_button_*'))
     dp.add_handler(
         MessageHandler(
