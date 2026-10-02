@@ -77,7 +77,6 @@ from module.easter_egg_func import (
     smonta_portoni,
     uni_bandita,
 )
-from module.gitlab import git, gitlab_handler
 from module.job_updater import check_exam_reminders, updater_lep
 from module.shared import config_map
 from module.utils.multi_lang_utils import get_regex_multi_lang, load_translations
@@ -114,8 +113,6 @@ def add_commands(up: Updater) -> None:
             "drive_contribute",
             "ottieni i permessi per caricare materiale sulla cartella Drive",
         ),
-        BotCommand("git", "accedi al materiale didattico su GitLab"),
-        BotCommand("gitlab", "accedi al materiale didattico su GitLab"),
         BotCommand("rappresentanti", "lista rappresentanti"),
         BotCommand("rappresentanti_dmi", "lista rappresentanti dmi"),
         BotCommand("rappresentanti_matematica", "lista rappresentanti matematica"),
@@ -265,9 +262,8 @@ def add_handlers(dp: Dispatcher) -> None:
     dp.add_handler(CallbackQueryHandler(subjects_handler, pattern='sb_.*'))
     dp.add_handler(CallbackQueryHandler(subjects_arrow_handler, pattern='pg_.*'))
 
-    # drive & gitlab buttons
+    # drive buttons
     dp.add_handler(CallbackQueryHandler(drive_handler, pattern=r'^drive_file_.*'))
-    dp.add_handler(CallbackQueryHandler(gitlab_handler, pattern='git_.*'))
 
     # regolamento didattico
     dp.add_handler(CommandHandler('regolamentodidattico', regolamentodidattico))
@@ -322,14 +318,10 @@ def add_handlers(dp: Dispatcher) -> None:
         CallbackQueryHandler(lezioni_curriculum_handler, pattern=r'^lezioni_cur_')
     )
 
-    # drive and gitlab commands
+    # drive commands
     if config_map['debug']['disable_drive'] == 0:
         dp.add_handler(CommandHandler('drive', drive))
         dp.add_handler(CommandHandler('drive_contribute', drive_contribute))
-
-    if config_map['debug']['disable_gitlab'] == 0:
-        dp.add_handler(CommandHandler('git', git))
-        dp.add_handler(CommandHandler('gitlab', git))
 
     # stats command
     if config_map['debug']['disable_db'] == 0:

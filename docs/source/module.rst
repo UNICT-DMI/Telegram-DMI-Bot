@@ -36,14 +36,6 @@ easter\_egg\_func
    :undoc-members:
    :show-inheritance:
 
-gitlab
---------------------
-
-.. automodule:: module.gitlab
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 job\_updater
 --------------------------
 

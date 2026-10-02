@@ -59,7 +59,6 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   📣 /report - _submit a report to representatives_
   📂 /drive - _access to the drive_
   🤝 /drive\_contribute - _request upload permission to add new material on the drive_
-  📂 /git o /gitlab - _access to gitlab_
   🧑‍💻 /contributors - _shows the developers that contributed to the bot development_
   🧾 /regolamentodidattico - _gives a pdf file of the desired year's educational regulations_
   ❓ /faq - _shows the frequently asked questions_
@@ -320,9 +319,7 @@ CREDITS_CONTRIBUTORS_TEXT_ID: "Contributors"
 
 # /help-miscs command
 MISC_GDRIVE_TEXT_ID: "📂 Drive"
-MISC_GITLAB_TEXT_ID: "📂 GitLab"
 MISC_GDRIVE_TOOLTIP_ID: "To access Department's Google Drive Folder use the command /drive"
-MISC_GITLAB_TOOLTIP_ID: "To access Department's GitLab use the command /drive /git o /gitlab"
 
 # /aulario command
 AULARIO_DAY_SELECTION_TEXT_ID: "Select the date of the class you are interested in."

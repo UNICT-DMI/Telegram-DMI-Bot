@@ -85,9 +85,7 @@ class TEXT_IDS(Enum):
     CREDITS_CONTRIBUTORS_TEXT_ID = auto()
     # /miscs
     MISC_GDRIVE_TEXT_ID = auto()
-    MISC_GITLAB_TEXT_ID = auto()
     MISC_GDRIVE_TOOLTIP_ID = auto()
-    MISC_GITLAB_TOOLTIP_ID = auto()
     # /aulario
     AULARIO_DAY_SELECTION_TEXT_ID = auto()
     AULARIO_WARNING_TEXT_ID = auto()

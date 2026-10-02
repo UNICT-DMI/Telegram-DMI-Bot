@@ -3,7 +3,6 @@ python-telegram-bot==13.8.1
 PyDrive2==1.10.0
 requests==2.32.3
 beautifulsoup4==4.12.3
-python-gitlab==2.10.1
 matplotlib==3.8.4
 pandas==2.2.2
 Pillow==10.3.0

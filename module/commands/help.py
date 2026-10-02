@@ -492,10 +492,6 @@ def help_misc(
                 get_locale(locale, TEXT_IDS.MISC_GDRIVE_TEXT_ID),
                 callback_data="localization_MISC_GDRIVE_TOOLTIP_ID",
             ),
-            InlineKeyboardButton(
-                get_locale(locale, TEXT_IDS.MISC_GITLAB_TEXT_ID),
-                callback_data="localization_MISC_GITLAB_TOOLTIP_ID",
-            ),
         ]
     )
     keyboard.append(
