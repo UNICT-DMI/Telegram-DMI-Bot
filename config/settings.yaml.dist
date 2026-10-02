@@ -1,13 +1,8 @@
 token: ""
 
-gitlab:
-  token: <GITLAB_AUTH_TOKEN>
-  root: <GITLAB_ROOT_GROUP>
-
 debug:
     disable_db: 0
     disable_drive: 1
-    disable_gitlab: 1
 
 dev_group_chatid: 0
 dev_group_chatid_logs: 0

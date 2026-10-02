@@ -61,7 +61,6 @@ HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   📣 /report - _permette di inviare una segnalazione ai rappresentanti_
   📂 /drive - _accedi a drive_
   🤝 /drive\_contribute - _ottieni i permessi per caricare materiale sulla cartella drive_
-  📂 /git o /gitlab - _accedi a gitlab_
   🧑‍💻 /contributors - _mostra gli sviluppatori che hanno contribuito allo sviluppo del bot_
   🧾 /regolamentodidattico - _invia il pdf del regolamento didattico per l'anno desiderato_
   ❓ /faq - _mostra le domande chieste più frequentemente_
@@ -324,9 +323,7 @@ CREDITS_CONTRIBUTORS_TEXT_ID: "Collaboratori"
 
 # /help-miscs command
 MISC_GDRIVE_TEXT_ID: "📂 Drive"
-MISC_GITLAB_TEXT_ID: "📂 GitLab"
 MISC_GDRIVE_TOOLTIP_ID: "Per accedere alla cartella Google Drive del dipartimento digita /drive"
-MISC_GITLAB_TOOLTIP_ID: "Per accedere ai file GitLab del dipartimento digita /git o /gitlab"
 
 # /aulario command
 AULARIO_DAY_SELECTION_TEXT_ID: "Seleziona la data della lezione che ti interessa."

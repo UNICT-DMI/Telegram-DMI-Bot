@@ -62,17 +62,6 @@ CREATE TABLE IF NOT EXISTS `timetable_slots` (
   `aula` VARCHAR(255) NOT NULL
 );
 
--- gitlab
-CREATE TABLE IF NOT EXISTS `gitlab` (
-  `id` TEXT NOT NULL UNIQUE,
-  `parent_id` INTEGER,
-  `pathname` TEXT,
-  `web_url` TEXT,
-  `name` TEXT,
-  `type` TEXT NOT NULL,
-  PRIMARY KEY(`id`)
-);
-
 --stickers
 CREATE TABLE IF NOT EXISTS `stickers` (
 'id' TEXT
