@@ -124,8 +124,7 @@ def drive_handler(update: Update, context: CallbackContext) -> None:
                     ).replace(PLACE_HOLDER, file_d['alternateLink']),
                 )
 
-        # pylint: disable=broad-except
-        except Exception as err:
+        except Exception as err:  # pylint: disable=broad-exception-caught
             log_error(header="drive_handler", error=err)
 
     update.callback_query.answer()  # stops the spinning
