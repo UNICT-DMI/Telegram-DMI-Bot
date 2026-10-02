@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `exams_reg` (
 CREATE TABLE IF NOT EXISTS `timetable_slots` (
   `ID` INTEGER PRIMARY KEY,
   `nome` VARCHAR(255) NOT NULL,
-  `giorno` INT(4) NOT NULL,
+  `giorno` VARCHAR(10) NOT NULL,
   `ora_inizio` VARCHAR(255) NOT NULL,
   `ora_fine` VARCHAR(255) NOT NULL,
   `aula` VARCHAR(255) NOT NULL
