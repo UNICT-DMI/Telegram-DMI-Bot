@@ -184,16 +184,15 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.lezioni">lezioni</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.generate_lezioni_text"><code class="docutils literal notranslate"><span class="pre">generate_lezioni_text()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.get_lezioni_text_InLineKeyboard"><code class="docutils literal notranslate"><span class="pre">get_lezioni_text_InLineKeyboard()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.get_orario_file"><code class="docutils literal notranslate"><span class="pre">get_orario_file()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.get_url"><code class="docutils literal notranslate"><span class="pre">get_url()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.find_timetable_pdfs"><code class="docutils literal notranslate"><span class="pre">find_timetable_pdfs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.get_course_page"><code class="docutils literal notranslate"><span class="pre">get_course_page()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.get_course_urls"><code class="docutils literal notranslate"><span class="pre">get_course_urls()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.get_courses_keyboard"><code class="docutils literal notranslate"><span class="pre">get_courses_keyboard()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni"><code class="docutils literal notranslate"><span class="pre">lezioni()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_button_anno"><code class="docutils literal notranslate"><span class="pre">lezioni_button_anno()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_button_giorno"><code class="docutils literal notranslate"><span class="pre">lezioni_button_giorno()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_button_insegnamento"><code class="docutils literal notranslate"><span class="pre">lezioni_button_insegnamento()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_handler"><code class="docutils literal notranslate"><span class="pre">lezioni_handler()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_input_insegnamento"><code class="docutils literal notranslate"><span class="pre">lezioni_input_insegnamento()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_course_handler"><code class="docutils literal notranslate"><span class="pre">lezioni_course_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_courses_handler"><code class="docutils literal notranslate"><span class="pre">lezioni_courses_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.lezioni_curriculum_handler"><code class="docutils literal notranslate"><span class="pre">lezioni_curriculum_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="module.commands.html#module.commands.lezioni.parse_timetable"><code class="docutils literal notranslate"><span class="pre">parse_timetable()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="module.commands.html#module-module.commands.professori">professori</a><ul>
@@ -282,27 +281,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.lesson">lesson</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson"><code class="docutils literal notranslate"><span class="pre">Lesson</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.nome"><code class="docutils literal notranslate"><span class="pre">Lesson.nome</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.giorno_settimana"><code class="docutils literal notranslate"><span class="pre">Lesson.giorno_settimana</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.ora_inizio"><code class="docutils literal notranslate"><span class="pre">Lesson.ora_inizio</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.ora_fine"><code class="docutils literal notranslate"><span class="pre">Lesson.ora_fine</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.aula"><code class="docutils literal notranslate"><span class="pre">Lesson.aula</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.anno"><code class="docutils literal notranslate"><span class="pre">Lesson.anno</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.semestre"><code class="docutils literal notranslate"><span class="pre">Lesson.semestre</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.DAY_TO_INT"><code class="docutils literal notranslate"><span class="pre">Lesson.DAY_TO_INT</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.IDS"><code class="docutils literal notranslate"><span class="pre">Lesson.IDS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.INT_TO_DAY"><code class="docutils literal notranslate"><span class="pre">Lesson.INT_TO_DAY</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.columns"><code class="docutils literal notranslate"><span class="pre">Lesson.columns</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.find"><code class="docutils literal notranslate"><span class="pre">Lesson.find()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.find_all"><code class="docutils literal notranslate"><span class="pre">Lesson.find_all()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.scrape"><code class="docutils literal notranslate"><span class="pre">Lesson.scrape()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.lesson.Lesson.table"><code class="docutils literal notranslate"><span class="pre">Lesson.table</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="module.data.html#module-module.data.professor">professor</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="module.data.html#module.data.professor.Professor"><code class="docutils literal notranslate"><span class="pre">Professor</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.professor.Professor.ID"><code class="docutils literal notranslate"><span class="pre">Professor.ID</span></code></a></li>
@@ -353,7 +331,7 @@
 <li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.end_hour"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.end_hour</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.find"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.find()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.find_all"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.find_all()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.get_max_giorno"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.get_max_giorno()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.get_last_day"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.get_last_day()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.is_still_to_come"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.is_still_to_come</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.scrape"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.scrape()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="module.data.html#module.data.timetable_slot.TimetableSlot.table"><code class="docutils literal notranslate"><span class="pre">TimetableSlot.table</span></code></a></li>

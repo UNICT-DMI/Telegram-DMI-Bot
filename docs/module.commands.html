@@ -154,13 +154,13 @@ Show the list of subject for the day</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="module.commands.aulario.create_calendar">
-<span class="sig-prename descclassname"><span class="pre">module.commands.aulario.</span></span><span class="sig-name descname"><span class="pre">create_calendar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">days</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.aulario.create_calendar" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">module.commands.aulario.</span></span><span class="sig-name descname"><span class="pre">create_calendar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">last_day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.aulario.create_calendar" title="Link to this definition"></a></dt>
 <dd><p>Called by <a class="reference internal" href="#module.commands.aulario.aulario" title="module.commands.aulario.aulario"><code class="xref py py-meth docutils literal notranslate"><span class="pre">aulario()</span></code></a> and <a class="reference internal" href="#module.commands.aulario.month_handler" title="module.commands.aulario.month_handler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">month_handler()</span></code></a>.
 Creates an InlineKeyboard to append to the message</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>days</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – day</p></li>
+<li><p><strong>last_day</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">date</span></code></span>) – last selectable day</p></li>
 <li><p><strong>year</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</span>) – yeat. Defaults to None.</p></li>
 <li><p><strong>month</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</span>) – month. Defaults to None.</p></li>
 </ul>
@@ -206,7 +206,7 @@ Generates the keyboard that lists all the subjects for the selected date</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>page</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – page of the subject selector</p></li>
-<li><p><strong>day</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – day</p></li>
+<li><p><strong>day</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – day, in ISO format (YYYY-MM-DD)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -665,73 +665,67 @@ Lists to the user the commands related to the secretariats’ office hours</p>
 <span id="lezioni"></span><h2>lezioni<a class="headerlink" href="#module-module.commands.lezioni" title="Link to this heading"></a></h2>
 <p>/lezioni command</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="module.commands.lezioni.generate_lezioni_text">
-<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">generate_lezioni_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.generate_lezioni_text" title="Link to this definition"></a></dt>
-<dd><p>Called by <a class="reference internal" href="#module.commands.lezioni.lezioni" title="module.commands.lezioni.lezioni"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lezioni()</span></code></a> after the search button in the /lezioni command has been pressed.
-Executes the query and returns the text to send to the user</p>
+<dt class="sig sig-object py" id="module.commands.lezioni.find_timetable_pdfs">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">find_timetable_pdfs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.find_timetable_pdfs" title="Link to this definition"></a></dt>
+<dd><p>Finds the timetable PDFs of a course page.
+PDFs embedded in a viewer come first, as the attached ones may be from past semesters (e.g. LM-40).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>locale</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – user’s language</p></li>
-<li><p><strong>user_dict</strong> – dictionary that stores the user selected parameters to use in the query</p></li>
+<li><p><strong>page</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">BeautifulSoup</span></code></span>) – content of the course page</p></li>
+<li><p><strong>page_url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – url of the course page</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>result of the query to send to the user</p>
+<dd class="field-odd"><p>urls of the PDFs</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="module.commands.lezioni.get_lezioni_text_InLineKeyboard">
-<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">get_lezioni_text_InLineKeyboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.get_lezioni_text_InLineKeyboard" title="Link to this definition"></a></dt>
-<dd><p>Generates the text and the InlineKeyboard for the /lezioni command, based on the current parameters.</p>
+<dt class="sig sig-object py" id="module.commands.lezioni.get_course_page">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">get_course_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.get_course_page" title="Link to this definition"></a></dt>
+<dd><p>Downloads the main content of a course page</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>locale</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – user’s language</p></li>
-<li><p><strong>context</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackContext</span></code></span>) – context passed by the handler</p></li>
-</ul>
+<dd class="field-odd"><p><strong>url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – url of the page</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">InlineKeyboardMarkup</span></code>]</span></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">BeautifulSoup</span></code>]</span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>message_text and InlineKeyboardMarkup to use</p>
+<dd class="field-odd"><p>content of the page, or None if it could not be downloaded</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="module.commands.lezioni.get_orario_file">
-<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">get_orario_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.get_orario_file" title="Link to this definition"></a></dt>
-<dd><p>Download pdf file from website.</p>
+<dt class="sig sig-object py" id="module.commands.lezioni.get_course_urls">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">get_course_urls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.get_course_urls" title="Link to this definition"></a></dt>
+<dd><p>Reads the timetable page of each course from the lezioni_link markdown file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code>]</span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None or downloaded file</p>
+<dd class="field-even"><p>course code (e.g. L-31) -&gt; url of its timetable page</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="module.commands.lezioni.get_url">
-<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">get_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">courses</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.get_url" title="Link to this definition"></a></dt>
-<dd><p>Extract the L-31 url from markdown file.</p>
+<dt class="sig sig-object py" id="module.commands.lezioni.get_courses_keyboard">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">get_courses_keyboard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.get_courses_keyboard" title="Link to this definition"></a></dt>
+<dd><p>Generates the keyboard to choose the course of the /lezioni command</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>courses</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – all available courses</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">InlineKeyboardMarkup</span></code></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>link of the website</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>InlineKeyboard</p>
 </dd>
 </dl>
 </dd></dl>
@@ -740,7 +734,7 @@ Executes the query and returns the text to send to the user</p>
 <dt class="sig sig-object py" id="module.commands.lezioni.lezioni">
 <span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni" title="Link to this definition"></a></dt>
 <dd><p>Called by the /lezioni command.
-Sends a pdf file to user downloaded from website.</p>
+Shows the courses to the user, to choose the one whose timetable to see</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -755,75 +749,10 @@ Sends a pdf file to user downloaded from website.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="module.commands.lezioni.lezioni_button_anno">
-<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni_button_anno</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni_button_anno" title="Link to this definition"></a></dt>
-<dd><p>Called by one of the buttons of the /lezioni command.
-Allows the user to choose an year among the ones proposed</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>update</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></span>) – update event</p></li>
-<li><p><strong>context</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackContext</span></code></span>) – context passed by the handler</p></li>
-<li><p><strong>chat_id</strong> – id of the chat of the user</p></li>
-<li><p><strong>message_id</strong> – id of the sub-menu message</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="module.commands.lezioni.lezioni_button_giorno">
-<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni_button_giorno</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni_button_giorno" title="Link to this definition"></a></dt>
-<dd><p>Called by one of the buttons of the /lezioni command.
-Allows the user to choose a day among the ones proposed</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>update</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></span>) – update event</p></li>
-<li><p><strong>context</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackContext</span></code></span>) – context passed by the handler</p></li>
-<li><p><strong>chat_id</strong> – id of the chat of the user</p></li>
-<li><p><strong>message_id</strong> – id of the sub-menu message</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="module.commands.lezioni.lezioni_button_insegnamento">
-<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni_button_insegnamento</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni_button_insegnamento" title="Link to this definition"></a></dt>
-<dd><p>Called by one of the buttons of the /lezioni command.
-Allows the user to write the subject they want to search for</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>update</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></span>) – update event</p></li>
-<li><p><strong>context</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackContext</span></code></span>) – context passed by the handler</p></li>
-<li><p><strong>chat_id</strong> – id of the chat of the user</p></li>
-<li><p><strong>message_id</strong> – id of the sub-menu message</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="module.commands.lezioni.lezioni_handler">
-<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni_handler" title="Link to this definition"></a></dt>
-<dd><p>Called by any of the buttons in the /lezioni command sub-menus.
-The action will change depending on the button:</p>
-<ul class="simple">
-<li><p>anno -&gt; adds / removes the selected year from the query parameters</p></li>
-<li><p>giorno -&gt; adds / removes the selected day from the query parameters</p></li>
-<li><p>search -&gt; executes the query with all the selected parametes and shows the result</p></li>
-</ul>
+<dt class="sig sig-object py" id="module.commands.lezioni.lezioni_course_handler">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni_course_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni_course_handler" title="Link to this definition"></a></dt>
+<dd><p>Called by clicking on a course of the /lezioni command.
+Shows its curricula if the course page has a timetable, otherwise sends its PDFs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -838,19 +767,56 @@ The action will change depending on the button:</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="module.commands.lezioni.lezioni_input_insegnamento">
-<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni_input_insegnamento</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni_input_insegnamento" title="Link to this definition"></a></dt>
-<dd><p>Called after <a class="reference internal" href="#module.commands.lezioni.lezioni_button_insegnamento" title="module.commands.lezioni.lezioni_button_insegnamento"><code class="xref py py-func docutils literal notranslate"><span class="pre">lezioni_button_insegnamento()</span></code></a>.
-Allows the user to input the wanted subject, in the format [Nn]ome: &lt;insegnamento&gt;</p>
+<dt class="sig sig-object py" id="module.commands.lezioni.lezioni_courses_handler">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni_courses_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni_courses_handler" title="Link to this definition"></a></dt>
+<dd><p>Called by the back button of the /lezioni curricula.
+Shows the courses again</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>update</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></span>) – update event</p></li>
-<li><p><strong>context</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackContext</span></code></span>) – context passed by the handler</p></li>
+<li><p><strong>context</strong> – context passed by the handler</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="module.commands.lezioni.lezioni_curriculum_handler">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">lezioni_curriculum_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.lezioni_curriculum_handler" title="Link to this definition"></a></dt>
+<dd><p>Called by clicking on a curriculum of the /lezioni command.
+Shows its timetable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></span>) – update event</p></li>
+<li><p><strong>context</strong> – context passed by the handler</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="module.commands.lezioni.parse_timetable">
+<span class="sig-prename descclassname"><span class="pre">module.commands.lezioni.</span></span><span class="sig-name descname"><span class="pre">parse_timetable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.commands.lezioni.parse_timetable" title="Link to this definition"></a></dt>
+<dd><p>Parses the timetable tables of a course page, as published by LM-18.
+Each table starts with a single-cell header like “CURRICULUM HEALTH INFORMATICS - Primo Anno”,
+followed by rows of subject, days, time and room; a row without subject continues the one above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>page</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">BeautifulSoup</span></code></span>) – content of the course page</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>curriculum -&gt; its timetable, formatted as Telegram HTML</p>
 </dd>
 </dl>
 </dd></dl>
