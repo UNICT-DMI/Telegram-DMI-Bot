@@ -7,7 +7,7 @@ from typing import Callable, List
 from telegram.ext import CallbackContext
 
 from module.commands.reminder import reminder_send_message
-from module.data import Exam, Lesson, Professor, TimetableSlot
+from module.data import Exam, Professor, TimetableSlot
 from module.data.db_manager import DbManager
 from module.shared import check_print_old_exams, get_year_code
 
@@ -64,9 +64,6 @@ def updater_lep(_: CallbackContext):
         scrape_exams,
         lambda: Professor.scrape(delete=True),
         lambda: TimetableSlot.scrape(delete=True),
-        lambda: Lesson.scrape(
-            f"1{get_year_code(9, 20)}", delete=True
-        ),  # aaaa/09/21 (cambio nuovo anno lezioni) data dal quale vengono prelevate le lezioni del nuovo anno
     ]
 
     # a failing source must not leave the other tables stale

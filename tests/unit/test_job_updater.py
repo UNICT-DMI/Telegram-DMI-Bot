@@ -7,12 +7,11 @@ from module.data.exam import Exam
 from module.job_updater import updater_lep
 
 
-@patch('module.job_updater.Lesson')
 @patch('module.job_updater.TimetableSlot')
 @patch('module.job_updater.Professor')
 @patch('module.job_updater.Exam')
 def test_updater_lep_runs_every_scraper_when_one_fails(
-    mock_exam, mock_professor, mock_timetable_slot, mock_lesson
+    mock_exam, mock_professor, mock_timetable_slot
 ):
     mock_exam.scrape.side_effect = AttributeError("table not found")
 
@@ -20,7 +19,6 @@ def test_updater_lep_runs_every_scraper_when_one_fails(
 
     mock_professor.scrape.assert_called_once_with(delete=True)
     mock_timetable_slot.scrape.assert_called_once_with(delete=True)
-    mock_lesson.scrape.assert_called_once()
 
 
 @patch.object(Exam, 'bulk_save')

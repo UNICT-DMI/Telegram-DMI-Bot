@@ -37,8 +37,6 @@ from module.commands.lezioni import (
     lezioni_course_handler,
     lezioni_courses_handler,
     lezioni_curriculum_handler,
-    lezioni_handler,
-    lezioni_input_insegnamento,
 )
 from module.commands.minigames import (
     minigames,
@@ -322,12 +320,6 @@ def add_handlers(dp: Dispatcher) -> None:
     )
     dp.add_handler(
         CallbackQueryHandler(lezioni_curriculum_handler, pattern=r'^lezioni_cur_')
-    )
-    dp.add_handler(CallbackQueryHandler(lezioni_handler, pattern='lezioni_button_*'))
-    dp.add_handler(
-        MessageHandler(
-            Filters.regex(r"^(?!=<[/])[Nn]ome:\s+"), lezioni_input_insegnamento
-        )
     )
 
     # drive and gitlab commands

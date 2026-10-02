@@ -11,7 +11,6 @@ MASTER_TEXT_ID: "Master"
 FOUND_RESULT_TEXT_ID: "Found: %capybara%"
 NO_RESULT_FOUND_TEXT_ID: "Nothing found\n"
 SEARCH_YEAR_TEXT_ID: "Year"
-SEARCH_DAY_TEXT_ID: "Day"
 SEARCH_SESSION_TEXT_ID: "Session"
 SEARCH_COURSE_TEXT_ID: "Teaching"
 SEARCH_HEADER_TEXT_ID: "~ Customize your search ~"
@@ -49,7 +48,7 @@ HELP_ALL_COMMANDS_KEYBOARD_TEXT_ID: "All commands"
 HELP_ALL_COMMANDS_TOOLTIP_ID: |-
   *@DMI_Bot can help you with (following commands):*
   📖 /esami - _look for exams with applicable filters_
-  📘 /lezioni - _look for lessons with applicable filters_
+  📘 /lezioni - _lesson timetables of the degree courses_
   🗓 /aulario - _shows lecture room and a map of the classrooms_
   👔 /prof <nome> - _es. /prof Barbanera_
   👥 /rappresentanti - _list of representatives_
@@ -375,17 +374,6 @@ CLASSES_SELECT_COURSE_TEXT_ID: "Select your degree course"
 CLASSES_SELECT_CURRICULUM_TEXT_ID: "Select your curriculum"
 CLASSES_TIMETABLE_TEXT_ID: "📘 Lesson timetable %capybara%"
 CLASSES_UNAVAILABLE_TEXT_ID: "The timetable is not available right now, you can find it here: %capybara%"
-CLASSES_SELECT_DAY_TEXT_ID: "Select the day you are interested in"
-CLASSES_SELECT_DAY1_TEXT_ID: "Monday"
-CLASSES_SELECT_DAY2_TEXT_ID: "Tuesday"
-CLASSES_SELECT_DAY3_TEXT_ID: "Wednesday"
-CLASSES_SELECT_DAY4_TEXT_ID: "Thursday"
-CLASSES_SELECT_DAY5_TEXT_ID: "Friday"
-CLASSES_USAGE_TEXT_ID: |-
-  Enter the name of the subject in the format:
-    nome: subject_name
-  Example:
-    nome: SisTeMi oPeRaTIvI
 
 # /esami command
 EXAMS_SELECT_SESSION_TEXT_ID: "Select the session you are interested in"
