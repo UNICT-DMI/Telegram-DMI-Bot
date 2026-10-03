@@ -4,9 +4,9 @@ import os
 import warnings
 from datetime import date, timedelta
 
-import matplotlib.pyplot as plt
 from telegram import Bot, Update
 from telegram.ext import CallbackContext
+lazy import matplotlib.pyplot as plt
 
 from module.data import DbManager
 from module.data.vars import EASTER_EGG
