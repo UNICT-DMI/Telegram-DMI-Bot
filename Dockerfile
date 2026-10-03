@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.15-rc-slim
 WORKDIR /dmibot/
 
 # web app dependencies & build
