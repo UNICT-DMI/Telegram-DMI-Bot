@@ -3,6 +3,7 @@
 
 import logging
 from datetime import date, datetime
+from io import StringIO
 from typing import List, Optional
 
 import pandas as pd
@@ -87,7 +88,7 @@ class TimetableSlot(Scrapable):
             aulario_url = in_file.read()
 
         response = requests.get(aulario_url, timeout=10).text
-        tables = pd.read_html(response)
+        tables = pd.read_html(StringIO(response))
 
         for table in tables:
             # the first header cell holds the day, e.g. "Venerdì, 09/10/2026"

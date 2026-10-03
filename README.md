@@ -33,7 +33,7 @@ _(If you don't have a token, message Telegram's [@BotFather](http://telegram.me/
 
 ### System requirements
 
-- Python 3
+- Python 3.15+
 - python-pip3
 - language-pack-it
 

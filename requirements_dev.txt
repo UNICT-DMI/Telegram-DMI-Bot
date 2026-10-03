@@ -9,4 +9,4 @@ mypy
 isort
 black
 types-PyYAML
-types-requests
+types-requests<2.31.0.7  # newer stubs need urllib3 2, ptb 13 needs urllib3<2

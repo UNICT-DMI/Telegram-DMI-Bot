@@ -1,6 +1,6 @@
 # Telegram-DMI-Bot
 
-Telegram bot [@DMI_Bot](https://t.me/DMI_Bot) giving UNICT DMI students info on professors, lessons, exams and offices. Python with python-telegram-bot 13 (sync API), plus a FastAPI + Parcel webapp in `webapp/`. Code must run on Python 3.9 (CI tests 3.9 and 3.10).
+Telegram bot [@DMI_Bot](https://t.me/DMI_Bot) giving UNICT DMI students info on professors, lessons, exams and offices. Python with python-telegram-bot 13 (sync API), plus a FastAPI + Parcel webapp in `webapp/`. Requires Python 3.15+ (PEP 810 `lazy` imports).
 
 ## Commands
 

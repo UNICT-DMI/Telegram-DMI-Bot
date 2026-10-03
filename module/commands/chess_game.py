@@ -33,10 +33,10 @@ import sqlite3
 import time
 from typing import List, Optional, Tuple
 
-import chess
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.error import TelegramError
 from telegram.ext import CallbackContext
+lazy import chess
 
 from module.commands.minigames import (
     _edit,
