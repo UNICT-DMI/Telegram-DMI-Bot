@@ -15,8 +15,8 @@
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=9a2dae69"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -111,12 +111,12 @@
 <p>DBManager class</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="module.data.db_manager.DbManager">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">module.data.db_manager.</span></span><span class="sig-name descname"><span class="pre">DbManager</span></span><a class="headerlink" href="#module.data.db_manager.DbManager" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">module.data.db_manager.</span></span><span class="sig-name descname"><span class="pre">DbManager</span></span><a class="headerlink" href="#module.data.db_manager.DbManager" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that handles the management of databases</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.db_manager.DbManager.count_from">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">count_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.count_from" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">count_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.count_from" title="Link to this definition"></a></dt>
 <dd><p>Returns the number of rows found with the query.
 Executes “SELECT COUNT(select) FROM table_name [WHERE where (with where_args)]”</p>
 <dl class="field-list simple">
@@ -125,7 +125,7 @@ Executes “SELECT COUNT(select) FROM table_name [WHERE where (with where_args)]
 <li><p><strong>table_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – name of the table used in the FROM</p></li>
 <li><p><strong>select</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – columns considered for the query. Defaults to “*”.</p></li>
 <li><p><strong>where</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – where clause, with ? placeholders for the where_args. Defaults to “”.</p></li>
-<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]</span>) – args used in the where clause. Defaults to None.</p></li>
+<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></span>) – args used in the where clause. Defaults to None.</p></li>
 <li><p><strong>group_by</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – group by clause. Defaults to “”.</p></li>
 </ul>
 </dd>
@@ -140,7 +140,7 @@ Executes “SELECT COUNT(select) FROM table_name [WHERE where (with where_args)]
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.db_manager.DbManager.delete_from">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.delete_from" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">delete_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.delete_from" title="Link to this definition"></a></dt>
 <dd><p>Deletes the rows from the specified table, where the condition, when set, is satisfied.
 Executes “DELETE FROM table_name [WHERE where (with where_args)]”</p>
 <dl class="field-list simple">
@@ -148,7 +148,7 @@ Executes “DELETE FROM table_name [WHERE where (with where_args)]”</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – name of the table used in the DELETE FROM</p></li>
 <li><p><strong>where</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – where clause, with ? placeholders for the where args. Defaults to “”.</p></li>
-<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]</span>) – args used in the where clause. Defaults to None.</p></li>
+<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></span>) – args used in the where clause. Defaults to None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -156,7 +156,7 @@ Executes “DELETE FROM table_name [WHERE where (with where_args)]”</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.db_manager.DbManager.get_db">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/DMI_DB.db'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.get_db" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/DMI_DB.db'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.get_db" title="Link to this definition"></a></dt>
 <dd><p>Creates the connection to the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -173,7 +173,7 @@ Executes “DELETE FROM table_name [WHERE where (with where_args)]”</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.db_manager.DbManager.insert_into">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">insert_into</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiple_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.insert_into" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">insert_into</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiple_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.insert_into" title="Link to this definition"></a></dt>
 <dd><p>Inserts the specified values in the database.
 Executes “INSERT INTO table_name ([columns]) VALUES (placeholders)”</p>
 <dl class="field-list simple">
@@ -190,7 +190,7 @@ Executes “INSERT INTO table_name ([columns]) VALUES (placeholders)”</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.db_manager.DbManager.query_from_file">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/DMI_DB.sql'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.query_from_file" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">query_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/DMI_DB.sql'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.query_from_file" title="Link to this definition"></a></dt>
 <dd><p>Commits all the queries in the specified file.
 Each query must end with a “);” and a carriage return</p>
 <dl class="field-list simple">
@@ -202,7 +202,7 @@ Each query must end with a “);” and a carriage return</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.db_manager.DbManager.query_from_string">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">queries</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.query_from_string" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">query_from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">queries</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.query_from_string" title="Link to this definition"></a></dt>
 <dd><p>Commits all the queries in the string.
 Should not be used to select something</p>
 <dl class="field-list simple">
@@ -214,7 +214,7 @@ Should not be used to select something</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.db_manager.DbManager.select_from">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">select_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.select_from" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">select_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.db_manager.DbManager.select_from" title="Link to this definition"></a></dt>
 <dd><p>Returns the results of a query.
 Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP BY group_by] [ORDER BY order_by]”</p>
 <dl class="field-list simple">
@@ -223,7 +223,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <li><p><strong>table_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – name of the table used in the FROM</p></li>
 <li><p><strong>select</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – columns considered for the query. Defaults to “*”.</p></li>
 <li><p><strong>where</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – where clause, with ? placeholders for the where_args. Defaults to “”.</p></li>
-<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]</span>) – args used in the where clause. Defaults to None.</p></li>
+<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></span>) – args used in the where clause. Defaults to None.</p></li>
 <li><p><strong>group_by</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – group by clause. Defaults to “”.</p></li>
 <li><p><strong>order_by</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – order by clause. Defaults to “”.</p></li>
 </ul>
@@ -265,12 +265,12 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <p>EasterEgg class</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="module.data.easter_egg.EasterEgg">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">module.data.easter_egg.</span></span><span class="sig-name descname"><span class="pre">EasterEgg</span></span><a class="headerlink" href="#module.data.easter_egg.EasterEgg" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">module.data.easter_egg.</span></span><span class="sig-name descname"><span class="pre">EasterEgg</span></span><a class="headerlink" href="#module.data.easter_egg.EasterEgg" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>You got gnomed</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.easter_egg.EasterEgg.get_bladrim">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_bladrim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_bladrim" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_bladrim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_bladrim" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
@@ -280,7 +280,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.easter_egg.EasterEgg.get_lei_che_ne_pensa_signorina">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_lei_che_ne_pensa_signorina</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_lei_che_ne_pensa_signorina" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_lei_che_ne_pensa_signorina</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_lei_che_ne_pensa_signorina" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
@@ -290,7 +290,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.easter_egg.EasterEgg.get_santino">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_santino</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_santino" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_santino</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_santino" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
@@ -300,7 +300,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.easter_egg.EasterEgg.get_smonta_portoni">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_smonta_portoni</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_smonta_portoni" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_smonta_portoni</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_smonta_portoni" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
@@ -310,7 +310,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.easter_egg.EasterEgg.get_uni_bandita">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_uni_bandita</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_uni_bandita" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_uni_bandita</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.easter_egg.EasterEgg.get_uni_bandita" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
@@ -326,7 +326,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <p>Exam class</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="module.data.exam.Exam">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">module.data.exam.</span></span><span class="sig-name descname"><span class="pre">Exam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anno</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cdl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insegnamento</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docenti</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">module.data.exam.</span></span><span class="sig-name descname"><span class="pre">Exam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anno</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cdl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insegnamento</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docenti</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#module.data.scrapable.Scrapable" title="module.data.scrapable.Scrapable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scrapable</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="module.data.exam.Exam.anno">
@@ -418,17 +418,17 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="module.data.exam.Exam.COURSES">
-<span class="sig-name descname"><span class="pre">COURSES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['l-31',</span> <span class="pre">'lm-18',</span> <span class="pre">'l-35',</span> <span class="pre">'lm-40']</span></em><a class="headerlink" href="#module.data.exam.Exam.COURSES" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">COURSES</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['l-31',</span> <span class="pre">'lm-18',</span> <span class="pre">'l-35',</span> <span class="pre">'lm-40']</span></span><a class="headerlink" href="#module.data.exam.Exam.COURSES" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="module.data.exam.Exam.SESSIONS">
-<span class="sig-name descname"><span class="pre">SESSIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['prima',</span> <span class="pre">'seconda',</span> <span class="pre">'terza',</span> <span class="pre">'straordinaria']</span></em><a class="headerlink" href="#module.data.exam.Exam.SESSIONS" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SESSIONS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['prima',</span> <span class="pre">'seconda',</span> <span class="pre">'terza',</span> <span class="pre">'straordinaria']</span></span><a class="headerlink" href="#module.data.exam.Exam.SESSIONS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.exam.Exam.append_multiple_sessions">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">append_multiple_sessions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cells</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam.append_multiple_sessions" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">append_multiple_sessions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cells</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam.append_multiple_sessions" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -447,7 +447,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.exam.Exam.columns">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#module.data.exam.Exam.columns" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">columns</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></span><a class="headerlink" href="#module.data.exam.Exam.columns" title="Link to this definition"></a></dt>
 <dd><p>tuple of column names of the database table that will store this Exam</p>
 </dd></dl>
 
@@ -459,7 +459,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.exam.Exam.find">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">select_sessione</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_sessione</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_anno</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_insegnamento</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam.find" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">select_sessione</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_sessione</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_anno</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_insegnamento</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam.find" title="Link to this definition"></a></dt>
 <dd><p>Produces a list of exams from the database, based on the provided parametes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -481,7 +481,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.exam.Exam.find_all">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam.find_all" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">find_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam.find_all" title="Link to this definition"></a></dt>
 <dd><p>Finds all the exams present in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -502,7 +502,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <dd class="field-odd"><p><strong>session_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – [ prima | seconda | terza | straordinaria ]</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>]</span></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>session</p>
@@ -512,7 +512,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.exam.Exam.scrape">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year_exams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam.scrape" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year_exams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.exam.Exam.scrape" title="Link to this definition"></a></dt>
 <dd><p>Scrapes the exams of the provided year and stores them in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -526,13 +526,13 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.exam.Exam.table">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">table</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#module.data.exam.Exam.table" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">table</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#module.data.exam.Exam.table" title="Link to this definition"></a></dt>
 <dd><p>name of the database table that will store this Exam</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.exam.Exam.values">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#module.data.exam.Exam.values" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">values</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></span><a class="headerlink" href="#module.data.exam.Exam.values" title="Link to this definition"></a></dt>
 <dd><p>tuple of values that will be saved in the database</p>
 </dd></dl>
 
@@ -544,7 +544,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <p>Professor class</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="module.data.professor.Professor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">module.data.professor.</span></span><span class="sig-name descname"><span class="pre">Professor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ID</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ruolo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheda_dmi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">telefono</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ufficio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sito</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.professor.Professor" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">module.data.professor.</span></span><span class="sig-name descname"><span class="pre">Professor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ID</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ruolo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheda_dmi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">telefono</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ufficio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sito</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.professor.Professor" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#module.data.scrapable.Scrapable" title="module.data.scrapable.Scrapable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scrapable</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="module.data.professor.Professor.ID">
@@ -658,18 +658,18 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="module.data.professor.Professor.URL_PROF">
-<span class="sig-name descname"><span class="pre">URL_PROF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'http://web.dmi.unict.it/docenti'</span></em><a class="headerlink" href="#module.data.professor.Professor.URL_PROF" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">URL_PROF</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'http://web.dmi.unict.it/docenti'</span></span><a class="headerlink" href="#module.data.professor.Professor.URL_PROF" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.professor.Professor.columns">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#module.data.professor.Professor.columns" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">columns</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></span><a class="headerlink" href="#module.data.professor.Professor.columns" title="Link to this definition"></a></dt>
 <dd><p>tuple of column names of the database table that will store this Professor</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.professor.Professor.find">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">where_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.professor.Professor.find" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">where_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.professor.Professor.find" title="Link to this definition"></a></dt>
 <dd><p>Produces a list of professors from the database, based on the provided parametes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -686,7 +686,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.professor.Professor.find_all">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.professor.Professor.find_all" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">find_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.professor.Professor.find_all" title="Link to this definition"></a></dt>
 <dd><p>Finds all the professors present in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -700,7 +700,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.professor.Professor.scrape">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.professor.Professor.scrape" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.professor.Professor.scrape" title="Link to this definition"></a></dt>
 <dd><p>Scrapes all the professors and stores them in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -711,7 +711,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.professor.Professor.table">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">table</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#module.data.professor.Professor.table" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">table</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#module.data.professor.Professor.table" title="Link to this definition"></a></dt>
 <dd><p>name of the database table that will store this Lesson</p>
 </dd></dl>
 
@@ -729,12 +729,12 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <p>Scrapable abstract class</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="module.data.scrapable.Scrapable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">module.data.scrapable.</span></span><span class="sig-name descname"><span class="pre">Scrapable</span></span><a class="headerlink" href="#module.data.scrapable.Scrapable" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">module.data.scrapable.</span></span><span class="sig-name descname"><span class="pre">Scrapable</span></span><a class="headerlink" href="#module.data.scrapable.Scrapable" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Abstract class base of everything that is to be scraped and saved in the database</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.scrapable.Scrapable.bulk_save">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bulk_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scrapables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.scrapable.Scrapable.bulk_save" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">bulk_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scrapables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.scrapable.Scrapable.bulk_save" title="Link to this definition"></a></dt>
 <dd><p>Saves multiple Scrapable objects at once in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -745,19 +745,19 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.scrapable.Scrapable.columns">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">columns</span></span><a class="headerlink" href="#module.data.scrapable.Scrapable.columns" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">columns</span></span><a class="headerlink" href="#module.data.scrapable.Scrapable.columns" title="Link to this definition"></a></dt>
 <dd><p>tuple of column names of the database table that will store this Scrapable</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.scrapable.Scrapable.count">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">where</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.scrapable.Scrapable.count" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">where</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">where_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.scrapable.Scrapable.count" title="Link to this definition"></a></dt>
 <dd><p>Count the number of scrapable objects present in the database, based on the parameters</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>where</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – where clause, with ? placeholders for the where_args. Defaults to “”.</p></li>
-<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]</span>) – args used in the where clause. Defaults to None.</p></li>
+<li><p><strong>where_args</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></span>) – args used in the where clause. Defaults to None.</p></li>
 <li><p><strong>group_by</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – group by clause. Defaults to “”.</p></li>
 </ul>
 </dd>
@@ -778,13 +778,13 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.scrapable.Scrapable.delete_all">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.scrapable.Scrapable.delete_all" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">delete_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.scrapable.Scrapable.delete_all" title="Link to this definition"></a></dt>
 <dd><p>Deletes all the scrapable objects of this kind from the database</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.scrapable.Scrapable.find_all">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.scrapable.Scrapable.find_all" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">find_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.scrapable.Scrapable.find_all" title="Link to this definition"></a></dt>
 <dd><p>Finds all the scrapable objects present in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -804,13 +804,13 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.scrapable.Scrapable.table">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">table</span></span><a class="headerlink" href="#module.data.scrapable.Scrapable.table" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">table</span></span><a class="headerlink" href="#module.data.scrapable.Scrapable.table" title="Link to this definition"></a></dt>
 <dd><p>name of the database table that will store this Scrapable</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.scrapable.Scrapable.values">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#module.data.scrapable.Scrapable.values" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#module.data.scrapable.Scrapable.values" title="Link to this definition"></a></dt>
 <dd><p>tuple of values that will be saved in the database</p>
 </dd></dl>
 
@@ -822,7 +822,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 <p>TimetableSlot class</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">module.data.timetable_slot.</span></span><span class="sig-name descname"><span class="pre">TimetableSlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ID</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">giorno</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ora_inizio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ora_fine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aula</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">module.data.timetable_slot.</span></span><span class="sig-name descname"><span class="pre">TimetableSlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ID</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">giorno</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ora_inizio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ora_fine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aula</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#module.data.scrapable.Scrapable" title="module.data.scrapable.Scrapable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scrapable</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot.ID">
@@ -892,19 +892,19 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot.columns">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.columns" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">columns</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.columns" title="Link to this definition"></a></dt>
 <dd><p>tuple of column names of the database table that will store this TimetableSlot</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot.end_hour">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">end_hour</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.end_hour" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">end_hour</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.end_hour" title="Link to this definition"></a></dt>
 <dd><p>adds half an hour to the ora_fine value</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot.find">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.find" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.find" title="Link to this definition"></a></dt>
 <dd><p>Produces a list of scrapables from the database, based on the provided parametes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -918,7 +918,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot.find_all">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.find_all" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">find_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.find_all" title="Link to this definition"></a></dt>
 <dd><p>Finds all the timetable slots present in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -932,11 +932,11 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot.get_last_day">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last_day</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.get_last_day" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_last_day</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.get_last_day" title="Link to this definition"></a></dt>
 <dd><p>Finds the last day with at least one timetable slot</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">date</span></code>]</span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">date</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the last day, or None if there are no timetable slots</p>
@@ -946,13 +946,13 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot.is_still_to_come">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_still_to_come</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.is_still_to_come" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_still_to_come</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.is_still_to_come" title="Link to this definition"></a></dt>
 <dd><p>whether or not the current time slot is still to come or has already passed</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot.scrape">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.scrape" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.scrape" title="Link to this definition"></a></dt>
 <dd><p>Scrapes the timetable slots of the provided year and stores them in the database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -963,7 +963,7 @@ Executes “SELECT select FROM table_name [WHERE where (with where_args)] [GROUP
 
 <dl class="py property">
 <dt class="sig sig-object py" id="module.data.timetable_slot.TimetableSlot.table">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">table</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.table" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">table</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#module.data.timetable_slot.TimetableSlot.table" title="Link to this definition"></a></dt>
 <dd><p>name of the database table that will store this TimetableSlot</p>
 </dd></dl>
 
