@@ -33,7 +33,7 @@ REPORT_TO_KEYBOARD_TEXT_ID: "📫 Report to Representatives"
 
 # /start command
 START_TEXT_ID: |-
-  Welcome! This bot is developed by Computer Science's students to help fellow DMI's students!
+  Welcome!!! This bot is developed by Computer Science's students to help fellow DMI's students!
   Use /help or press the ❔ Help button to know what this bot can do
 
 # /help command
