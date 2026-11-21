@@ -1,4 +1,7 @@
 FROM python:3.15-rc-slim
+LABEL org.opencontainers.image.source=https://github.com/UNICT-DMI/Telegram-DMI-Bot
+LABEL org.opencontainers.image.description="Telegram bot for the DMI students (@DMI_Bot)"
+LABEL org.opencontainers.image.licenses=GPL-3.0
 WORKDIR /dmibot/
 
 # web app dependencies & build
